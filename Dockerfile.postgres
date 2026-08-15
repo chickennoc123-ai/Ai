@@ -1,0 +1,13 @@
+# ---------------------------------------------------------------------------
+# EA Factory Pro - PostgreSQL with platform bootstrap SQL
+# ---------------------------------------------------------------------------
+FROM postgres:15-alpine
+
+ENV POSTGRES_DB=eafactory \
+    POSTGRES_USER=eafactory \
+    POSTGRES_PASSWORD=eafactory
+
+# Scripts in this directory run once, on first initialisation of the volume.
+COPY docker/postgres/init.sql /docker-entrypoint-initdb.d/10-init.sql
+
+EXPOSE 5432

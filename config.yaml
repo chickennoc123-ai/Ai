@@ -1,0 +1,207 @@
+# ---------------------------------------------------------------------------
+# EA Factory Pro - main configuration.
+# Values support environment interpolation: ${VAR} or ${VAR:-default}.
+# ---------------------------------------------------------------------------
+
+system:
+  name: "EA Factory Pro"
+  version: "1.0.0"
+  environment: "${ENVIRONMENT:-development}"
+  timezone: "UTC"
+  base_currency: "USD"
+
+broker:
+  xmtrading:
+    mode: "${XM_MODE:-simulated}"        # simulated | rest
+    account_id: "${XM_ACCOUNT_ID:-DEMO-1000001}"
+    password: "${XM_PASSWORD:-}"
+    server: "${XM_SERVER:-XMGlobal-Demo}"
+    demo: true
+    rest_url: "${XM_REST_URL:-https://demo.xm.com/api}"
+    ws_url: "${XM_WS_URL:-wss://demo.xm.com/ws}"
+    leverage: 500
+    initial_balance: 10000.0
+    request_timeout: 15
+    max_retries: 4
+    symbols:
+      - XAUUSD
+      - EURUSD
+      - USDJPY
+      - GBPUSD
+      - AUDUSD
+
+data:
+  default_provider: "simulated"          # simulated | csv | alphavantage
+  cache_dir: "data/cache"
+  history_bars: 5000
+  providers:
+    simulated:
+      seed: 20240101
+      start: "2021-01-01"
+    csv:
+      directory: "data/csv"
+    alphavantage:
+      api_key: "${ALPHAVANTAGE_API_KEY:-}"
+      base_url: "https://www.alphavantage.co/query"
+  storage:
+    ticks: "influxdb"
+    ohlcv: "influxdb"
+  timeframes: ["M1", "M5", "M15", "M30", "H1", "H4", "D1", "W1", "MN1"]
+
+agents:
+  research:
+    enabled: true
+    interval: 3600
+    max_candidates: 24
+    survivors: 6
+    mutation_rate: 0.35
+  analysis:
+    enabled: true
+    interval: 60
+    timeframe: "H1"
+    indicators: ["rsi", "macd", "bb", "sma", "ema", "atr", "adx"]
+  execution:
+    enabled: true
+    interval: 15
+    max_positions: 5
+    max_slippage_pips: 3.0
+    algo: "immediate"                    # immediate | twap | vwap | iceberg
+    twap_slices: 4
+    twap_interval: 5
+  risk:
+    enabled: true
+    interval: 30
+    max_drawdown: 0.15
+    max_var: 0.02
+    max_exposure: 0.50
+    max_symbol_exposure: 0.20
+    var_confidence: 0.99
+    monte_carlo_paths: 5000
+    kill_switch_drawdown: 0.25
+  meta:
+    enabled: true
+    interval: 86400
+
+llm:
+  provider: "${LLM_PROVIDER:-heuristic}" # heuristic | anthropic | openai | ollama
+  model: "claude-sonnet-5"
+  temperature: 0.4
+  max_tokens: 2000
+  timeout: 60
+
+strategies:
+  active:
+    - RSI
+    - MACD
+    - SMA_Cross
+    - Bollinger_Bands
+    - ADX_Trend
+    - Volatility_Breakout
+  max_allocation_per_strategy: 0.20
+  max_total_allocation: 1.0
+
+backtest:
+  initial_capital: 10000
+  # Costs are expressed as a fraction of traded notional / price, charged per
+  # side. The defaults model an XM Zero account: ~USD 3.5 per lot per side
+  # (0.000035 of a 100k notional) plus ~0.2 pip of slippage. Raise them to
+  # stress-test a strategy; values above ~0.0002 make intraday systems
+  # structurally unprofitable.
+  commission: 0.00007
+  slippage: 0.00002
+  risk_per_trade: 0.01
+  max_concurrent_positions: 1
+  timeframes: ["M15", "H1", "H4"]
+
+validation:
+  walk_forward:
+    train_months: 12
+    test_months: 3
+    min_folds: 3
+  calibration:
+    confidence_bins: 10
+  pbo:
+    samples: 1000
+    partitions: 8
+  robustness:
+    perturbations: 24
+    perturbation_pct: 0.20
+  thresholds:
+    min_sharpe: 0.50
+    min_trades: 30
+    max_pbo: 0.50
+    min_wfa_efficiency: 0.40
+    max_calibration_error: 0.15
+
+lifecycle:
+  degraded_sharpe: 0.50
+  paused_sharpe: 0.0
+  retire_after_days: 90
+  evaluation_window_trades: 30
+  recovery_sharpe: 0.75
+
+decision:
+  kelly_fraction: 0.25
+  uncertainty_penalty: 0.50
+  max_correlation: 0.70
+  min_allocation: 0.01
+  max_allocation: 0.20
+  capital: 10000
+
+dashboard:
+  host: "0.0.0.0"
+  port: 8501
+  refresh_interval: 5
+  api_url: "${API_URL:-http://localhost:8000}"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["*"]
+  auth_enabled: "${API_AUTH_ENABLED:-false}"
+  jwt_secret: "${API_JWT_SECRET:-change-me-in-production}"
+  jwt_expire_minutes: 720
+  rate_limit: "240/minute"
+
+database:
+  url: "${DATABASE_URL:-}"
+  pool_size: 10
+  max_overflow: 20
+  echo: false
+
+redis:
+  host: "${REDIS_HOST:-localhost}"
+  port: "${REDIS_PORT:-6379}"
+  db: "${REDIS_DB:-0}"
+  namespace: "eafactory"
+
+influxdb:
+  enabled: true
+  url: "${INFLUXDB_URL:-http://localhost:8086}"
+  token: "${INFLUXDB_TOKEN:-ea-factory-dev-token}"
+  org: "${INFLUXDB_ORG:-ea-factory}"
+  bucket: "${INFLUXDB_BUCKET:-market}"
+
+notifications:
+  enabled: true
+  channels: ["log"]                      # log | telegram | email
+  telegram:
+    bot_token: "${TELEGRAM_BOT_TOKEN:-}"
+    chat_id: "${TELEGRAM_CHAT_ID:-}"
+  email:
+    host: "${SMTP_HOST:-}"
+    port: "${SMTP_PORT:-587}"
+    user: "${SMTP_USER:-}"
+    password: "${SMTP_PASSWORD:-}"
+    to: "${NOTIFY_EMAIL_TO:-}"
+
+logging:
+  level: "${LOG_LEVEL:-INFO}"
+  json: "${LOG_JSON:-false}"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/ea_factory.log"
+
+monitoring:
+  prometheus_enabled: true
+  metrics_port: 9100
+  health_check_interval: 30

@@ -1,0 +1,158 @@
+# ---------------------------------------------------------------------------
+# EA Factory Pro - full stack.
+#   docker-compose up -d          start everything
+#   docker-compose logs -f api    follow the API
+#   docker-compose down -v        stop and delete the volumes
+#
+# Dashboard : http://localhost:8501
+# API docs  : http://localhost:8000/docs
+# InfluxDB  : http://localhost:8086
+# ---------------------------------------------------------------------------
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    container_name: eafactory-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-eafactory}
+      POSTGRES_USER: ${POSTGRES_USER:-eafactory}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-eafactory}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-eafactory} -d ${POSTGRES_DB:-eafactory}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [eafactory]
+
+  redis:
+    build:
+      context: .
+      dockerfile: Dockerfile.redis
+    container_name: eafactory-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [eafactory]
+
+  influxdb:
+    build:
+      context: .
+      dockerfile: Dockerfile.influxdb
+    container_name: eafactory-influxdb
+    restart: unless-stopped
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USER:-eafactory}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD:-eafactory123}
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG:-ea-factory}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET:-market}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN:-ea-factory-dev-token}
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+      - influxdb-config:/etc/influxdb2
+    ports:
+      - "8086:8086"
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+    networks: [eafactory]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: eafactory-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # The worker owns the agents; the API only serves HTTP and WebSocket.
+      API_START_AGENTS: "false"
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+      INFLUXDB_URL: http://influxdb:8086
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./config.yaml:/app/config.yaml:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      influxdb:
+        condition: service_started
+    networks: [eafactory]
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: eafactory-worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+      INFLUXDB_URL: http://influxdb:8086
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./config.yaml:/app/config.yaml:ro
+      - ./strategies/ai_generated:/app/strategies/ai_generated
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_started
+    networks: [eafactory]
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    container_name: eafactory-dashboard
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      API_URL: http://api:8000
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_started
+    networks: [eafactory]
+
+volumes:
+  postgres-data:
+  redis-data:
+  influxdb-data:
+  influxdb-config:
+
+networks:
+  eafactory:
+    driver: bridge

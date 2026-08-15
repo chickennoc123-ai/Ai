@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+*.pem
+*.key
+
+# Runtime artifacts
+logs/*.log
+logs/*.jsonl
+data/cache/
+data/*.parquet
+data/*.csv
+artifacts/
+*.db
+*.sqlite3
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Strategies written at runtime by the Research Agent
+strategies/ai_generated/gen_*.py

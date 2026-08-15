@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# EA Factory Pro - agent worker (research, analysis, execution, risk, meta)
+# ---------------------------------------------------------------------------
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/app
+
+WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+RUN mkdir -p logs data/cache strategies/ai_generated \
+    && useradd --create-home --uid 10003 worker \
+    && chown -R worker:worker /app
+USER worker
+
+HEALTHCHECK --interval=60s --timeout=10s --start-period=45s --retries=3 \
+    CMD python -c "import sys; sys.exit(0)"
+
+CMD ["python", "-m", "worker.main"]
