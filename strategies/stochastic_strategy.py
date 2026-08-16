@@ -50,8 +50,8 @@ class StochasticStrategy(BaseStrategy):
         short_trigger = self.crossunder(percent_k, percent_d) & (percent_k >= overbought - 15)
 
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[long_trigger.fillna(False)] = 1
-        raw[short_trigger.fillna(False)] = -1
+        raw.loc[long_trigger.fillna(False)] = 1
+        raw.loc[short_trigger.fillna(False)] = -1
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
 
         # Exit when the oscillator reaches the opposite extreme.

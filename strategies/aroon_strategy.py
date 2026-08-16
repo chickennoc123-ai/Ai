@@ -34,10 +34,10 @@ class AroonStrategy(BaseStrategy):
         threshold = float(self.params["threshold"])
 
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[oscillator >= threshold] = 1
-        raw[oscillator <= -threshold] = -1
+        raw.loc[oscillator >= threshold] = 1
+        raw.loc[oscillator <= -threshold] = -1
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
-        position = held.where(oscillator.abs() >= threshold / 2.0, 0).fillna(0).astype("int8")
+        position = held.where(oscillator.abs() >= threshold / 2.0, 0).astype("int8")
 
         confidence = self.scale_confidence(oscillator.abs(), threshold, 100.0)
         return self.build_frame(df, position, confidence)

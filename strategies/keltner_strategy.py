@@ -39,8 +39,8 @@ class KeltnerStrategy(BaseStrategy):
             df["high"], df["low"], close, int(self.params["period"]), float(self.params["multiplier"])
         )
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[close > upper] = 1
-        raw[close < lower] = -1
+        raw.loc[close > upper] = 1
+        raw.loc[close < lower] = -1
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
 
         exit_long = (held > 0) & (close < basis)

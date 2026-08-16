@@ -48,10 +48,10 @@ class ZScoreReversionStrategy(BaseStrategy):
         calm = slope <= float(self.params["max_trend_slope"]) * 20
 
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[(scores <= -entry) & calm] = 1
-        raw[(scores >= entry) & calm] = -1
+        raw.loc[(scores <= -entry) & calm] = 1
+        raw.loc[(scores >= entry) & calm] = -1
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
-        position = held.where(scores.abs() > exit_level, 0).fillna(0).astype("int8")
+        position = held.where(scores.abs() > exit_level, 0).astype("int8")
 
         confidence = self.scale_confidence(scores.abs(), entry, entry * 2.0)
         return self.build_frame(df, position, confidence)

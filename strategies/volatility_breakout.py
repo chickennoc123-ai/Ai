@@ -43,8 +43,8 @@ class VolatilityBreakoutStrategy(BaseStrategy):
 
         liquid = (atr_values / close).fillna(0.0) >= float(self.params["min_atr_pct"])
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[(close > upper) & liquid] = 1
-        raw[(close < lower) & liquid] = -1
+        raw.loc[(close > upper) & liquid] = 1
+        raw.loc[(close < lower) & liquid] = -1
 
         exit_bars = int(self.params["exit_bars"])
         held = raw.replace(0, pd.NA).ffill(limit=exit_bars).fillna(0).astype("int8")

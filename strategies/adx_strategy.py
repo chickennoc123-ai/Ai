@@ -42,11 +42,11 @@ class ADXTrendStrategy(BaseStrategy):
         adx_values, plus_di, minus_di = adx(df["high"], df["low"], df["close"], period)
 
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[(plus_di > minus_di) & (adx_values >= threshold)] = 1
-        raw[(minus_di > plus_di) & (adx_values >= threshold)] = -1
+        raw.loc[(plus_di > minus_di) & (adx_values >= threshold)] = 1
+        raw.loc[(minus_di > plus_di) & (adx_values >= threshold)] = -1
         # Hold the position until ADX collapses below the exit threshold.
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
-        position = held.where(adx_values >= exit_threshold, 0).fillna(0).astype("int8")
+        position = held.where(adx_values >= exit_threshold, 0).astype("int8")
 
         confidence = self.scale_confidence(adx_values, threshold, 55.0)
         return self.build_frame(df, position, confidence)

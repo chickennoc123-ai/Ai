@@ -67,12 +67,12 @@ class SessionBreakoutStrategy(BaseStrategy):
 
         close = frame["close"]
         raw = pd.Series(0, index=index, dtype="int8")
-        raw[tradable & (close > range_high + buffer_width)] = 1
-        raw[tradable & (close < range_low - buffer_width)] = -1
+        raw.loc[tradable & (close > range_high + buffer_width)] = 1
+        raw.loc[tradable & (close < range_low - buffer_width)] = -1
 
         # Hold within the trading day only, flat overnight.
         held = raw.replace(0, np.nan).groupby(frame["day"]).ffill().fillna(0.0)
-        position = pd.Series(held.to_numpy(), index=index).where(tradable, 0).fillna(0).astype("int8")
+        position = pd.Series(held.to_numpy(), index=index).where(tradable, 0).astype("int8")
 
         span = (range_high - range_low).replace(0.0, np.nan)
         excursion = (close - (range_high + range_low) / 2.0).abs() / span

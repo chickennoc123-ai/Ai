@@ -48,8 +48,8 @@ class MomentumStrategy(BaseStrategy):
         entry = float(self.params["entry_z"])
         exit_level = float(self.params["exit_z"])
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[normalised >= entry] = 1
-        raw[normalised <= -entry] = -1
+        raw.loc[normalised >= entry] = 1
+        raw.loc[normalised <= -entry] = -1
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
         flat = normalised.abs() < exit_level
         position = held.where(~flat, 0).astype("int8")

@@ -40,8 +40,8 @@ class DonchianStrategy(BaseStrategy):
         exit_upper, exit_lower = exit_upper.shift(1), exit_lower.shift(1)
 
         raw = pd.Series(0, index=df.index, dtype="int8")
-        raw[close >= entry_upper] = 1
-        raw[close <= entry_lower] = -1
+        raw.loc[close >= entry_upper] = 1
+        raw.loc[close <= entry_lower] = -1
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
 
         exit_long = (held > 0) & (close <= exit_lower)

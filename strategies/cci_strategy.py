@@ -43,11 +43,11 @@ class CCIStrategy(BaseStrategy):
 
         raw = pd.Series(0, index=df.index, dtype="int8")
         if breakout:
-            raw[values >= threshold] = 1
-            raw[values <= -threshold] = -1
+            raw.loc[values >= threshold] = 1
+            raw.loc[values <= -threshold] = -1
         else:
-            raw[values <= -threshold] = 1
-            raw[values >= threshold] = -1
+            raw.loc[values <= -threshold] = 1
+            raw.loc[values >= threshold] = -1
 
         held = raw.replace(0, pd.NA).ffill().fillna(0).astype("int8")
         exit_long = (held > 0) & (values >= exit_threshold if not breakout else values <= exit_threshold)
