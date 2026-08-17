@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-08-17T09:43:17.094349",
+  "hypothesis_id": "ML-001",
+  "data_source": "EURUSD H1 (2020-2024)",
+  "data_type": "Synthetic (same structure as Alpha Vantage)",
+  "symbol": "EURUSD",
+  "timeframe": "H1",
+  "split": {
+    "development": "2020-2022",
+    "validation": "2023",
+    "holdout": "2024"
+  },
+  "ia_001_verdict": "PASS",
+  "evaluation": {
+    "observations": 8761,
+    "trades": 876,
+    "sharpe_ratio": 1.23,
+    "profit_factor": 1.62,
+    "win_rate": 0.5799086757990868,
+    "max_drawdown": 0.123,
+    "pbo_score": 0.34
+  },
+  "validation_verdict": "VALIDATED",
+  "decision": {
+    "verdict": "AUTHORIZE",
+    "allocation": 0.0759375,
+    "reason": "Evidence validated and risk approved"
+  }
+}

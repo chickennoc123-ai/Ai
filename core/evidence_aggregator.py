@@ -195,7 +195,7 @@ class EvidenceAggregator:
         confidence_level = self._determine_confidence_level(
             aggregated_score,
             len(oos_predictions),
-            trial_ledger.count_by_status.__doc__,  # Placeholder
+            len(trial_ledger.get_completed_trials()),
         )
 
         evidence = AggregatedEvidence(
