@@ -18,11 +18,27 @@ from typing import Dict, List
 import numpy as np
 import pandas as pd
 
-from core.indicators import atr as wilder_atr
-from core.indicators import rsi as wilder_rsi
+from core.indicators import true_range
 from utils.exceptions import EAFactoryError
 
-FEATURE_VERSION = "FE-R2-001"
+# NOT the ML-001-R2 numerical oracle: core.indicators.rsi / core.indicators.atr
+# remain in place, unmodified, ONLY because other strategies (the RSI
+# strategy, MACD's ATR-based stop-loss sizing — see strategies/base_strategy.py,
+# core/strategy.py) depend on their existing pandas-ewm-based behavior. They
+# are intentionally NOT imported here. ML-001-R2's rsi_14/atr_14 use the
+# CANONICAL_NUMERICAL_ORACLE defined below (_seeded_wilder_smooth), which is
+# mathematically distinct from core.indicators.py's ewm(adjust=False)
+# formulation (see ML-001-M5-FULL-REMEDIATION-REPORT.md for the empirical
+# proof these two are not equivalent, contrary to what an earlier version of
+# this spec incorrectly asserted).
+
+#: Bumped from FE-R2-001 to FE-R2-002 per spec Section 2/16's immutability
+#: rule: rsi_14/atr_14's smoothing formula changed (M-5 remediation — see
+#: ML-001-M5-FULL-REMEDIATION-REPORT.md), which changes computed feature
+#: values, which requires a new feature_version. Any artifact recorded
+#: under FE-R2-001 used the old (spec-inconsistent) formula and is
+#: automatically rejected by RFR2Model.load()'s feature_version check.
+FEATURE_VERSION = "FE-R2-002"
 
 #: Fixed feature vector order. Any reordering requires a new feature_version.
 FEATURE_ORDER: List[str] = [
@@ -144,14 +160,103 @@ def compute_momentum(close: pd.Series, lookback: int) -> pd.Series:
     return result.replace([np.inf, -np.inf], np.nan)
 
 
+class WilderSmoothingError(FeatureEngineeringError):
+    """Raised when Wilder smoothing encounters an internal NaN gap it cannot seed past."""
+
+
+def _seeded_wilder_smooth(values: pd.Series, period: int) -> pd.Series:
+    """CANONICAL_NUMERICAL_ORACLE for rsi_14/atr_14 (spec Section 4, post-M-5).
+
+    Classic Wilder smoothing, explicit and deterministic, with NO
+    dependency on any library's internal recursion/initialization
+    semantics:
+
+        seed  = simple arithmetic mean of the first ``period`` valid
+                (non-NaN) input values, found starting from the series'
+                first non-NaN entry
+        avg[t_seed] = seed
+        avg[t] = (avg[t-1] * (period - 1) + values[t]) / period   for t > t_seed
+
+    All positions before the seed are NaN. A leading NaN in ``values``
+    (e.g. from ``close.diff()``) is tolerated and skipped over to find
+    the seed window; an internal NaN gap after that point is treated as
+    a hard error (the causal input, once validated by
+    ``_check_weekday_gaps``/``_validate_ohlcv``, should never contain one).
+
+    This is a plain, explicit, loop-based recurrence — deliberately not
+    vectorized — so its behavior is auditable by hand, matches spec
+    Section 4's prose exactly, and needs no cross-reference to any
+    library's own documentation to verify.
+    """
+    arr = values.to_numpy(dtype="float64")
+    n = len(arr)
+    out = np.full(n, np.nan)
+
+    first_non_nan = None
+    for i in range(n):
+        if not np.isnan(arr[i]):
+            first_non_nan = i
+            break
+    if first_non_nan is None or first_non_nan + period > n:
+        return pd.Series(out, index=values.index)
+
+    seed_window = arr[first_non_nan : first_non_nan + period]
+    if np.isnan(seed_window).any():
+        raise WilderSmoothingError(
+            "non-contiguous NaN gap within the Wilder seed window",
+            seed_window_start=first_non_nan,
+            period=period,
+        )
+
+    seed_pos = first_non_nan + period - 1
+    prev = float(seed_window.mean())
+    out[seed_pos] = prev
+
+    for t in range(seed_pos + 1, n):
+        val = arr[t]
+        if np.isnan(val):
+            raise WilderSmoothingError(
+                "unexpected NaN encountered after the Wilder seed", position=t
+            )
+        prev = (prev * (period - 1) + val) / period
+        out[t] = prev
+
+    return pd.Series(out, index=values.index)
+
+
 def compute_rsi_14(close: pd.Series) -> pd.Series:
-    """Wilder RSI(14). Delegates to the existing, tested ``core.indicators.rsi``."""
-    return wilder_rsi(close, period=14)
+    """Seeded Wilder RSI(14) — spec Section 4 CANONICAL_NUMERICAL_ORACLE.
+
+    delta[t] = close[t] - close[t-1]; gain = max(delta, 0); loss = max(-delta, 0).
+    avg_gain/avg_loss via ``_seeded_wilder_smooth``. RS = avg_gain / avg_loss.
+    RSI = 100 - 100 / (1 + RS).
+
+    Division-by-zero convention (spec Section 4): a zero average loss
+    with a positive average gain correctly yields RSI = 100 (RS -> inf);
+    a completely flat window (zero gain AND zero loss) is defined as
+    neutral, RSI = 50, rather than left undefined (0/0).
+    """
+    delta = close.diff()
+    gain = delta.clip(lower=0.0)
+    loss = -delta.clip(upper=0.0)
+    avg_gain = _seeded_wilder_smooth(gain, 14)
+    avg_loss = _seeded_wilder_smooth(loss, 14)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        rs = avg_gain / avg_loss
+    result = 100.0 - (100.0 / (1.0 + rs))
+    return result.mask((avg_gain == 0.0) & (avg_loss == 0.0), 50.0)
 
 
 def compute_atr_14(high: pd.Series, low: pd.Series, close: pd.Series) -> pd.Series:
-    """Wilder ATR(14). Delegates to the existing, tested ``core.indicators.atr``."""
-    return wilder_atr(high, low, close, period=14)
+    """Seeded Wilder ATR(14) — spec Section 4 CANONICAL_NUMERICAL_ORACLE.
+
+    True Range itself has no seeding ambiguity (a stateless per-bar max
+    of three terms) and is reused directly from ``core.indicators.true_range``.
+    Only the smoothing step — ``_seeded_wilder_smooth`` — is the part
+    spec Section 4 required to be unambiguous, and is applied here.
+    """
+    tr = true_range(high, low, close)
+    return _seeded_wilder_smooth(tr, 14)
 
 
 def compute_volatility_regime(atr_14: pd.Series) -> pd.Series:
@@ -232,8 +337,17 @@ def get_feature_schema() -> Dict[str, object]:
         "definitions": {
             "momentum_5": "(close[t]-close[t-5])/close[t-5]",
             "momentum_20": "(close[t]-close[t-20])/close[t-20]",
-            "rsi_14": "Wilder RSI, period=14, seeded via ewm(alpha=1/14, adjust=False)",
-            "atr_14": "Wilder ATR of True Range, period=14",
+            "rsi_14": (
+                "Seeded Wilder RSI, period=14: avg_gain/avg_loss seeded as the "
+                "simple mean of the first 14 values, then avg[t]=(avg[t-1]*13+"
+                "value[t])/14; RSI=100-100/(1+avg_gain/avg_loss); flat market "
+                "(0/0) -> RSI=50"
+            ),
+            "atr_14": (
+                "Seeded Wilder ATR of True Range, period=14: seeded as the "
+                "simple mean of the first 14 True Range values, then "
+                "avg[t]=(avg[t-1]*13+TR[t])/14"
+            ),
             "volatility_regime": (
                 "ordinal {0,1,2} from atr_14 vs. trailing 500-bar 33rd/67th percentile"
             ),

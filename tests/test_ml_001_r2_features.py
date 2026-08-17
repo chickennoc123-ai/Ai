@@ -26,7 +26,7 @@ from tests.r2_fixtures import make_synthetic_ohlcv
 class TestFeatureCorrectness:
     def test_feature_order_and_version_are_fixed(self) -> None:
         assert FEATURE_ORDER == ["momentum_5", "momentum_20", "rsi_14", "atr_14", "volatility_regime"]
-        assert FEATURE_VERSION == "FE-R2-001"
+        assert FEATURE_VERSION == "FE-R2-002"
 
     def test_normal_data_produces_all_columns_in_order(self) -> None:
         df = make_synthetic_ohlcv(700, seed=1)

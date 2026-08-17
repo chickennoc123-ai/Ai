@@ -28,11 +28,11 @@ Per `ML-001-EXECUTION-AUTHENTICITY-AUDIT.md`, `ML-001-STRATEGY-RECOVERY-FORENSIC
 | `strategy_id` | `ML-001-R2` |
 | `strategy_version` | `1.0.0` |
 | `model_version` | `RF-R2-001` |
-| `feature_version` | `FE-R2-001` |
+| `feature_version` | `FE-R2-002` *(bumped from `FE-R2-001` — see ML-001-M5-FULL-REMEDIATION-REPORT.md: the rsi_14/atr_14 smoothing formula was corrected, which changes computed values, per this section's own immutability rule below)* |
 | `data_version` | `DATA-R2-001` *(checksum to be appended once real data is acquired — see §6 Open Item)* |
 | `research_version` | `RESEARCH-R2-001` |
 
-**Immutability rule**: any change to feature formulas, model hyperparameters, target definition, or trading rules requires a new version suffix (e.g., `FE-R2-002`, `RF-R2-002`). No silent in-place edits to a version once it has produced any recorded prediction or evaluation.
+**Immutability rule**: any change to feature formulas, model hyperparameters, target definition, or trading rules requires a new version suffix (e.g., `FE-R2-002`, `RF-R2-002`). No silent in-place edits to a version once it has produced any recorded prediction or evaluation. Any artifact recorded under `FE-R2-001` used a since-corrected formula (see §4's amendment) and must not be treated as `FE-R2-002`-compatible.
 
 `ML-001` (unversioned) and `ML-001 v1.0` are retired identifiers and MUST NOT be reused. `ML-001-R2` never inherits the old identity's authorization state — it starts at `RESEARCH_ONLY`.
 
@@ -88,18 +88,42 @@ Fixed feature vector order (index 0–4):
 - Warmup: 20 bars
 
 ### [2] `rsi_14`
-- **Formula**: Wilder's RSI. `avg_gain`/`avg_loss` seeded as the simple mean of the first 14 gains/losses, then propagated via Wilder smoothing `avg[t] = (avg[t-1] × 13 + value[t]) / 14` (equivalent to `ewm(alpha=1/14, adjust=False)`); `RS = avg_gain / avg_loss`; `RSI = 100 − 100 / (1 + RS)`
-- **Lookback**: 14-period smoothing constant
-- **Price field**: `close`
-- **Warmup**: minimum 14 bars for a defined value; **100-bar burn-in required** before a value is used for training or live inference, to dilute Wilder seed-dependency (standard practice — the seed average biases early values)
-- **NaN handling**: as above
+
+**AMENDED** (ML-001-M5-FULL-REMEDIATION-REPORT.md): an earlier version of this section asserted that the explicit seeded-Wilder formula below was "equivalent to `ewm(alpha=1/14, adjust=False)`". **That assertion was false** — empirically verified to diverge by up to 31% relative at the point RSI first becomes defined, and still ~2×10⁻⁴ relative even at the 100-bar burn-in threshold this section itself declares (see the remediation report for the full numeric proof). The two are two different, precisely-defined procedures that only converge asymptotically, never exactly. This section now names exactly one of them as authoritative and removes the false equivalence claim.
+
+- **Source**: `close`, period = 14
+- **Step 1 — price changes**: `delta[t] = close[t] - close[t-1]` (undefined/NaN at the series' first bar, no prior close)
+- **Step 2 — gain/loss decomposition**: `gain[t] = max(delta[t], 0)`; `loss[t] = max(-delta[t], 0)` (both NaN wherever `delta[t]` is NaN)
+- **Step 3 — initialization (the seed)**: starting from the first bar where `delta` is defined, `avg_gain` is seeded as the simple arithmetic mean of the first 14 `gain` values; `avg_loss` is seeded identically over the first 14 `loss` values. This seed is the RSI series' first defined value's position.
+- **Step 4 — Wilder recurrence**: for every bar after the seed, `avg_gain[t] = (avg_gain[t-1] × 13 + gain[t]) / 14`; `avg_loss[t] = (avg_loss[t-1] × 13 + loss[t]) / 14`. This is the **only** update rule — no other averaging method, and no library-provided exponential-moving-average function of any kind, computes this series.
+- **Step 5 — combination**: `RS = avg_gain / avg_loss`; `RSI = 100 − 100 / (1 + RS)`
+- **Division-by-zero behavior**: if `avg_loss = 0` and `avg_gain > 0`, `RS → ∞` and `RSI = 100` (correct, not an error). If `avg_loss = 0` and `avg_gain = 0` (a completely flat window — no price movement at all), `RS` is undefined (`0/0`); `RSI` is defined as exactly `50` (neutral) in this case, not left undefined.
+- **First valid value**: the bar index where the Step 3 seed is computed (15th price bar of the series, since 14 `delta` values require 15 closes)
+- **Warmup**: as above for definedness; **100-bar burn-in still required** before a value is used for training or live inference — not because the seed choice is now ambiguous (it isn't), but as a conservative margin against any residual short-window noise in the smoothed average
+- **NaN handling**: any bar before the Step 3 seed position is NaN; no internal NaN gaps are tolerated once the seed is established (an input the upstream data-quality gate has already validated should never produce one)
+- **Precision**: standard IEEE-754 double-precision (`float64`) throughout; no additional rounding
+- **Minimum data requirement**: at least 15 price bars to produce any defined value; at least 115 bars for a value usable per the 100-bar burn-in
 - **Normalization/scaling**: none — native `[0, 100]` range is acceptable for a tree model
-- **Reference implementation**: functionally equivalent to `core/indicators.py` lines 62–82 (existing, tested, working code in this repository) — reuse that implementation directly rather than re-deriving it, subject to a fresh unit test confirming output matches this specification exactly
+
+**CANONICAL_NUMERICAL_ORACLE**: the five-step procedure above (Steps 1–5), implemented exactly and only as `core/features/fe_r2_001.py::compute_rsi_14` / `_seeded_wilder_smooth`. This is sufficient for an independent engineer to reproduce `rsi_14` by hand or in any language without consulting this repository's source code — see `ML-001-M5-FULL-REMEDIATION-REPORT.md` for a fully worked textbook example (closes `[44.34, 44.09, ..., 46.28]`, 15 bars, hand-verified `RSI[14] = 70.46413502109705`).
 
 ### [3] `atr_14`
-- **Formula**: `TR[t] = max(high[t]-low[t], |high[t]-close[t-1]|, |low[t]-close[t-1]|)`; `ATR = ` Wilder-smoothed `TR` over 14 periods (same smoothing method as RSI)
-- **Warmup**: 14 bars minimum defined, 100-bar burn-in required before use (same rationale as `rsi_14`)
-- **Reference implementation**: functionally equivalent to `core/indicators.py` lines 111–123
+
+**AMENDED** (ML-001-M5-FULL-REMEDIATION-REPORT.md): same false-equivalence correction as `rsi_14` above — the smoothing step is the seeded Wilder recurrence, not any library's exponential-moving-average function.
+
+- **Source**: `high, low, close`, period = 14
+- **True Range** (no seeding ambiguity — a stateless per-bar maximum, not a smoothed/averaged quantity): `TR[t] = max(high[t]-low[t], |high[t]-close[t-1]|, |low[t]-close[t-1]|)`. At the series' first bar (no prior close), `TR[0] = high[0] - low[0]` (the only one of the three terms that is defined).
+- **Initialization (the seed)**: `avg_TR` is seeded as the simple arithmetic mean of the first 14 `TR` values, starting from the series' first bar (since `TR` has no leading NaN, unlike `rsi_14`'s `delta`).
+- **Wilder recurrence**: for every bar after the seed, `avg_TR[t] = (avg_TR[t-1] × 13 + TR[t]) / 14` — identical recurrence form to `rsi_14`, applied to `TR` instead of `gain`/`loss`.
+- **ATR** = `avg_TR` (no further transformation)
+- **First valid value**: the 14th price bar of the series (index 13, 0-based) — one bar earlier than `rsi_14`'s first valid value, since `TR[0]` is defined while `delta[0]`/`gain[0]`/`loss[0]` are not
+- **Warmup**: 14 bars minimum defined, **100-bar burn-in required** before use (same rationale as `rsi_14`)
+- **NaN handling / Precision / Minimum data requirement**: as `rsi_14` above, adjusted for the one-bar-earlier first-valid-value position
+- **Normalization/scaling**: none
+
+**CANONICAL_NUMERICAL_ORACLE**: `core/features/fe_r2_001.py::compute_atr_14`, which reuses `core/indicators.py::true_range` directly (that function is not implicated in the ambiguity this amendment resolves) and applies the same `_seeded_wilder_smooth` used for `rsi_14`.
+
+**Namespacing note** (spec Section 4 amendment, applies to both `rsi_14` and `atr_14`): `core/indicators.py::rsi` / `core/indicators.py::atr` are NOT the ML-001-R2 numerical oracle and are intentionally not imported by `core/features/fe_r2_001.py`. They remain unmodified because other, unrelated strategies in this repository (the RSI strategy, MACD's ATR-based stop-loss sizing) depend on their existing (unseeded, pandas-`ewm`-based) behavior — changing them would be an out-of-scope, unrelated behavior change to systems this spec does not govern.
 
 ### [4] `volatility_regime` — **NEWLY DEFINED, NO HISTORICAL PRECEDENT**
 - **Formula**: ordinal 3-class regime label derived from `atr_14`'s position in its own trailing distribution:

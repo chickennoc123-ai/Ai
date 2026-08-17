@@ -114,7 +114,7 @@ class TestFeatureSchemaMismatch:
 
             # Simulate a stale schema from a superseded feature_version.
             tampered = dict(written)
-            tampered["feature_version"] = "FE-R2-002"
+            tampered["feature_version"] = "FE-R2-999-SIMULATED-FUTURE-VERSION"
             with open(schema_path, "w") as f:
                 json.dump(tampered, f)
 

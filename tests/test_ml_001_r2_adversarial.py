@@ -35,6 +35,26 @@ class TestFutureDataInjection:
 
         pd.testing.assert_frame_equal(features_short, features_long.loc[df_short.index])
 
+    def test_seeded_wilder_rsi_atr_specifically_unaffected_by_future_bars(self) -> None:
+        """Targeted re-verification for the M-5 remediation's new
+        _seeded_wilder_smooth recurrence specifically: the loop-based
+        implementation processes strictly left-to-right, but this is
+        confirmed empirically, not merely by code inspection."""
+        from core.features.fe_r2_001 import compute_atr_14, compute_rsi_14
+
+        df_short = make_synthetic_ohlcv(200, seed=94)
+        df_long = pd.concat(
+            [df_short, make_synthetic_ohlcv(200, seed=95, start=df_short.index[-1] + pd.Timedelta(hours=1))]
+        )
+
+        rsi_short = compute_rsi_14(df_short["close"])
+        rsi_long = compute_rsi_14(df_long["close"])
+        pd.testing.assert_series_equal(rsi_short, rsi_long.loc[df_short.index])
+
+        atr_short = compute_atr_14(df_short["high"], df_short["low"], df_short["close"])
+        atr_long = compute_atr_14(df_long["high"], df_long["low"], df_long["close"])
+        pd.testing.assert_series_equal(atr_short, atr_long.loc[df_short.index])
+
     def test_label_at_t_is_unaffected_by_bars_after_t_plus_1(self) -> None:
         df_short = make_synthetic_ohlcv(50, seed=92)
         df_long = pd.concat([df_short, make_synthetic_ohlcv(50, seed=93, start=df_short.index[-1] + pd.Timedelta(hours=1))])
@@ -159,7 +179,7 @@ class TestModelMismatch:
             with open(meta_path) as f:
                 meta = json.load(f)
             # Simulate a future feature-set change without recomputing this model.
-            meta["feature_version"] = "FE-R2-002"
+            meta["feature_version"] = "FE-R2-999-SIMULATED-FUTURE-VERSION"
             with open(meta_path, "w") as f:
                 json.dump(meta, f)
 
