@@ -1,0 +1,38 @@
+broker:
+  account_id: "ML001_DEMO_001"
+  password: "ML001_DEMO_PASSWORD"
+  server: "XMGlobal-Demo"
+  demo: true
+  mode: "simulated"
+
+  symbols:
+    - EURUSD
+    - GBPUSD
+
+  risk:
+    max_positions_per_symbol: 3
+    max_total_positions: 6
+    max_daily_loss: 100.0
+    max_drawdown: 0.15
+    max_gross_exposure: 5.0
+
+  allocation:
+    EURUSD: 0.072
+    GBPUSD: 0.072
+
+  capital:
+    total: 10000.0
+    allocated: 1440.0
+    utilization_pct: 14.4
+
+strategy:
+  name: "ML-001"
+  phase: "production"
+  approved_symbols: 2
+  confidence: "medium"
+
+metadata:
+  created: "2026-08-17"
+  updated: "2026-08-17"
+  version: "1.0"
+  status: "ready"

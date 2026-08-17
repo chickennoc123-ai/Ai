@@ -1,0 +1,43 @@
+broker:
+  account_id: "AGLE_DEMO_001"
+  password: "AGLE_DEMO_PASSWORD"
+  server: "XMGlobal-Demo"
+  demo: true
+  mode: "simulated"
+
+  symbols:
+    - EURUSD
+    - GBPUSD
+    - XAUUSD
+    - USDJPY
+    - AUDUSD
+
+  risk:
+    max_positions_per_symbol: 3
+    max_total_positions: 15
+    max_daily_loss: 100.0
+    max_drawdown: 0.15
+    max_gross_exposure: 5.0
+
+  allocation:
+    EURUSD: "independent"
+    GBPUSD: "independent"
+    XAUUSD: "independent"
+    USDJPY: "independent"
+    AUDUSD: "independent"
+
+capital:
+  total: "independent"
+  mode: "continuous_monitoring"
+
+monitoring:
+  symbols: 5
+  timeframe: "all"
+  mode: "24/7"
+  ai_analysis: "enabled"
+
+metadata:
+  created: "2026-08-17"
+  updated: "2026-08-17"
+  version: "1.0"
+  status: "ready"
