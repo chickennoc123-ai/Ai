@@ -128,6 +128,24 @@ def run_backtest(
         raise BacktestConfigError("ohlcv missing required columns", missing=list(missing))
     if not ohlcv.index.is_monotonic_increasing:
         raise BacktestConfigError("ohlcv timestamps must be strictly increasing")
+    if config.max_positions_per_symbol != 1:
+        # Spec Section 10 fixes "Maximum positions: 1 open position per
+        # symbol at a time; no pyramiding/scaling-in for v1.0.0" as a
+        # constant, in the same normative table as every other trading-rule
+        # value this engine actively enforces. The state machine below
+        # holds exactly one Optional[Trade], not a list — it structurally
+        # cannot support any other value. A configured value other than 1
+        # must be rejected explicitly here rather than silently ignored
+        # (ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md Finding M-4: this
+        # field previously had no effect on behavior at all). Supporting a
+        # different value would require multi-position trading-rule logic
+        # this spec never defines for v1.0.0 — not invented here.
+        raise BacktestConfigError(
+            "max_positions_per_symbol must be 1 for BACKTEST-R2-001 v1.0.0 "
+            "(spec Section 10) — this engine's state machine does not "
+            "support multi-position trading",
+            configured_value=config.max_positions_per_symbol,
+        )
 
     equity = initial_equity
     open_trade: Optional[Trade] = None

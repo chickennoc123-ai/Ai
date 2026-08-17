@@ -16,9 +16,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-import core.features.fe_r2_001 as fe_r2_001
 from core.features.fe_r2_001 import FEATURE_ORDER, FeatureEngineeringError, build_feature_matrix
-from core.ml_r2.model_r2 import ModelSchemaError, RFR2Model
+from core.ml_r2.model_r2 import ModelIntegrityError, ModelSchemaError, RFR2Model
 from core.ml_r2.target_r2 import LabelConstructionError, align_features_and_labels, compute_label
 from core.ml_r2.walkforward_r2 import generate_oos_predictions, make_walk_forward_windows
 from core.provenance_enforcement import DataAccessAction, DataState, DataStateViolationError
@@ -134,10 +133,14 @@ class TestFeatureReordering:
 
 
 class TestModelMismatch:
-    def test_feature_version_drift_is_observable_in_saved_metadata(self) -> None:
+    def test_feature_version_drift_is_rejected_at_load_time(self) -> None:
         """If FE-R2-001 is ever superseded, a model trained under the old
-        feature_version must not be silently treated as compatible — the
-        drift must be detectable from the persisted metadata."""
+        feature_version must not be silently treated as compatible.
+
+        Finding M-8 remediation (ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md):
+        this used to only be observable-if-checked-manually; load() now
+        enforces it, per spec Section 12's "schema hash checked at each
+        entry point," and fails closed."""
         df = make_synthetic_ohlcv(800, seed=100)
         features = build_feature_matrix(df)
         labels = compute_label(df["close"])
@@ -160,8 +163,8 @@ class TestModelMismatch:
             with open(meta_path, "w") as f:
                 json.dump(meta, f)
 
-            reloaded = RFR2Model.load(model_path, meta_path)
-            assert reloaded.metadata.feature_version != fe_r2_001.FEATURE_VERSION
+            with pytest.raises(ModelIntegrityError):
+                RFR2Model.load(model_path, meta_path)
 
 
 class TestDatasetMismatch:

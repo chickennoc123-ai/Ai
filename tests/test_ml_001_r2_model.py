@@ -267,3 +267,94 @@ class TestFeatureSchemaArtifactWiring:
             with open(schema_path) as f:
                 written = json.load(f)
         assert written["feature_order"] == list(X.columns)
+
+
+class TestFeatureVersionEnforcementAtLoad:
+    """M-8 remediation: load() must fail closed on schema mismatch (spec
+    Section 12, FEATURE_PARITY: "schema hash checked at each entry point").
+    Covers the A-E matrix from the governing remediation instruction."""
+
+    def _save_valid(self, tmp, seed: int):
+        X, y, start, end = _training_data(seed=seed)
+        model = RFR2Model()
+        model.train(X, y, start, end)
+        model_path = str(Path(tmp) / "model.joblib")
+        meta_path = str(Path(tmp) / "metadata.json")
+        model.save(model_path, meta_path)
+        return model_path, meta_path
+
+    def test_a_correct_feature_version_load_succeeds(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path, meta_path = self._save_valid(tmp, seed=42)
+            loaded = RFR2Model.load(model_path, meta_path)  # must not raise
+        assert loaded.metadata.feature_version == FEATURE_VERSION
+
+    def test_b_wrong_feature_version_load_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path, meta_path = self._save_valid(tmp, seed=43)
+            with open(meta_path) as f:
+                meta = json.load(f)
+            meta["feature_version"] = "FE-R2-999-DIFFERENT"
+            with open(meta_path, "w") as f:
+                json.dump(meta, f)
+            with pytest.raises(ModelIntegrityError):
+                RFR2Model.load(model_path, meta_path)
+
+    def test_c_missing_feature_version_fails_via_dataclass_construction(self) -> None:
+        """feature_version is a required (non-default) ModelMetadata field —
+        its absence is rejected by construction itself, wrapped into
+        ModelIntegrityError for a consistent failure type."""
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path, meta_path = self._save_valid(tmp, seed=44)
+            with open(meta_path) as f:
+                meta = json.load(f)
+            del meta["feature_version"]
+            # checksum must still match the (unmodified) model bytes so the
+            # test isolates the missing-field failure specifically.
+            with open(meta_path, "w") as f:
+                json.dump(meta, f)
+            with pytest.raises(ModelIntegrityError):
+                RFR2Model.load(model_path, meta_path)
+
+    def test_d_malformed_json_metadata_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path, meta_path = self._save_valid(tmp, seed=45)
+            with open(meta_path, "w") as f:
+                f.write("{not valid json,,,")
+            with pytest.raises(ModelIntegrityError):
+                RFR2Model.load(model_path, meta_path)
+
+    def test_e_feature_order_mismatch_fails(self) -> None:
+        """Schema mismatch via feature_order (not just the version label)
+        must also be rejected."""
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path, meta_path = self._save_valid(tmp, seed=46)
+            with open(meta_path) as f:
+                meta = json.load(f)
+            meta["feature_order"] = list(reversed(meta["feature_order"]))
+            with open(meta_path, "w") as f:
+                json.dump(meta, f)
+            with pytest.raises(ModelIntegrityError):
+                RFR2Model.load(model_path, meta_path)
+
+
+class TestFeatureDtypeValidation:
+    """L-2 remediation: dtype was not explicitly checked, relying on
+    sklearn to raise a less-specific downstream error."""
+
+    def test_non_numeric_column_is_rejected_with_a_clear_schema_error(self) -> None:
+        X, y, start, end = _training_data(seed=47)
+        broken = X.copy()
+        broken["volatility_regime"] = broken["volatility_regime"].astype(str)
+        model = RFR2Model()
+        with pytest.raises(ModelSchemaError) as exc_info:
+            model.train(broken, y, start, end)
+        assert "volatility_regime" in exc_info.value.context.get("non_numeric_columns", [])
+
+    def test_numeric_but_non_float_dtype_is_accepted(self) -> None:
+        """int64 is still numeric — must not be rejected."""
+        X, y, start, end = _training_data(seed=48)
+        int_valued = X.copy()
+        int_valued["volatility_regime"] = int_valued["volatility_regime"].astype("int64")
+        model = RFR2Model()
+        model.train(int_valued, y, start, end)  # must not raise

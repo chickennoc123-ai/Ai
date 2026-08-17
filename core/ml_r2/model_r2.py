@@ -94,6 +94,17 @@ def _validate_feature_schema(X: pd.DataFrame) -> None:
             expected=list(FEATURE_ORDER),
             actual=list(X.columns),
         )
+    non_numeric = [col for col in X.columns if not pd.api.types.is_numeric_dtype(X[col])]
+    if non_numeric:
+        # L-2 remediation: previously relied on sklearn to raise a less
+        # specific downstream error on non-numeric input; checked here
+        # explicitly so the failure names FE-R2-001's own schema as the
+        # cause, not an opaque numpy/sklearn cast error several frames away.
+        raise ModelSchemaError(
+            "feature columns must be numeric dtype",
+            non_numeric_columns=non_numeric,
+            dtypes={col: str(X[col].dtype) for col in non_numeric},
+        )
     if X.isna().any().any():
         raise ModelSchemaError("feature matrix contains NaN values; align/drop before training or inference")
 
@@ -223,10 +234,32 @@ class RFR2Model:
 
     @classmethod
     def load(cls, model_path: str, metadata_path: str) -> "RFR2Model":
+        """Load a persisted model, failing closed on any integrity or
+        schema mismatch.
+
+        Per spec Section 12 (FEATURE_PARITY): "a shared FE-R2-001 schema
+        hash checked at each entry point." Loading is exactly such an
+        entry point — a model trained under a different feature_version
+        or a different feature_order must never be silently accepted
+        (ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md Finding M-8: this was
+        previously observable-if-checked-manually, but not enforced here).
+
+        This function does NOT check model_version or strategy_version —
+        spec Section 12 names FEATURE_PARITY's schema check specifically;
+        it says nothing about rejecting a different (but otherwise valid)
+        model_version at load time, so no such check is added here
+        (avoiding invented compatibility behavior beyond what is
+        specified).
+        """
         import json
 
         with open(metadata_path) as f:
-            meta_dict = json.load(f)
+            raw_meta_text = f.read()
+        try:
+            meta_dict = json.loads(raw_meta_text)
+        except json.JSONDecodeError as exc:
+            raise ModelIntegrityError("metadata file is not valid JSON", parse_error=str(exc)) from exc
+
         with open(model_path, "rb") as f:
             raw_bytes = f.read()
 
@@ -241,12 +274,33 @@ class RFR2Model:
                 actual=recomputed,
             )
 
+        try:
+            metadata = ModelMetadata(**meta_dict)
+        except TypeError as exc:
+            raise ModelIntegrityError("metadata is malformed or incomplete", parse_error=str(exc)) from exc
+
+        # FEATURE_PARITY schema check (spec Section 12) — fail closed on
+        # any mismatch against the currently-imported FE-R2-001 module,
+        # not merely observable-if-someone-looks.
+        if metadata.feature_version != FEATURE_VERSION:
+            raise ModelIntegrityError(
+                "loaded model's feature_version does not match the current FE-R2-001 module",
+                loaded_feature_version=metadata.feature_version,
+                current_feature_version=FEATURE_VERSION,
+            )
+        if list(metadata.feature_order) != list(FEATURE_ORDER):
+            raise ModelIntegrityError(
+                "loaded model's feature_order does not match the current FE-R2-001 module",
+                loaded_feature_order=list(metadata.feature_order),
+                current_feature_order=list(FEATURE_ORDER),
+            )
+
         model = joblib.load(io.BytesIO(raw_bytes))
         if list(model.classes_) != [0, 1] and list(model.classes_) != [0.0, 1.0]:
             raise ModelIntegrityError("loaded model classes are not binary {0, 1}", classes=list(model.classes_))
 
         instance = cls()
         instance._model = model
-        instance._metadata = ModelMetadata(**meta_dict)
+        instance._metadata = metadata
         instance._serialized_bytes = raw_bytes
         return instance
