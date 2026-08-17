@@ -41,3 +41,4 @@ artifacts/
 
 # Strategies written at runtime by the Research Agent
 strategies/ai_generated/gen_*.py
+production.pid
