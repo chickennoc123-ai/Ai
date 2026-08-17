@@ -1,0 +1,100 @@
+{
+  "timestamp": "20260817_112441",
+  "symbols": [
+    "EURUSD",
+    "XAUUSD",
+    "USDJPY",
+    "GBPUSD",
+    "AUDUSD"
+  ],
+  "timeframe": "H1",
+  "split": {
+    "development": "2020-01-01 to 2022-12-31",
+    "validation": "2023-01-01 to 2023-12-31",
+    "holdout": "2024-01-01 to 2024-12-31"
+  },
+  "summary": {
+    "total": 5,
+    "passed": 2,
+    "rejected": 0,
+    "inconclusive": 0,
+    "invalid": 0
+  },
+  "results": {
+    "EURUSD": {
+      "status": "PASSED",
+      "verdict": "VALIDATED",
+      "decision": "AUTHORIZE",
+      "allocation": 0.07212757041313506,
+      "sharpe": 1.19335459843825,
+      "pf": 1.5387215021468812,
+      "win_rate": 0.5689128292853333,
+      "max_dd": 0.1232298741740947,
+      "pbo": 0.330688327232421,
+      "observations": 8761,
+      "trades": 876,
+      "all_thresholds_met": true,
+      "reason": "Evidence validated and risk approved"
+    },
+    "XAUUSD": {
+      "status": "VALIDATED",
+      "verdict": "VALIDATED",
+      "decision": "REJECT",
+      "allocation": 0.0,
+      "sharpe": 0.3954582188788038,
+      "pf": 1.0321676209962283,
+      "win_rate": 0.5237375348339267,
+      "max_dd": 0.07336116369991755,
+      "pbo": 0.45074742578697985,
+      "observations": 8761,
+      "trades": 876,
+      "all_thresholds_met": false,
+      "reason": "Insufficient Sharpe ratio: 0.40 < 1.0"
+    },
+    "USDJPY": {
+      "status": "VALIDATED",
+      "verdict": "VALIDATED",
+      "decision": "REJECT",
+      "allocation": 0.0,
+      "sharpe": 0.8347915457121143,
+      "pf": 1.3302382114055529,
+      "win_rate": 0.5094047979658445,
+      "max_dd": 0.1739260302074577,
+      "pbo": 0.5788989743576819,
+      "observations": 8761,
+      "trades": 876,
+      "all_thresholds_met": false,
+      "reason": "Insufficient Sharpe ratio: 0.83 < 1.0"
+    },
+    "GBPUSD": {
+      "status": "PASSED",
+      "verdict": "VALIDATED",
+      "decision": "AUTHORIZE",
+      "allocation": 0.07180333829512947,
+      "sharpe": 1.1271666955403217,
+      "pf": 1.5318045502960953,
+      "win_rate": 0.5794596744512451,
+      "max_dd": 0.1385369117517691,
+      "pbo": 0.4218344230701563,
+      "observations": 8761,
+      "trades": 876,
+      "all_thresholds_met": true,
+      "reason": "Evidence validated and risk approved"
+    },
+    "AUDUSD": {
+      "status": "VALIDATED",
+      "verdict": "VALIDATED",
+      "decision": "REJECT",
+      "allocation": 0.0,
+      "sharpe": 0.6960646035901918,
+      "pf": 1.1074170089048072,
+      "win_rate": 0.5002713342953085,
+      "max_dd": 0.19727617251931684,
+      "pbo": 0.5265003053523133,
+      "observations": 8761,
+      "trades": 876,
+      "all_thresholds_met": false,
+      "reason": "Insufficient Sharpe ratio: 0.70 < 1.0"
+    }
+  }
+}
