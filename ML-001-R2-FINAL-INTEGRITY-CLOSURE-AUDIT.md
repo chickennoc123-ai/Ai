@@ -227,4 +227,5 @@ No PURE_HOLDOUT data was accessed. No real/economic market data was used anywher
 
 ## EXACT COMMIT HASH
 
-This report describes work committed at: **(recorded in the commit that includes this file — see repository history immediately following commit `e9d8b59`)**
+`34b5dc0` — "Close M-4/M-8/L-1/L-2; formally disposition M-3/M-5/L-3 (research only)"
+(parent baseline: `e9d8b59`, branch `claude/ea-factory-pro-system-bc9jaa`)
