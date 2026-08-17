@@ -23,7 +23,7 @@ import pandas as pd
 import sklearn
 from sklearn.ensemble import RandomForestClassifier
 
-from core.features.fe_r2_001 import FEATURE_ORDER, FEATURE_VERSION
+from core.features.fe_r2_001 import FEATURE_ORDER, FEATURE_VERSION, get_feature_schema
 from utils.exceptions import EAFactoryError
 from utils.helpers import utcnow
 
@@ -74,6 +74,14 @@ class ModelMetadata:
     training_rows: int
     class_balance: Dict[str, int]
     checksum: str = ""
+    #: Spec Section 6 explicitly names this as a required metadata field
+    #: (ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md Finding M-6). Optional
+    #: here because no real DATA-R2-001 dataset exists yet (spec Section 2:
+    #: "checksum to be appended once real data is acquired") — the field's
+    #: PRESENCE is what was missing, not merely its value; a caller training
+    #: on real data supplies it, a synthetic/test run honestly records None
+    #: rather than a fabricated placeholder.
+    data_version: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -130,6 +138,7 @@ class RFR2Model:
         y: pd.Series,
         training_start: datetime,
         training_end: datetime,
+        data_version: Optional[str] = None,
     ) -> ModelMetadata:
         """Fit RF-R2-001 on (X, y). X/y must already be leakage-safe and NaN-free."""
         _validate_feature_schema(X)
@@ -160,6 +169,7 @@ class RFR2Model:
             training_rows=len(X),
             class_balance=class_balance,
             checksum=checksum,
+            data_version=data_version,
         )
 
         self._model = model
@@ -182,7 +192,18 @@ class RFR2Model:
         class_1_index = list(self._model.classes_).index(1)
         return proba[:, class_1_index]
 
-    def save(self, model_path: str, metadata_path: str) -> None:
+    def save(self, model_path: str, metadata_path: str, feature_schema_path: Optional[str] = None) -> None:
+        """Persist the trained model, its metadata, and (if requested) the
+        FE-R2-001 feature schema it was trained against.
+
+        ``feature_schema_path``, when given, is always written from
+        ``core.features.fe_r2_001.get_feature_schema()`` directly — never
+        a hand-duplicated copy — so it can never become a second,
+        independently-drifting source of truth (spec Section 6/16;
+        ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md Finding M-7: this
+        function previously existed but nothing ever called it to
+        actually write the artifact).
+        """
         if self._model is None or self._metadata is None or self._serialized_bytes is None:
             raise ModelNotTrainedError("cannot save an untrained model")
         # Write the exact bytes that were checksummed at train() time —
@@ -195,6 +216,10 @@ class RFR2Model:
 
         with open(metadata_path, "w") as f:
             json.dump(self._metadata.to_dict(), f, indent=2)
+
+        if feature_schema_path is not None:
+            with open(feature_schema_path, "w") as f:
+                json.dump(get_feature_schema(), f, indent=2)
 
     @classmethod
     def load(cls, model_path: str, metadata_path: str) -> "RFR2Model":

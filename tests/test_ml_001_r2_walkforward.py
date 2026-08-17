@@ -91,7 +91,10 @@ class TestWalkForwardOOSGeneration:
     def test_oos_predictions_are_registered_with_full_provenance(self) -> None:
         df = make_synthetic_ohlcv(2500, seed=46)
         windows = make_walk_forward_windows(df, train_window_size=1200, test_window_size=300, step_size=300, hypothesis_id="ML-001-R2-test")
-        batches = generate_oos_predictions(df, windows[:1], hypothesis_id="ML-001-R2-test")
+        batches, provenance = generate_oos_predictions(
+            df, windows[:1], hypothesis_id="ML-001-R2-test", dataset_id="synthetic-fixture-46",
+            validation_period=("2023-01-01", "2023-12-31"), holdout_period=("2024-01-01", "2024-12-31"),
+        )
         assert len(batches) == 1
         batch = batches[0]
         assert batch.model_version == "RF-R2-001"
@@ -100,11 +103,17 @@ class TestWalkForwardOOSGeneration:
         assert batch.test_data_state == DataState.VALIDATION
         # every prediction is (class, probability) with a matching timestamp
         assert len(batch.predictions) == len(batch.test_indices) == len(batch.test_dates)
+        # RunProvenance is produced automatically, one per window, not left unwired.
+        assert len(provenance) == 1
+        provenance[0].validate_complete()  # must not raise
 
     def test_oos_predictions_use_only_past_training_data(self) -> None:
         df = make_synthetic_ohlcv(2500, seed=47)
         windows = make_walk_forward_windows(df, train_window_size=1200, test_window_size=300, step_size=300, hypothesis_id="ML-001-R2-test")
-        batches = generate_oos_predictions(df, windows[:1], hypothesis_id="ML-001-R2-test")
+        batches, _ = generate_oos_predictions(
+            df, windows[:1], hypothesis_id="ML-001-R2-test", dataset_id="synthetic-fixture-47",
+            validation_period=("2023-01-01", "2023-12-31"), holdout_period=("2024-01-01", "2024-12-31"),
+        )
         batch = batches[0]
         for test_date in batch.test_dates:
             assert batch.window.train_dates[1] < test_date
@@ -112,8 +121,10 @@ class TestWalkForwardOOSGeneration:
     def test_holdout_state_requires_final_evaluation_semantics(self) -> None:
         df = make_synthetic_ohlcv(2500, seed=48)
         windows = make_walk_forward_windows(df, train_window_size=1200, test_window_size=300, step_size=300, hypothesis_id="ML-001-R2-test")
-        batches = generate_oos_predictions(
-            df, windows[:1], hypothesis_id="ML-001-R2-test", test_data_state=DataState.PURE_HOLDOUT
+        batches, _ = generate_oos_predictions(
+            df, windows[:1], hypothesis_id="ML-001-R2-test", dataset_id="synthetic-fixture-48",
+            validation_period=("2023-01-01", "2023-12-31"), holdout_period=("2024-01-01", "2024-12-31"),
+            test_data_state=DataState.PURE_HOLDOUT,
         )
         assert batches[0].test_data_state == DataState.PURE_HOLDOUT
 

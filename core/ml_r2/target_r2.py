@@ -18,6 +18,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from core.features.fe_r2_001 import build_feature_matrix
 from utils.exceptions import EAFactoryError
 
 TARGET_SPEC_ID = "TARGET-R2-001"
@@ -97,3 +98,23 @@ def assert_no_leakage(close: pd.Series, features: pd.DataFrame, labels: pd.Serie
             "label definedness does not match TARGET-R2-001 recomputed from close prices",
             mismatched_definedness_count=int(both_undefined_mismatch.sum()),
         )
+
+
+def build_training_set(ohlcv: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
+    """The single authoritative entry point from raw OHLCV to a clean (X, y).
+
+    This is the ONLY function the real training/walk-forward pipeline may
+    use to obtain a trainable (X, y) pair. It always computes features,
+    computes labels, and runs ``assert_no_leakage`` before alignment —
+    automatically and unconditionally, not as an opt-in step a caller
+    could forget. If ``assert_no_leakage`` ever finds a mismatch, this
+    function raises and no (X, y) is returned: the pipeline fails closed.
+
+    (ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md Finding M-1: prior to
+    this, ``assert_no_leakage`` existed and was tested but was never
+    called from any production code path.)
+    """
+    features = build_feature_matrix(ohlcv)
+    labels = compute_label(ohlcv["close"])
+    assert_no_leakage(ohlcv["close"], features, labels)
+    return align_features_and_labels(features, labels)

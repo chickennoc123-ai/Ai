@@ -52,9 +52,68 @@ _VOLATILITY_REGIME_HIGH_QUANTILE = 0.67
 
 REQUIRED_OHLCV_COLUMNS = ("open", "high", "low", "close")
 
+#: H1 is this strategy's frozen timeframe (spec Section 2/7) — not an
+#: invented value, the expected spacing between consecutive bars follows
+#: directly from that declaration.
+_BAR_WIDTH = pd.Timedelta(hours=1)
+
+#: FX market closure window per spec Section 7's Weekend policy, verbatim:
+#: "FX market closed Fri 22:00 UTC – Sun 22:00 UTC; this window is
+#: excluded from continuity checks, not treated as missing data." No
+#: other calendar exception is defined anywhere in the spec, so none is
+#: invented here.
+_WEEKEND_CLOSE_WEEKDAY = 4  # Friday (Monday=0 ... Sunday=6)
+_WEEKEND_CLOSE_HOUR = 22
+_WEEKEND_REOPEN_WEEKDAY = 6  # Sunday
+_WEEKEND_REOPEN_HOUR = 22
+
 
 class FeatureEngineeringError(EAFactoryError):
     """Raised when input data or computed features violate FE-R2-001."""
+
+
+def _is_weekend_closure_time(ts: pd.Timestamp) -> bool:
+    """True if ``ts`` falls inside the spec Section 7 weekend closure window."""
+    dow = ts.weekday()
+    if dow == _WEEKEND_CLOSE_WEEKDAY:
+        return ts.hour >= _WEEKEND_CLOSE_HOUR
+    if _WEEKEND_CLOSE_WEEKDAY < dow < _WEEKEND_REOPEN_WEEKDAY:
+        return True  # Saturday
+    if dow == _WEEKEND_REOPEN_WEEKDAY:
+        return ts.hour < _WEEKEND_REOPEN_HOUR
+    return False
+
+
+def _check_weekday_gaps(index: pd.DatetimeIndex) -> None:
+    """Enforce spec Section 7: weekday gaps >1 bar are a data-quality
+    violation; the declared Fri 22:00 UTC – Sun 22:00 UTC weekend closure
+    is excluded from this check, per spec, and no other exception exists.
+
+    A "gap" here is any interval between two consecutive bars wider than
+    one H1 bar (i.e. at least one expected bar is missing). For each such
+    interval, every expected-but-missing H1 timestamp strictly between the
+    two bars must fall inside the weekend closure window; if any one of
+    them does not, the gap is a weekday data-quality violation.
+    """
+    violations = []
+    for prev_ts, curr_ts in zip(index[:-1], index[1:]):
+        delta = curr_ts - prev_ts
+        if delta <= _BAR_WIDTH:
+            continue
+        missing = pd.date_range(prev_ts + _BAR_WIDTH, curr_ts - _BAR_WIDTH, freq="h")
+        if not all(_is_weekend_closure_time(ts) for ts in missing):
+            violations.append((prev_ts, curr_ts))
+
+    if violations:
+        first_start, first_end = violations[0]
+        raise FeatureEngineeringError(
+            "OHLCV frame contains unexpected weekday gap(s) (spec Section 7 "
+            "data-quality violation) — not a legitimate Fri 22:00-Sun 22:00 "
+            "UTC weekend closure",
+            violation_count=len(violations),
+            first_violation_start=first_start.isoformat(),
+            first_violation_end=first_end.isoformat(),
+        )
 
 
 def _validate_ohlcv(df: pd.DataFrame) -> None:
@@ -74,6 +133,7 @@ def _validate_ohlcv(df: pd.DataFrame) -> None:
         )
     if not df.index.is_monotonic_increasing:
         raise FeatureEngineeringError("OHLCV frame timestamps must be strictly increasing")
+    _check_weekday_gaps(df.index)
 
 
 def compute_momentum(close: pd.Series, lookback: int) -> pd.Series:

@@ -73,13 +73,35 @@ class TestShuffledAndDuplicateTimestamps:
 
 
 class TestMissingBars:
-    def test_a_gap_in_the_index_does_not_corrupt_downstream_computation(self) -> None:
-        """A weekend-style gap is legal (monotonic increasing, no duplicates) and
-        must not crash feature computation — the pipeline must not assume a
-        fixed bar frequency."""
+    def test_an_arbitrary_weekday_gap_is_now_rejected(self) -> None:
+        """A gap removed from ordinary weekday hours is a spec Section 7
+        data-quality violation and must be rejected, not silently tolerated.
+
+        This supersedes the pre-remediation version of this test, which
+        asserted the opposite (permissive) behavior — see
+        ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md Finding C-1 and
+        ML-001-R2-IMPLEMENTATION-INTEGRITY-REMEDIATION-REPORT.md.
+        make_synthetic_ohlcv(700, seed=97) starting 2020-01-03 (a Friday)
+        places bars 300-349 in mid-January on ordinary weekdays.
+        """
         df = make_synthetic_ohlcv(700, seed=97)
-        # Remove a contiguous block to simulate a gap, keep index monotonic/unique.
         gapped = pd.concat([df.iloc[:300], df.iloc[350:]])
+        with pytest.raises(FeatureEngineeringError):
+            build_feature_matrix(gapped)
+
+    def test_a_genuine_weekend_gap_does_not_corrupt_downstream_computation(self) -> None:
+        """A real Fri 22:00-Sun 22:00 UTC weekend closure is legal (per spec
+        Section 7) and must not crash feature computation."""
+        df = make_synthetic_ohlcv(2000, seed=97)
+        # Last bar strictly before the Friday 22:00 UTC close (hour == 21).
+        friday_close_bars = df.index[(df.index.weekday == 4) & (df.index.hour == 21)]
+        last_bar_before_close = friday_close_bars[0]
+        sunday_reopen = last_bar_before_close + pd.Timedelta(days=2, hours=1)  # Sunday 22:00 UTC
+
+        pre_weekend = df.loc[:last_bar_before_close]
+        post_weekend = df.loc[df.index >= sunday_reopen]
+        gapped = pd.concat([pre_weekend, post_weekend])
+
         features = build_feature_matrix(gapped)  # must not raise
         assert list(features.columns) == FEATURE_ORDER
         assert features.index.equals(gapped.index)
@@ -172,7 +194,9 @@ class TestHoldoutAndValidationAccessViolations:
         )
         with pytest.raises(DataStateViolationError):
             generate_oos_predictions(
-                df, windows[:1], hypothesis_id="ML-001-R2-test", training_data_state=DataState.VALIDATION
+                df, windows[:1], hypothesis_id="ML-001-R2-test", dataset_id="synthetic-fixture-104",
+                validation_period=("2023-01-01", "2023-12-31"), holdout_period=("2024-01-01", "2024-12-31"),
+                training_data_state=DataState.VALIDATION,
             )
 
     def test_accidental_training_on_holdout_blocked(self) -> None:
@@ -182,7 +206,9 @@ class TestHoldoutAndValidationAccessViolations:
         )
         with pytest.raises(DataStateViolationError):
             generate_oos_predictions(
-                df, windows[:1], hypothesis_id="ML-001-R2-test", training_data_state=DataState.PURE_HOLDOUT
+                df, windows[:1], hypothesis_id="ML-001-R2-test", dataset_id="synthetic-fixture-105",
+                validation_period=("2023-01-01", "2023-12-31"), holdout_period=("2024-01-01", "2024-12-31"),
+                training_data_state=DataState.PURE_HOLDOUT,
             )
 
     def test_holdout_access_for_training_action_blocked(self) -> None:
@@ -197,6 +223,9 @@ class TestHoldoutAndValidationAccessViolations:
                 df,
                 windows[:1],
                 hypothesis_id="ML-001-R2-test",
+                dataset_id="synthetic-fixture-106",
+                validation_period=("2023-01-01", "2023-12-31"),
+                holdout_period=("2024-01-01", "2024-12-31"),
                 training_data_state=DataState.PURE_HOLDOUT,
                 test_data_state=DataState.PURE_HOLDOUT,
             )

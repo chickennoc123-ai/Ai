@@ -13,7 +13,9 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from core.features.fe_r2_001 import FEATURE_ORDER, build_feature_matrix
+import json
+
+from core.features.fe_r2_001 import FEATURE_ORDER, FEATURE_VERSION, build_feature_matrix, get_feature_schema
 from core.ml_r2.model_r2 import (
     HYPERPARAMETERS,
     MODEL_VERSION,
@@ -172,3 +174,96 @@ class TestModelPersistence:
 
             with pytest.raises(ModelIntegrityError):
                 RFR2Model.load(model_path, meta_path)
+
+
+class TestDataVersionField:
+    """Finding M-6 remediation: ModelMetadata was missing the data_version
+    field spec Section 6 explicitly names as required metadata."""
+
+    def test_data_version_defaults_to_none_for_synthetic_runs(self) -> None:
+        X, y, start, end = _training_data(seed=35)
+        model = RFR2Model()
+        metadata = model.train(X, y, start, end)
+        assert metadata.data_version is None
+
+    def test_data_version_is_recorded_when_supplied(self) -> None:
+        X, y, start, end = _training_data(seed=36)
+        model = RFR2Model()
+        metadata = model.train(X, y, start, end, data_version="DATA-R2-001-checksum-abc123")
+        assert metadata.data_version == "DATA-R2-001-checksum-abc123"
+
+    def test_data_version_survives_save_and_load(self) -> None:
+        X, y, start, end = _training_data(seed=37)
+        model = RFR2Model()
+        model.train(X, y, start, end, data_version="DATA-R2-001-checksum-def456")
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path = str(Path(tmp) / "model.joblib")
+            meta_path = str(Path(tmp) / "metadata.json")
+            model.save(model_path, meta_path)
+            loaded = RFR2Model.load(model_path, meta_path)
+        assert loaded.metadata.data_version == "DATA-R2-001-checksum-def456"
+
+
+class TestFeatureSchemaArtifactWiring:
+    """Finding M-7 remediation: get_feature_schema() existed but nothing
+    ever called it to write the artifact file spec Sections 6/16 require."""
+
+    def test_save_without_schema_path_does_not_write_a_schema_file(self) -> None:
+        """Backward compatible: existing callers that never asked for a
+        schema file must see no behavior change."""
+        X, y, start, end = _training_data(seed=38)
+        model = RFR2Model()
+        model.train(X, y, start, end)
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path = str(Path(tmp) / "model.joblib")
+            meta_path = str(Path(tmp) / "metadata.json")
+            model.save(model_path, meta_path)
+            assert not (Path(tmp) / "feature_schema.json").exists()
+
+    def test_save_with_schema_path_writes_the_schema_file(self) -> None:
+        X, y, start, end = _training_data(seed=39)
+        model = RFR2Model()
+        model.train(X, y, start, end)
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path = str(Path(tmp) / "model.joblib")
+            meta_path = str(Path(tmp) / "metadata.json")
+            schema_path = str(Path(tmp) / "feature_schema.json")
+            model.save(model_path, meta_path, feature_schema_path=schema_path)
+
+            assert Path(schema_path).exists()
+            with open(schema_path) as f:
+                written = json.load(f)
+            assert written["feature_version"] == FEATURE_VERSION
+
+    def test_written_schema_matches_get_feature_schema_exactly(self) -> None:
+        """The written file must not become a second, independently
+        drifting source of truth — it must always equal the live function's
+        current output, verbatim."""
+        X, y, start, end = _training_data(seed=40)
+        model = RFR2Model()
+        model.train(X, y, start, end)
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path = str(Path(tmp) / "model.joblib")
+            meta_path = str(Path(tmp) / "metadata.json")
+            schema_path = str(Path(tmp) / "feature_schema.json")
+            model.save(model_path, meta_path, feature_schema_path=schema_path)
+
+            with open(schema_path) as f:
+                written = json.load(f)
+        assert written == get_feature_schema()
+
+    def test_written_schema_feature_order_matches_the_actual_training_matrix(self) -> None:
+        """Verify against the actual produced feature matrix, not just the
+        schema function in isolation."""
+        X, y, start, end = _training_data(seed=41)
+        model = RFR2Model()
+        model.train(X, y, start, end)
+        with tempfile.TemporaryDirectory() as tmp:
+            model_path = str(Path(tmp) / "model.joblib")
+            meta_path = str(Path(tmp) / "metadata.json")
+            schema_path = str(Path(tmp) / "feature_schema.json")
+            model.save(model_path, meta_path, feature_schema_path=schema_path)
+
+            with open(schema_path) as f:
+                written = json.load(f)
+        assert written["feature_order"] == list(X.columns)

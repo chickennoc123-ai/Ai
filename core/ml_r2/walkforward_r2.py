@@ -25,15 +25,24 @@ documented, deliberate deviation — not a silent patch to shared code.
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List
+from typing import List, Tuple
 
 import pandas as pd
 
-from core.features.fe_r2_001 import FEATURE_ORDER, FEATURE_VERSION, WARMUP_BARS, build_feature_matrix
-from core.ml_r2.model_r2 import MODEL_VERSION, RFR2Model
-from core.ml_r2.target_r2 import align_features_and_labels, compute_label
+from core.features.fe_r2_001 import (
+    FEATURE_ORDER,
+    FEATURE_VERSION,
+    WARMUP_BARS,
+    build_feature_matrix,
+    get_feature_schema,
+)
+from core.ml_r2.model_r2 import HYPERPARAMETERS, MODEL_VERSION, RFR2Model
+from core.ml_r2.provenance_r2 import STRATEGY_ID, STRATEGY_VERSION, RunProvenance, get_code_version
+from core.ml_r2.target_r2 import build_training_set
 from core.oos_wfa_engine import OOSPredictionBatch, WFAPredictionEngine, WFAWindow
 from core.provenance_enforcement import DataAccessAction, DataState, DataStateViolationError, ProvenanceEnforcer
 from utils.exceptions import EAFactoryError
@@ -127,15 +136,34 @@ class HoldoutAccessGuard:
         return self._holdout_opened
 
 
+def _dataset_checksum(df: pd.DataFrame) -> str:
+    """Deterministic SHA-256 over a DataFrame's content, used as ``dataset_id``
+    binding for RunProvenance — sensitive enough to catch a dataset swap
+    (verified empirically in ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md
+    Finding M-2's discussion / the Dataset Mismatch adversarial tests)."""
+    return hashlib.sha256(pd.util.hash_pandas_object(df).values.tobytes()).hexdigest()
+
+
+def _config_checksum() -> str:
+    return hashlib.sha256(json.dumps(HYPERPARAMETERS, sort_keys=True).encode()).hexdigest()
+
+
+def _feature_schema_hash() -> str:
+    return hashlib.sha256(json.dumps(get_feature_schema(), sort_keys=True, default=str).encode()).hexdigest()
+
+
 def generate_oos_predictions(
     df: pd.DataFrame,
     windows: List[WFAWindow],
     hypothesis_id: str,
+    dataset_id: str,
+    validation_period: tuple,
+    holdout_period: tuple,
     model_version: str = MODEL_VERSION,
     feature_version: str = FEATURE_VERSION,
     training_data_state: DataState = DataState.DEVELOPMENT,
     test_data_state: DataState = DataState.VALIDATION,
-) -> List[OOSPredictionBatch]:
+) -> Tuple[List[OOSPredictionBatch], List[RunProvenance]]:
     """Generate genuinely out-of-sample RF-R2-001 predictions across walk-forward windows.
 
     Each test window's feature computation is extended backward by
@@ -143,6 +171,25 @@ def generate_oos_predictions(
     ``volatility_regime``) are valid at the start of the window, then the
     output is trimmed back to the window's declared boundaries before
     being registered as an OOS prediction batch.
+
+    Returns ``(batches, provenance_records)`` — one ``RunProvenance`` per
+    window, always produced (never optional), referencing that specific
+    window's own trained model checksum and training period, not
+    independently reconstructed metadata (Finding M-9 remediation:
+    ``RunProvenance`` is now constructed by the authoritative walk-forward
+    path itself, not left as an unwired, isolated dataclass).
+
+    Args:
+        dataset_id: caller-supplied identifier for ``df`` — dataset
+            identity is a caller-level concern (e.g. vendor + symbol +
+            acquisition date), not something this function should invent.
+        validation_period: the overall study's declared VALIDATION date
+            range (spec Section 8), independent of which windows this
+            particular call processes.
+        holdout_period: the overall study's declared PURE_HOLDOUT date
+            range — recorded in provenance even when this call never
+            touches holdout data, since the record describes the full
+            frozen split boundary, not just this call's slice of it.
     """
     enforcer = ProvenanceEnforcer(hypothesis_id=hypothesis_id)
     enforcer.validate_access(training_data_state, DataAccessAction.TRAINING)
@@ -151,13 +198,20 @@ def generate_oos_predictions(
     else:
         enforcer.validate_access(test_data_state, DataAccessAction.SELECTION)
 
+    dataset_checksum = _dataset_checksum(df)
+    code_version = get_code_version()
+    config_checksum = _config_checksum()
+    feature_schema_hash = _feature_schema_hash()
+
     batches: List[OOSPredictionBatch] = []
+    provenance_records: List[RunProvenance] = []
 
     for window in windows:
         train_df = df.iloc[window.train_start : window.train_end]
-        train_features = build_feature_matrix(train_df)
-        train_labels = compute_label(train_df["close"])
-        X_train, y_train = align_features_and_labels(train_features, train_labels)
+        # Authoritative path: build_training_set unconditionally runs
+        # assert_no_leakage before returning (X, y) — fail-closed by
+        # construction, not by caller discipline (Finding M-1 remediation).
+        X_train, y_train = build_training_set(train_df)
         if len(X_train) == 0:
             raise TemporalSplitError(
                 "training window produced zero usable rows after warmup/label alignment",
@@ -165,7 +219,33 @@ def generate_oos_predictions(
             )
 
         model = RFR2Model()
-        model.train(X_train, y_train, training_start=window.train_dates[0], training_end=window.train_dates[1])
+        model_metadata = model.train(
+            X_train, y_train, training_start=window.train_dates[0], training_end=window.train_dates[1]
+        )
+
+        provenance_records.append(
+            RunProvenance(
+                strategy_id=STRATEGY_ID,
+                strategy_version=STRATEGY_VERSION,
+                model_version=model_version,
+                feature_version=feature_version,
+                dataset_id=dataset_id,
+                dataset_checksum=dataset_checksum,
+                code_version=code_version,
+                config_checksum=config_checksum,
+                training_period=(window.train_dates[0], window.train_dates[1]),
+                validation_period=validation_period,
+                holdout_period=holdout_period,
+                feature_schema_hash=feature_schema_hash,
+                model_checksum=model_metadata.checksum,
+                random_seed=HYPERPARAMETERS["random_state"],
+                execution_assumptions={
+                    "n_jobs": 1,
+                    "max_warmup_bars": MAX_WARMUP_BARS,
+                    "window_index": window.window_index,
+                },
+            )
+        )
 
         # Extend the test slice backward for feature warmup, then trim to the true window.
         extended_start = max(0, window.test_start - MAX_WARMUP_BARS)
@@ -214,7 +294,7 @@ def generate_oos_predictions(
             )
         )
 
-    return batches
+    return batches, provenance_records
 
 
 def make_walk_forward_windows(

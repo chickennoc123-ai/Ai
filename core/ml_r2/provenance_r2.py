@@ -10,12 +10,41 @@ metric traced back to an uncommitted, unrecoverable generator.
 from __future__ import annotations
 
 import json
+import subprocess
 from dataclasses import asdict, dataclass, field
+from pathlib import Path
 from typing import Any, Dict, Optional
 
 from utils.exceptions import EAFactoryError
 
 PROVENANCE_SPEC_ID = "PROVENANCE-R2-001"
+
+#: Canonical strategy identity (spec Section 2). Defined once here so no
+#: caller has to hardcode a duplicate copy of these strings (Finding I-5).
+STRATEGY_ID = "ML-001-R2"
+STRATEGY_VERSION = "1.0.0"
+
+
+def get_code_version(repo_root: Optional[str] = None) -> str:
+    """Return the short git commit hash of the code that produced this run.
+
+    Falls back to ``"unknown"`` only if git metadata is genuinely
+    unavailable (e.g. a stripped deployment artifact with no .git
+    directory) — this should not happen in normal development use.
+    """
+    cwd = repo_root or str(Path(__file__).resolve().parents[2])
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=True,
+        )
+        return result.stdout.strip() or "unknown"
+    except Exception:
+        return "unknown"
 
 _REQUIRED_FIELDS = (
     "strategy_id",
