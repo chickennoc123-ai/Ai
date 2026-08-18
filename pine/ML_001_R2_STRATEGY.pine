@@ -30,10 +30,15 @@ var string PINE_MODEL_STATUS = "BLOCKED_BY_MISSING_MODEL_ARTIFACT"
 modelReady = false   // hardcoded false; nothing in this environment can set this true
 
 // This is NOT a hedge or a soft caveat: `modelReady` gates every entry
-// call below. Because it is hardcoded false, strategy.entry() is
-// structurally unreachable in this script -- the Strategy Tester will
-// always show zero trades, zero P&L, by construction. That is the
-// correct, honest representation of "no model exists," not a bug.
+// call below and is hardcoded false. With this file's default settings
+// (PARITY TEST FIXTURE MODE off), strategy.entry() is structurally
+// unreachable -- the Strategy Tester shows zero trades, zero P&L, by
+// construction, the correct, honest representation of "no model
+// exists," not a bug. The one exception is PARITY TEST FIXTURE MODE
+// (see the block below PHASE 5), an explicit, off-by-default,
+// clearly-labeled MODEL_PARITY_TEST_FIXTURE_ONLY opt-in that replays a
+// deterministic supplied-probability sequence -- never RF-R2-001's
+// output -- through these same mechanics for parity testing only.
 // ============================================================
 strategy("ML-001-R2 Strategy (FE-R2-002/RF-R2-001) - MANUAL TEST ONLY",
      shorttitle            = "ML001R2-STRAT",
@@ -191,35 +196,80 @@ plot(volatility_regime,  title = "volatility_regime", display = display.data_win
 // ============================================================
 // PHASE 5: SIGNAL TIMING -- SIGNAL BAR (close t) vs EXECUTION BAR (open t+1)
 // ------------------------------------------------------------
-// modelReady is hardcoded false (see PINE_MODEL_STATUS above), so
-// p (the model's predict_proba output) does not exist here and the
-// REAL LONG/SHORT condition below can never evaluate true. To still
-// let a human visually confirm the SIGNAL BAR -> EXECUTION BAR marker
-// mechanism works correctly, an optional, clearly-labeled, OFF-BY-
-// DEFAULT synthetic pulse is provided for TIMING DEMONSTRATION ONLY.
-// This pulse is NOT derived from momentum/RSI/ATR/volatility_regime,
-// NOT a substitute model, and is NEVER wired to strategy.entry/exit
-// (see PHASE 11 below) -- it only drives the visual markers, so it
-// can never be mistaken for a real trading signal or a Strategy
-// Tester result.
+// modelReady is hardcoded false (see PINE_MODEL_STATUS above), so with
+// PARITY TEST FIXTURE MODE off (its default), p (the model's
+// predict_proba output) does not exist and the LONG/SHORT condition
+// below can never evaluate true. With PARITY TEST FIXTURE MODE
+// explicitly enabled by the user (see that block just below), p is
+// sourced from the embedded MODEL_PARITY_TEST_FIXTURE_ONLY array --
+// still never RF-R2-001's output. Independent of both, an optional,
+// clearly-labeled, OFF-BY-DEFAULT synthetic pulse is also provided for
+// TIMING DEMONSTRATION ONLY (visual marker check with no real chart
+// data at all required) -- NOT derived from momentum/RSI/ATR/
+// volatility_regime, NOT a substitute model, and NEVER wired to
+// strategy.entry/exit (see PHASE 11 below) -- it only drives the
+// visual markers, so it can never be mistaken for a real trading
+// signal or a Strategy Tester result.
 // ============================================================
 timingDemoMode = input.bool(false, title = "TIMING DEMONSTRATION MODE (synthetic pulse marker only -- NOT a trading signal, NOT model output, OFF by default)")
 demoSignalRaw  = timingDemoMode and bar_index >= 600 and bar_index % 47 == 0   // arbitrary, documented, non-economic pulse; gated past full warmup so it never fires during any feature's warmup window
 
-// p = predict_proba(feature_vector[t])[1] -- spec Section 10. Does not
-// exist (no model). Left explicitly na, never assigned a value, so any
-// future accidental use of `p` fails loudly rather than silently
-// defaulting to a number that looks like a real probability.
-float p = na
+// ============================================================
+// PARITY TEST FIXTURE MODE (Phase 7 of the simulator/parity project)
+// -- MODEL_PARITY_TEST_FIXTURE_ONLY --
+// ------------------------------------------------------------
+// Wires the SAME supplied-probability sequence used by the Python
+// reference simulator (core.ml_r2.simulator_r2.FixtureProbabilityProvider,
+// values sourced from ML-001-R2-GOLDEN-PROBABILITY-FIXTURE.csv) through
+// this file's own §10 mechanics below (position sizing / SL / TP /
+// max-hold / exit-priority / position-limit), so a human can compare
+// TradingView's actual Strategy Tester trade list against the Python
+// golden vector's trade sequence, bar-for-bar.
+//
+// THIS IS NOT RF-R2-001's OUTPUT. It has no relationship to any trained
+// model, real or hypothetical -- it exists solely to exercise the
+// (already spec-translated, otherwise unreachable) risk/exit mechanics
+// against a known, deterministic input.
+//
+// strategy.entry()/strategy.exit() always fill against the chart's REAL
+// bars -- there is no Pine mechanism to make the order engine replay a
+// synthetic embedded price series independent of the actual chart. So,
+// unlike ML_001_R2_FEATURE_DEBUG.pine's self-contained array replay,
+// this mode REQUIRES loading ML-001-R2-GOLDEN-OHLCV-FIXTURE.csv as a
+// custom TradingView data feed (TradingView's "Import" CSV chart
+// feature) so this chart's own bar_index/OHLC exactly matches the
+// Python golden dataset. Only the supplied-probability sequence is
+// embedded below; atr_14, order fills, and SL/TP breach checks are all
+// computed natively by Pine against the imported chart's real bars,
+// through the same canonical feature block already verified byte-
+// identical across this project's three .pine files. See
+// ML-001-R2-TRADINGVIEW-MANUAL-TEST-GUIDE.md, Phase 7 section.
+// ============================================================
+parityTestFixtureMode = input.bool(false, title = "PARITY TEST FIXTURE MODE (MODEL_PARITY_TEST_FIXTURE_ONLY -- requires ML-001-R2-GOLDEN-OHLCV-FIXTURE.csv loaded as the chart)")
 
-longConditionReal  = modelReady and not na(p) and p > 0.55 and strategy.position_size == 0
-shortConditionReal = modelReady and not na(p) and p < 0.45 and strategy.position_size == 0
+var array<int>   fxSigBarIndex = array.from(698, 730, 762, 794, 826, 882, 914, 916, 934, 970, 975)
+var array<float> fxSigProb     = array.from(0.9000000000, 0.9000000000, 0.1000000000, 0.1000000000, 0.9000000000, 0.9000000000, 0.9000000000, 0.9000000000, 0.9000000000, 0.5500000000, 0.4500000000)
 
-// The bar-close SIGNAL for markers is either the (structurally always-
-// false) real condition or, if the user explicitly opts in, the demo
-// pulse -- never both combined into one "signal" that could be
-// misread as model output.
-signalBar = longConditionReal or shortConditionReal or demoSignalRaw
+fxSigLookup = array.indexof(fxSigBarIndex, bar_index)
+pFixture = parityTestFixtureMode and fxSigLookup >= 0 ? array.get(fxSigProb, fxSigLookup) : na
+
+// p = predict_proba(feature_vector[t])[1] -- spec Section 10. In normal
+// (non-fixture) mode this is permanently na (no model). In PARITY TEST
+// FIXTURE MODE it is sourced from the embedded
+// MODEL_PARITY_TEST_FIXTURE_ONLY array above -- still never RF-R2-001's
+// output, and mutually exclusive with modelReady (which never becomes
+// true in this environment regardless).
+float p = parityTestFixtureMode ? pFixture : na
+
+signalSourceActive = modelReady or parityTestFixtureMode
+longCondition  = signalSourceActive and not na(p) and p > 0.55 and strategy.position_size == 0
+shortCondition = signalSourceActive and not na(p) and p < 0.45 and strategy.position_size == 0
+
+// The bar-close SIGNAL for markers is the (real-model-gated, or fixture-
+// mode) threshold condition, or, if the user explicitly opts in
+// separately, the demo pulse -- never both combined into one "signal"
+// that could be misread as model output.
+signalBar = longCondition or shortCondition or demoSignalRaw
 
 // EXECUTION BAR = the bar immediately following a SIGNAL BAR (T+1).
 // `pendingExecution`, set at the end of bar t's evaluation, is read at
@@ -235,12 +285,17 @@ plotshape(executionBar, title = "EXECUTION BAR (open t+1)",  style = shape.trian
 
 // ============================================================
 // PHASE 11: RISK / EXIT MECHANICS (spec Section 10) -- translated in
-// full so the mechanics are available and auditable, but gated behind
-// `modelReady` (hardcoded false) so none of it can ever execute a
-// simulated trade in this environment. This is deliberate: it proves
-// the mechanics translate to Pine syntax without claiming they have
-// been exercised against real signals (they have not -- there is no
-// model to generate one).
+// full so the mechanics are available and auditable. Gated behind
+// `signalSourceActive` (= modelReady OR parityTestFixtureMode), both of
+// which default to "no real trade possible": modelReady is hardcoded
+// false (no model), and parityTestFixtureMode defaults false (opt-in,
+// clearly labeled MODEL_PARITY_TEST_FIXTURE_ONLY). With both off, none
+// of this can ever execute a simulated trade -- the mechanics are
+// translated and auditable without claiming they have been exercised
+// against a real signal (there is no model to generate one). With
+// parityTestFixtureMode on (and the golden CSV loaded as the chart,
+// per the block above), this SAME code path is what a human compares
+// against the Python golden vector's trade sequence.
 // ============================================================
 riskPct       = 0.02
 slAtrMult     = 1.5
@@ -252,7 +307,7 @@ var int   entryBarIx = na
 var float slPrice    = na
 var float tpPrice    = na
 
-if modelReady and longConditionReal
+if longCondition
     entryAtr   := atr_14
     entryBarIx := bar_index
     // Position sizing (spec Section 10): size = (equity * 0.02) /
@@ -261,8 +316,8 @@ if modelReady and longConditionReal
     // * pip_value), which is algebraically equivalent for Pine's
     // qty-in-units strategy.entry() call -- ASSUMPTION flagged in the
     // parity report as not independently verified against a live pip/lot
-    // convention, since this branch is structurally unreachable and has
-    // never executed.
+    // convention. In real (non-fixture) mode this branch is structurally
+    // unreachable; in PARITY TEST FIXTURE MODE it is exercised for real.
     stopDistPrice = slAtrMult * entryAtr
     riskAmount    = strategy.equity * riskPct
     qty           = stopDistPrice > 0 ? riskAmount / stopDistPrice : na
@@ -270,7 +325,7 @@ if modelReady and longConditionReal
     tpPrice := close + tpAtrMult * entryAtr
     strategy.entry("LONG", strategy.long, qty = qty)
 
-if modelReady and shortConditionReal
+if shortCondition
     entryAtr   := atr_14
     entryBarIx := bar_index
     stopDistPrice = slAtrMult * entryAtr
@@ -287,9 +342,9 @@ if modelReady and shortConditionReal
 // only when SL/TP did not already close the position this bar.
 holdingBars = na(entryBarIx) ? na : bar_index - entryBarIx
 maxHoldHit  = not na(holdingBars) and holdingBars >= maxHoldBars
-reversalHit = modelReady and ((strategy.position_size > 0 and shortConditionReal) or (strategy.position_size < 0 and longConditionReal))
+reversalHit = signalSourceActive and ((strategy.position_size > 0 and shortCondition) or (strategy.position_size < 0 and longCondition))
 
-if modelReady and strategy.position_size != 0
+if signalSourceActive and strategy.position_size != 0
     strategy.exit("SL/TP", stop = slPrice, limit = tpPrice)
     if maxHoldHit
         strategy.close_all(comment = "MAX_HOLD_24_BARS")

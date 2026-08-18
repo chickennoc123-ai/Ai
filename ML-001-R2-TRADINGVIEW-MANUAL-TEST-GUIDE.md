@@ -4,8 +4,15 @@
 implementation (`pine/ml_001_r2_features.pine`,
 `pine/ML_001_R2_FEATURE_DEBUG.pine`, `pine/ML_001_R2_STRATEGY.pine`)
 behaves consistently with the Python production pipeline
-(`core/features/fe_r2_001.py`). This is **not** a production deployment
-guide. No step here results in real trading.
+(`core/features/fe_r2_001.py`, feature layer, and
+`core/ml_r2/simulator_r2.py` + `core/ml_r2/backtest_r2.py`,
+position/risk/execution layers). This is **not** a production deployment
+guide. No step here results in real trading. Sections 1–4 cover feature
+parity (momentum/RSI/ATR/volatility_regime); Sections 5–6 cover signal
+timing and position/risk/trade-sequence parity, using a second
+engineered fixture (`ML-001-R2-GOLDEN-OHLCV-FIXTURE.csv`,
+`ML-001-R2-GOLDEN-PROBABILITY-FIXTURE.csv`,
+`ML-001-R2-GOLDEN-PARITY-VECTOR.csv`).
 
 **GOVERNANCE (unchanged by this guide)**: `ECONOMIC_VALIDITY = UNPROVEN`.
 `PRODUCTION = BLOCKED`. `ML-001-R2 = RESEARCH_ONLY / NOT_AUTHORIZED`.
@@ -125,9 +132,10 @@ expected, correct behavior, not a defect.
 ## 5. Signal/execution timing (`ML_001_R2_STRATEGY.pine`)
 
 `PINE_MODEL_STATUS = BLOCKED_BY_MISSING_MODEL_ARTIFACT` — no trained
-RF-R2-001 model exists, so the real LONG/SHORT condition can never fire
-and the Strategy Tester will always show **zero trades**. This is
-correct, not a bug.
+RF-R2-001 model exists, so with **PARITY TEST FIXTURE MODE off**
+(its default) the real LONG/SHORT condition can never fire and the
+Strategy Tester will always show **zero trades**. This is correct, not
+a bug.
 
 To visually confirm the SIGNAL BAR → EXECUTION BAR (T+1) marker
 mechanism works independent of the (absent) model:
@@ -142,14 +150,128 @@ mechanism works independent of the (absent) model:
 3. Confirm the Strategy Tester's trade list remains empty throughout
    (proving the demo pulse never reaches order execution).
 
-## 6. Recording discrepancies
+## 6. Golden dataset — position/risk/trade-sequence parity (Phase 7)
+
+`ML-001-R2-GOLDEN-OHLCV-FIXTURE.csv` (1001 bars) is a second,
+independent synthetic fixture — distinct from the 770-bar feature-only
+fixture in Sections 3–4 — engineered specifically to exercise the
+**position/risk engine** (spec Section 10): a 650-bar warmup, then eight
+deliberately-constructed scenarios (long entry→stop-loss, long
+entry→take-profit, short entry→stop-loss, short entry→take-profit, a
+24-bar max-holding-period exit, an exit-priority conflict bar where
+stop-loss AND take-profit are both touched in the same bar, a
+position-limit test — two further LONG signals fired while a position
+is already open — and a threshold-boundary test at `p` exactly `0.55`
+and exactly `0.45`).
+
+Every scenario's outcome (which bar enters, which bar exits, and why)
+was **verified against the real Python simulator's actual output**
+(`core.ml_r2.simulator_r2.run_simulation`), not hand-traced — see
+`ML-001-R2-PYTHON-PINE-SIMULATOR-PARITY-REPORT.md` for the full trade
+list. `ML-001-R2-GOLDEN-PROBABILITY-FIXTURE.csv` holds the 11
+supplied probabilities that drive these scenarios — labeled
+`MODEL_PARITY_TEST_FIXTURE_ONLY` everywhere it appears in code, since
+it has no relationship to RF-R2-001 (which does not exist).
+
+| bar_index | timestamp (UTC) | momentum_5 | momentum_20 | rsi_14 | atr_14 | volatility_regime | supplied_model_probability | signal | position_state | entry | exit | exit_reason | scenario |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 100 | 2023-01-06 04:00:00+00:00 | 0.000246 | 0.000347 | 60.513031 | 0.000262 | | | FLAT | FLAT | | | | first valid rsi_14 / atr_14 (100-bar warmup boundary) |
+| 600 | 2023-02-06 00:00:00+00:00 | -0.000036 | 0.000093 | 51.876585 | 0.000262 | 1.000000 | | FLAT | FLAT | | | | first valid volatility_regime (600-bar warmup boundary) |
+| 698 | 2023-02-10 02:00:00+00:00 | 0.000098 | -0.000139 | 43.315060 | 0.000240 | 0.000000 | 0.900000 | LONG | FLAT | | | | first LONG signal (scenario 1; p=0.90 supplied) |
+| 699 | 2023-02-10 03:00:00+00:00 | 0.000061 | -0.000214 | 43.513322 | 0.000226 | 0.000000 | | FLAT | LONG | ENTER_LONG | | | ENTER_LONG (T+1 fill, scenario 1) |
+| 700 | 2023-02-10 04:00:00+00:00 | -0.000260 | -0.000710 | 29.927484 | 0.000264 | 1.000000 | | FLAT | FLAT | | EXIT_STOP | STOP_LOSS | first EXIT_STOP (scenario 1) |
+| 730 | 2023-02-13 10:00:00+00:00 | 0.000237 | -0.000083 | 50.750621 | 0.000256 | 0.000000 | 0.900000 | LONG | FLAT | | | | second LONG signal (scenario 2) |
+| 731 | 2023-02-13 11:00:00+00:00 | 0.000230 | -0.000146 | 50.878669 | 0.000241 | 0.000000 | | FLAT | LONG | ENTER_LONG | | | ENTER_LONG (scenario 2) |
+| 732 | 2023-02-13 12:00:00+00:00 | 0.001132 | 0.000532 | 69.623383 | 0.000308 | 2.000000 | | FLAT | FLAT | | EXIT_TP | TAKE_PROFIT | first EXIT_TP (scenario 2) |
+| 762 | 2023-02-14 18:00:00+00:00 | -0.000210 | 0.000742 | 56.697641 | 0.000267 | 1.000000 | 0.100000 | SHORT | FLAT | | | | first SHORT signal (scenario 3; p=0.10 supplied) |
+| 763 | 2023-02-14 19:00:00+00:00 | -0.000221 | 0.000650 | 56.823562 | 0.000251 | 0.000000 | | FLAT | SHORT | ENTER_SHORT | | | ENTER_SHORT (scenario 3) |
+| 764 | 2023-02-14 20:00:00+00:00 | 0.000266 | 0.001077 | 68.728716 | 0.000292 | 2.000000 | | FLAT | FLAT | | EXIT_STOP | STOP_LOSS | EXIT_STOP, short direction (scenario 3) |
+| 827 | 2023-02-17 11:00:00+00:00 | -0.000162 | 0.000102 | 45.199154 | 0.000255 | 0.000000 | | FLAT | LONG | ENTER_LONG | | | ENTER_LONG (scenario 5, max-hold) |
+| 851 | 2023-02-20 11:00:00+00:00 | -0.000013 | -0.000016 | 43.155205 | 0.000055 | 0.000000 | | FLAT | FLAT | | EXIT_MAX_HOLD | MAX_HOLDING_PERIOD | first EXIT_MAX_HOLD (scenario 5; holding=24 bars exactly) |
+| 883 | 2023-02-21 19:00:00+00:00 | -0.000148 | -0.000296 | 39.285062 | 0.000196 | 0.000000 | | FLAT | LONG | ENTER_LONG | | | ENTER_LONG (scenario 6, exit-priority conflict) |
+| 884 | 2023-02-21 20:00:00+00:00 | -0.000099 | -0.000406 | 39.285062 | 0.000271 | 1.000000 | | FLAT | FLAT | | EXIT_STOP | STOP_LOSS | EXIT-PRIORITY CONFLICT bar: low≤SL AND high≥TP → resolves EXIT_STOP (SL>TP priority proven) |
+| 915 | 2023-02-23 03:00:00+00:00 | -0.000106 | 0.000041 | 49.101070 | 0.000226 | 0.000000 | | FLAT | LONG | ENTER_LONG | | | ENTER_LONG (scenario 7, position limit) |
+| 916 | 2023-02-23 04:00:00+00:00 | -0.000054 | -0.000056 | 49.511824 | 0.000211 | 0.000000 | 0.900000 | LONG | LONG | | | | signal=LONG but position already open → NO second ENTER_LONG (position limit enforced) |
+| 939 | 2023-02-24 03:00:00+00:00 | -0.000000 | 0.000038 | 52.126672 | 0.000052 | 0.000000 | | FLAT | FLAT | | EXIT_MAX_HOLD | MAX_HOLDING_PERIOD | EXIT_MAX_HOLD closes scenario-7 position |
+| 970 | 2023-02-27 10:00:00+00:00 | 0.000250 | -0.000298 | 44.706923 | 0.000253 | 1.000000 | 0.550000 | FLAT | FLAT | | | | p=0.55 exactly supplied → signal=FLAT (strict '>' boundary, no entry) |
+| 975 | 2023-02-27 15:00:00+00:00 | -0.000059 | -0.000382 | 44.935950 | 0.000254 | 1.000000 | 0.450000 | FLAT | FLAT | | | | p=0.45 exactly supplied → signal=FLAT (strict '<' boundary, no entry) |
+
+All values above are read directly from `ML-001-R2-GOLDEN-PARITY-VECTOR.csv`
+(the full per-bar export, produced by `core.ml_r2.simulator_r2.run_simulation`
+against the golden OHLCV fixture). Trust that file over this table if
+they ever disagree.
+
+### Running this in TradingView: PARITY TEST FIXTURE MODE
+
+`strategy.entry()`/`strategy.exit()` always fill against the chart's
+**real** bars — Pine has no mechanism to make its order engine replay a
+synthetic price series independent of the actual chart. So, unlike the
+feature-debug script's self-contained array replay, testing position/
+risk parity for real requires:
+
+1. In TradingView, use the **Import** chart-data feature to load
+   `ML-001-R2-GOLDEN-OHLCV-FIXTURE.csv` as a custom data feed. This
+   makes the chart's own `bar_index`/OHLC identical to the Python
+   golden dataset, bar-for-bar.
+2. Add `ML_001_R2_STRATEGY.pine` to that chart.
+3. Enable **PARITY TEST FIXTURE MODE** in the script's settings. This
+   reads the same 11 supplied probabilities (embedded in the script,
+   keyed by `bar_index`) through the file's translated §10 mechanics —
+   `atr_14`, order fills, and SL/TP breach checks are all computed
+   natively by Pine against the imported real bars.
+4. Open the Strategy Tester's **List of Trades** tab. Compare each
+   trade's entry bar/price, exit bar/price, and exit reason against the
+   table above and against `ML-001-R2-GOLDEN-PARITY-VECTOR.csv`'s
+   `entry`/`exit`/`exit_reason`/`position_size`/`stop_loss`/
+   `take_profit` columns.
+5. Specifically confirm: exactly **7** trades appear (not 9 — the
+   position-limit scenario's two extra LONG signals at bars 916/934
+   must NOT produce separate trades); the conflict-bar trade (entry at
+   bar 883) exits `STOP_LOSS`, not `TAKE_PROFIT`; the two max-hold
+   trades (entries at bars 827 and 915) each show `holding_bars = 24`
+   exactly.
+
+This is the closest this project gets to genuine, human-executed,
+TradingView-native position/risk parity evidence. It still does not by
+itself constitute economic validation — see the GOVERNANCE REMINDER at
+the end of this guide.
+
+## 7. Repeat for GBPUSD
+
+Every check in Sections 2, 5, and 6 should be repeated with **GBPUSD**
+selected instead of EURUSD (Section 1, step 1). The Pine scripts
+contain no symbol-specific logic — nothing in the canonical feature
+block or the §10 mechanics reads `syminfo.ticker` — so behavior should
+be identical in kind, only the actual numeric values will differ
+(different real price history). A discrepancy that appears on GBPUSD
+but not EURUSD (or vice versa) would itself be a notable finding, worth
+recording even though neither script contains anything that should
+cause one.
+
+## 8. Recording discrepancies
 
 For any mismatch you observe (either a compile error, or a Fixture
-Replay Mode `diff` outside the declared tolerance, or a live-chart value
+Replay Mode `diff` outside the declared tolerance, a live-chart value
 that looks structurally wrong — e.g. a warmup flag not clearing at the
-expected bar), record: bar_index / timestamp, the feature name, Python's
-expected value, Pine's actual value, and the absolute/relative
-difference. Report this against
-`ML-001-R2-PYTHON-PINE-PARITY-REPORT.md`'s verdict table — a confirmed
-mismatch outside tolerance should flip the relevant `*_PARITY` field
-from `PASS` to `FAIL`, not be silently absorbed.
+expected bar — or a Strategy Tester trade list that disagrees with
+Section 6's table), record: bar_index / timestamp, the feature or event
+name, Python's expected value, Pine's actual value, and the
+absolute/relative difference. Report this against
+`ML-001-R2-PYTHON-PINE-SIMULATOR-PARITY-REPORT.md`'s verdict table — a
+confirmed mismatch outside tolerance should flip the relevant
+`*_PARITY` field from `PASS` to `FAIL`, not be silently absorbed.
+
+---
+
+## GOVERNANCE REMINDER
+
+**Completing every check in this guide — even with zero discrepancies
+found — does NOT constitute economic validation.** It demonstrates
+mechanical/structural/numerical agreement between two *implementations*
+of the same rules, on synthetic, engineered data. It says nothing about
+whether ML-001-R2's trading rules are profitable, robust, or safe to
+deploy with real capital. `ECONOMIC_VALIDITY` remains `UNPROVEN` and
+`PRODUCTION` remains `BLOCKED` regardless of this guide's outcome — see
+`ML-001-R2-ECONOMIC-VALIDATION-REPORT.md` for why, and
+`ML-001-R2-PYTHON-PINE-SIMULATOR-PARITY-REPORT.md` Section 12 for the
+explicit governance gate this guide cannot open.
