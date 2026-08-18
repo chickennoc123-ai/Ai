@@ -1,0 +1,79 @@
+{
+  "candidates": {
+    "STRAT-000001": {
+      "candidate_id": "STRAT-000001",
+      "code_version": "a68bd05",
+      "creation_timestamp": "2026-08-18T14:04:34.724173+00:00",
+      "dataset_id": "EURUSD_H1:94400954ab8a91c7",
+      "generator_id": "ORIGINAL_HYPOTHESIS",
+      "generator_parameters": {
+        "note": "ML-001-R2-CLEAN-REBUILD-SPEC.md v1.0.0, not machine-generated"
+      },
+      "history": [
+        {
+          "reason": "registered",
+          "state": "GENERATED",
+          "timestamp": "2026-08-18T14:04:34.724213+00:00"
+        },
+        {
+          "evidence_reference": "data/csv/GAP_ADMISSION_MANIFEST.json",
+          "reason": "FE-R2-003 build_feature_matrix succeeded on real EURUSD_H1.csv: 57600 rows, 502 admitted gaps, 57000 usable rows after warmup",
+          "state": "DATA_VALIDATED",
+          "timestamp": "2026-08-18T14:04:35.747878+00:00"
+        }
+      ],
+      "parent_candidate_id": null,
+      "spec": {
+        "direction": "long_and_short",
+        "entry_rule": "RF-R2-001.predict_proba(FE-R2-003 feature vector) crosses spec Section 9 decision threshold",
+        "exit_rule": "First of: stop-loss, take-profit, or max_hold_bars elapsed (spec Section 9)",
+        "features": [
+          "momentum_5",
+          "momentum_20",
+          "rsi_14",
+          "atr_14",
+          "volatility_regime"
+        ],
+        "max_hold_bars": 24,
+        "position_sizing": "fixed_fractional (spec Section 11, RiskGovernanceConfig)",
+        "stop_loss": "per spec Section 9 (initial candidate, not yet parameter-searched)",
+        "take_profit": "per spec Section 9 (initial candidate, not yet parameter-searched)",
+        "timeframe": "H1",
+        "transaction_cost_model": "realistic median spread + 0.2 pip slippage buffer (spec Section 7)"
+      },
+      "state": "DATA_VALIDATED",
+      "version": 1
+    }
+  },
+  "next_id": 2,
+  "search_history": {
+    "events": [
+      {
+        "candidate_id": "STRAT-000001",
+        "event": "generated",
+        "timestamp": "2026-08-18T14:04:34.724228+00:00"
+      },
+      {
+        "candidate_id": "STRAT-000001",
+        "event": "transition",
+        "reason": "FE-R2-003 build_feature_matrix succeeded on real EURUSD_H1.csv: 57600 rows, 502 admitted gaps, 57000 usable rows after warmup",
+        "timestamp": "2026-08-18T14:04:35.747910+00:00",
+        "to_state": "DATA_VALIDATED"
+      }
+    ],
+    "model_search_count": 0,
+    "parameter_search_count": 0,
+    "search_method": "none (single pre-specified hypothesis)",
+    "search_space": {
+      "note": "ORIGINAL_HYPOTHESIS is not drawn from a search space; it is the single specified candidate under ML-001-R2-CLEAN-REBUILD-SPEC.md"
+    },
+    "selection_bias_status": "UNACCOUNTED",
+    "selection_criteria": "N/A - only one candidate exists; no selection-among-alternatives has occurred",
+    "total_strategies_failed": 0,
+    "total_strategies_generated": 1,
+    "total_strategies_passed": 0,
+    "total_strategies_rejected": 0,
+    "total_strategies_surviving": 0,
+    "total_strategies_tested": 1
+  }
+}
