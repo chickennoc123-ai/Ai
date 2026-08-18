@@ -1,7 +1,28 @@
 # ML-001 — Holdout / WFA State-Machine Governance Decision
 
-**Date**: August 18, 2026
-**Status**: `SPECIFICATION_DECISION_REQUIRED = TRUE` — this document analyzes the conflict and the available options, and does **not** resolve it, because no document in this repository grants authority to pick one unilaterally (see "Search for authority" below). `core/factory/state_machine.py` is **not modified** by this document or by anything else in this task.
+**Date**: August 18, 2026 (original analysis); **resolved** August 18, 2026 (same day, follow-up task).
+**Status**: `SPECIFICATION_DECISION_REQUIRED = FALSE` — **RESOLVED**. §1-§6 below are the original analysis, preserved verbatim as the historical record of the reasoning (per this project's discipline of never deleting prior evidence): they correctly found that no document *in this repository* granted authority to pick between Options A/B/C unilaterally, and none did. What changed is that the product owner — the only party who *does* hold that authority — explicitly directed the resolution in a follow-up task ("ML-001 — CLOSE STRATEGY FACTORY GOVERNANCE BEFORE STRAT-000002"), which is itself now the authorizing instruction. See §7 for the resolution and what was actually implemented.
+
+---
+
+## §0. Resolution (read this first)
+
+**Option A/C's shape was adopted**: holdout is the final gate, immediately preceded by an explicit `CANDIDATE_FREEZE` (`FROZEN`) checkpoint, itself preceded by an explicit `MULTIPLE_TESTING_REVIEWED` accounting gate. The new, formalized forward spine (`core/factory/state_machine.py`):
+
+```
+GENERATED → DATA_VALIDATED → TRAINED → OOS_TESTED → WFA_TESTED → ROBUSTNESS_TESTED
+→ COST_TESTED → STATISTICALLY_VALIDATED → MULTIPLE_TESTING_REVIEWED → FROZEN
+→ HOLDOUT_TESTED → EVG_REVIEW → RESEARCH_CANDIDATE → PAPER_VALIDATION → LIVE_CANDIDATE
+```
+
+This is Option C in spirit — holdout last, with the naming/ordering ambiguity from §1 additionally closed by making `MULTIPLE_TESTING_REVIEWED` (§7's accounting) and `FROZEN` (§4/§5's immutability checkpoint) explicit, separately-gated states rather than folding that discipline into documentation alone. Full specification: `ML-001-STRATEGY-FACTORY-SPEC.md` §2-§9. Implementation details:
+
+- `core/factory/state_machine.py`: `_FORWARD_SPINE` reordered; `MULTIPLE_TESTING_REVIEWED` added as a new state.
+- `core/factory/registry.py`: `_FROZEN_OR_LATER` now starts at `OOS_TESTED` (spec-swap immutability, unchanged in spirit from before — it always included `OOS_TESTED`) and additionally covers `MULTIPLE_TESTING_REVIEWED`; `transition()` raises `MultipleTestingAccountingRequiredError` if a candidate attempts `MULTIPLE_TESTING_REVIEWED` before `set_search_space()` has ever been called on that registry.
+- `STRAT-000001` is unaffected: its real history (`GENERATED → DATA_VALIDATED → TRAINED → REJECTED`) uses only states that kept their name and did not move relative to each other, so it remains 100% legal and unmodified under the new spine — no migration was needed or performed.
+- Tests: `tests/test_factory_state_machine.py`, `tests/test_factory_registry.py`, `tests/test_factory_holdout_governance.py` updated/extended; new `tests/test_factory_hypothesis.py`, `tests/test_factory_provenance_metadata.py` added. Full suite green (see the consolidated final report for the current count).
+
+**Why C over plain A**: §3's comparison already found C strictly more defensive than A at a small additional cost (the extra rename/clarification work). Given the resolution was going to require a code change either way (A alone was never going to be free), paying that small additional cost to also close the interpretive ambiguity was judged worth it — consistent with, not contradicting, the original analysis.
 
 ---
 
@@ -121,15 +142,20 @@ Options A and C carry the same structural risk profile; C is strictly more defen
 - Does not add a fourth, "obviously correct" option framed to look pre-selected.
 - Does not claim `STRAT-000001`'s rejection is invalidated by this ambiguity — it isn't: `TRAINED → REJECTED` is legal under **all three** options above (none of them touch the `X → REJECTED` transitions, which remain available from every non-terminal, non-`LIVE_CANDIDATE` state per `_ALLOWED_TRANSITIONS`), so the rejection stands regardless of how this question is eventually resolved.
 
-## 6. Interim operating rule (not a resolution, a stopgap)
+## 6. Interim operating rule — superseded by §0
+
+*(Historical: this section originally described a process-only stopgap, "behave as if Option A/C were already adopted, even though the state machine does not yet enforce that ordering," while the decision remained open. That stopgap is no longer interim — §0 records that the state machine itself now enforces this ordering directly, so this section is preserved for its historical reasoning only, not as current operating guidance.)*
 
 Until a decision is made, any future candidate in this Factory should follow the same discipline `STRAT-000001` already followed **de facto**: never transition through `HOLDOUT_TESTED` until WFA/robustness/cost/statistical validation are complete and the candidate looks like a genuine EVG candidate on VALIDATION-period evidence alone — i.e., behave as if Option A/C were already adopted, even though the state machine does not yet enforce that ordering. This is a process discipline, not a code change, and does not require touching `state_machine.py`.
 
 ```
-SPECIFICATION_DECISION_REQUIRED = TRUE
+SPECIFICATION_DECISION_REQUIRED = FALSE   (resolved -- see §0)
 OPTIONS_PRESENTED = [A, B, C]
-RECOMMENDATION = NONE (no in-repository authority to select one — see §2)
-INTERIM_OPERATING_RULE = "treat HOLDOUT_TESTED as the last gate before EVG_REVIEW, in practice,
-                           regardless of the state machine's current declared order"
-STATE_MACHINE_MODIFIED = FALSE
+OPTION_ADOPTED = C (holdout last + explicit MULTIPLE_TESTING_REVIEWED/FROZEN gates)
+AUTHORIZED_BY = explicit product-owner direction ("ML-001 — CLOSE STRATEGY FACTORY
+                 GOVERNANCE BEFORE STRAT-000002" task), not invented by this document
+STATE_MACHINE_MODIFIED = TRUE (core/factory/state_machine.py, core/factory/registry.py)
+CANONICAL_SPEC = ML-001-STRATEGY-FACTORY-SPEC.md §2-§9
+STRAT-000001_AFFECTED = FALSE (its history uses only unchanged-position states; no
+                         migration needed)
 ```

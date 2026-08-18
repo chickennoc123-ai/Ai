@@ -35,6 +35,32 @@ def _spec(**overrides) -> StrategyCandidateSpec:
     return StrategyCandidateSpec(**base)
 
 
+def _walk_to_frozen(reg: StrategyRegistry, candidate_id: str) -> None:
+    """Advance ``candidate_id`` through the full, real pre-holdout spine
+    (ML-001-STRATEGY-FACTORY-SPEC.md §4): TRAIN -> OOS -> WALK_FORWARD ->
+    ROBUSTNESS -> COST_STRESS -> STATISTICS -> MULTIPLE_TESTING ->
+    CANDIDATE_FREEZE. Registers a minimal search-space declaration first,
+    since MULTIPLE_TESTING_REVIEWED cannot legally be entered without one.
+    Shared by every test that needs a FROZEN-or-later candidate, so a
+    future spine change only needs to be taught to this one helper."""
+    reg.transition(candidate_id, CandidateState.DATA_VALIDATED, reason="ok")
+    reg.transition(candidate_id, CandidateState.TRAINED, reason="ok")
+    reg.transition(candidate_id, CandidateState.OOS_TESTED, reason="ok")
+    reg.transition(candidate_id, CandidateState.WFA_TESTED, reason="ok")
+    reg.transition(candidate_id, CandidateState.ROBUSTNESS_TESTED, reason="ok")
+    reg.transition(candidate_id, CandidateState.COST_TESTED, reason="ok")
+    reg.transition(candidate_id, CandidateState.STATISTICALLY_VALIDATED, reason="ok")
+    reg.set_search_space(
+        search_space={"stop_loss_atr_multiple": [1.0, 2.0]},
+        search_method="seeded_uniform_grid_sample",
+        parameter_search_count=2,
+        model_search_count=1,
+        selection_criteria="test helper",
+    )
+    reg.transition(candidate_id, CandidateState.MULTIPLE_TESTING_REVIEWED, reason="accounting recorded")
+    reg.transition(candidate_id, CandidateState.FROZEN, reason="freeze for holdout")
+
+
 class TestSpecCompleteness:
     def test_complete_spec_constructs(self) -> None:
         _spec()
@@ -118,18 +144,28 @@ class TestLifecycleAndImmutability:
     def test_mutation_blocked_once_frozen(self, tmp_path) -> None:
         reg = StrategyRegistry(path=tmp_path / "registry.json")
         c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
+        _walk_to_frozen(reg, c.candidate_id)
+        with pytest.raises(FrozenCandidateMutationError):
+            reg.assert_mutation_allowed(c.candidate_id)
+
+    def test_mutation_already_blocked_at_oos_tested_before_frozen(self, tmp_path) -> None:
+        """Per registry.py's _FROZEN_OR_LATER: immutability begins at
+        OOS_TESTED, not only at the later, named FROZEN checkpoint -- a
+        candidate's spec must not be swappable in response to OOS/WFA/
+        robustness/cost/statistics feedback either."""
+        reg = StrategyRegistry(path=tmp_path / "registry.json")
+        c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
         reg.transition(c.candidate_id, CandidateState.DATA_VALIDATED, reason="ok")
         reg.transition(c.candidate_id, CandidateState.TRAINED, reason="ok")
-        reg.transition(c.candidate_id, CandidateState.FROZEN, reason="freeze for holdout")
+        reg.assert_mutation_allowed(c.candidate_id)  # still mutable through TRAINED
+        reg.transition(c.candidate_id, CandidateState.OOS_TESTED, reason="ok")
         with pytest.raises(FrozenCandidateMutationError):
             reg.assert_mutation_allowed(c.candidate_id)
 
     def test_derive_new_version_creates_separate_candidate_not_a_mutation(self, tmp_path) -> None:
         reg = StrategyRegistry(path=tmp_path / "registry.json")
         parent = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
-        reg.transition(parent.candidate_id, CandidateState.DATA_VALIDATED, reason="ok")
-        reg.transition(parent.candidate_id, CandidateState.TRAINED, reason="ok")
-        reg.transition(parent.candidate_id, CandidateState.FROZEN, reason="freeze")
+        _walk_to_frozen(reg, parent.candidate_id)
         reg.reject(parent.candidate_id, reason="failed holdout", failed_phase="HOLDOUT")
 
         child_spec = _spec(max_hold_bars=48)

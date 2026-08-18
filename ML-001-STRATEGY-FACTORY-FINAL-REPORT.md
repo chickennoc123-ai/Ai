@@ -93,18 +93,28 @@ NONDETERMINISM_STATUS = ISOLATED
 
 ---
 
-## 7. Holdout / WFA state-machine governance — unresolved, honestly flagged
+## 7. Holdout / WFA state-machine governance — RESOLVED
 
-`core/factory/state_machine.py`'s declared forward spine places `HOLDOUT_TESTED` *before* `OOS_TESTED`/`WFA_TESTED`, in apparent tension with this project's own repeatedly-established discipline that `PURE_HOLDOUT` is opened exactly once, only after every other gate has passed. Full analysis: `ML-001-HOLDOUT-WFA-GOVERNANCE-DECISION.md`, presenting three options (A: holdout last; B: holdout first, the current/status-quo ordering; C: holdout last plus explicit renaming/documentation to remove the ambiguity) scored across leakage risk, selection risk, early-rejection ability, WFA compatibility, immutable-version compatibility, multiple-testing compatibility, EVG consequences, and registry consequences.
+*(Updated August 18, 2026, in a follow-up task: "ML-001 — CLOSE STRATEGY FACTORY GOVERNANCE BEFORE STRAT-000002." At the time this report was first written, this section correctly reported the ordering as unresolved — see `ML-001-HOLDOUT-WFA-GOVERNANCE-DECISION.md` §0 for the resolution history.)*
 
-**No document in this repository was found that grants authority to resolve this unilaterally** — the "roadmap Sections 6/16/19/20" cited in `core/factory/*` docstrings do not exist as a committed file anywhere in this repository. Accordingly:
+`core/factory/state_machine.py`'s forward spine previously placed `HOLDOUT_TESTED` *before* `OOS_TESTED`/`WFA_TESTED`, in tension with this project's own repeatedly-established discipline that `PURE_HOLDOUT` is opened exactly once, only after every other gate has passed. `ML-001-HOLDOUT-WFA-GOVERNANCE-DECISION.md` analyzed three options (A: holdout last; B: holdout first, the then-status-quo ordering; C: holdout last plus explicit new gates removing the ambiguity) and found no document in this repository granted authority to pick one unilaterally.
+
+**The product owner then explicitly directed the resolution** (holdout-last, per Option C), which is now implemented:
 
 ```
-SPECIFICATION_DECISION_REQUIRED = TRUE
-state_machine.py MODIFIED = FALSE
+GENERATED → DATA_VALIDATED → TRAINED → OOS_TESTED → WFA_TESTED → ROBUSTNESS_TESTED
+→ COST_TESTED → STATISTICALLY_VALIDATED → MULTIPLE_TESTING_REVIEWED → FROZEN
+→ HOLDOUT_TESTED → EVG_REVIEW → RESEARCH_CANDIDATE → PAPER_VALIDATION → LIVE_CANDIDATE
 ```
 
-This did **not** block `STRAT-000001`'s rejection: the always-legal `TRAINED → REJECTED` transition was used specifically so no `HOLDOUT_TESTED` claim (true or fabricated) would ever need to be made, and that path remains legal under all three options in the governance document.
+`MULTIPLE_TESTING_REVIEWED` and `FROZEN` are new, explicit checkpoints — entering `MULTIPLE_TESTING_REVIEWED` is now hard-blocked (`MultipleTestingAccountingRequiredError`) unless `StrategyRegistry.set_search_space()` has actually been called, so the search-space accounting §8 relies on is a precondition of that gate, not a label applied after the fact. Canonical specification: `ML-001-STRATEGY-FACTORY-SPEC.md` §2-§9.
+
+```
+SPECIFICATION_DECISION_REQUIRED = FALSE (resolved)
+state_machine.py MODIFIED = TRUE
+```
+
+This did **not** require touching `STRAT-000001`'s own record: its real history (`GENERATED → DATA_VALIDATED → TRAINED → REJECTED`) uses only states whose relative position didn't change, so it remains exactly as it was, unmodified, still legal under the new spine. The always-legal `TRAINED → REJECTED` transition was used specifically so no `HOLDOUT_TESTED` claim (true or fabricated) would ever need to be made, and that path remains legal under the now-adopted ordering.
 
 ---
 
@@ -133,13 +143,13 @@ selection_bias_status      = "UNACCOUNTED"   (never set to PASS — correctly no
 ## 9. Tests
 
 ```
-python3 -m pytest --collect-only -q   →   615 tests collected
+python3 -m pytest --collect-only -q   →   656 tests collected
 python3 -m pytest -q                  →   exit code 0, zero failures, zero errors
 ```
 
-615 = the pre-existing 591 (baseline, unaffected by this task — no canonical economic logic was modified) + 5 new non-determinism regression tests (`tests/test_ml_r2_nondeterminism.py`) + 19 new governance/immutability tests (`tests/test_factory_holdout_governance.py`, covering rejected-candidate immutability, illegal-transition rejection, frozen-spec-requires-new-version, final-holdout one-time-access semantics, and the multiple-testing counters above). No existing test was weakened, skipped, or deleted to reach this count.
+656 = the pre-existing 591 (baseline, unaffected by economic logic — no canonical economic logic was ever modified) + 5 non-determinism regression tests (`tests/test_ml_r2_nondeterminism.py`) + governance/immutability/multiple-testing tests across `tests/test_factory_state_machine.py`, `tests/test_factory_registry.py`, and `tests/test_factory_holdout_governance.py` (rejected-candidate immutability, illegal-transition rejection, frozen-spec-requires-new-version, final-holdout one-time-access semantics, EVG-only-after-holdout, the multiple-testing-accounting gate, and the multiple-testing counters above) + new `tests/test_factory_hypothesis.py` (hypothesis-intake discipline, §7) + new `tests/test_factory_provenance_metadata.py` (multi-symbol provenance metadata, §12). No existing test was weakened, skipped, or deleted to reach this count — several were updated in place only where the newly-adopted, explicitly-authorized state-machine ordering (§7) made their previous assertions structurally invalid (e.g. a test that froze a candidate immediately after `TRAINED` now walks the real, longer pre-holdout spine instead), never to relax what they check.
 
-**Software test evidence only** — as previously disclosed, none of these 615 tests execute against real EURUSD/GBPUSD data or compute an economic metric; §4's walk-forward/training results come from the JSON artifacts cited throughout, produced by direct script execution outside the test suite.
+**Software test evidence only** — as previously disclosed, none of these 656 tests execute against real EURUSD/GBPUSD data or compute an economic metric; §4's walk-forward/training results come from the JSON artifacts cited throughout, produced by direct script execution outside the test suite.
 
 ---
 
@@ -151,28 +161,34 @@ EDGE_STATUS                 = NOT_PROVEN
 FACTORY_ENGINEERING_STATUS  = WORKING
 FORWARD_VALIDATION_STATUS   = NOT_STARTED
 PRODUCTION_STATUS           = BLOCKED
-HOLDOUT_POLICY               = SPECIFICATION_DECISION_REQUIRED (see §7;
-                                interim operating rule: treat HOLDOUT_TESTED as the
-                                last gate before EVG_REVIEW in practice, regardless of
-                                the state machine's current declared order)
+HOLDOUT_POLICY               = RESOLVED (holdout-last, Option C; see §7 and
+                                ML-001-HOLDOUT-WFA-GOVERNANCE-DECISION.md §0)
 NONDETERMINISM_STATUS       = ISOLATED (see §6; behaviorally proven safe, fix implemented)
+CANONICAL_SPEC_STATUS       = ML-001-STRATEGY-FACTORY-SPEC.md (canonical, §2-§9;
+                                supersedes the previously-uncommitted "roadmap" citations)
+HYPOTHESIS_SOURCE_CONTRACT_STATUS = INFRASTRUCTURE READY, ZERO HYPOTHESES INGESTED
+                                (ML-001-HYPOTHESIS-SOURCE-CONTRACT.md, core/factory/hypothesis.py)
+SEARCH_SPACE_ACCOUNTING_STATUS = ENFORCED (MultipleTestingAccountingRequiredError gates
+                                MULTIPLE_TESTING_REVIEWED; see
+                                ML-001-SEARCH-SPACE-AND-MULTIPLE-TESTING-CONTRACT.md)
+MULTI_SYMBOL_READINESS      = ARCHITECTURE READY, ZERO SYMBOLS ADDED (DatasetProvenanceRecord,
+                                StrategyCandidate.instrument_universe; spec §12)
 TOTAL_STRATEGIES_TESTED     = 1
 TOTAL_STRATEGIES_REJECTED   = 1
 TOTAL_STRATEGIES_PASSED     = 0
-TESTS_PASSING                = 615 / 615
+TOTAL_HYPOTHESES_INGESTED   = 0
+TESTS_PASSING                = 656 / 656
 KNOWN_BLOCKERS:
   - No proven edge exists for ML-001-R2 on real EURUSD/GBPUSD H1 data (§4-5).
-  - Holdout/WFA state-machine ordering is unresolved pending a specification decision (§7).
-  - The "roadmap Sections 6/16/19/20" cited in core/factory/* docstrings do not exist as a
-    committed document in this repository — a broader documentation gap beyond just §7's
-    specific question.
 DECISIONS_REQUIRED:
-  - Resolve the HOLDOUT_TESTED/WFA_TESTED ordering (Option A, B, or C, or a variant) —
-    by whoever holds authority over the Strategy Factory roadmap; not resolved here.
   - Decide whether to attempt a new strategy hypothesis (STRAT-000002) with a materially
     different feature set/model class, or conclude 1-bar H1 direction is not viable for
     this instrument pair with tree-based models on these five features. NOT decided,
     NOT started, and explicitly out of scope for this task's stop condition.
+  - Decide whether/when to begin actual multi-symbol, multi-feature, or external-hypothesis
+    expansion now that the governance/accounting infrastructure for it exists (§7,
+    ML-001-STRATEGY-FACTORY-SPEC.md §12) — infrastructure readiness is not itself a
+    decision to expand.
 ```
 
 ---

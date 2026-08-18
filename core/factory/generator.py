@@ -1,6 +1,6 @@
 """Deterministic candidate generation for the Strategy Factory.
 
-Per roadmap Section 7: no ``random.choice``/``random.uniform`` bare calls
+Per ML-001-STRATEGY-FACTORY-SPEC.md §7: no ``random.choice``/``random.uniform`` bare calls
 in the economic path. Any stochastic search must be seeded, with the seed
 and search space recorded, so the Factory can always answer "why was this
 strategy tested" and "how many alternatives were tested before this one

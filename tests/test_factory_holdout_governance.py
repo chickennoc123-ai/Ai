@@ -21,26 +21,14 @@ from pathlib import Path
 import pytest
 
 from core.factory.candidate import FrozenCandidateMutationError, StrategyCandidateSpec
-from core.factory.registry import DEFAULT_REGISTRY_PATH, StrategyRegistry
+from core.factory.registry import (
+    DEFAULT_REGISTRY_PATH,
+    MultipleTestingAccountingRequiredError,
+    StrategyRegistry,
+)
 from core.factory.state_machine import CandidateState, IllegalStateTransitionError, assert_legal_transition
 from core.provenance_enforcement import DataAccessAction, DataState, DataStateViolationError, ProvenanceEnforcer
-
-
-def _spec(**overrides) -> StrategyCandidateSpec:
-    base = dict(
-        entry_rule="model probability > 0.55",
-        exit_rule="stop/target/max_hold",
-        features=("momentum_5", "rsi_14"),
-        timeframe="H1",
-        direction="long_only",
-        stop_loss="1.5x ATR",
-        take_profit="2.0x ATR",
-        max_hold_bars=24,
-        position_sizing="fixed_fractional",
-        transaction_cost_model="realistic",
-    )
-    base.update(overrides)
-    return StrategyCandidateSpec(**base)
+from tests.test_factory_registry import _spec, _walk_to_frozen
 
 
 class TestRejectedCandidateImmutability:
@@ -107,18 +95,14 @@ class TestNewVersionRequiredAfterFrozenModification:
     def test_cannot_patch_a_frozen_candidates_spec_in_place(self, tmp_path) -> None:
         reg = StrategyRegistry(path=tmp_path / "registry.json")
         c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
-        reg.transition(c.candidate_id, CandidateState.DATA_VALIDATED, reason="ok")
-        reg.transition(c.candidate_id, CandidateState.TRAINED, reason="ok")
-        reg.transition(c.candidate_id, CandidateState.FROZEN, reason="freeze")
+        _walk_to_frozen(reg, c.candidate_id)
         with pytest.raises(FrozenCandidateMutationError):
             reg.assert_mutation_allowed(c.candidate_id)
 
     def test_only_sanctioned_path_is_derive_new_version_with_fresh_id(self, tmp_path) -> None:
         reg = StrategyRegistry(path=tmp_path / "registry.json")
         parent = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
-        reg.transition(parent.candidate_id, CandidateState.DATA_VALIDATED, reason="ok")
-        reg.transition(parent.candidate_id, CandidateState.TRAINED, reason="ok")
-        reg.transition(parent.candidate_id, CandidateState.FROZEN, reason="freeze")
+        _walk_to_frozen(reg, parent.candidate_id)
 
         child = reg.derive_new_version(
             parent.candidate_id, _spec(max_hold_bars=48), generator_id="G",
@@ -135,18 +119,40 @@ class TestNewVersionRequiredAfterFrozenModification:
 class TestFinalHoldoutSemantics:
     """PURE_HOLDOUT access is a one-time, forward-only, non-optimizable event."""
 
-    def test_holdout_tested_cannot_be_reentered_once_left(self) -> None:
-        # HOLDOUT_TESTED -> OOS_TESTED is the only forward move; going back
-        # to HOLDOUT_TESTED from anywhere later in the spine is illegal.
-        for later_state in (
+    def test_holdout_tested_is_unreachable_except_via_frozen(self) -> None:
+        """No reusable-data gate (OOS/WFA/ROBUSTNESS/COST/STATISTICS) may
+        jump directly into HOLDOUT_TESTED, and once a candidate is past
+        HOLDOUT_TESTED (at EVG_REVIEW or later), it can never re-enter
+        HOLDOUT_TESTED either -- it is reachable from exactly one state,
+        FROZEN, and from nowhere else in the spine."""
+        for other_state in (
+            CandidateState.TRAINED,
             CandidateState.OOS_TESTED,
             CandidateState.WFA_TESTED,
             CandidateState.ROBUSTNESS_TESTED,
             CandidateState.COST_TESTED,
             CandidateState.STATISTICALLY_VALIDATED,
+            CandidateState.MULTIPLE_TESTING_REVIEWED,
+            CandidateState.EVG_REVIEW,
+            CandidateState.RESEARCH_CANDIDATE,
+            CandidateState.PAPER_VALIDATION,
+            CandidateState.LIVE_CANDIDATE,
         ):
             with pytest.raises(IllegalStateTransitionError):
-                assert_legal_transition(later_state, CandidateState.HOLDOUT_TESTED)
+                assert_legal_transition(other_state, CandidateState.HOLDOUT_TESTED)
+        # the one legal entry point
+        assert_legal_transition(CandidateState.FROZEN, CandidateState.HOLDOUT_TESTED)
+
+    def test_holdout_tested_candidate_is_also_mutation_blocked(self, tmp_path) -> None:
+        """No mutation after holdout access (task requirement, distinct
+        from the FROZEN-specific test above): once a candidate reaches
+        HOLDOUT_TESTED itself, its spec is still immutable."""
+        reg = StrategyRegistry(path=tmp_path / "registry.json")
+        c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
+        _walk_to_frozen(reg, c.candidate_id)
+        reg.transition(c.candidate_id, CandidateState.HOLDOUT_TESTED, reason="holdout evaluated")
+        with pytest.raises(FrozenCandidateMutationError):
+            reg.assert_mutation_allowed(c.candidate_id)
 
     def test_holdout_access_guard_permits_only_final_evaluation(self) -> None:
         enforcer = ProvenanceEnforcer(hypothesis_id="TEST-HOLDOUT-SEMANTICS")
@@ -171,6 +177,65 @@ class TestFinalHoldoutSemantics:
         reg.transition(c.candidate_id, CandidateState.TRAINED, reason="ok")
         reg.reject(c.candidate_id, reason="no edge found in walk-forward", failed_phase="WFA")
         assert reg.get(c.candidate_id).state == CandidateState.REJECTED
+
+
+class TestEVGOnlyAfterRequiredEvidence:
+    """EVG_REVIEW must not be reachable without every earlier gate --
+    including HOLDOUT_TESTED specifically -- having actually happened."""
+
+    def test_evg_review_unreachable_from_any_state_except_holdout_tested(self) -> None:
+        for other_state in (
+            CandidateState.GENERATED,
+            CandidateState.DATA_VALIDATED,
+            CandidateState.TRAINED,
+            CandidateState.OOS_TESTED,
+            CandidateState.WFA_TESTED,
+            CandidateState.ROBUSTNESS_TESTED,
+            CandidateState.COST_TESTED,
+            CandidateState.STATISTICALLY_VALIDATED,
+            CandidateState.MULTIPLE_TESTING_REVIEWED,
+            CandidateState.FROZEN,
+        ):
+            with pytest.raises(IllegalStateTransitionError):
+                assert_legal_transition(other_state, CandidateState.EVG_REVIEW)
+        assert_legal_transition(CandidateState.HOLDOUT_TESTED, CandidateState.EVG_REVIEW)
+
+    def test_registry_level_evg_review_requires_full_walk_through_holdout(self, tmp_path) -> None:
+        reg = StrategyRegistry(path=tmp_path / "registry.json")
+        c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
+        _walk_to_frozen(reg, c.candidate_id)
+        with pytest.raises(IllegalStateTransitionError):
+            reg.transition(c.candidate_id, CandidateState.EVG_REVIEW, reason="skip holdout")
+        reg.transition(c.candidate_id, CandidateState.HOLDOUT_TESTED, reason="holdout evaluated")
+        reg.transition(c.candidate_id, CandidateState.EVG_REVIEW, reason="ok, now legal")
+        assert reg.get(c.candidate_id).state == CandidateState.EVG_REVIEW
+
+
+class TestMultipleTestingGateEnforcement:
+    """MULTIPLE_TESTING_REVIEWED must not be a label with nothing behind
+    it -- the search-space accounting it certifies must already exist."""
+
+    def test_cannot_enter_multiple_testing_reviewed_without_search_space_declared(self, tmp_path) -> None:
+        reg = StrategyRegistry(path=tmp_path / "registry.json")
+        c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
+        reg.transition(c.candidate_id, CandidateState.DATA_VALIDATED, reason="ok")
+        reg.transition(c.candidate_id, CandidateState.TRAINED, reason="ok")
+        reg.transition(c.candidate_id, CandidateState.OOS_TESTED, reason="ok")
+        reg.transition(c.candidate_id, CandidateState.WFA_TESTED, reason="ok")
+        reg.transition(c.candidate_id, CandidateState.ROBUSTNESS_TESTED, reason="ok")
+        reg.transition(c.candidate_id, CandidateState.COST_TESTED, reason="ok")
+        reg.transition(c.candidate_id, CandidateState.STATISTICALLY_VALIDATED, reason="ok")
+        # set_search_space() deliberately never called
+        with pytest.raises(MultipleTestingAccountingRequiredError):
+            reg.transition(c.candidate_id, CandidateState.MULTIPLE_TESTING_REVIEWED, reason="attempt without accounting")
+        # the failed attempt must not have advanced the candidate's state
+        assert reg.get(c.candidate_id).state == CandidateState.STATISTICALLY_VALIDATED
+
+    def test_succeeds_once_search_space_is_declared(self, tmp_path) -> None:
+        reg = StrategyRegistry(path=tmp_path / "registry.json")
+        c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
+        _walk_to_frozen(reg, c.candidate_id)  # calls set_search_space() internally
+        assert reg.get(c.candidate_id).state == CandidateState.FROZEN
 
 
 class TestMultipleTestingAccountingIsHonest:

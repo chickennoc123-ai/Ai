@@ -18,17 +18,23 @@ class TestLegalForwardTransitions:
         assert_legal_transition(CandidateState.GENERATED, CandidateState.DATA_VALIDATED)
 
     def test_full_forward_spine_is_legal(self) -> None:
+        """Per ML-001-STRATEGY-FACTORY-SPEC.md §4 (holdout-last policy):
+        TRAIN -> OOS -> WALK_FORWARD -> ROBUSTNESS -> COST_STRESS ->
+        STATISTICS -> MULTIPLE_TESTING -> CANDIDATE_FREEZE -> PURE_HOLDOUT
+        -> EVG. HOLDOUT_TESTED is deliberately the last reusable-data gate
+        before EVG_REVIEW, not right after TRAINED."""
         spine = [
             CandidateState.GENERATED,
             CandidateState.DATA_VALIDATED,
             CandidateState.TRAINED,
-            CandidateState.FROZEN,
-            CandidateState.HOLDOUT_TESTED,
             CandidateState.OOS_TESTED,
             CandidateState.WFA_TESTED,
             CandidateState.ROBUSTNESS_TESTED,
             CandidateState.COST_TESTED,
             CandidateState.STATISTICALLY_VALIDATED,
+            CandidateState.MULTIPLE_TESTING_REVIEWED,
+            CandidateState.FROZEN,
+            CandidateState.HOLDOUT_TESTED,
             CandidateState.EVG_REVIEW,
             CandidateState.RESEARCH_CANDIDATE,
             CandidateState.PAPER_VALIDATION,
@@ -36,6 +42,27 @@ class TestLegalForwardTransitions:
         ]
         for a, b in zip(spine, spine[1:]):
             assert_legal_transition(a, b)
+
+    def test_holdout_is_the_last_gate_before_evg(self) -> None:
+        """Locks in the specific ordering decision, not just that SOME
+        spine exists: OOS/WFA/ROBUSTNESS/COST/STATISTICS/MULTIPLE_TESTING
+        must all precede FROZEN, which must precede HOLDOUT_TESTED, which
+        must precede EVG_REVIEW."""
+        assert_legal_transition(CandidateState.STATISTICALLY_VALIDATED, CandidateState.MULTIPLE_TESTING_REVIEWED)
+        assert_legal_transition(CandidateState.MULTIPLE_TESTING_REVIEWED, CandidateState.FROZEN)
+        assert_legal_transition(CandidateState.FROZEN, CandidateState.HOLDOUT_TESTED)
+        assert_legal_transition(CandidateState.HOLDOUT_TESTED, CandidateState.EVG_REVIEW)
+        # none of OOS/WFA/ROBUSTNESS/COST/STATISTICS may jump straight to HOLDOUT_TESTED
+        for early_state in (
+            CandidateState.TRAINED,
+            CandidateState.OOS_TESTED,
+            CandidateState.WFA_TESTED,
+            CandidateState.ROBUSTNESS_TESTED,
+            CandidateState.COST_TESTED,
+            CandidateState.STATISTICALLY_VALIDATED,
+        ):
+            with pytest.raises(IllegalStateTransitionError):
+                assert_legal_transition(early_state, CandidateState.HOLDOUT_TESTED)
 
     def test_live_candidate_to_retired_is_legal(self) -> None:
         assert_legal_transition(CandidateState.LIVE_CANDIDATE, CandidateState.RETIRED)
@@ -48,13 +75,14 @@ class TestRejectionIsAlwaysReachable:
             CandidateState.GENERATED,
             CandidateState.DATA_VALIDATED,
             CandidateState.TRAINED,
-            CandidateState.FROZEN,
-            CandidateState.HOLDOUT_TESTED,
             CandidateState.OOS_TESTED,
             CandidateState.WFA_TESTED,
             CandidateState.ROBUSTNESS_TESTED,
             CandidateState.COST_TESTED,
             CandidateState.STATISTICALLY_VALIDATED,
+            CandidateState.MULTIPLE_TESTING_REVIEWED,
+            CandidateState.FROZEN,
+            CandidateState.HOLDOUT_TESTED,
             CandidateState.EVG_REVIEW,
             CandidateState.RESEARCH_CANDIDATE,
             CandidateState.PAPER_VALIDATION,
@@ -79,8 +107,9 @@ class TestIllegalTransitions:
             assert_legal_transition(CandidateState.OOS_TESTED, CandidateState.TRAINED)
 
     def test_cannot_skip_a_single_gate(self) -> None:
+        # skips MULTIPLE_TESTING_REVIEWED on the way to FROZEN
         with pytest.raises(IllegalStateTransitionError):
-            assert_legal_transition(CandidateState.FROZEN, CandidateState.OOS_TESTED)
+            assert_legal_transition(CandidateState.STATISTICALLY_VALIDATED, CandidateState.FROZEN)
 
     @pytest.mark.parametrize("terminal", [CandidateState.REJECTED, CandidateState.FAILED, CandidateState.RETIRED])
     def test_terminal_states_have_no_outgoing_transitions(self, terminal: CandidateState) -> None:
