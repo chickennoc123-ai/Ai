@@ -26,6 +26,12 @@
           "reason": "RF-R2-001 trained on real EURUSD+GBPUSD H1 DEVELOPMENT data (canonical full-window run, frozen hyperparameters per spec Sec 6, random_state=42); reproducibility independently verified across 3 fresh-process runs per symbol (checksums match exactly). A process-state interference artifact was found and documented (load()+predict_proba() on an unrelated model instance perturbing a subsequent training call within the SAME process) -- does not affect these artifacts, which were trained cleanly.",
           "state": "TRAINED",
           "timestamp": "2026-08-18T14:56:34.414593+00:00"
+        },
+        {
+          "evidence_reference": "reports/ml_r2_real_data/WALKFORWARD_EURUSD.json, reports/ml_r2_real_data/WALKFORWARD_GBPUSD.json, ML-001-R2-REAL-DATA-LEAKAGE-PROVENANCE-AUDIT.md",
+          "reason": "Genuine 65-window walk-forward OOS evaluation on real EURUSD+GBPUSD H1 data (24-month trailing DEVELOPMENT training, 1-month VALIDATION test, monthly step; PURE_HOLDOUT never accessed -- structurally absent from the data passed to the WFA engine, not just runtime-guarded) shows NO EDGE: EURUSD profit_factor=0.879 (net -19,980.55 on 1387 trades, win_rate=39.4%), GBPUSD profit_factor=0.892 (net -18,589.15 on 1452 trades, win_rate=39.4%). Losses are distributed, not concentrated: 55.4% of EURUSD windows and 67.7% of GBPUSD windows are individually net-negative, near-zero correlation with time (0.058 / -0.049), so this is not a single bad period dragging down an otherwise-working strategy. Rejection is based on this real OOS evidence, not on a hyperparameter search or any optimization attempt -- RF-R2-001 was trained exactly once per window at its frozen, unmodified spec hyperparameters (Section 6), never tuned toward a better result. NOTE: this candidate was NOT transitioned through HOLDOUT_TESTED before this rejection -- PURE_HOLDOUT was deliberately never opened, consistent with this project's holdout-is-final and one-time-access discipline; whether HOLDOUT_TESTED is intended to precede or follow WFA_TESTED in this state machine is flagged as an open specification question, not resolved here, and did not need to be resolved to reach this REJECTED verdict since TRAINED may transition directly to REJECTED per the state machine's own rules.",
+          "state": "REJECTED",
+          "timestamp": "2026-08-18T15:04:48.651637+00:00"
         }
       ],
       "parent_candidate_id": null,
@@ -47,7 +53,7 @@
         "timeframe": "H1",
         "transaction_cost_model": "realistic median spread + 0.2 pip slippage buffer (spec Section 7)"
       },
-      "state": "TRAINED",
+      "state": "REJECTED",
       "version": 1
     }
   },
@@ -72,6 +78,13 @@
         "reason": "RF-R2-001 trained on real EURUSD+GBPUSD H1 DEVELOPMENT data (canonical full-window run, frozen hyperparameters per spec Sec 6, random_state=42); reproducibility independently verified across 3 fresh-process runs per symbol (checksums match exactly). A process-state interference artifact was found and documented (load()+predict_proba() on an unrelated model instance perturbing a subsequent training call within the SAME process) -- does not affect these artifacts, which were trained cleanly.",
         "timestamp": "2026-08-18T14:56:34.414635+00:00",
         "to_state": "TRAINED"
+      },
+      {
+        "candidate_id": "STRAT-000001",
+        "event": "transition",
+        "reason": "Genuine 65-window walk-forward OOS evaluation on real EURUSD+GBPUSD H1 data (24-month trailing DEVELOPMENT training, 1-month VALIDATION test, monthly step; PURE_HOLDOUT never accessed -- structurally absent from the data passed to the WFA engine, not just runtime-guarded) shows NO EDGE: EURUSD profit_factor=0.879 (net -19,980.55 on 1387 trades, win_rate=39.4%), GBPUSD profit_factor=0.892 (net -18,589.15 on 1452 trades, win_rate=39.4%). Losses are distributed, not concentrated: 55.4% of EURUSD windows and 67.7% of GBPUSD windows are individually net-negative, near-zero correlation with time (0.058 / -0.049), so this is not a single bad period dragging down an otherwise-working strategy. Rejection is based on this real OOS evidence, not on a hyperparameter search or any optimization attempt -- RF-R2-001 was trained exactly once per window at its frozen, unmodified spec hyperparameters (Section 6), never tuned toward a better result. NOTE: this candidate was NOT transitioned through HOLDOUT_TESTED before this rejection -- PURE_HOLDOUT was deliberately never opened, consistent with this project's holdout-is-final and one-time-access discipline; whether HOLDOUT_TESTED is intended to precede or follow WFA_TESTED in this state machine is flagged as an open specification question, not resolved here, and did not need to be resolved to reach this REJECTED verdict since TRAINED may transition directly to REJECTED per the state machine's own rules.",
+        "timestamp": "2026-08-18T15:04:48.651688+00:00",
+        "to_state": "REJECTED"
       }
     ],
     "model_search_count": 0,
@@ -85,7 +98,7 @@
     "total_strategies_failed": 0,
     "total_strategies_generated": 1,
     "total_strategies_passed": 0,
-    "total_strategies_rejected": 0,
+    "total_strategies_rejected": 1,
     "total_strategies_surviving": 0,
     "total_strategies_tested": 1
   }
