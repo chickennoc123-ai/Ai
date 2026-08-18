@@ -1,0 +1,297 @@
+//@version=6
+// ============================================================
+// ML-001-R2 STRATEGY (FE-R2-002 / RF-R2-001) -- MANUAL PARITY TEST ONLY
+// ============================================================
+// GOVERNANCE (unchanged by this file, must not be altered by it):
+//   ECONOMIC_VALIDITY = UNPROVEN
+//   PRODUCTION        = BLOCKED
+//   ML-001-R2         = RESEARCH_ONLY / NOT_AUTHORIZED
+// This script does NOT trade real money, does NOT submit broker orders
+// (TradingView's Strategy Tester is a local backtest simulation only;
+// no broker/alert-webhook wiring is included here), and does NOT modify
+// any production authorization. It exists ONLY so a human can manually
+// inspect, on a real EURUSD/GBPUSD H1 chart, whether the *timing
+// mechanics* (signal-at-close, execute-at-next-open) and the *risk/exit
+// mechanics* (SL/TP/max-hold/exit-priority, spec Section 10) translate
+// correctly to Pine -- independent of, and blocked on, the missing
+// model artifact described below.
+//
+// Spec Section 13 (PINE COMPATIBILITY ARCHITECTURE) requires that any
+// Pine translation of RF-R2-001 be an automated exporter of the
+// *trained* model's tree structure (Approach B); Approach C
+// ("replace the model with something Pine-native and call it
+// equivalent") is explicitly rejected by the spec itself. No trained
+// RF-R2-001 artifact (.joblib or otherwise) has ever existed anywhere
+// in this repository or its git history -- confirmed repeatedly across
+// every prior phase of this project (forensic audit, clean rebuild,
+// integrity audit, remediation rounds, economic validation attempt).
+// Because no trained artifact exists, no exporter can run, so:
+var string PINE_MODEL_STATUS = "BLOCKED_BY_MISSING_MODEL_ARTIFACT"
+modelReady = false   // hardcoded false; nothing in this environment can set this true
+
+// This is NOT a hedge or a soft caveat: `modelReady` gates every entry
+// call below. Because it is hardcoded false, strategy.entry() is
+// structurally unreachable in this script -- the Strategy Tester will
+// always show zero trades, zero P&L, by construction. That is the
+// correct, honest representation of "no model exists," not a bug.
+// ============================================================
+strategy("ML-001-R2 Strategy (FE-R2-002/RF-R2-001) - MANUAL TEST ONLY",
+     shorttitle            = "ML001R2-STRAT",
+     overlay               = true,
+     pyramiding            = 0,
+     calc_on_every_tick    = false,
+     process_orders_on_close = false,
+     default_qty_type      = strategy.cash,
+     default_qty_value     = 0,
+     initial_capital       = 100000,
+     currency              = currency.USD)
+
+// --- No-repaint / timing notes (Phase 12 audit -- see also
+// ML-001-R2-PYTHON-PINE-PARITY-REPORT.md for the full write-up) -----
+// - calc_on_every_tick=false: the script's entry/exit conditions are
+//   only evaluated once, at bar close, on the realtime (currently
+//   forming) bar -- not on every intrabar tick. This prevents a signal
+//   from being computed on unconfirmed/partial bar data.
+// - process_orders_on_close=false (Pine's default): any strategy.entry/
+//   strategy.exit call made during bar t's script evaluation fills at
+//   bar (t+1)'s OPEN, automatically -- this is the native Pine
+//   mechanism that gives T+1 execution timing "for free," matching
+//   spec Section 9 ("Prediction timestamp: bar close (t); Execution
+//   timestamp: next bar open (t+1)") and Section 12's TIMING_PARITY
+//   invariant, WITHOUT needing to manually delay order submission by
+//   one bar (which would itself risk an off-by-one bug).
+// - No request.security() is used anywhere in this script: all
+//   computation operates on the chart's own symbol/timeframe series
+//   (close/high/low/open/bar_index/time), so there is no multi-context
+//   lookahead/repainting risk of the kind request.security() can
+//   introduce.
+// - No `close[bar not yet closed]`-style future reference is used:
+//   every historical reference below is close[n]/high[n]/low[n] for
+//   n >= 0 (current or past bars only).
+// ============================================================
+
+// ============================================================
+// ML-001-R2 CANONICAL FEATURE BLOCK -- BEGIN
+// This exact block (between BEGIN/END markers) is duplicated VERBATIM
+// across ml_001_r2_features.pine, ML_001_R2_FEATURE_DEBUG.pine, and
+// ML_001_R2_STRATEGY.pine. Pine has no local multi-file import without
+// first publishing a library to TradingView (not done here, since this
+// is a private manual-test artifact) -- so "single canonical
+// implementation" is enforced by verbatim textual identity across the
+// three files, checked by an automated diff (tests/test_pine_parity.py),
+// not by Pine's own import mechanism. See
+// ML-001-R2-PYTHON-PINE-PARITY-REPORT.md, Structural Parity section.
+// DO NOT hand-edit this block independently in any one file -- edit it
+// once, then copy verbatim to the other two.
+// ============================================================
+
+// --- [0]/[1] momentum_5, momentum_20 ---
+// Python: momentum[t] = (close[t]-close[t-lookback])/close[t-lookback]
+momentum_5_raw  = (close - close[5])  / close[5]
+momentum_20_raw = (close - close[20]) / close[20]
+
+// --- RSI inputs: delta / gain / loss ---
+// Python: delta[t]=close[t]-close[t-1] (na at bar 0, no prior close);
+//         gain=max(delta,0); loss=max(-delta,0), both na wherever delta is na.
+delta_ = close - close[1]
+gain_  = na(delta_) ? na : (delta_ >= 0 ? delta_ : 0.0)
+loss_  = na(delta_) ? na : (delta_ <  0 ? -delta_ : 0.0)
+
+// --- seeded Wilder smoothing (explicit -- NOT ta.rma()) ---
+// Mirrors core/features/fe_r2_001.py::_seeded_wilder_smooth exactly:
+//   seed  = simple mean of the first `period` valid values, counted
+//           from `firstValidOffset` (the bar_index where the raw input
+//           series itself first becomes defined)
+//   avg[t] = (avg[t-1]*(period-1) + value[t]) / period thereafter
+// Implemented with `var` persistent per-call-site state, not any
+// built-in smoothing function, so behavior is directly auditable
+// against the Python source rather than relying on an unverified
+// assumption about a library function's internal seed semantics.
+f_seededWilder(float value, int period, int firstValidOffset) =>
+    var float avgOut    = na
+    var float seedSum   = 0.0
+    var int   seedCount = 0
+    if bar_index >= firstValidOffset and not na(value)
+        if seedCount < period
+            seedSum   := seedSum + value
+            seedCount := seedCount + 1
+            if seedCount == period
+                avgOut := seedSum / period
+        else
+            avgOut := (avgOut * (period - 1) + value) / period
+    avgOut
+
+avg_gain = f_seededWilder(gain_, 14, 1)
+avg_loss = f_seededWilder(loss_, 14, 1)
+
+// --- [2] rsi_14 ---
+// Python division-by-zero convention (spec Section 4, Step 5):
+//   avg_loss=0 & avg_gain>0 -> RSI=100 (RS -> inf, correct, not an error)
+//   avg_loss=0 & avg_gain=0 -> RSI=50 (flat market, defined neutral, not 0/0)
+rsi_14_raw = na(avg_gain) or na(avg_loss) ? na :
+             (avg_loss == 0.0 and avg_gain == 0.0) ? 50.0 :
+             (avg_loss == 0.0) ? 100.0 :
+             100.0 - 100.0 / (1.0 + avg_gain / avg_loss)
+
+// --- True Range (no seeding ambiguity -- stateless per-bar max) ---
+// Python: TR[t] = max(high-low, |high-prevclose|, |low-prevclose|);
+//         TR[0] = high[0]-low[0] (the only defined term, no prior close).
+// IMPORTANT: Python's true_range relies on pandas DataFrame.max(axis=1,
+// skipna=True) to produce this bar-0 fallback automatically. Pine's
+// math.max() does NOT reliably reproduce that skipna fallback (na
+// propagates through math.max in Pine), so the bar-0 case is handled
+// with an EXPLICIT branch here rather than assumed equivalent --
+// a discrepancy class this project's own M-5 remediation specifically
+// warned against assuming away.
+prevClose_ = close[1]
+tr_ = bar_index == 0 ? (high - low) :
+      math.max(high - low, math.max(math.abs(high - prevClose_), math.abs(low - prevClose_)))
+
+// --- [3] atr_14 ---
+// atr_14_raw_unmasked: the UNMASKED recurrence output, used internally
+// for volatility_regime's percentile calculation (Python computes
+// volatility_regime from the raw, not warmup-masked, atr_14 -- see
+// core/features/fe_r2_001.py::build_feature_matrix: compute_volatility_regime
+// is called on atr_14 BEFORE _apply_warmup runs). Do not substitute the
+// warmup-masked atr_14 here; that would diverge from the Python pipeline.
+atr_14_raw_unmasked = f_seededWilder(tr_, 14, 0)
+
+// --- [4] volatility_regime ---
+// Python: 500-bar trailing causal percentile of atr_14 (33rd/67th,
+// linear interpolation), computed on the RAW atr_14 series.
+// ASSUMPTION (not verified by execution -- flag in parity report):
+// ta.percentile_linear_interpolation(source, length, percentage)
+// requires `length` consecutive defined bars before returning a
+// non-na value, mirroring pandas' rolling(..., min_periods=window).
+p33_ = ta.percentile_linear_interpolation(atr_14_raw_unmasked, 500, 33)
+p67_ = ta.percentile_linear_interpolation(atr_14_raw_unmasked, 500, 67)
+
+volatility_regime_raw = na(atr_14_raw_unmasked) or na(p33_) or na(p67_) ? na :
+     atr_14_raw_unmasked < p33_ ? 0.0 :
+     atr_14_raw_unmasked > p67_ ? 2.0 : 1.0
+
+// --- WARMUP_BARS masking (applied to OUTPUT columns only; spec Section 4) ---
+// {momentum_5:5, momentum_20:20, rsi_14:100, atr_14:100, volatility_regime:600}
+momentum_5        = bar_index < 5   ? na : momentum_5_raw
+momentum_20       = bar_index < 20  ? na : momentum_20_raw
+rsi_14            = bar_index < 100 ? na : rsi_14_raw
+atr_14            = bar_index < 100 ? na : atr_14_raw_unmasked
+volatility_regime = bar_index < 600 ? na : volatility_regime_raw
+
+// ============================================================
+// ML-001-R2 CANONICAL FEATURE BLOCK -- END
+// ============================================================
+
+plot(rsi_14,             title = "rsi_14",            display = display.data_window)
+plot(atr_14,             title = "atr_14",            display = display.data_window)
+plot(momentum_5,         title = "momentum_5",        display = display.data_window)
+plot(momentum_20,        title = "momentum_20",       display = display.data_window)
+plot(volatility_regime,  title = "volatility_regime", display = display.data_window)
+
+// ============================================================
+// PHASE 5: SIGNAL TIMING -- SIGNAL BAR (close t) vs EXECUTION BAR (open t+1)
+// ------------------------------------------------------------
+// modelReady is hardcoded false (see PINE_MODEL_STATUS above), so
+// p (the model's predict_proba output) does not exist here and the
+// REAL LONG/SHORT condition below can never evaluate true. To still
+// let a human visually confirm the SIGNAL BAR -> EXECUTION BAR marker
+// mechanism works correctly, an optional, clearly-labeled, OFF-BY-
+// DEFAULT synthetic pulse is provided for TIMING DEMONSTRATION ONLY.
+// This pulse is NOT derived from momentum/RSI/ATR/volatility_regime,
+// NOT a substitute model, and is NEVER wired to strategy.entry/exit
+// (see PHASE 11 below) -- it only drives the visual markers, so it
+// can never be mistaken for a real trading signal or a Strategy
+// Tester result.
+// ============================================================
+timingDemoMode = input.bool(false, title = "TIMING DEMONSTRATION MODE (synthetic pulse marker only -- NOT a trading signal, NOT model output, OFF by default)")
+demoSignalRaw  = timingDemoMode and bar_index >= 600 and bar_index % 47 == 0   // arbitrary, documented, non-economic pulse; gated past full warmup so it never fires during any feature's warmup window
+
+// p = predict_proba(feature_vector[t])[1] -- spec Section 10. Does not
+// exist (no model). Left explicitly na, never assigned a value, so any
+// future accidental use of `p` fails loudly rather than silently
+// defaulting to a number that looks like a real probability.
+float p = na
+
+longConditionReal  = modelReady and not na(p) and p > 0.55 and strategy.position_size == 0
+shortConditionReal = modelReady and not na(p) and p < 0.45 and strategy.position_size == 0
+
+// The bar-close SIGNAL for markers is either the (structurally always-
+// false) real condition or, if the user explicitly opts in, the demo
+// pulse -- never both combined into one "signal" that could be
+// misread as model output.
+signalBar = longConditionReal or shortConditionReal or demoSignalRaw
+
+// EXECUTION BAR = the bar immediately following a SIGNAL BAR (T+1).
+// `pendingExecution`, set at the end of bar t's evaluation, is read at
+// the START of bar t+1's evaluation -- this is a manual one-bar delay
+// used ONLY for the visual marker (separate from strategy.entry's own
+// native T+1 fill timing described above, which needs no manual delay).
+var bool pendingExecution = false
+executionBar = pendingExecution
+pendingExecution := signalBar
+
+plotshape(signalBar,    title = "SIGNAL BAR (close t)",      style = shape.triangleup,   location = location.belowbar, color = color.yellow, size = size.tiny, text = "SIG")
+plotshape(executionBar, title = "EXECUTION BAR (open t+1)",  style = shape.triangledown, location = location.abovebar, color = color.aqua,   size = size.tiny, text = "EXEC")
+
+// ============================================================
+// PHASE 11: RISK / EXIT MECHANICS (spec Section 10) -- translated in
+// full so the mechanics are available and auditable, but gated behind
+// `modelReady` (hardcoded false) so none of it can ever execute a
+// simulated trade in this environment. This is deliberate: it proves
+// the mechanics translate to Pine syntax without claiming they have
+// been exercised against real signals (they have not -- there is no
+// model to generate one).
+// ============================================================
+riskPct       = 0.02
+slAtrMult     = 1.5
+tpAtrMult     = 2.5
+maxHoldBars   = 24
+
+var float entryAtr   = na
+var int   entryBarIx = na
+var float slPrice    = na
+var float tpPrice    = na
+
+if modelReady and longConditionReal
+    entryAtr   := atr_14
+    entryBarIx := bar_index
+    // Position sizing (spec Section 10): size = (equity * 0.02) /
+    // (stop_loss_distance_pips * pip_value). Expressed here directly in
+    // price-distance terms (stop_loss_distance_price = stop_loss_distance_pips
+    // * pip_value), which is algebraically equivalent for Pine's
+    // qty-in-units strategy.entry() call -- ASSUMPTION flagged in the
+    // parity report as not independently verified against a live pip/lot
+    // convention, since this branch is structurally unreachable and has
+    // never executed.
+    stopDistPrice = slAtrMult * entryAtr
+    riskAmount    = strategy.equity * riskPct
+    qty           = stopDistPrice > 0 ? riskAmount / stopDistPrice : na
+    slPrice := close - stopDistPrice
+    tpPrice := close + tpAtrMult * entryAtr
+    strategy.entry("LONG", strategy.long, qty = qty)
+
+if modelReady and shortConditionReal
+    entryAtr   := atr_14
+    entryBarIx := bar_index
+    stopDistPrice = slAtrMult * entryAtr
+    riskAmount    = strategy.equity * riskPct
+    qty           = stopDistPrice > 0 ? riskAmount / stopDistPrice : na
+    slPrice := close + stopDistPrice
+    tpPrice := close - tpAtrMult * entryAtr
+    strategy.entry("SHORT", strategy.short, qty = qty)
+
+// Exit priority (spec Section 10, fixed order): SL > TP > MaxHoldingPeriod > SignalReversal.
+// strategy.exit() natively applies SL/TP as OCA (one-cancels-other) at
+// the correct priority (whichever level the bar's range touches first);
+// max-hold and signal-reversal are evaluated explicitly, in that order,
+// only when SL/TP did not already close the position this bar.
+holdingBars = na(entryBarIx) ? na : bar_index - entryBarIx
+maxHoldHit  = not na(holdingBars) and holdingBars >= maxHoldBars
+reversalHit = modelReady and ((strategy.position_size > 0 and shortConditionReal) or (strategy.position_size < 0 and longConditionReal))
+
+if modelReady and strategy.position_size != 0
+    strategy.exit("SL/TP", stop = slPrice, limit = tpPrice)
+    if maxHoldHit
+        strategy.close_all(comment = "MAX_HOLD_24_BARS")
+    else if reversalHit
+        strategy.close_all(comment = "SIGNAL_REVERSAL")
