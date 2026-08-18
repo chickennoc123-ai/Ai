@@ -1,0 +1,198 @@
+{
+  "EURUSD": {
+    "n_validation_predictions": 11520,
+    "ic_pearson": 0.014588065361284435,
+    "ic_pearson_pvalue": 0.11742615562023734,
+    "ic_spearman": 0.03023692928626204,
+    "ic_spearman_pvalue": 0.0011713848219361029,
+    "directional_accuracy": 0.5183159722222223,
+    "prediction_distribution": {
+      "mean": 0.49774741992068466,
+      "std": 0.028273410249384213,
+      "min": 0.39658912696514215,
+      "max": 0.6209056853003919,
+      "pct_above_0.55": 0.01423611111111111,
+      "pct_below_0.45": 0.029861111111111113,
+      "pct_flat_zone": 0.9559027777777778
+    },
+    "calibration_by_decile": [
+      {
+        "bucket": "(0.396, 0.462]",
+        "n": 1152,
+        "mean_pred_prob": 0.4527588732035153,
+        "realized_freq_label1": 0.4704861111111111,
+        "mean_fwd_return": -1.438629069311632e-05
+      },
+      {
+        "bucket": "(0.462, 0.47]",
+        "n": 1152,
+        "mean_pred_prob": 0.4662265052979899,
+        "realized_freq_label1": 0.4713541666666667,
+        "mean_fwd_return": -3.0018309368359326e-05
+      },
+      {
+        "bucket": "(0.47, 0.479]",
+        "n": 1152,
+        "mean_pred_prob": 0.4747629741408253,
+        "realized_freq_label1": 0.46875,
+        "mean_fwd_return": -7.571932651166695e-06
+      },
+      {
+        "bucket": "(0.479, 0.487]",
+        "n": 1152,
+        "mean_pred_prob": 0.48311925623008123,
+        "realized_freq_label1": 0.4921875,
+        "mean_fwd_return": 1.830439388595931e-05
+      },
+      {
+        "bucket": "(0.487, 0.497]",
+        "n": 1152,
+        "mean_pred_prob": 0.49213187355058685,
+        "realized_freq_label1": 0.4809027777777778,
+        "mean_fwd_return": -4.873566616170601e-05
+      },
+      {
+        "bucket": "(0.497, 0.506]",
+        "n": 1152,
+        "mean_pred_prob": 0.5012813670628367,
+        "realized_freq_label1": 0.4947916666666667,
+        "mean_fwd_return": 3.063525655366581e-05
+      },
+      {
+        "bucket": "(0.506, 0.518]",
+        "n": 1152,
+        "mean_pred_prob": 0.5118552904858099,
+        "realized_freq_label1": 0.5164930555555556,
+        "mean_fwd_return": -6.907739182930097e-06
+      },
+      {
+        "bucket": "(0.518, 0.526]",
+        "n": 1152,
+        "mean_pred_prob": 0.5222725205925162,
+        "realized_freq_label1": 0.5338541666666666,
+        "mean_fwd_return": 2.3725815543657404e-05
+      },
+      {
+        "bucket": "(0.526, 0.534]",
+        "n": 1152,
+        "mean_pred_prob": 0.5302559668852163,
+        "realized_freq_label1": 0.4904513888888889,
+        "mean_fwd_return": -4.636563840932609e-05
+      },
+      {
+        "bucket": "(0.534, 0.621]",
+        "n": 1152,
+        "mean_pred_prob": 0.5428095717574686,
+        "realized_freq_label1": 0.5416666666666666,
+        "mean_fwd_return": 3.049782926236101e-05
+      }
+    ],
+    "monotonicity_transitions_increasing": 5,
+    "monotonicity_transitions_total": 9,
+    "feature_importances_canonical_model": {
+      "momentum_5": 0.26381624415228905,
+      "momentum_20": 0.22812854421544826,
+      "rsi_14": 0.31683198568110144,
+      "atr_14": 0.1754648688657009,
+      "volatility_regime": 0.015758357085460268
+    }
+  },
+  "GBPUSD": {
+    "n_validation_predictions": 11520,
+    "ic_pearson": -0.002051041272346534,
+    "ic_pearson_pvalue": 0.8257798846577956,
+    "ic_spearman": 0.016974936457229462,
+    "ic_spearman_pvalue": 0.06847396666207779,
+    "directional_accuracy": 0.5125,
+    "prediction_distribution": {
+      "mean": 0.5009154121354779,
+      "std": 0.030325963698278738,
+      "min": 0.3672943973543043,
+      "max": 0.6088827493924782,
+      "pct_above_0.55": 0.02248263888888889,
+      "pct_below_0.45": 0.03046875,
+      "pct_flat_zone": 0.9470486111111112
+    },
+    "calibration_by_decile": [
+      {
+        "bucket": "(0.366, 0.462]",
+        "n": 1152,
+        "mean_pred_prob": 0.4480022920487959,
+        "realized_freq_label1": 0.4652777777777778,
+        "mean_fwd_return": -2.13096744969301e-05
+      },
+      {
+        "bucket": "(0.462, 0.475]",
+        "n": 1152,
+        "mean_pred_prob": 0.46918629313173277,
+        "realized_freq_label1": 0.4782986111111111,
+        "mean_fwd_return": 1.9837960166197032e-05
+      },
+      {
+        "bucket": "(0.475, 0.485]",
+        "n": 1152,
+        "mean_pred_prob": 0.48034186830002873,
+        "realized_freq_label1": 0.5052083333333334,
+        "mean_fwd_return": 2.6935915489290596e-05
+      },
+      {
+        "bucket": "(0.485, 0.492]",
+        "n": 1152,
+        "mean_pred_prob": 0.4890584308737356,
+        "realized_freq_label1": 0.4626736111111111,
+        "mean_fwd_return": -2.0746398432957045e-05
+      },
+      {
+        "bucket": "(0.492, 0.499]",
+        "n": 1152,
+        "mean_pred_prob": 0.49559462581265457,
+        "realized_freq_label1": 0.5086805555555556,
+        "mean_fwd_return": 1.0764628903586444e-05
+      },
+      {
+        "bucket": "(0.499, 0.507]",
+        "n": 1152,
+        "mean_pred_prob": 0.5023652835027199,
+        "realized_freq_label1": 0.4982638888888889,
+        "mean_fwd_return": -8.294241172474683e-06
+      },
+      {
+        "bucket": "(0.507, 0.522]",
+        "n": 1152,
+        "mean_pred_prob": 0.5134035023735141,
+        "realized_freq_label1": 0.5052083333333334,
+        "mean_fwd_return": 2.2422797629240465e-05
+      },
+      {
+        "bucket": "(0.522, 0.533]",
+        "n": 1152,
+        "mean_pred_prob": 0.5274949183647735,
+        "realized_freq_label1": 0.5164930555555556,
+        "mean_fwd_return": -2.872673806366828e-05
+      },
+      {
+        "bucket": "(0.533, 0.539]",
+        "n": 1152,
+        "mean_pred_prob": 0.5361282055841302,
+        "realized_freq_label1": 0.5112847222222222,
+        "mean_fwd_return": -3.128759509244384e-05
+      },
+      {
+        "bucket": "(0.539, 0.609]",
+        "n": 1152,
+        "mean_pred_prob": 0.5475787013626934,
+        "realized_freq_label1": 0.5182291666666666,
+        "mean_fwd_return": -1.125608818503598e-05
+      }
+    ],
+    "monotonicity_transitions_increasing": 5,
+    "monotonicity_transitions_total": 9,
+    "feature_importances_canonical_model": {
+      "momentum_5": 0.260102330661788,
+      "momentum_20": 0.22277190897023935,
+      "rsi_14": 0.3115881139029821,
+      "atr_14": 0.1909900714730679,
+      "volatility_regime": 0.014547574991922703
+    }
+  }
+}

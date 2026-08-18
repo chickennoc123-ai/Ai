@@ -74,6 +74,24 @@ class ModelMetadata:
     training_rows: int
     class_balance: Dict[str, int]
     checksum: str = ""
+    #: Content-based fingerprint (SHA-256 over every tree's feature/threshold/
+    #: children/value arrays), independent of joblib's serialization byte
+    #: layout. Added after ML-001-NONDETERMINISM-AUDIT.md found that
+    #: ``checksum`` (the raw serialized-bytes hash) can legitimately differ
+    #: for two behaviorally-identical models trained with the same inputs
+    #: and seed, if an unrelated ``joblib.load()`` happened earlier in the
+    #: same process (predictions/feature_importances_/tree structure were
+    #: independently verified bit-identical in that investigation; only the
+    #: serialization bytes varied). ``structural_fingerprint`` is the
+    #: order-independent counterpart: it is guaranteed identical whenever
+    #: the fitted model is behaviorally identical, regardless of process
+    #: history, and should be preferred over ``checksum`` for cross-run
+    #: reproducibility comparisons. ``checksum`` remains the correct choice
+    #: for on-disk load-integrity verification (its original purpose,
+    #: unchanged) since it must catch even a byte-identical-but-corrupted
+    #: file. Optional/defaulted so existing metadata JSON (saved before this
+    #: field existed) still loads via ``ModelMetadata(**meta_dict)``.
+    structural_fingerprint: Optional[str] = None
     #: Spec Section 6 explicitly names this as a required metadata field
     #: (ML-001-R2-IMPLEMENTATION-INTEGRITY-AUDIT.md Finding M-6). Optional
     #: here because no real DATA-R2-001 dataset exists yet (spec Section 2:
@@ -129,6 +147,27 @@ def _checksum_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def _structural_fingerprint(model: RandomForestClassifier) -> str:
+    """Content-based fingerprint, independent of joblib's serialization byte
+    layout (see ``ModelMetadata.structural_fingerprint`` docstring for why
+    this exists alongside ``checksum``). Hashes exactly the numeric content
+    that determines the model's decision function: every tree's feature
+    indices, split thresholds, child pointers, and leaf value arrays, plus
+    the top-level ``classes_``/``n_outputs_`` — nothing else (no memory
+    layout, no pickle protocol metadata, no object identity)."""
+    hasher = hashlib.sha256()
+    hasher.update(np.asarray(model.classes_).tobytes())
+    hasher.update(np.asarray(model.n_outputs_).tobytes())
+    for estimator in model.estimators_:
+        tree = estimator.tree_
+        hasher.update(np.ascontiguousarray(tree.feature).tobytes())
+        hasher.update(np.ascontiguousarray(tree.threshold).tobytes())
+        hasher.update(np.ascontiguousarray(tree.children_left).tobytes())
+        hasher.update(np.ascontiguousarray(tree.children_right).tobytes())
+        hasher.update(np.ascontiguousarray(tree.value).tobytes())
+    return hasher.hexdigest()
+
+
 class RFR2Model:
     """RF-R2-001 wrapper: train/predict/predict_proba with strict schema validation."""
 
@@ -166,6 +205,7 @@ class RFR2Model:
         class_balance = {str(k): int(v) for k, v in y.value_counts().sort_index().items()}
         serialized = _serialize_model(model)
         checksum = _checksum_bytes(serialized)
+        structural_fingerprint = _structural_fingerprint(model)
 
         metadata = ModelMetadata(
             model_version=MODEL_VERSION,
@@ -180,6 +220,7 @@ class RFR2Model:
             training_rows=len(X),
             class_balance=class_balance,
             checksum=checksum,
+            structural_fingerprint=structural_fingerprint,
             data_version=data_version,
         )
 

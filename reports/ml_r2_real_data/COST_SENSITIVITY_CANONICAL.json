@@ -1,0 +1,30 @@
+{
+  "EURUSD": {
+    "baseline_costs": {
+      "trades": 229,
+      "net_profit": -1600.533627643992,
+      "profit_factor": 0.9398709646680841,
+      "expectancy": -6.989229815039267
+    },
+    "zero_costs": {
+      "trades": 229,
+      "net_profit": 442.60019216129643,
+      "profit_factor": 1.015625394453254,
+      "expectancy": 1.9327519308353556
+    }
+  },
+  "GBPUSD": {
+    "baseline_costs": {
+      "trades": 287,
+      "net_profit": -1548.7814525950594,
+      "profit_factor": 0.9588299942535431,
+      "expectancy": -5.396451054338186
+    },
+    "zero_costs": {
+      "trades": 286,
+      "net_profit": 260.9253941857978,
+      "profit_factor": 1.0064790746846402,
+      "expectancy": 0.9123265530971951
+    }
+  }
+}
