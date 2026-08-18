@@ -1,0 +1,24 @@
+{
+  "sources": {
+    "SRC-KOMO135-FOREX-HISTORICAL-DATA": {
+      "access_method": "HTTP_DOWNLOAD",
+      "availability": "Publicly reachable via raw.githubusercontent.com as of acquisition date",
+      "coverage": "2012-11-16 to 2022-03-05 (as acquired for EURUSD/GBPUSD H1)",
+      "license_status": "UNKNOWN",
+      "notes": "README does not state its own upstream provenance beyond '10 years of forex historical csv data'. Verified instead against the 2016 Brexit GBPUSD flash-crash event (independently-known historical fact) -- see DATASET_VALIDATION_REPORT.md sec 3.",
+      "price_type": "Bid (assumed, not independently confirmed for this specific repo)",
+      "provenance_confidence": "PARTIALLY_VERIFIED",
+      "provider": "komo135/forex-historical-data (GitHub)",
+      "source_id": "SRC-KOMO135-FOREX-HISTORICAL-DATA",
+      "source_url": "https://raw.githubusercontent.com/komo135/forex-historical-data/main/",
+      "supported_instruments": [
+        "EURUSD",
+        "GBPUSD"
+      ],
+      "supported_timeframes": [
+        "H1"
+      ],
+      "timezone_semantics": "Raw Date column assumed fixed UTC-5 (EST, no DST) per the documented HistData.com convention used by a related repo with byte-identical sample rows; NOT independently confirmed for this specific repo -- see DATASET_VALIDATION_REPORT.md sec 1"
+    }
+  }
+}

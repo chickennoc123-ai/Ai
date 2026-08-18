@@ -1,0 +1,64 @@
+{
+  "datasets": {
+    "DATASET-EURUSD-H1-KOMO135-V1": {
+      "checksum": "1b29ca23bdc7b2645ae48a0ccb06108263b69e586bdc7d0ba40e66d1e5966eb9",
+      "coverage_end": "2022-03-05 04:00:00+00:00",
+      "coverage_start": "2012-11-16 05:00:00+00:00",
+      "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+      "dataset_version": "v1",
+      "download_method": "curl (raw bytes to disk)",
+      "download_timestamp": "2026-08-18T12:00:00Z",
+      "duplicate_count": 0,
+      "file_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+      "gap_report": {
+        "admitted_gap_count": 502,
+        "feature_version_at_admission": "FE-R2-003",
+        "full_gap_manifest_path": "data/csv/GAP_ADMISSION_MANIFEST.json",
+        "raw_missing_bars_pct": 7.422234336138462,
+        "usable_rows_after_warmup": 57000
+      },
+      "instrument": "EURUSD",
+      "integrity_status": "PASS",
+      "missing_bar_count": 4357,
+      "price_type": "Bid (assumed)",
+      "provenance_status": "VERIFIED_WITH_QUALIFICATION",
+      "row_count": 57600,
+      "source_id": "SRC-KOMO135-FOREX-HISTORICAL-DATA",
+      "source_url": "https://raw.githubusercontent.com/komo135/forex-historical-data/main/EURUSD/EURUSDh1.csv",
+      "synthetic": false,
+      "timeframe": "H1",
+      "timezone": "UTC (converted from assumed raw UTC-5, see source record notes)",
+      "verification_method": "Independently cross-checked against the 2016-06-24 GBPUSD Brexit flash-crash (intraday low ~1.35233 in this dataset, consistent with the well-documented public event) -- see DATASET_VALIDATION_REPORT.md sec 3. Qualification: raw source timezone convention (UTC-5, no DST) is an documented assumption, not independently confirmed for this specific repository."
+    },
+    "DATASET-GBPUSD-H1-KOMO135-V1": {
+      "checksum": "affda7b6e6f4ea505e46f714de37a51bf5d466efb78c3247c5900a0f0a85d3d7",
+      "coverage_end": "2022-03-05 04:00:00+00:00",
+      "coverage_start": "2012-11-16 10:00:00+00:00",
+      "dataset_id": "DATASET-GBPUSD-H1-KOMO135-V1",
+      "dataset_version": "v1",
+      "download_method": "curl (raw bytes to disk)",
+      "download_timestamp": "2026-08-18T12:00:00Z",
+      "duplicate_count": 0,
+      "file_checksum": "24a5f1ffa0056f3b58708a27d9020829833f43ef826e7738262411c96afd52de",
+      "gap_report": {
+        "admitted_gap_count": 500,
+        "feature_version_at_admission": "FE-R2-003",
+        "full_gap_manifest_path": "data/csv/GAP_ADMISSION_MANIFEST.json",
+        "raw_missing_bars_pct": 7.414348263113959,
+        "usable_rows_after_warmup": 57000
+      },
+      "instrument": "GBPUSD",
+      "integrity_status": "PASS",
+      "missing_bar_count": 4352,
+      "price_type": "Bid (assumed)",
+      "provenance_status": "VERIFIED_WITH_QUALIFICATION",
+      "row_count": 57600,
+      "source_id": "SRC-KOMO135-FOREX-HISTORICAL-DATA",
+      "source_url": "https://raw.githubusercontent.com/komo135/forex-historical-data/main/GBPUSD/GBPUSDh1.csv",
+      "synthetic": false,
+      "timeframe": "H1",
+      "timezone": "UTC (converted from assumed raw UTC-5, see source record notes)",
+      "verification_method": "Independently cross-checked against the 2016-06-24 GBPUSD Brexit flash-crash (intraday low ~1.35233 in this dataset, consistent with the well-documented public event) -- see DATASET_VALIDATION_REPORT.md sec 3. Qualification: raw source timezone convention (UTC-5, no DST) is an documented assumption, not independently confirmed for this specific repository."
+    }
+  }
+}

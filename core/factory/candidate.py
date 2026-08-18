@@ -104,6 +104,13 @@ class StrategyCandidateSpec:
     max_hold_bars: int
     position_sizing: str
     transaction_cost_model: str
+    #: How broadly this candidate's evaluation is declared to apply
+    #: (ML-001-MARKET-UNIVERSE-SPEC.md §4) -- SINGLE_INSTRUMENT by default,
+    #: since every real candidate to date (STRAT-000001) tested exactly
+    #: one instrument at a time (evaluated separately per symbol, never
+    #: pooled). Declared BEFORE evaluation, never inferred afterward from
+    #: however many instruments a candidate happened to touch.
+    research_scope: str = "SINGLE_INSTRUMENT"
 
     def __post_init__(self) -> None:
         required_str_fields = (
@@ -123,6 +130,12 @@ class StrategyCandidateSpec:
             missing.append("max_hold_bars")
         if missing:
             raise CandidateSpecError("candidate specification is incomplete", missing_fields=missing)
+        from core.factory.instrument_registry import RESEARCH_SCOPES
+
+        if self.research_scope not in RESEARCH_SCOPES:
+            raise CandidateSpecError(
+                "unknown research_scope", research_scope=self.research_scope, allowed=sorted(RESEARCH_SCOPES)
+            )
 
     def spec_checksum(self) -> str:
         """Deterministic checksum of this spec's content (for dedup/audit)."""

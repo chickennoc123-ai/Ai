@@ -1,0 +1,32 @@
+{
+  "instruments": {
+    "INSTR-EURUSD": {
+      "asset_class": "FX_SPOT",
+      "contract_metadata": {},
+      "cost_model_reference": "ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7 (realistic median spread + 0.2 pip slippage)",
+      "data_availability": "H1 2012-11-16 to 2022-03-05 (DATASET-EURUSD-H1-KOMO135-V1)",
+      "instrument_id": "INSTR-EURUSD",
+      "price_precision": "5 decimal places (as observed in data/csv/EURUSD_H1.csv)",
+      "quote_currency": "USD",
+      "status": "ACTIVE",
+      "symbol": "EURUSD",
+      "tick_size": "UNKNOWN",
+      "timezone_session_semantics": "24x5 FX market, closed Fri 22:00 UTC - Sun 22:00 UTC (spec-declared)",
+      "venue_provider": "UNKNOWN"
+    },
+    "INSTR-GBPUSD": {
+      "asset_class": "FX_SPOT",
+      "contract_metadata": {},
+      "cost_model_reference": "ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7 (realistic median spread + 0.2 pip slippage)",
+      "data_availability": "H1 2012-11-16 to 2022-03-05 (DATASET-GBPUSD-H1-KOMO135-V1)",
+      "instrument_id": "INSTR-GBPUSD",
+      "price_precision": "5 decimal places (as observed in data/csv/GBPUSD_H1.csv)",
+      "quote_currency": "USD",
+      "status": "ACTIVE",
+      "symbol": "GBPUSD",
+      "tick_size": "UNKNOWN",
+      "timezone_session_semantics": "24x5 FX market, closed Fri 22:00 UTC - Sun 22:00 UTC (spec-declared)",
+      "venue_provider": "UNKNOWN"
+    }
+  }
+}

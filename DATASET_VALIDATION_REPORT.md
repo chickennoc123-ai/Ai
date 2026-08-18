@@ -1,7 +1,9 @@
 # DATASET VALIDATION REPORT — Real EURUSD/GBPUSD H1 Data
 
 **Date**: August 18, 2026
-**Status**: `REAL_MARKET_DATA = TRUE` · `PROVENANCE = VERIFIED (with one disclosed timezone assumption)` · `DATA_INTEGRITY = PASS (data itself)` · `PIPELINE_COMPATIBILITY = BLOCKED` (see §6 — this is the reason the pipeline cannot yet proceed past this dataset, not a defect in the data)
+**Status**: `REAL_MARKET_DATA = TRUE` · `PROVENANCE = VERIFIED_WITH_QUALIFICATION` · `DATA_INTEGRITY = PASS (data itself)` · `PIPELINE_COMPATIBILITY = RESOLVED` (§6 originally reported this as BLOCKED; resolved by FE-R2-003, see the update note immediately below — §6's original text is preserved unmodified as the historical record of the blocker)
+
+**Update, August 18, 2026 (Generation 1, Phase 1 — Data Factory task)**: §6 below, and the `PIPELINE_COMPATIBILITY = BLOCKED` verdict in the original "FINAL FIELDS" section, are **stale** — preserved verbatim for their historical accuracy at the time they were written, not edited to hide that they were later superseded. A concurrent session subsequently resolved this exact blocker via `FE-R2-003` (`core/features/fe_r2_001.py::_check_weekday_gaps_v3`, additive, `_check_weekday_gaps` left completely unmodified — see `ML-001-REAL-MARKET-GAP-SEMANTICS-AUDIT.md`, `ML-001-PHASE-1A-TEMPORAL-SEMANTICS-CONTRACT.md`). Real training and a full 65-window walk-forward evaluation subsequently ran successfully against this exact dataset (`ML-001-R2-REAL-DATA-TRAINING-AND-WALKFORWARD-REPORT.md`), producing `STRAT-000001`'s real, non-fabricated `REJECTED` result. Both real datasets are now registered in the Generation 1 Data Factory (`core.factory.dataset_registry.DatasetRegistry`, `reports/factory/dataset_registry.json`) with `provenance_status = "VERIFIED_WITH_QUALIFICATION"` and confirmed `is_real_market_data_eligible = True` — see `ML-001-DATA-FACTORY-SPEC.md` §10.
 
 This is the first time in this project's history that genuine, externally-sourced, historically-verifiable real market data has been obtained and validated. Everything below is reproducible from the recorded source URLs and checksums.
 
@@ -110,12 +112,16 @@ Per this mission's own governance rules — "Do not modify EVG semantics merely 
 
 ## FINAL FIELDS FOR THIS REPORT
 
+*(Original verdict below, preserved as written at the time. See the update note at the top of this document — `PIPELINE_COMPATIBILITY` is now `RESOLVED`, not `BLOCKED`; §6 above describes the blocker that was later resolved by FE-R2-003, not a still-open problem.)*
+
 ```
 REAL_MARKET_DATA      = TRUE
 PROVENANCE            = VERIFIED (one disclosed timezone assumption, §1)
 DATA_INTEGRITY        = PASS (the data itself — chronology, OHLC consistency, no corruption)
 PIPELINE_COMPATIBILITY = BLOCKED (existing _check_weekday_gaps rejects real thin-liquidity
                                     gaps; longest fully-compliant contiguous real span = ~5 days)
+                                    [SUPERSEDED -- see update note at top of document: RESOLVED
+                                    by FE-R2-003, real training/WFA subsequently succeeded]
 ```
 
 See the companion report, `ML-001-R2-STRATEGY-FACTORY-EXECUTION-REPORT.md`, for how this finding propagates through the rest of the mission's phases.

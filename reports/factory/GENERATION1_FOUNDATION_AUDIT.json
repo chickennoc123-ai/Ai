@@ -1,0 +1,158 @@
+{
+  "phase": "GENERATION_1_PHASE_4_INTEGRATION",
+  "symbol": "EURUSD",
+  "dataset_record": {
+    "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+    "instrument": "EURUSD",
+    "timeframe": "H1",
+    "source_id": "SRC-KOMO135-FOREX-HISTORICAL-DATA",
+    "source_url": "https://raw.githubusercontent.com/komo135/forex-historical-data/main/EURUSD/EURUSDh1.csv",
+    "download_timestamp": "2026-08-18T12:00:00Z",
+    "timezone": "UTC (converted from assumed raw UTC-5, see source record notes)",
+    "price_type": "Bid (assumed)",
+    "coverage_start": "2012-11-16 05:00:00+00:00",
+    "coverage_end": "2022-03-05 04:00:00+00:00",
+    "row_count": 57600,
+    "duplicate_count": 0,
+    "missing_bar_count": 4357,
+    "gap_report": {
+      "admitted_gap_count": 502,
+      "feature_version_at_admission": "FE-R2-003",
+      "full_gap_manifest_path": "data/csv/GAP_ADMISSION_MANIFEST.json",
+      "raw_missing_bars_pct": 7.422234336138462,
+      "usable_rows_after_warmup": 57000
+    },
+    "checksum": "1b29ca23bdc7b2645ae48a0ccb06108263b69e586bdc7d0ba40e66d1e5966eb9",
+    "file_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+    "download_method": "curl (raw bytes to disk)",
+    "synthetic": false,
+    "provenance_status": "VERIFIED_WITH_QUALIFICATION",
+    "integrity_status": "PASS",
+    "dataset_version": "v1",
+    "verification_method": "Independently cross-checked against the 2016-06-24 GBPUSD Brexit flash-crash (intraday low ~1.35233 in this dataset, consistent with the well-documented public event) -- see DATASET_VALIDATION_REPORT.md sec 3. Qualification: raw source timezone convention (UTC-5, no DST) is an documented assumption, not independently confirmed for this specific repository."
+  },
+  "instrument_record": {
+    "instrument_id": "INSTR-EURUSD",
+    "symbol": "EURUSD",
+    "asset_class": "FX_SPOT",
+    "venue_provider": "UNKNOWN",
+    "quote_currency": "USD",
+    "timezone_session_semantics": "24x5 FX market, closed Fri 22:00 UTC - Sun 22:00 UTC (spec-declared)",
+    "tick_size": "UNKNOWN",
+    "price_precision": "5 decimal places (as observed in data/csv/EURUSD_H1.csv)",
+    "contract_metadata": {},
+    "data_availability": "H1 2012-11-16 to 2022-03-05 (DATASET-EURUSD-H1-KOMO135-V1)",
+    "cost_model_reference": "ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7 (realistic median spread + 0.2 pip slippage)",
+    "status": "ACTIVE"
+  },
+  "feature_schema_identity": "f6e2473d9cf5055707f59c14ef741cecc79d62ba5e637313668e8ee8ba21739f",
+  "feature_contracts": {
+    "momentum_5": {
+      "feature_id": "FE-R2-003::momentum_5",
+      "name": "momentum_5",
+      "version": "FE-R2-003",
+      "definition": "(close[t]-close[t-5])/close[t-5]",
+      "formula_reference": "core/features/fe_r2_001.py (canonical, single implementation)",
+      "input_columns": [
+        "close"
+      ],
+      "lookback": 5,
+      "timestamp_semantics": "feature(t) uses only bars with timestamp <= t (no lookahead)",
+      "output_schema": "float64",
+      "warmup_requirement": 5,
+      "code_version": "FE-R2-003",
+      "determinism_status": "DETERMINISTIC",
+      "group": "MOMENTUM"
+    },
+    "momentum_20": {
+      "feature_id": "FE-R2-003::momentum_20",
+      "name": "momentum_20",
+      "version": "FE-R2-003",
+      "definition": "(close[t]-close[t-20])/close[t-20]",
+      "formula_reference": "core/features/fe_r2_001.py (canonical, single implementation)",
+      "input_columns": [
+        "close"
+      ],
+      "lookback": 20,
+      "timestamp_semantics": "feature(t) uses only bars with timestamp <= t (no lookahead)",
+      "output_schema": "float64",
+      "warmup_requirement": 20,
+      "code_version": "FE-R2-003",
+      "determinism_status": "DETERMINISTIC",
+      "group": "MOMENTUM"
+    },
+    "rsi_14": {
+      "feature_id": "FE-R2-003::rsi_14",
+      "name": "rsi_14",
+      "version": "FE-R2-003",
+      "definition": "Seeded Wilder RSI, period=14: avg_gain/avg_loss seeded as the simple mean of the first 14 values, then avg[t]=(avg[t-1]*13+value[t])/14; RSI=100-100/(1+avg_gain/avg_loss); flat market (0/0) -> RSI=50",
+      "formula_reference": "core/features/fe_r2_001.py (canonical, single implementation)",
+      "input_columns": [
+        "close"
+      ],
+      "lookback": 14,
+      "timestamp_semantics": "feature(t) uses only bars with timestamp <= t (no lookahead)",
+      "output_schema": "float64",
+      "warmup_requirement": 100,
+      "code_version": "FE-R2-003",
+      "determinism_status": "DETERMINISTIC",
+      "group": "MOMENTUM"
+    },
+    "atr_14": {
+      "feature_id": "FE-R2-003::atr_14",
+      "name": "atr_14",
+      "version": "FE-R2-003",
+      "definition": "Seeded Wilder ATR of True Range, period=14: seeded as the simple mean of the first 14 True Range values, then avg[t]=(avg[t-1]*13+TR[t])/14",
+      "formula_reference": "core/features/fe_r2_001.py (canonical, single implementation)",
+      "input_columns": [
+        "high",
+        "low",
+        "close"
+      ],
+      "lookback": 14,
+      "timestamp_semantics": "feature(t) uses only bars with timestamp <= t (no lookahead)",
+      "output_schema": "float64",
+      "warmup_requirement": 100,
+      "code_version": "FE-R2-003",
+      "determinism_status": "DETERMINISTIC",
+      "group": "VOLATILITY"
+    },
+    "volatility_regime": {
+      "feature_id": "FE-R2-003::volatility_regime",
+      "name": "volatility_regime",
+      "version": "FE-R2-003",
+      "definition": "ordinal {0,1,2} from atr_14 vs. trailing 500-bar 33rd/67th percentile",
+      "formula_reference": "core/features/fe_r2_001.py (canonical, single implementation)",
+      "input_columns": [
+        "high",
+        "low",
+        "close"
+      ],
+      "lookback": 500,
+      "timestamp_semantics": "feature(t) uses only bars with timestamp <= t (no lookahead)",
+      "output_schema": "float64 (ordinal {0,1,2} for volatility_regime)",
+      "warmup_requirement": 600,
+      "code_version": "FE-R2-003",
+      "determinism_status": "DETERMINISTIC",
+      "group": "REGIME"
+    }
+  },
+  "usable_rows_after_warmup": 57000,
+  "total_rows": 57600,
+  "feature_output_checksum": "70c273c54774381acd6e25eef2b151884c69afc401766b916e86091d7d7ec900",
+  "provenance_trace": {
+    "candidate_scope": "SINGLE_INSTRUMENT",
+    "instrument_id": "INSTR-EURUSD",
+    "feature_schema_identity": "f6e2473d9cf5055707f59c14ef741cecc79d62ba5e637313668e8ee8ba21739f",
+    "feature_ids": [
+      "FE-R2-003::momentum_5",
+      "FE-R2-003::momentum_20",
+      "FE-R2-003::rsi_14",
+      "FE-R2-003::atr_14",
+      "FE-R2-003::volatility_regime"
+    ],
+    "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+    "dataset_file_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+    "source_id": "SRC-KOMO135-FOREX-HISTORICAL-DATA"
+  }
+}
