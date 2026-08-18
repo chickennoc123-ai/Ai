@@ -98,7 +98,7 @@ class TestWalkForwardOOSGeneration:
         assert len(batches) == 1
         batch = batches[0]
         assert batch.model_version == "RF-R2-001"
-        assert batch.feature_version == "FE-R2-002"
+        assert batch.feature_version == "FE-R2-003"
         assert batch.training_data_state == DataState.DEVELOPMENT
         assert batch.test_data_state == DataState.VALIDATION
         # every prediction is (class, probability) with a matching timestamp

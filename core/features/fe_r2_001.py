@@ -38,7 +38,18 @@ from utils.exceptions import EAFactoryError
 #: values, which requires a new feature_version. Any artifact recorded
 #: under FE-R2-001 used the old (spec-inconsistent) formula and is
 #: automatically rejected by RFR2Model.load()'s feature_version check.
-FEATURE_VERSION = "FE-R2-002"
+#:
+#: Bumped from FE-R2-002 to FE-R2-003 per the same immutability rule:
+#: `_validate_ohlcv` now enforces the corrected, dataset-disclosed weekend
+#: closure window and an explicit, individually-verified holiday exception
+#: list (see `_check_weekday_gaps_v3` below and
+#: `ML-001-REAL-MARKET-GAP-SEMANTICS-AUDIT.md`) instead of the FE-R2-002
+#: naive Fri 22:00-Sun 22:00 UTC window, which real data fails outright.
+#: This is an authorized, disclosed, versioned specification correction
+#: (governance decision recorded 2026-08-18), not a silent relaxation.
+#: `_check_weekday_gaps` (FE-R2-002) is left completely unmodified below
+#: and remains independently tested — no frozen behavior was edited.
+FEATURE_VERSION = "FE-R2-003"
 
 #: Fixed feature vector order. Any reordering requires a new feature_version.
 FEATURE_ORDER: List[str] = [
@@ -132,7 +143,156 @@ def _check_weekday_gaps(index: pd.DatetimeIndex) -> None:
         )
 
 
-def _validate_ohlcv(df: pd.DataFrame) -> None:
+#: Corrected weekend-closure window for FE-R2-003, specific to the
+#: disclosed EST-fixed (no DST), Date+5h timezone-conversion convention
+#: recorded for this project's real EURUSD/GBPUSD H1 datasets (see
+#: DATASET_VALIDATION_REPORT.md Section 1). Empirically audited (not
+#: guessed) against both `data/csv/EURUSD_H1.csv` and
+#: `data/csv/GBPUSD_H1.csv`: every one of the 478 weekly-closure events in
+#: both series has its last pre-closure bar at UTC hour 1-4 on Saturday and
+#: its first post-closure bar at UTC hour 5 on Monday — never the FE-R2-002
+#: `_is_weekend_closure_time` window (Fri 22:00 UTC - Sun 22:00 UTC), which
+#: was written and tested only against synthetic fixtures that never
+#: exercised a real broker's actual weekly session boundary under this
+#: timezone convention. This function corrects the *parameter*; it does
+#: not relax the *policy* (an unexplained gap outside this window, or
+#: outside the explicit holiday list below, still hard-rejects).
+#: See ML-001-REAL-MARKET-GAP-SEMANTICS-AUDIT.md Section 3 for the full
+#: derivation and evidence.
+_CORRECTED_WEEKEND_CLOSE_WEEKDAY = 5  # Saturday
+_CORRECTED_WEEKEND_CLOSE_HOUR = 1
+_CORRECTED_WEEKEND_REOPEN_WEEKDAY = 0  # Monday
+_CORRECTED_WEEKEND_REOPEN_HOUR = 5
+
+
+def _is_corrected_weekend_closure_time(ts: pd.Timestamp) -> bool:
+    """True if ``ts`` falls inside FE-R2-003's dataset-corrected weekend window."""
+    dow = ts.weekday()
+    if dow == _CORRECTED_WEEKEND_CLOSE_WEEKDAY:  # Saturday
+        return ts.hour >= _CORRECTED_WEEKEND_CLOSE_HOUR
+    if dow == 6:  # Sunday: always inside the closure window
+        return True
+    if dow == _CORRECTED_WEEKEND_REOPEN_WEEKDAY:  # Monday
+        return ts.hour < _CORRECTED_WEEKEND_REOPEN_HOUR
+    return False
+
+
+#: Explicit, individually-verified holiday/anomaly exception list for
+#: FE-R2-003. Each entry is the EXACT admitted [start, end) span found by
+#: direct audit of the real EURUSD_H1.csv/GBPUSD_H1.csv gap distribution
+#: (ML-001-REAL-MARKET-GAP-SEMANTICS-AUDIT.md Section 3b) — the wider of
+#: the two symbols' observed bounds where they differ by an hour, so one
+#: list serves both. This is deliberately an enumerated list, not a
+#: generic "any gap in December" rule: every entry corresponds to a
+#: specific, named, independently-verifiable real-world closure (Christmas
+#: Day, New Year's Day) or a specific, dated, isolated 1-2 hour feed gap.
+#: Nothing outside this list and the corrected weekend window above is
+#: ever admitted — nothing here widens silently over time; a new real gap
+#: discovered in a future dataset requires a new, disclosed entry (and,
+#: per spec Section 2/16, a new feature_version), never a loosened rule.
+_ADMITTED_HOLIDAY_WINDOWS: List[tuple] = [
+    ("2012-12-24T23:00", "2012-12-26T13:00", "Christmas 2012"),
+    ("2013-01-01T00:00", "2013-01-02T04:00", "New Year 2013"),
+    ("2013-12-24T23:00", "2013-12-26T13:00", "Christmas 2013"),
+    ("2013-12-31T23:00", "2014-01-02T04:00", "New Year 2014"),
+    ("2014-05-01T08:00", "2014-05-01T11:00", "Isolated 2h feed gap, 2014-05-01 (May Day)"),
+    ("2014-12-25T00:00", "2014-12-26T14:00", "Christmas 2014"),
+    ("2015-01-01T00:00", "2015-01-02T14:00", "New Year 2015"),
+    ("2015-12-24T23:00", "2015-12-28T05:00", "Christmas 2015 (weekend-adjacent)"),
+    ("2016-01-01T01:00", "2016-01-04T05:00", "New Year 2016 (weekend-adjacent)"),
+    ("2016-03-22T20:00", "2016-03-22T22:00", "Isolated 1h feed gap, 2016-03-22"),
+    ("2016-03-23T22:00", "2016-03-24T01:00", "Isolated 2h feed gap, 2016-03-23"),
+    ("2016-10-13T20:00", "2016-10-13T22:00", "Isolated 1h feed gap, 2016-10-13"),
+    ("2016-12-24T04:00", "2016-12-26T11:00", "Christmas 2016"),
+    ("2017-12-23T04:00", "2017-12-26T11:00", "Christmas 2017 (weekend-adjacent)"),
+    ("2017-12-30T04:00", "2018-01-02T05:00", "New Year 2018 (weekend-adjacent)"),
+    ("2018-12-25T01:00", "2018-12-26T11:00", "Christmas 2018"),
+    ("2019-01-01T03:00", "2019-01-02T11:00", "New Year 2019"),
+    ("2019-12-25T01:00", "2019-12-26T11:00", "Christmas 2019"),
+    ("2020-01-01T03:00", "2020-01-02T11:00", "New Year 2020"),
+    ("2020-12-25T01:00", "2020-12-28T05:00", "Christmas 2020 (weekend-adjacent)"),
+    ("2021-01-01T00:00", "2021-01-04T05:00", "New Year 2021 (weekend-adjacent)"),
+    ("2021-06-16T20:00", "2021-06-16T22:00", "Isolated 1h feed gap, 2021-06-16"),
+]
+
+
+def _in_admitted_holiday_window(ts: pd.Timestamp) -> str | None:
+    """Return the matching reason string if ``ts`` falls in an admitted
+    holiday/anomaly window, else ``None``."""
+    for start, end, reason in _ADMITTED_HOLIDAY_WINDOWS:
+        if pd.Timestamp(start, tz="UTC") <= ts < pd.Timestamp(end, tz="UTC"):
+            return reason
+    return None
+
+
+def _check_weekday_gaps_v3(index: pd.DatetimeIndex) -> List[Dict[str, object]]:
+    """FE-R2-003 gap check: corrected weekend window + explicit holiday list.
+
+    Behaves exactly like ``_check_weekday_gaps`` (FE-R2-002) except that a
+    gap is admitted (not a violation) if every missing expected timestamp
+    inside it falls either inside ``_is_corrected_weekend_closure_time`` or
+    inside an ``_ADMITTED_HOLIDAY_WINDOWS`` entry. Any gap containing even
+    one missing timestamp outside both still raises, identically to
+    FE-R2-002. Returns a gap admission log (one entry per admitted gap) for
+    provenance/observability manifests; does not mutate any global state.
+    """
+    violations = []
+    admitted_log: List[Dict[str, object]] = []
+    for prev_ts, curr_ts in zip(index[:-1], index[1:]):
+        delta = curr_ts - prev_ts
+        if delta <= _BAR_WIDTH:
+            continue
+        missing = pd.date_range(prev_ts + _BAR_WIDTH, curr_ts - _BAR_WIDTH, freq="h")
+
+        unexplained = []
+        reasons = set()
+        for ts in missing:
+            # v3 admission is a strict superset of v2's: the original
+            # declared Fri 22:00-Sun 22:00 UTC window is still honored
+            # unconditionally (so every synthetic fixture built against
+            # spec Section 7's literal window keeps behaving exactly as
+            # before — this is additive, not a replacement), union'd with
+            # the dataset-corrected real window and the explicit holiday
+            # list. Never narrower than FE-R2-002 for any input.
+            if _is_weekend_closure_time(ts):
+                reasons.add("declared_weekend_closure")
+                continue
+            if _is_corrected_weekend_closure_time(ts):
+                reasons.add("corrected_weekend_closure")
+                continue
+            holiday_reason = _in_admitted_holiday_window(ts)
+            if holiday_reason is not None:
+                reasons.add(holiday_reason)
+                continue
+            unexplained.append(ts)
+
+        if unexplained:
+            violations.append((prev_ts, curr_ts))
+        else:
+            admitted_log.append(
+                {
+                    "gap_start": prev_ts.isoformat(),
+                    "gap_end": curr_ts.isoformat(),
+                    "missing_bar_count": len(missing),
+                    "reasons": sorted(reasons),
+                }
+            )
+
+    if violations:
+        first_start, first_end = violations[0]
+        raise FeatureEngineeringError(
+            "OHLCV frame contains unexpected weekday gap(s) (FE-R2-003 "
+            "data-quality violation) — not a legitimate corrected weekend "
+            "closure or an admitted holiday/anomaly window",
+            violation_count=len(violations),
+            first_violation_start=first_start.isoformat(),
+            first_violation_end=first_end.isoformat(),
+        )
+
+    return admitted_log
+
+
+def _validate_ohlcv(df: pd.DataFrame) -> List[Dict[str, object]]:
     missing = [c for c in REQUIRED_OHLCV_COLUMNS if c not in df.columns]
     if missing:
         raise FeatureEngineeringError(
@@ -149,7 +309,7 @@ def _validate_ohlcv(df: pd.DataFrame) -> None:
         )
     if not df.index.is_monotonic_increasing:
         raise FeatureEngineeringError("OHLCV frame timestamps must be strictly increasing")
-    _check_weekday_gaps(df.index)
+    return _check_weekday_gaps_v3(df.index)
 
 
 def compute_momentum(close: pd.Series, lookback: int) -> pd.Series:
@@ -305,8 +465,14 @@ def build_feature_matrix(ohlcv: pd.DataFrame) -> pd.DataFrame:
 
     Raises:
         FeatureEngineeringError: If the input frame is malformed.
+
+    Note:
+        The returned frame's ``.attrs["gap_admission_log"]`` (pandas
+        DataFrame metadata, not a schema column) records every FE-R2-003
+        weekend/holiday gap admitted while validating ``ohlcv`` — see
+        ``_check_weekday_gaps_v3``. Empty for perfectly continuous input.
     """
-    _validate_ohlcv(ohlcv)
+    gap_admission_log = _validate_ohlcv(ohlcv)
 
     close = ohlcv["close"]
     high = ohlcv["high"]
@@ -325,7 +491,9 @@ def build_feature_matrix(ohlcv: pd.DataFrame) -> pd.DataFrame:
     columns = {
         name: _apply_warmup(raw[name], WARMUP_BARS[name]) for name in FEATURE_ORDER
     }
-    return pd.DataFrame(columns, index=ohlcv.index)[FEATURE_ORDER]
+    result = pd.DataFrame(columns, index=ohlcv.index)[FEATURE_ORDER]
+    result.attrs["gap_admission_log"] = gap_admission_log
+    return result
 
 
 def get_feature_schema() -> Dict[str, object]:
