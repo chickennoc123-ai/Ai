@@ -1,0 +1,406 @@
+{
+  "generated_by": "GEN 7 Cycle 2 (horizon expansion / cost amplification discovery)",
+  "cycle_id": "CYCLE-02",
+  "phase_0_state_verification": {
+    "sealed_holdout_untouched": true,
+    "sealed_holdout_dataset_id": "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130",
+    "sealed_holdout_authorizations": 0,
+    "sealed_holdout_consumptions": 0,
+    "pure_holdout_terminal": true,
+    "pure_holdout_consumption_event": "LEDGER-00000028 (dataset DATASET-EURUSD-H1-KOMO135-V1, exactly once)",
+    "ogd4_unchanged": true,
+    "gap_found_and_fixed": "no cumulative multiple-testing ledger existed prior to this cycle; cycle-1 discovery_queue.json/hypothesis_evaluation.json were being silently overwritten in place on each run. Fixed: archived cycle-1 outputs to reports/factory/discovery_cycles/cycle_01_*.json (read-only going forward) and built discovery/ledger.py (append-only, cross-cycle)."
+  },
+  "phase_1_research_memory": {
+    "artifact": "reports/factory/research_memory_summary.json",
+    "rows_extracted": 10,
+    "source": "reports/factory/failure_library.json (read-only, 22 pre-cycle-2 records)"
+  },
+  "phase_2_3_horizon_sweep": {
+    "horizons_bars": [
+      2,
+      4,
+      8,
+      12,
+      24,
+      48,
+      72,
+      120,
+      240
+    ],
+    "families": 5,
+    "structural_parameter_sets": 27,
+    "total_evaluations": 243,
+    "train_window": {
+      "start": "2012-11-16T05:00:00",
+      "end": "2020-04-29T15:00:00",
+      "bars": 46080
+    },
+    "validation_window": {
+      "start": "2020-04-29T16:00:00",
+      "end": "2022-03-05T04:00:00",
+      "bars": 11520
+    },
+    "gate_distribution": {
+      "ECONOMICALLY_UNTRADABLE": 55,
+      "KILLED_NEGATIVE_EXPECTANCY": 96,
+      "KILLED_UNDERPOWERED": 87,
+      "VAL_FAIL_NEGATIVE": 3,
+      "VAL_FAIL_UNDERPOWERED": 2
+    },
+    "by_family_gate_distribution": {
+      "STREAK_REVERSAL_MULTIBAR": {
+        "ECONOMICALLY_UNTRADABLE": 20,
+        "KILLED_UNDERPOWERED": 36,
+        "KILLED_NEGATIVE_EXPECTANCY": 13,
+        "VAL_FAIL_UNDERPOWERED": 1,
+        "VAL_FAIL_NEGATIVE": 2
+      },
+      "GAP_MAGNITUDE_STRUCTURE": {
+        "KILLED_NEGATIVE_EXPECTANCY": 27,
+        "ECONOMICALLY_UNTRADABLE": 6,
+        "KILLED_UNDERPOWERED": 21
+      },
+      "VOLATILITY_TRANSITION": {
+        "KILLED_NEGATIVE_EXPECTANCY": 24,
+        "KILLED_UNDERPOWERED": 8,
+        "ECONOMICALLY_UNTRADABLE": 12,
+        "VAL_FAIL_UNDERPOWERED": 1
+      },
+      "BREAKOUT_STRUCTURE": {
+        "KILLED_NEGATIVE_EXPECTANCY": 27,
+        "ECONOMICALLY_UNTRADABLE": 12,
+        "KILLED_UNDERPOWERED": 14,
+        "VAL_FAIL_NEGATIVE": 1
+      },
+      "MULTITIMEFRAME_TREND_FILTER": {
+        "ECONOMICALLY_UNTRADABLE": 5,
+        "KILLED_UNDERPOWERED": 8,
+        "KILLED_NEGATIVE_EXPECTANCY": 5
+      }
+    }
+  },
+  "phase_4_economic_filter": {
+    "economically_untradable_count": 55,
+    "note": "gross-positive/net-negative results are classified ECONOMICALLY_UNTRADABLE, never counted as a successful hypothesis, per Phase 4 instruction",
+    "cost_efficiency_vs_horizon_finding": "mean train cost-efficiency rose roughly monotonically with horizon across every family (e.g. STREAK 0.4x->8.6x, GAP_MAGNITUDE 1.2x->25.0x, BREAKOUT 0.4x->14.3x from horizon=2 to horizon=240), confirming the amortization premise structurally -- but this did not translate into replicable net edge (see phase 8)."
+  },
+  "phase_5_multiple_testing": {
+    "cycle_count": 2,
+    "cumulative_hypotheses_generated": 15,
+    "cumulative_parameter_evaluations": 251,
+    "cumulative_survivors": 0,
+    "families_ever_touched": [
+      "BREAKOUT_STRUCTURE",
+      "COST_AMORTIZATION",
+      "GAP_DISLOCATION",
+      "GAP_MAGNITUDE_STRUCTURE",
+      "MULTITIMEFRAME_TREND_FILTER",
+      "REGIME_RECOMBINATION",
+      "SESSION_CONDITIONING",
+      "STREAK_REVERSAL",
+      "STREAK_REVERSAL_MULTIBAR",
+      "VOLATILITY_STATE_FILTER",
+      "VOLATILITY_TRANSITION"
+    ],
+    "cycles": [
+      {
+        "cycle_id": "CYCLE-01",
+        "started_at": "2026-08-19T22:47:54.245321+00:00",
+        "hypotheses_generated": 8,
+        "parameter_evaluations": 8,
+        "families_touched": [
+          "STREAK_REVERSAL",
+          "GAP_DISLOCATION",
+          "VOLATILITY_STATE_FILTER",
+          "SESSION_CONDITIONING",
+          "REGIME_RECOMBINATION",
+          "COST_AMORTIZATION"
+        ],
+        "survivors": 0,
+        "notes": "Backfilled retroactively: cycle 1 already executed and committed (b0e3f12) before this ledger existed. 0/8 survived internal validation."
+      },
+      {
+        "cycle_id": "CYCLE-02",
+        "started_at": "2026-08-19T22:52:47.601874+00:00",
+        "hypotheses_generated": 7,
+        "parameter_evaluations": 243,
+        "families_touched": [
+          "STREAK_REVERSAL_MULTIBAR",
+          "GAP_MAGNITUDE_STRUCTURE",
+          "VOLATILITY_TRANSITION",
+          "BREAKOUT_STRUCTURE",
+          "MULTITIMEFRAME_TREND_FILTER"
+        ],
+        "survivors": 0,
+        "notes": "Horizon-expansion sweep (2/4/8/12/24/48/72/120/240 bars) across 5 structurally distinct families. 0/243 evaluations passed both train (t>=2.0) and internal validation (t>=1.5, n>=30) gates. 5 evaluations cleared train alone; all 5 failed validation (3 sign-flipped negative, 2 underpowered). Cost-efficiency rose monotonically with horizon (confirming amortization premise structurally) but trade count fell in the same direction, destroying statistical power before any edge could be confirmed out-of-sample. See FAIL-000023..028."
+      }
+    ]
+  },
+  "phase_6_novelty_classification": [
+    {
+      "family": "STREAK_REVERSAL_MULTIBAR",
+      "classification": "HORIZON_VARIANT",
+      "justification": "cycle 1 tested k=2,3,4 at horizon=1 (OP-STREAK-REVERSAL) and k=3 at horizon=4,8 (OP-COST-AMORTIZED); cycle 2 adds k=6 and sweeps all k across 9 horizons -- same economic mechanism (streak exhaustion), different holding period / minor parameter."
+    },
+    {
+      "family": "GAP_MAGNITUDE_STRUCTURE (FADE mode)",
+      "classification": "HORIZON_VARIANT",
+      "justification": "cycle 1 tested unconditional gap fade (horizon=24) and size-gated fade >8pips (horizon=24,48); cycle 2 buckets magnitude into 3 tiers and sweeps 9 horizons -- same mechanism (weekend gap reversion), parameter/horizon extension only."
+    },
+    {
+      "family": "GAP_MAGNITUDE_STRUCTURE (CONTINUATION mode)",
+      "classification": "NEW_MECHANISM",
+      "justification": "opposite economic claim to FADE: gaps TREND rather than revert. Never tested in cycle 1 (which only ever tested the reversion direction). Distinct, falsifiable mechanism."
+    },
+    {
+      "family": "VOLATILITY_TRANSITION (COMPRESSION_BREAKOUT)",
+      "classification": "NEW_MECHANISM",
+      "justification": "cycle 1 used the NR7 compression state only as a no-trade FILTER on an unrelated breakout rule (OP-STATE-FILTER ablation). Cycle 2 uses the same state as a direct ENTRY TRIGGER (enter in the post-compression breakout direction) -- different causal claim about the same variable, never tested end-to-end before."
+    },
+    {
+      "family": "VOLATILITY_TRANSITION (SHOCK momentum/reversal)",
+      "classification": "NEW_FAMILY",
+      "justification": "GEN 8 cycle-1 observatory computed OBS-MRSHOCK/OBS-MOMCONT as raw observations at fixed 1-bar/4-bar horizons, but neither was ever promoted into a GEN 7 hypothesis or run through train/validation gates. First full end-to-end test of this mechanism."
+    },
+    {
+      "family": "BREAKOUT_STRUCTURE",
+      "classification": "NEW_FAMILY",
+      "justification": "a breakout rule existed in discovery/evaluation.py purely as the SUBJECT of the NR7 filter ablation in cycle 1 -- it was never itself evaluated as a hypothesis with train/validation gates. First first-class test of breakout continuation vs reversal."
+    },
+    {
+      "family": "MULTITIMEFRAME_TREND_FILTER",
+      "classification": "NEW_FAMILY",
+      "justification": "no cross-timeframe (H1 signal x D1 trend) mechanism existed anywhere in cycle 1. Genuinely new economic claim: streak-fade profitability depends on higher-timeframe trend alignment."
+    }
+  ],
+  "phase_7_early_destruction": {
+    "killed_insufficient_sample": 0,
+    "killed_negative_expectancy": 96,
+    "killed_cost_dominated": 0,
+    "killed_underpowered": 87
+  },
+  "phase_8_survivor_identification": {
+    "candidates_clearing_train_gate": 5,
+    "candidates_clearing_train_and_validation": 0,
+    "discovery_survivors": [],
+    "near_misses": [
+      {
+        "family": "STREAK_REVERSAL_MULTIBAR",
+        "params": {
+          "k": 3,
+          "vol_gated": false,
+          "horizon": 24
+        },
+        "train": {
+          "n": 1524,
+          "gross_expectancy": 0.000406,
+          "mean_net": 0.000296,
+          "net_std": 0.0050611,
+          "t_stat": 2.283,
+          "profit_factor": 1.175,
+          "win_rate": 0.5157,
+          "cost": 0.00011,
+          "cost_efficiency": 3.69,
+          "turnover": 0.03307,
+          "sharpe": 0.0585,
+          "sortino": 0.0961,
+          "max_drawdown": 0.112221
+        },
+        "validation": {
+          "n": 384,
+          "gross_expectancy": 0.0001574,
+          "mean_net": 4.74e-05,
+          "net_std": 0.0038442,
+          "t_stat": 0.242,
+          "profit_factor": 1.032,
+          "win_rate": 0.4948,
+          "cost": 0.00011,
+          "cost_efficiency": 1.431,
+          "turnover": 0.03333,
+          "sharpe": 0.0123,
+          "sortino": 0.0227,
+          "max_drawdown": 0.063079
+        },
+        "gate": "VAL_FAIL_UNDERPOWERED"
+      },
+      {
+        "family": "STREAK_REVERSAL_MULTIBAR",
+        "params": {
+          "k": 4,
+          "vol_gated": false,
+          "horizon": 12
+        },
+        "train": {
+          "n": 1682,
+          "gross_expectancy": 0.0002929,
+          "mean_net": 0.0001829,
+          "net_std": 0.0036229,
+          "t_stat": 2.07,
+          "profit_factor": 1.157,
+          "win_rate": 0.5202,
+          "cost": 0.00011,
+          "cost_efficiency": 2.662,
+          "turnover": 0.0365,
+          "sharpe": 0.0505,
+          "sortino": 0.0754,
+          "max_drawdown": 0.106568
+        },
+        "validation": {
+          "n": 428,
+          "gross_expectancy": 4.03e-05,
+          "mean_net": -6.97e-05,
+          "net_std": 0.0029375,
+          "t_stat": -0.491,
+          "profit_factor": 0.939,
+          "win_rate": 0.5117,
+          "cost": 0.00011,
+          "cost_efficiency": 0.366,
+          "turnover": 0.03715,
+          "sharpe": -0.0237,
+          "sortino": -0.038,
+          "max_drawdown": 0.049548
+        },
+        "gate": "VAL_FAIL_NEGATIVE"
+      },
+      {
+        "family": "STREAK_REVERSAL_MULTIBAR",
+        "params": {
+          "k": 6,
+          "vol_gated": false,
+          "horizon": 120
+        },
+        "train": {
+          "n": 225,
+          "gross_expectancy": 0.0020837,
+          "mean_net": 0.0019737,
+          "net_std": 0.0108494,
+          "t_stat": 2.729,
+          "profit_factor": 1.585,
+          "win_rate": 0.5778,
+          "cost": 0.00011,
+          "cost_efficiency": 18.943,
+          "turnover": 0.00488,
+          "sharpe": 0.1819,
+          "sortino": 0.383,
+          "max_drawdown": 0.089707
+        },
+        "validation": {
+          "n": 57,
+          "gross_expectancy": -0.0007482,
+          "mean_net": -0.0008582,
+          "net_std": 0.0089868,
+          "t_stat": -0.721,
+          "profit_factor": 0.794,
+          "win_rate": 0.4737,
+          "cost": 0.00011,
+          "cost_efficiency": 6.802,
+          "turnover": 0.00495,
+          "sharpe": -0.0955,
+          "sortino": -0.1571,
+          "max_drawdown": 0.092505
+        },
+        "gate": "VAL_FAIL_NEGATIVE"
+      },
+      {
+        "family": "VOLATILITY_TRANSITION",
+        "params": {
+          "mechanism": "SHOCK",
+          "z_threshold": 2.0,
+          "mode": "MOMENTUM",
+          "horizon": 240
+        },
+        "train": {
+          "n": 182,
+          "gross_expectancy": 0.0022905,
+          "mean_net": 0.0021805,
+          "net_std": 0.0144995,
+          "t_stat": 2.029,
+          "profit_factor": 1.463,
+          "win_rate": 0.5495,
+          "cost": 0.00011,
+          "cost_efficiency": 20.822,
+          "turnover": 0.00395,
+          "sharpe": 0.1504,
+          "sortino": 0.2517,
+          "max_drawdown": 0.137695
+        },
+        "validation": {
+          "n": 45,
+          "gross_expectancy": 0.0016116,
+          "mean_net": 0.0015016,
+          "net_std": 0.0116,
+          "t_stat": 0.868,
+          "profit_factor": 1.415,
+          "win_rate": 0.5556,
+          "cost": 0.00011,
+          "cost_efficiency": 14.651,
+          "turnover": 0.00391,
+          "sharpe": 0.1294,
+          "sortino": 0.2605,
+          "max_drawdown": 0.033384
+        },
+        "gate": "VAL_FAIL_UNDERPOWERED"
+      },
+      {
+        "family": "BREAKOUT_STRUCTURE",
+        "params": {
+          "lookback": 10,
+          "mode": "REVERSAL",
+          "horizon": 240
+        },
+        "train": {
+          "n": 186,
+          "gross_expectancy": 0.0029651,
+          "mean_net": 0.0028551,
+          "net_std": 0.0145219,
+          "t_stat": 2.681,
+          "profit_factor": 1.668,
+          "win_rate": 0.5591,
+          "cost": 0.00011,
+          "cost_efficiency": 26.955,
+          "turnover": 0.00404,
+          "sharpe": 0.1966,
+          "sortino": 0.3856,
+          "max_drawdown": 0.097768
+        },
+        "validation": {
+          "n": 46,
+          "gross_expectancy": -0.0018172,
+          "mean_net": -0.0019272,
+          "net_std": 0.0121012,
+          "t_stat": -1.08,
+          "profit_factor": 0.664,
+          "win_rate": 0.4348,
+          "cost": 0.00011,
+          "cost_efficiency": 16.52,
+          "turnover": 0.00399,
+          "sharpe": -0.1593,
+          "sortino": -0.2348,
+          "max_drawdown": 0.148436
+        },
+        "gate": "VAL_FAIL_NEGATIVE"
+      }
+    ]
+  },
+  "phase_9_gen12_handoff": {
+    "survivors_forwarded": 0,
+    "gen12_invoked": false,
+    "reason": "zero DISCOVERY_SURVIVORs per Phase 8 criteria; Phase 9 explicitly prohibits artificial advancement when no survivor exists",
+    "sealed_holdout_exposure": "NONE"
+  },
+  "phase_10_failure_memory": {
+    "records_added_this_cycle": 6,
+    "record_ids": [
+      "FAIL-000023",
+      "FAIL-000024",
+      "FAIL-000025",
+      "FAIL-000026",
+      "FAIL-000027",
+      "FAIL-000028"
+    ],
+    "total_library_size": 28,
+    "key_reusable_lesson": "cost-efficiency and statistical power move in OPPOSITE directions as horizon extends on a single instrument: the same trade-count shrinkage that improves cost-efficiency also destroys the sample needed to trust the estimate. Horizon extension relocates the cost problem into a power problem; it does not resolve it alone."
+  },
+  "final_state": "NO_EDGE_FOUND_YET"
+}

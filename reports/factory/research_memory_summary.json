@@ -1,0 +1,87 @@
+{
+  "generated_by": "discovery/research_memory.py (GEN 7 Cycle 2, Phase 1)",
+  "source": "reports/factory/failure_library.json (read-only) + reports/factory/discovery_cycles/cycle_01_*.json (read-only)",
+  "row_count": 10,
+  "rows": [
+    {
+      "family": "RSI_OVERSOLD_MEAN_REVERSION",
+      "observation": "rsi_14 < 30 -> rsi_14 crosses back above 30 (3 variants incl. volatility-regime-gated)",
+      "result": "STRAT-000001, STRAT-000002 REJECTED (HYP-000001/2 REFUTED, HYP-000003 blocked by SILENT_HORIZON_DRIFT)",
+      "failure_mode": "REFUTED / SILENT_HORIZON_DRIFT",
+      "known_limit": "entire RSI-oversold-crossback mechanism family exhausted at H1 EURUSD",
+      "unexplored_region": "none sanctioned -- refuted-family firewall blocks regeneration"
+    },
+    {
+      "family": "VOLATILITY_STATE_FILTER",
+      "observation": "next-bar range after NR7 = 0.711x recent median, t=-49.626",
+      "result": "filter ablation: REFUTED_INTERNAL",
+      "failure_mode": "FILTER_NO_IMPROVEMENT",
+      "known_limit": "NR7 compression state is real (strongly significant) but does not translate into a profitable no-trade filter on breakout entries",
+      "unexplored_region": "whether compression state improves ENTRY TIMING (not filtering) for other signal families; whether longer post-compression horizons help"
+    },
+    {
+      "family": "COST_AMORTIZATION",
+      "observation": "gap-fill tendency (t=22.366) conditioned on gap size after unconditioned version proved cost-marginal",
+      "result": "train n=130, net=0.0002671, t=0.991 -> TRAIN_FAIL",
+      "failure_mode": "INSUFFICIENT_STATISTICAL_POWER",
+      "known_limit": "net expectancy POSITIVE (2.67 pips) but t=0.991 < 2.0 gate; underpowered, not unprofitable",
+      "unexplored_region": "raising trade count for this exact mechanism (more instruments, longer history)"
+    },
+    {
+      "family": "GAP_DISLOCATION",
+      "observation": "P(gap fill within 24 bars) = 0.876 over 386 weekends",
+      "result": "train n=386, net=-2.11e-05, t=-0.204 -> TRAIN_FAIL",
+      "failure_mode": "COST_DOMINATED",
+      "known_limit": "1-bar horizon gross effect (0.89 pips est.) is smaller than 1.1-pip roundtrip cost",
+      "unexplored_region": "longer holding horizons that amortize the same fixed cost"
+    },
+    {
+      "family": "COST_AMORTIZATION",
+      "observation": "streak anti-persistence (t=-7.346) re-tested at 8-bar horizon after 1-bar horizon proved cost-dominated",
+      "result": "train n=5990, net=-2.9e-05, t=-0.763 -> TRAIN_FAIL",
+      "failure_mode": "COST_DOMINATED",
+      "known_limit": "1-bar horizon gross effect (0.81 pips est.) is smaller than 1.1-pip roundtrip cost",
+      "unexplored_region": "longer holding horizons that amortize the same fixed cost"
+    },
+    {
+      "family": "STREAK_REVERSAL",
+      "observation": "P(continuation | 2-bar streak) = 0.457, t=-8.965",
+      "result": "train n=14786, net=-9.24e-05, t=-10.741 -> TRAIN_FAIL",
+      "failure_mode": "COST_DOMINATED",
+      "known_limit": "1-bar horizon gross effect (0.18 pips est.) is smaller than 1.1-pip roundtrip cost",
+      "unexplored_region": "longer holding horizons that amortize the same fixed cost"
+    },
+    {
+      "family": "SESSION_CONDITIONING",
+      "observation": "streak reversal edge (t=-8.96) x highest-vol session (1.384x range)",
+      "result": "train n=3355, net=-0.0001232, t=-5.099 -> TRAIN_FAIL",
+      "failure_mode": "NEGATIVE_EXPECTANCY",
+      "known_limit": "net expectancy negative at 1-bar horizon (t=-5.099)",
+      "unexplored_region": "whether sign/magnitude changes at longer horizons or with regime filters"
+    },
+    {
+      "family": "REGIME_RECOMBINATION",
+      "observation": "streak reversal (t=-7.35) recombined with volatility persistence (t=+53)",
+      "result": "train n=3083, net=-8.82e-05, t=-4.061 -> TRAIN_FAIL",
+      "failure_mode": "COST_DOMINATED",
+      "known_limit": "1-bar horizon gross effect (0.22 pips est.) is smaller than 1.1-pip roundtrip cost",
+      "unexplored_region": "longer holding horizons that amortize the same fixed cost"
+    },
+    {
+      "family": "SESSION_CONDITIONING",
+      "observation": "hour-of-day return anomalies with |t|>4.4 in the observation window",
+      "result": "train n=3734, net=-3.67e-05, t=-4.014 -> TRAIN_FAIL",
+      "failure_mode": "COST_DOMINATED",
+      "known_limit": "1-bar horizon gross effect (0.73 pips est.) is smaller than 1.1-pip roundtrip cost",
+      "unexplored_region": "longer holding horizons that amortize the same fixed cost"
+    },
+    {
+      "family": "GAP_DISLOCATION",
+      "observation": "large weekend gaps (>8 pips) net +2.67 pips/trade, 2.4x cost",
+      "result": "STATISTICAL_FAILURE: n=130, t=0.99 (underpowered, NOT unprofitable)",
+      "failure_mode": "INSUFFICIENT_STATISTICAL_POWER",
+      "known_limit": "event rate ~52/year hard-caps achievable n on a single-symbol, single-window test; re-testing the same window cannot fix this",
+      "unexplored_region": "pooling the same mechanism across multiple correlated instruments to raise n without reusing observations; NOT explorable with current single-instrument dev data"
+    }
+  ]
+}

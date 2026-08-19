@@ -1,0 +1,246 @@
+{
+  "generated_by": "discovery/engine.py (GEN 7)",
+  "observation_registry_window": {
+    "start": "2012-11-16T05:00:00",
+    "end": "2020-04-29T15:00:00",
+    "bars": 46080
+  },
+  "budget": 20,
+  "assumed_roundtrip_cost": 0.00011,
+  "queue_size": 8,
+  "hypotheses": [
+    {
+      "hyp_id": "DISC-C16ABFE3FB",
+      "operator": "OP-STATE-FILTER",
+      "what_was_discovered": "next-bar range after NR7 = 0.711x recent median, t=-49.626",
+      "why_interesting": "volatility clustering implies compression is a state, not a trigger; breakout entries during compression should underperform",
+      "evidence_obs_ids": [
+        "OBS-NR7-EXPAND",
+        "OBS-VOLCLUST-L1"
+      ],
+      "mechanism": "range compression persists into the next hour (narrowest-range-of-7 predicts below-median next-bar range); use as a NO-TRADE filter for breakout-style entries",
+      "testable_prediction": "a breakout rule filtered by 'not in NR7 state' outperforms the same rule unfiltered, net of costs, on validation data",
+      "proposed_test": {
+        "type": "filter_ablation",
+        "state": "NR7",
+        "applies_to": "breakout entries",
+        "horizon_bars": 1
+      },
+      "expected_gross_effect": 0.000246,
+      "effect_vs_cost": 2.236,
+      "economic_flag": "VIABLE",
+      "priority": 73.985,
+      "family_signature": "01c553b443bb5b3f20336728a98752c70d0c81d98ae6b030aaee922f5aba47c3",
+      "information_gain_inputs": {
+        "min_t": 49.626,
+        "min_n": 7825,
+        "complexity": 1.5
+      }
+    },
+    {
+      "hyp_id": "DISC-13AE393975",
+      "operator": "OP-COST-AMORTIZED",
+      "what_was_discovered": "gap-fill tendency (t=22.366) conditioned on gap size after unconditioned version proved cost-marginal",
+      "why_interesting": "cycle-1 failure analysis: median gap 5.1 pips vs 1.1-pip cost left ~0 net; large gaps carry proportionally larger targets for the same fixed cost",
+      "evidence_obs_ids": [
+        "OBS-WKND-GAPFILL"
+      ],
+      "mechanism": "fade only weekend gaps larger than 8 pips toward Friday close with a 24-bar time stop: condition on target size exceeding cost several times over",
+      "testable_prediction": "large-gap fade (>8 pips, 24-bar stop) has positive net expectancy on train AND validation",
+      "proposed_test": {
+        "type": "gap_fade",
+        "horizon_bars": 24,
+        "min_gap": 0.0008
+      },
+      "expected_gross_effect": 0.0003503,
+      "effect_vs_cost": 3.184,
+      "economic_flag": "VIABLE",
+      "priority": 67.098,
+      "family_signature": "f8a200815ddac09dafd20a86bb7079f9f41d85a8442215a05ef5d4fd6f635f3b",
+      "information_gain_inputs": {
+        "min_t": 22.366,
+        "min_n": 386,
+        "complexity": 1.0
+      }
+    },
+    {
+      "hyp_id": "DISC-18CAAD908A",
+      "operator": "OP-EVENT-SEQUENCE",
+      "what_was_discovered": "P(gap fill within 24 bars) = 0.876 over 386 weekends",
+      "why_interesting": "positioning unwind after illiquid weekend open; event-based, ~52 trades/year, well-defined target and time stop",
+      "evidence_obs_ids": [
+        "OBS-WKND-GAPFILL"
+      ],
+      "mechanism": "weekend opening gaps revert toward Friday close within 24 H1 bars (fade the gap at Sunday open, target = Friday close)",
+      "testable_prediction": "fading weekend gaps with target=Friday-close and 24-bar time stop yields positive expectancy net of spread on validation data",
+      "proposed_test": {
+        "entry": "Sunday open bar close, direction opposing the gap",
+        "exit": "Friday close touched OR 24 bars elapsed",
+        "horizon_bars": 24,
+        "event": "weekend_gap"
+      },
+      "expected_gross_effect": 0.0003832,
+      "effect_vs_cost": 3.483,
+      "economic_flag": "VIABLE",
+      "priority": 67.098,
+      "family_signature": "b4738cf7e3fa43e385ed27028806888cab27eead61d43faefa0a9086da0ced1d",
+      "information_gain_inputs": {
+        "min_t": 22.366,
+        "min_n": 386,
+        "complexity": 1.0
+      }
+    },
+    {
+      "hyp_id": "DISC-BE615E0241",
+      "operator": "OP-COST-AMORTIZED",
+      "what_was_discovered": "streak anti-persistence (t=-7.346) re-tested at 8-bar horizon after 1-bar horizon proved cost-dominated",
+      "why_interesting": "cycle-1 failure analysis: gross edge positive but < cost at 1-bar horizon; if reversion persists beyond one bar, expectancy scales with horizon while cost stays fixed",
+      "evidence_obs_ids": [
+        "OBS-TRENDPERSIST-K3"
+      ],
+      "mechanism": "fade 3-bar streaks and hold 8 bars: amortize the fixed roundtrip cost over a 8-hour reversion swing",
+      "testable_prediction": "8-bar streak fade clears cost on train AND internal validation",
+      "proposed_test": {
+        "type": "streak_fade",
+        "k": 3,
+        "horizon_bars": 8
+      },
+      "expected_gross_effect": 0.00025,
+      "effect_vs_cost": 2.273,
+      "economic_flag": "VIABLE",
+      "priority": 16.697,
+      "family_signature": "71a7c193c17dad2931307726792400838683df2b53d935c685bf9ff4b6d9862e",
+      "information_gain_inputs": {
+        "min_t": 7.346,
+        "min_n": 4989,
+        "complexity": 1.0
+      }
+    },
+    {
+      "hyp_id": "DISC-380AA23AF3",
+      "operator": "OP-STREAK-REVERSAL",
+      "what_was_discovered": "P(continuation | 2-bar streak) = 0.457, t=-8.965",
+      "why_interesting": "exhaustion/anti-persistence after consecutive moves; distinct from oscillator-level mean reversion (no indicator threshold involved)",
+      "evidence_obs_ids": [
+        "OBS-TRENDPERSIST-K2"
+      ],
+      "mechanism": "after 2 consecutive same-direction H1 bars, the next bar reverses more often than chance (fade the streak, 1-bar horizon)",
+      "testable_prediction": "fading 2-bar streaks yields positive gross expectancy at 1-bar horizon on unseen dev-internal validation data",
+      "proposed_test": {
+        "entry": "at close of 2-th consecutive up(down) bar, enter short(long)",
+        "exit": "next bar close",
+        "horizon_bars": 1,
+        "direction": "counter-streak"
+      },
+      "expected_gross_effect": 7.3e-05,
+      "effect_vs_cost": 0.664,
+      "economic_flag": "ECONOMICALLY_DOUBTFUL",
+      "priority": 5.953,
+      "family_signature": "0a811c9043aa18d504cd6bd66206b7c31a8304caa4a75c8e51e1a644d0646492",
+      "information_gain_inputs": {
+        "min_t": 8.965,
+        "min_n": 10883,
+        "complexity": 1.0
+      }
+    },
+    {
+      "hyp_id": "DISC-D3CE8303E0",
+      "operator": "OP-SESSION-CONDITION",
+      "what_was_discovered": "streak reversal edge (t=-8.96) x highest-vol session (1.384x range)",
+      "why_interesting": "same probability edge applied where bar magnitude is largest -> gross effect scales with session range while cost is constant",
+      "evidence_obs_ids": [
+        "OBS-TRENDPERSIST-K2",
+        "OBS-SESSVOL-NY_LATE"
+      ],
+      "mechanism": "fade 2-bar streaks ONLY during the high-volatility late-NY window (17-21 UTC) where per-bar range is 1.38x average",
+      "testable_prediction": "streak-fade restricted to 17-21 UTC has higher net expectancy per trade than the unconditioned version",
+      "proposed_test": {
+        "entry": "counter-streak after 2 consecutive bars, hour in 17-21 UTC",
+        "exit": "next bar close",
+        "horizon_bars": 1
+      },
+      "expected_gross_effect": 0.0001011,
+      "effect_vs_cost": 0.919,
+      "economic_flag": "ECONOMICALLY_DOUBTFUL",
+      "priority": 5.492,
+      "family_signature": "2d6155a6ea70a546c2c6b4159c8e6c8d094ac5e8b6b9067e40396f6af80a6af6",
+      "information_gain_inputs": {
+        "min_t": 8.965,
+        "min_n": 9643,
+        "complexity": 1.5
+      }
+    },
+    {
+      "hyp_id": "DISC-FAAE60C0A5",
+      "operator": "OP-RECOMBINE",
+      "what_was_discovered": "streak reversal (t=-7.35) recombined with volatility persistence (t=+53)",
+      "why_interesting": "conditioning the probability edge on a persistent state variable concentrates trades where gross effect exceeds cost",
+      "evidence_obs_ids": [
+        "OBS-TRENDPERSIST-K3",
+        "OBS-VOLCLUST-L1"
+      ],
+      "mechanism": "fade 3-bar streaks conditioned on ELEVATED realized volatility (50-bar vol above its median): streak exhaustion should be stronger when moves are large enough to exhaust",
+      "testable_prediction": "vol-conditioned streak fade beats unconditioned fade net of costs",
+      "proposed_test": {
+        "entry": "counter-streak after 3 bars AND vol50 > median",
+        "exit": "next bar close",
+        "horizon_bars": 1
+      },
+      "expected_gross_effect": 0.0001149,
+      "effect_vs_cost": 1.045,
+      "economic_flag": "VIABLE",
+      "priority": 5.116,
+      "family_signature": "596c87dd16388efbbb277d39ba82e29161bc985a695b76e8b7f7ae06af6b5f5c",
+      "information_gain_inputs": {
+        "min_t": 7.346,
+        "min_n": 4989,
+        "complexity": 1.5
+      }
+    },
+    {
+      "hyp_id": "DISC-42031BA0D6",
+      "operator": "OP-SESSION-CONDITION",
+      "what_was_discovered": "hour-of-day return anomalies with |t|>4.4 in the observation window",
+      "why_interesting": "persistent intraday flow (fixing/rebalancing) can create clock-driven drift; cheap to test, high refutation value",
+      "evidence_obs_ids": [
+        "OBS-HOUR-04",
+        "OBS-HOUR-06"
+      ],
+      "mechanism": "systematic directional drift in specific Asia hours (04 UTC negative t=-6.98, 06 UTC positive t=+4.49): time-of-day flow pattern, trade the hour with the sign",
+      "testable_prediction": "an hour-conditioned position (short 04 UTC / long 06 UTC bar) retains sign on validation data",
+      "proposed_test": {
+        "entry": "at hour open (04 short, 06 long)",
+        "exit": "hour close",
+        "horizon_bars": 1
+      },
+      "expected_gross_effect": 7.35e-05,
+      "effect_vs_cost": 0.668,
+      "economic_flag": "ECONOMICALLY_DOUBTFUL",
+      "priority": 2.002,
+      "family_signature": "d87b6b45cd014f050ffc7a7e24eaf2f23b267e38548865f172ca0333093d361b",
+      "information_gain_inputs": {
+        "min_t": 4.494,
+        "min_n": 1814,
+        "complexity": 1.5
+      }
+    }
+  ],
+  "rejections": [
+    {
+      "hyp_id": "DISC-89182E7900",
+      "reason": "near-duplicate within batch"
+    },
+    {
+      "hyp_id": "DISC-F356C0F178",
+      "reason": "near-duplicate within batch"
+    },
+    {
+      "hyp_id": "DISC-92DA6C8131",
+      "reason": "near-duplicate within batch"
+    },
+    {
+      "hyp_id": "DISC-5EE01827E5",
+      "reason": "near-duplicate within batch"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "cumulative_hypotheses_generated": 15,
+  "cumulative_parameter_evaluations": 251,
+  "cumulative_survivors": 0,
+  "cycle_count": 2,
+  "cycles": [
+    {
+      "cycle_id": "CYCLE-01",
+      "families_touched": [
+        "STREAK_REVERSAL",
+        "GAP_DISLOCATION",
+        "VOLATILITY_STATE_FILTER",
+        "SESSION_CONDITIONING",
+        "REGIME_RECOMBINATION",
+        "COST_AMORTIZATION"
+      ],
+      "hypotheses_generated": 8,
+      "notes": "Backfilled retroactively: cycle 1 already executed and committed (b0e3f12) before this ledger existed. 0/8 survived internal validation.",
+      "parameter_evaluations": 8,
+      "started_at": "2026-08-19T22:47:54.245321+00:00",
+      "survivors": 0
+    },
+    {
+      "cycle_id": "CYCLE-02",
+      "families_touched": [
+        "STREAK_REVERSAL_MULTIBAR",
+        "GAP_MAGNITUDE_STRUCTURE",
+        "VOLATILITY_TRANSITION",
+        "BREAKOUT_STRUCTURE",
+        "MULTITIMEFRAME_TREND_FILTER"
+      ],
+      "hypotheses_generated": 7,
+      "notes": "Horizon-expansion sweep (2/4/8/12/24/48/72/120/240 bars) across 5 structurally distinct families. 0/243 evaluations passed both train (t>=2.0) and internal validation (t>=1.5, n>=30) gates. 5 evaluations cleared train alone; all 5 failed validation (3 sign-flipped negative, 2 underpowered). Cost-efficiency rose monotonically with horizon (confirming amortization premise structurally) but trade count fell in the same direction, destroying statistical power before any edge could be confirmed out-of-sample. See FAIL-000023..028.",
+      "parameter_evaluations": 243,
+      "started_at": "2026-08-19T22:52:47.601874+00:00",
+      "survivors": 0
+    }
+  ],
+  "families_ever_touched": [
+    "BREAKOUT_STRUCTURE",
+    "COST_AMORTIZATION",
+    "GAP_DISLOCATION",
+    "GAP_MAGNITUDE_STRUCTURE",
+    "MULTITIMEFRAME_TREND_FILTER",
+    "REGIME_RECOMBINATION",
+    "SESSION_CONDITIONING",
+    "STREAK_REVERSAL",
+    "STREAK_REVERSAL_MULTIBAR",
+    "VOLATILITY_STATE_FILTER",
+    "VOLATILITY_TRANSITION"
+  ]
+}
