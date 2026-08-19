@@ -54,12 +54,42 @@ SOURCE_TYPES = frozenset(
         "MARKET_OBSERVATION",
         "MACRO_DATA_SOURCE",
         "ALTERNATIVE_DATA_SOURCE",
+        # Generation 3 additions (ML-001-RESEARCH-INTAKE-SPEC.md §2) --
+        # additive; no existing record is invalidated by extending the set.
+        "MACRO_RESEARCH",
+        "ALTERNATIVE_DATA_RESEARCH",
+        "INTERNAL_RESEARCH_REPORT",
     }
 )
 
 LICENSE_STATUSES = frozenset({"UNKNOWN", "PUBLIC_DOMAIN", "PERMISSIVE", "RESTRICTED", "PROPRIETARY", "DISPUTED"})
 PROVENANCE_STATUSES = frozenset({"UNVERIFIED", "PARTIALLY_VERIFIED", "VERIFIED"})
-VERIFICATION_STATUSES = frozenset({"UNVERIFIED", "SPOT_CHECKED", "INDEPENDENTLY_VERIFIED"})
+#: Generation 3 (ML-001-RESEARCH-INTAKE-SPEC.md §3): extended additively.
+#: VERIFIED / PROVISIONALLY_VERIFIED / UNVERIFIED / ACCESS_FAILED / REJECTED
+#: are the task-mandated verification distinctions; the two Generation 2
+#: values (SPOT_CHECKED, INDEPENDENTLY_VERIFIED) remain valid so no record
+#: or test written against them is invalidated. A status is NEVER silently
+#: upgraded -- the only path to a stronger status is an explicit
+#: re-registration or new_version() call that states its evidence.
+VERIFICATION_STATUSES = frozenset(
+    {
+        "UNVERIFIED",
+        "SPOT_CHECKED",
+        "INDEPENDENTLY_VERIFIED",
+        "VERIFIED",
+        "PROVISIONALLY_VERIFIED",
+        "ACCESS_FAILED",
+        "REJECTED",
+    }
+)
+
+#: Whether the source's content was actually reached at intake time.
+#: ACCESS_FAILED is a first-class, honest outcome (e.g. network policy
+#: blocks a host): the source is retained with the failure on record --
+#: it is NEVER silently replaced by a different source pretending to be
+#: the same one, and nothing downstream may treat an ACCESS_FAILED
+#: source's content as having been reviewed.
+ACCESS_STATUSES = frozenset({"NOT_ATTEMPTED", "ACCESSED", "ACCESS_FAILED"})
 
 
 class SourceSpecError(EAFactoryError):
@@ -102,8 +132,26 @@ class SourceRecord:
     #: same source (Phase 2: "create a new source version if content
     #: materially changes" -- never overwrite the old one).
     supersedes_source_id: Optional[str] = None
+    #: Generation 3 additions (ML-001-RESEARCH-INTAKE-SPEC.md §3) --
+    #: additive, defaulted, backward-compatible with every existing record.
+    access_status: str = "NOT_ATTEMPTED"
+    #: Content-addressed snapshot reference (core.factory.source_snapshot)
+    #: -- "UNKNOWN" when no snapshot was retained (e.g. ACCESS_FAILED, or
+    #: retention not legally permitted for this source).
+    artifact_reference: str = "UNKNOWN"
 
     def __post_init__(self) -> None:
+        if self.access_status not in ACCESS_STATUSES:
+            raise SourceSpecError(
+                "unknown access_status", access_status=self.access_status, allowed=sorted(ACCESS_STATUSES)
+            )
+        if self.access_status == "ACCESS_FAILED" and self.content_checksum not in ("UNKNOWN", ""):
+            # an inaccessible source cannot simultaneously claim its content
+            # was checksummed -- that would imply the content WAS reached.
+            raise SourceSpecError(
+                "ACCESS_FAILED source cannot carry a content_checksum -- the content was never reached",
+                source_id=self.source_id,
+            )
         required = ("source_id", "title", "retrieval_timestamp")
         missing = [f for f in required if not getattr(self, f) or not str(getattr(self, f)).strip()]
         if missing:

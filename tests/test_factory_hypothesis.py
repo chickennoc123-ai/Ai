@@ -149,11 +149,31 @@ class TestRegistryIdentityAndPersistence:
         assert summary["by_evidence_level"]["FORMALIZED_UNTESTED"] == 1
 
 
-class TestNoHypothesesActuallyIngestedInProduction:
-    """Locks in the task's explicit stop condition: this infrastructure
-    exists but has not been used to ingest anything real yet."""
+class TestProductionHypothesisIngestionDiscipline:
+    """Updated for Generation 3 (documented contract change, not a
+    weakening): the original test asserted the production hypothesis
+    registry did NOT exist, encoding Generation 2's explicit "zero real
+    hypotheses ingested" stop condition. Generation 3's execution contract
+    explicitly authorized a small, controlled REAL research seed set, so
+    the registry now legitimately exists. The replacement invariants are
+    stronger than the old existence check: every production hypothesis
+    must carry full source lineage, and none may claim SUPPORTED (no
+    hypothesis has any test evidence yet)."""
 
-    def test_no_production_hypothesis_registry_file_exists(self) -> None:
-        from core.factory.hypothesis import DEFAULT_HYPOTHESIS_REGISTRY_PATH
+    def test_every_production_hypothesis_has_full_lineage_and_none_is_supported(self) -> None:
+        from core.factory.hypothesis import DEFAULT_HYPOTHESIS_REGISTRY_PATH, HypothesisRegistry
 
-        assert not DEFAULT_HYPOTHESIS_REGISTRY_PATH.exists()
+        if not DEFAULT_HYPOTHESIS_REGISTRY_PATH.exists():
+            pytest.skip("production hypothesis registry not present in this checkout")
+        reg = HypothesisRegistry(path=DEFAULT_HYPOTHESIS_REGISTRY_PATH)
+        population = reg.list_all()
+        assert population, "registry file exists but is empty -- inconsistent state"
+        for h in population:
+            assert h.source_reference.strip()
+            assert h.original_claim.strip()
+            assert h.origin_type != "UNSPECIFIED"
+            assert h.formalization_status != "SUPPORTED"  # nothing has test evidence yet
+            if h.origin_type == "AI_DERIVED":
+                assert h.ai_provenance  # AI hypotheses carry their provenance
+            if h.origin_type == "CROSS_SOURCE_SYNTHESIS":
+                assert len(h.parent_claim_ids) + len(h.parent_source_ids) >= 2

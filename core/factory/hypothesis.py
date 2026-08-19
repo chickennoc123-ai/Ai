@@ -43,6 +43,23 @@ SOURCE_TYPES = frozenset(
         "PUBLIC_STRATEGY_DESCRIPTION",
         "YOUTUBE",
         "OTHER_DOCUMENTED_SOURCE",
+        # Generation 3 (additive): align this module's vocabulary with the
+        # richer core.factory.research_source_registry.SOURCE_TYPES so a
+        # hypothesis derived from any registered SourceRecord can carry
+        # the same type label its source carries. Nothing removed.
+        "WORKING_PAPER",
+        "TEXTBOOK",
+        "RESEARCH_REPORT",
+        "PUBLIC_STRATEGY",
+        "OPEN_SOURCE_CODE",
+        "HUMAN_HYPOTHESIS",
+        "AI_GENERATED_HYPOTHESIS",
+        "MARKET_OBSERVATION",
+        "MACRO_DATA_SOURCE",
+        "ALTERNATIVE_DATA_SOURCE",
+        "MACRO_RESEARCH",
+        "ALTERNATIVE_DATA_RESEARCH",
+        "INTERNAL_RESEARCH_REPORT",
     }
 )
 
@@ -77,6 +94,32 @@ FORMALIZATION_STATUSES = frozenset(
 )
 _FORMALIZATION_TERMINAL = frozenset({"REJECTED", "SUPPORTED", "REFUTED", "SUPERSEDED"})
 _FORMALIZATION_FORWARD_ORDER = ["DRAFT", "FORMALIZED", "ELIGIBLE", "TESTED"]
+
+#: Generation 3, Phase 7 (ML-001-HYPOTHESIS-GENERATION-SPEC.md §2): where
+#: a hypothesis came from. CROSS_SOURCE_SYNTHESIS must preserve ALL parent
+#: lineage (>= 2 parent claims/sources, enforced at construction).
+#: UNSPECIFIED exists only for records predating this field.
+ORIGIN_TYPES = frozenset(
+    {
+        "PAPER_DERIVED",
+        "WEB_DERIVED",
+        "YOUTUBE_DERIVED",
+        "PUBLIC_STRATEGY_DERIVED",
+        "HUMAN_DERIVED",
+        "AI_DERIVED",
+        "MARKET_OBSERVATION_DERIVED",
+        "CROSS_SOURCE_SYNTHESIS",
+        "UNSPECIFIED",
+    }
+)
+
+#: Phase 8: the minimum provenance keys an AI-derived hypothesis must
+#: carry. AI plausibility is NOT evidence -- these fields exist so an
+#: AI-generated hypothesis can never blend in as human research, and so
+#: its generation is reproducible/auditable.
+AI_PROVENANCE_REQUIRED_KEYS = frozenset(
+    {"generation_model", "generation_timestamp", "prompt_identity", "input_source_ids", "input_claim_ids"}
+)
 
 
 #: A hypothesis may never be CAPTURED already claiming validated evidence
@@ -148,6 +191,17 @@ class HypothesisRecord:
     regime_conditions: str = "UNKNOWN"
     falsification_conditions: str = "UNKNOWN"
     cost_assumptions: str = "UNKNOWN"
+    #: Generation 3 additions (Phase 7-8) -- additive, defaulted.
+    origin_type: str = "UNSPECIFIED"
+    #: ALL parents, preserved -- for CROSS_SOURCE_SYNTHESIS this is the
+    #: full parent set (>= 2 required), never collapsed to one.
+    parent_source_ids: Tuple[str, ...] = ()
+    parent_claim_ids: Tuple[str, ...] = ()
+    #: Phase 8: non-empty (with AI_PROVENANCE_REQUIRED_KEYS present) iff
+    #: origin_type == AI_DERIVED; must be empty otherwise -- an
+    #: AI-generated hypothesis can never present itself as human-derived,
+    #: and a human hypothesis can never carry fake AI provenance.
+    ai_provenance: Dict[str, Any] = field(default_factory=dict)
     #: A second, richer status axis alongside `evidence_level` (kept for
     #: backward compatibility -- evidence_level tracks progression toward
     #: real StrategyRegistry test evidence; formalization_status tracks
@@ -186,6 +240,32 @@ class HypothesisRecord:
             raise HypothesisSpecError(
                 "evidence_level implies real test evidence but transformation_history is empty",
                 evidence_level=self.evidence_level,
+            )
+        if self.origin_type not in ORIGIN_TYPES:
+            raise HypothesisSpecError(
+                "unknown origin_type", origin_type=self.origin_type, allowed=sorted(ORIGIN_TYPES)
+            )
+        if self.origin_type == "CROSS_SOURCE_SYNTHESIS" and (
+            len(self.parent_claim_ids) + len(self.parent_source_ids) < 2
+        ):
+            raise HypothesisSpecError(
+                "CROSS_SOURCE_SYNTHESIS requires at least 2 recorded parents -- synthesis "
+                "lineage must preserve ALL parents, never collapse to one",
+                hypothesis_id=self.hypothesis_id,
+            )
+        if self.origin_type == "AI_DERIVED":
+            missing_keys = sorted(AI_PROVENANCE_REQUIRED_KEYS - set(self.ai_provenance.keys()))
+            if missing_keys:
+                raise HypothesisSpecError(
+                    "AI_DERIVED hypothesis is missing required AI provenance keys -- AI "
+                    "generation must carry stronger provenance separation, not less",
+                    hypothesis_id=self.hypothesis_id, missing_keys=missing_keys,
+                )
+        elif self.ai_provenance:
+            raise HypothesisSpecError(
+                "ai_provenance may only be set on an AI_DERIVED hypothesis -- a human/paper "
+                "hypothesis carrying AI provenance (or vice versa) is a lineage corruption",
+                hypothesis_id=self.hypothesis_id, origin_type=self.origin_type,
             )
         if self.formalization_status in _FORMALIZATION_TERMINAL and not self.transformation_history:
             # symmetric protection on the second status axis (Generation 2):
@@ -229,6 +309,8 @@ class HypothesisRecord:
         d["assumptions"] = list(self.assumptions)
         d["candidate_ids"] = list(self.candidate_ids)
         d["feature_dependencies"] = list(self.feature_dependencies)
+        d["parent_source_ids"] = list(self.parent_source_ids)
+        d["parent_claim_ids"] = list(self.parent_claim_ids)
         return d
 
     @staticmethod
@@ -237,6 +319,8 @@ class HypothesisRecord:
         d["assumptions"] = tuple(d.get("assumptions", ()))
         d["candidate_ids"] = tuple(d.get("candidate_ids", ()))
         d["feature_dependencies"] = tuple(d.get("feature_dependencies", ()))
+        d["parent_source_ids"] = tuple(d.get("parent_source_ids", ()))
+        d["parent_claim_ids"] = tuple(d.get("parent_claim_ids", ()))
         d["transformation_history"] = list(d.get("transformation_history", []))
         return HypothesisRecord(**d)
 
@@ -303,11 +387,19 @@ class HypothesisRegistry:
         original_claim: str,
         assumptions: Tuple[str, ...] = (),
         hypothesis_id: Optional[str] = None,
+        origin_type: str = "UNSPECIFIED",
+        source_claim_id: Optional[str] = None,
+        parent_source_ids: Tuple[str, ...] = (),
+        parent_claim_ids: Tuple[str, ...] = (),
+        ai_provenance: Optional[Dict[str, Any]] = None,
     ) -> HypothesisRecord:
         """Capture a new hypothesis. Always starts at ``UNVALIDATED_CLAIM`` —
         callers cannot pass a higher evidence_level here; that can only be
         reached later, through ``update_evidence_level``, once real testing
-        exists to justify it."""
+        exists to justify it. Generation 3 lineage arguments
+        (``origin_type``/``parent_*``/``ai_provenance``) are validated by
+        ``HypothesisRecord.__post_init__`` (synthesis needs >= 2 parents,
+        AI needs full provenance keys, non-AI may carry none)."""
         hid = hypothesis_id or self.allocate_hypothesis_id()
         if hid in self._hypotheses:
             raise DuplicateHypothesisError("hypothesis_id already registered", hypothesis_id=hid)
@@ -322,6 +414,11 @@ class HypothesisRegistry:
             transformation_history=[
                 {"timestamp": utcnow().isoformat(), "event": "captured", "detail": "hypothesis registered"}
             ],
+            origin_type=origin_type,
+            source_claim_id=source_claim_id,
+            parent_source_ids=tuple(parent_source_ids),
+            parent_claim_ids=tuple(parent_claim_ids),
+            ai_provenance=dict(ai_provenance) if ai_provenance else {},
         )
         self._hypotheses[hid] = record
         self._save()
@@ -423,6 +520,17 @@ class HypothesisRegistry:
                 "illegal formalization_status transition",
                 hypothesis_id=hypothesis_id, current_status=current, requested_status=new_status,
                 allowed=sorted(legal_next),
+            )
+        if new_status == "SUPPORTED" and not record.candidate_ids:
+            # Generation 3, Phase 8: SUPPORTED requires an independent
+            # evidence path -- a real, linked StrategyCandidate whose test
+            # evidence exists outside this registry. This closes, for ALL
+            # origins (and AI_DERIVED in particular), the route
+            # AI_GENERATED -> SUPPORTED on plausibility alone.
+            raise HypothesisSpecError(
+                "cannot mark SUPPORTED without at least one linked candidate -- source "
+                "confidence, popularity, and AI plausibility are not evidence",
+                hypothesis_id=hypothesis_id, origin_type=record.origin_type,
             )
         record.formalization_status = new_status
         record.transformation_history.append(

@@ -244,19 +244,33 @@ class TestMultipleTestingAccountingIsHonest:
     """Confirms the counters this task's final status block cites are not
     aspirational -- they come from the real, on-disk production registry."""
 
-    def test_production_registry_reflects_exactly_one_tested_one_rejected_zero_passed(self) -> None:
+    def test_production_registry_counters_match_the_real_population(self) -> None:
+        """Updated for Generation 3 (documented contract change, not a
+        weakening): this test originally asserted total_strategies_generated
+        == 1, encoding the Generation 2-era population. Generation 3's
+        execution contract (rule 23 / Phase 24) explicitly authorized the
+        next production candidate when a real hypothesis legitimately
+        qualified -- STRAT-000002 was generated from HYP-000001 (real
+        public-strategy source SRC2-000001) with full lineage, and remains
+        GENERATED (never tested, never validated). The invariant that
+        actually matters is strengthened, not relaxed: the stored counters
+        must equal counts RECOMPUTED from the actual candidate population,
+        so neither inflation nor deflation can hide."""
         if not DEFAULT_REGISTRY_PATH.exists():
             pytest.skip("production registry not present in this checkout")
         reg = StrategyRegistry(path=DEFAULT_REGISTRY_PATH)
         summary = reg.search_history_summary()
-        assert summary["total_strategies_tested"] == 1
-        assert summary["total_strategies_rejected"] == 1
+        population = reg.list_all()
+        assert summary["total_strategies_generated"] == len(population) == 2
+        assert summary["total_strategies_rejected"] == sum(
+            1 for c in population if c.state == CandidateState.REJECTED
+        ) == 1
+        assert summary["total_strategies_tested"] == 1  # only STRAT-000001 ever reached DATA_VALIDATED
         assert summary["total_strategies_passed"] == 0
         assert summary["total_strategies_failed"] == 0
         assert summary["total_strategies_surviving"] == 0
-        # exactly one candidate was ever generated -- "tested vs generated"
-        # cannot be silently inflated or deflated relative to each other
-        assert summary["total_strategies_generated"] == 1
+        # STRAT-000002 exists but is GENERATED only -- never validated/tested
+        assert reg.get("STRAT-000002").state == CandidateState.GENERATED
 
     def test_selection_bias_status_is_not_silently_marked_pass(self) -> None:
         if not DEFAULT_REGISTRY_PATH.exists():

@@ -1,0 +1,195 @@
+{
+  "hypotheses": {
+    "HYP-000001": {
+      "ai_provenance": {},
+      "assumptions": [],
+      "candidate_ids": [
+        "STRAT-000002"
+      ],
+      "cost_assumptions": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)",
+      "date_captured": "2026-08-19T01:04:19.121020+00:00",
+      "economic_mechanism": "rsi_14 < 30 (source's oversold threshold) => rsi_14 crosses back above 30 from below",
+      "evidence_level": "CANDIDATE_GENERATED",
+      "expected_direction": "positive",
+      "falsification_conditions": "conditional expectancy <= 0 after realistic costs on out-of-sample walk-forward, OR confidence interval straddles economically irrelevant values, OR effect absent OOS",
+      "feature_dependencies": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "formalization_status": "ELIGIBLE",
+      "formalized_trading_rule": "IF rsi_14 < 30 (source's oversold threshold) AND rsi_14 crosses back above 30 from below THEN expect positive movement in forward return over 12 bars on EURUSD H1 (horizon=12 bars, regime=any (unconditional; source states no regime)); falsified if conditional expectancy <= 0 after realistic costs on out-of-sample walk-forward, OR confidence interval straddles economically irrelevant values, OR effect absent OOS (costs: realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7))",
+      "holding_period": "12 bars",
+      "hypothesis_id": "HYP-000001",
+      "hypothesis_version": 1,
+      "instrument_scope": "EURUSD",
+      "origin_type": "PUBLIC_STRATEGY_DERIVED",
+      "original_claim": "It is commonly believed that RSI above 70 is overbought and RSI below 30 is oversold.",
+      "parent_claim_ids": [
+        "CLAIM-000001"
+      ],
+      "parent_source_ids": [
+        "SRC2-000001"
+      ],
+      "regime_conditions": "any (unconditional; source states no regime)",
+      "source_claim_id": "CLAIM-000001",
+      "source_reference": "SRC2-000001",
+      "source_type": "OPEN_SOURCE_CODE",
+      "target_definition": "forward return over 12 bars on EURUSD H1",
+      "timeframe_scope": "UNKNOWN",
+      "transformation_history": [
+        {
+          "detail": "hypothesis registered",
+          "event": "captured",
+          "timestamp": "2026-08-19T01:04:19.121029+00:00"
+        },
+        {
+          "detail": "formalized from verbatim source claim; horizon/instrument are this project's testable framing, not the source's words",
+          "event": "formalized",
+          "timestamp": "2026-08-19T01:04:19.122336+00:00"
+        },
+        {
+          "detail": "DRAFT -> FORMALIZED: formalized from verbatim source claim; horizon/instrument are this project's testable framing, not the source's words",
+          "event": "formalization_status_changed",
+          "timestamp": "2026-08-19T01:04:19.122671+00:00"
+        },
+        {
+          "detail": "FORMALIZED -> ELIGIBLE: quality gates passed",
+          "event": "formalization_status_changed",
+          "timestamp": "2026-08-19T01:04:19.134886+00:00"
+        },
+        {
+          "detail": "STRAT-000002",
+          "event": "candidate_linked",
+          "timestamp": "2026-08-19T01:04:19.138895+00:00"
+        }
+      ]
+    },
+    "HYP-000002": {
+      "ai_provenance": {},
+      "assumptions": [],
+      "candidate_ids": [],
+      "cost_assumptions": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)",
+      "date_captured": "2026-08-19T01:04:19.124726+00:00",
+      "economic_mechanism": "rsi_14 < 30 => rsi_14 crosses back above 30 from below",
+      "evidence_level": "FORMALIZED_UNTESTED",
+      "expected_direction": "positive",
+      "falsification_conditions": "conditional expectancy <= 0 after realistic costs on out-of-sample walk-forward, OR effect absent OOS",
+      "feature_dependencies": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "formalization_status": "FORMALIZED",
+      "formalized_trading_rule": "IF rsi_14 < 30 AND rsi_14 crosses back above 30 from below THEN expect positive movement in forward return over 24 bars on EURUSD H1 (horizon=24 bars, regime=any); falsified if conditional expectancy <= 0 after realistic costs on out-of-sample walk-forward, OR effect absent OOS (costs: realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7))",
+      "holding_period": "24 bars",
+      "hypothesis_id": "HYP-000002",
+      "hypothesis_version": 1,
+      "instrument_scope": "EURUSD",
+      "origin_type": "CROSS_SOURCE_SYNTHESIS",
+      "original_claim": "Synthesis: the source's RSI oversold-reversion idea remains untested in this project at multi-bar horizons; the 1-bar horizon is already-covered territory (internal coverage fact). At a 24-bar horizon on EURUSD H1, RSI-oversold conditional expectancy after costs is positive.",
+      "parent_claim_ids": [
+        "CLAIM-000001",
+        "CLAIM-000003"
+      ],
+      "parent_source_ids": [
+        "SRC2-000001",
+        "SRC2-000004"
+      ],
+      "regime_conditions": "any",
+      "source_claim_id": "CLAIM-000001",
+      "source_reference": "SRC2-000001",
+      "source_type": "OPEN_SOURCE_CODE",
+      "target_definition": "forward return over 24 bars on EURUSD H1",
+      "timeframe_scope": "UNKNOWN",
+      "transformation_history": [
+        {
+          "detail": "hypothesis registered",
+          "event": "captured",
+          "timestamp": "2026-08-19T01:04:19.124739+00:00"
+        },
+        {
+          "detail": "synthesis formalization at the untested 24-bar horizon",
+          "event": "formalized",
+          "timestamp": "2026-08-19T01:04:19.126432+00:00"
+        },
+        {
+          "detail": "DRAFT -> FORMALIZED: synthesis formalization at the untested 24-bar horizon",
+          "event": "formalization_status_changed",
+          "timestamp": "2026-08-19T01:04:19.126858+00:00"
+        }
+      ]
+    },
+    "HYP-000003": {
+      "ai_provenance": {
+        "generation_model": "ml001-session-agent (model identifier withheld in committed artifacts per repository policy; the generating session is identified by the Claude-Session trailer on the commit that introduced this record)",
+        "generation_parameters": {
+          "note": "single non-sampled generation; no seed applicable"
+        },
+        "generation_seed": null,
+        "generation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "input_claim_ids": [
+          "CLAIM-000001",
+          "CLAIM-000003"
+        ],
+        "input_source_ids": [
+          "SRC2-000001",
+          "SRC2-000004"
+        ],
+        "prompt_identity": "72a2f7d59e2ad399b489c8e71768f30178cbe0259c55794d781b7352bfc35551",
+        "prompt_text": "Given claim CLAIM-000001 (RSI oversold/overbought lore) and claim CLAIM-000003 (no 1-bar signal found for this feature set), generate one falsifiable, mechanism-distinct hypothesis using only implemented features (rsi_14, atr_14, volatility_regime) on EURUSD H1."
+      },
+      "assumptions": [],
+      "candidate_ids": [],
+      "cost_assumptions": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)",
+      "date_captured": "2026-08-19T01:04:19.128451+00:00",
+      "economic_mechanism": "volatility_regime == 2 (high) AND rsi_14 < 30 => rsi_14 crosses back above 30 from below while volatility_regime == 2",
+      "evidence_level": "FORMALIZED_UNTESTED",
+      "expected_direction": "negative",
+      "falsification_conditions": "conditional expectancy >= 0 after costs OOS (i.e. no continuation effect), OR effect absent OOS",
+      "feature_dependencies": [
+        "rsi_14",
+        "volatility_regime",
+        "atr_14"
+      ],
+      "formalization_status": "FORMALIZED",
+      "formalized_trading_rule": "IF volatility_regime == 2 (high) AND rsi_14 < 30 AND rsi_14 crosses back above 30 from below while volatility_regime == 2 THEN expect negative movement in forward return over 12 bars on EURUSD H1 (horizon=12 bars, regime=high volatility only (volatility_regime == 2)); falsified if conditional expectancy >= 0 after costs OOS (i.e. no continuation effect), OR effect absent OOS (costs: realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7))",
+      "holding_period": "12 bars",
+      "hypothesis_id": "HYP-000003",
+      "hypothesis_version": 1,
+      "instrument_scope": "EURUSD",
+      "origin_type": "AI_DERIVED",
+      "original_claim": "In the high-volatility regime (volatility_regime == 2), RSI-oversold readings on EURUSD H1 mark continuation rather than reversion: conditional 12-bar forward expectancy after an oversold signal is NEGATIVE, not positive.",
+      "parent_claim_ids": [
+        "CLAIM-000001",
+        "CLAIM-000003"
+      ],
+      "parent_source_ids": [
+        "SRC2-000001",
+        "SRC2-000004"
+      ],
+      "regime_conditions": "high volatility only (volatility_regime == 2)",
+      "source_claim_id": null,
+      "source_reference": "ai:generation-session (see ai_provenance)",
+      "source_type": "AI_GENERATED_HYPOTHESIS",
+      "target_definition": "forward return over 12 bars on EURUSD H1",
+      "timeframe_scope": "UNKNOWN",
+      "transformation_history": [
+        {
+          "detail": "hypothesis registered",
+          "event": "captured",
+          "timestamp": "2026-08-19T01:04:19.128460+00:00"
+        },
+        {
+          "detail": "AI formalization; regime-conditional continuation mechanism, distinct from parents' reversion mechanism",
+          "event": "formalized",
+          "timestamp": "2026-08-19T01:04:19.130170+00:00"
+        },
+        {
+          "detail": "DRAFT -> FORMALIZED: AI formalization; regime-conditional continuation mechanism, distinct from parents' reversion mechanism",
+          "event": "formalization_status_changed",
+          "timestamp": "2026-08-19T01:04:19.130737+00:00"
+        }
+      ]
+    }
+  },
+  "next_id": 4
+}

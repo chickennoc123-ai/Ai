@@ -35,6 +35,37 @@ CLAIM_TYPES = frozenset(
     }
 )
 
+#: Generation 3, Phase 5 (ML-001-CLAIM-EXTRACTION-SPEC.md §3): what KIND
+#: of statement the claim is. This classification is descriptive only --
+#: it must never be treated as evidence of truth. A claim classified
+#: EMPIRICAL is not thereby true; a claim classified PROMOTIONAL is not
+#: thereby false. It exists so downstream prioritization can reason about
+#: claim character without re-reading source text.
+CLAIM_CLASSIFICATIONS = frozenset(
+    {
+        "MECHANISTIC",
+        "EMPIRICAL",
+        "DESCRIPTIVE",
+        "PREDICTIVE",
+        "CAUSAL",
+        "HEURISTIC",
+        "MARKET_LORE",
+        "UNVERIFIED",
+        "PROMOTIONAL",
+    }
+)
+
+#: Generation 3, Phase 4 (ML-001-CLAIM-EXTRACTION-SPEC.md §2): the
+#: epistemic standing of the claim text. These are DIFFERENT states and
+#: must never be conflated:
+#:   SOURCE_CLAIM     -- "the source says X"; nothing more is asserted.
+#:   FACT_ESTABLISHED -- X has been independently established by this
+#:                        project's own evidence; requires a non-empty
+#:                        evidence_reference at construction (enforced).
+#:   HYPOTHESIS_CANDIDATE -- X has been reframed as a falsifiable
+#:                        proposition awaiting formalization.
+EPISTEMIC_STATUSES = frozenset({"SOURCE_CLAIM", "FACT_ESTABLISHED", "HYPOTHESIS_CANDIDATE"})
+
 #: UNEXTRACTED -> EXTRACTED -> FORMALIZATION_PENDING -> FORMALIZED -> TESTED
 #: -> {SUPPORTED, REFUTED} ; SUPERSEDED is reachable from any non-terminal
 #: state (a claim re-extracted/re-worded from the same source material).
@@ -110,6 +141,16 @@ class ClaimRecord:
     direction: str = "UNKNOWN"
     supporting_context: str = ""
     verification_status: str = "UNEXTRACTED"
+    #: Generation 3 additions (ML-001-CLAIM-EXTRACTION-SPEC.md) --
+    #: additive, defaulted, backward-compatible.
+    source_version: int = 1
+    conditions: str = "UNKNOWN"
+    extraction_method: str = "UNKNOWN"
+    claim_classification: str = "UNVERIFIED"
+    epistemic_status: str = "SOURCE_CLAIM"
+    #: Required non-empty when epistemic_status == FACT_ESTABLISHED --
+    #: a fact claim with nothing behind it is structurally impossible.
+    evidence_reference: str = ""
 
     def __post_init__(self) -> None:
         required = ("claim_id", "source_id", "claim_text", "creation_timestamp")
@@ -121,6 +162,22 @@ class ClaimRecord:
         if self.verification_status not in CLAIM_STATUSES:
             raise ClaimSpecError(
                 "unknown verification_status", verification_status=self.verification_status, allowed=list(CLAIM_STATUSES)
+            )
+        if self.claim_classification not in CLAIM_CLASSIFICATIONS:
+            raise ClaimSpecError(
+                "unknown claim_classification", claim_classification=self.claim_classification,
+                allowed=sorted(CLAIM_CLASSIFICATIONS),
+            )
+        if self.epistemic_status not in EPISTEMIC_STATUSES:
+            raise ClaimSpecError(
+                "unknown epistemic_status", epistemic_status=self.epistemic_status,
+                allowed=sorted(EPISTEMIC_STATUSES),
+            )
+        if self.epistemic_status == "FACT_ESTABLISHED" and not self.evidence_reference.strip():
+            raise ClaimSpecError(
+                "epistemic_status FACT_ESTABLISHED requires a non-empty evidence_reference -- "
+                "'the source says X' can never silently become 'X is established fact'",
+                claim_id=self.claim_id,
             )
 
     def identity_checksum(self) -> str:

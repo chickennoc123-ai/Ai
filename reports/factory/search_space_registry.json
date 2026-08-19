@@ -1,0 +1,51 @@
+{
+  "next_id": 2,
+  "search_spaces": {
+    "SEARCHSPACE-000001": {
+      "cost_model": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)",
+      "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+      "entry_conditions": [
+        "rsi_14 crosses back above 30 from below"
+      ],
+      "exit_conditions": [
+        "stop_or_target_or_maxhold"
+      ],
+      "feature_parameters": {
+        "rsi_oversold_threshold": [
+          30
+        ]
+      },
+      "features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "generation_method": "MANUAL",
+      "generation_seed": null,
+      "holding_periods": [
+        12,
+        24
+      ],
+      "position_sizing_options": [
+        "fixed_fractional"
+      ],
+      "regimes": [
+        "any"
+      ],
+      "search_space_id": "SEARCHSPACE-000001",
+      "stop_loss_options": [
+        "1.5xATR",
+        "2.0xATR"
+      ],
+      "symbols": [
+        "EURUSD"
+      ],
+      "take_profit_options": [
+        "2.0xATR",
+        "3.0xATR"
+      ],
+      "timeframes": [
+        "H1"
+      ]
+    }
+  }
+}

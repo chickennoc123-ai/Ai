@@ -1,6 +1,7 @@
 {
   "candidates": {
     "STRAT-000001": {
+      "candidate_checksum": "",
       "candidate_id": "STRAT-000001",
       "code_version": "a68bd05",
       "creation_timestamp": "2026-08-18T14:04:34.724173+00:00",
@@ -34,7 +35,10 @@
           "timestamp": "2026-08-18T15:04:48.651637+00:00"
         }
       ],
+      "hypothesis_id": null,
+      "instrument_universe": [],
       "parent_candidate_id": null,
+      "search_space_id": null,
       "spec": {
         "direction": "long_and_short",
         "entry_rule": "RF-R2-001.predict_proba(FE-R2-003 feature vector) crosses spec Section 9 decision threshold",
@@ -48,6 +52,7 @@
         ],
         "max_hold_bars": 24,
         "position_sizing": "fixed_fractional (spec Section 11, RiskGovernanceConfig)",
+        "research_scope": "SINGLE_INSTRUMENT",
         "stop_loss": "per spec Section 9 (initial candidate, not yet parameter-searched)",
         "take_profit": "per spec Section 9 (initial candidate, not yet parameter-searched)",
         "timeframe": "H1",
@@ -55,9 +60,58 @@
       },
       "state": "REJECTED",
       "version": 1
+    },
+    "STRAT-000002": {
+      "candidate_checksum": "f38087385217026cdc5b2e950186b74976072c1a63744c8fb4194ff121f0ae38",
+      "candidate_id": "STRAT-000002",
+      "code_version": "generation-3-real-intake",
+      "creation_timestamp": "2026-08-19T01:04:19.137615+00:00",
+      "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+      "generator_id": "GEN2-CANDIDATE-GENERATION-ENGINE",
+      "generator_parameters": {
+        "param_draw": {
+          "entry_condition": "rsi_14 crosses back above 30 from below",
+          "exit_condition": "stop_or_target_or_maxhold",
+          "holding_period": 12,
+          "position_sizing": "fixed_fractional",
+          "stop_loss": "1.5xATR",
+          "take_profit": "2.0xATR"
+        },
+        "symbol": "EURUSD",
+        "timeframe": "H1"
+      },
+      "history": [
+        {
+          "reason": "registered",
+          "state": "GENERATED",
+          "timestamp": "2026-08-19T01:04:19.137628+00:00"
+        }
+      ],
+      "hypothesis_id": "HYP-000001",
+      "instrument_universe": [],
+      "parent_candidate_id": null,
+      "search_space_id": "SEARCHSPACE-000001",
+      "spec": {
+        "direction": "long_only",
+        "entry_rule": "rsi_14 < 30 (source's oversold threshold) => rsi_14 crosses back above 30 from below :: rsi_14 crosses back above 30 from below",
+        "exit_rule": "stop_or_target_or_maxhold",
+        "features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "max_hold_bars": 12,
+        "position_sizing": "fixed_fractional",
+        "research_scope": "SINGLE_INSTRUMENT",
+        "stop_loss": "1.5xATR",
+        "take_profit": "2.0xATR",
+        "timeframe": "H1",
+        "transaction_cost_model": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)"
+      },
+      "state": "GENERATED",
+      "version": 1
     }
   },
-  "next_id": 2,
+  "next_id": 3,
   "search_history": {
     "events": [
       {
@@ -85,18 +139,29 @@
         "reason": "Genuine 65-window walk-forward OOS evaluation on real EURUSD+GBPUSD H1 data (24-month trailing DEVELOPMENT training, 1-month VALIDATION test, monthly step; PURE_HOLDOUT never accessed -- structurally absent from the data passed to the WFA engine, not just runtime-guarded) shows NO EDGE: EURUSD profit_factor=0.879 (net -19,980.55 on 1387 trades, win_rate=39.4%), GBPUSD profit_factor=0.892 (net -18,589.15 on 1452 trades, win_rate=39.4%). Losses are distributed, not concentrated: 55.4% of EURUSD windows and 67.7% of GBPUSD windows are individually net-negative, near-zero correlation with time (0.058 / -0.049), so this is not a single bad period dragging down an otherwise-working strategy. Rejection is based on this real OOS evidence, not on a hyperparameter search or any optimization attempt -- RF-R2-001 was trained exactly once per window at its frozen, unmodified spec hyperparameters (Section 6), never tuned toward a better result. NOTE: this candidate was NOT transitioned through HOLDOUT_TESTED before this rejection -- PURE_HOLDOUT was deliberately never opened, consistent with this project's holdout-is-final and one-time-access discipline; whether HOLDOUT_TESTED is intended to precede or follow WFA_TESTED in this state machine is flagged as an open specification question, not resolved here, and did not need to be resolved to reach this REJECTED verdict since TRAINED may transition directly to REJECTED per the state machine's own rules.",
         "timestamp": "2026-08-18T15:04:48.651688+00:00",
         "to_state": "REJECTED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "generated",
+        "timestamp": "2026-08-19T01:04:19.137638+00:00"
       }
     ],
+    "feature_search_space": {},
     "model_search_count": 0,
+    "model_search_space": {},
     "parameter_search_count": 0,
+    "parameter_search_space": {},
     "search_method": "none (single pre-specified hypothesis)",
     "search_space": {
       "note": "ORIGINAL_HYPOTHESIS is not drawn from a search space; it is the single specified candidate under ML-001-R2-CLEAN-REBUILD-SPEC.md"
     },
     "selection_bias_status": "UNACCOUNTED",
     "selection_criteria": "N/A - only one candidate exists; no selection-among-alternatives has occurred",
+    "symbol_search_space": {},
+    "timeframe_search_space": {},
+    "total_hypotheses_ingested": 3,
     "total_strategies_failed": 0,
-    "total_strategies_generated": 1,
+    "total_strategies_generated": 2,
     "total_strategies_passed": 0,
     "total_strategies_rejected": 1,
     "total_strategies_surviving": 0,

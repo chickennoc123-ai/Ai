@@ -1,0 +1,113 @@
+{
+  "claims": {
+    "CLAIM-000001": {
+      "claim_classification": "MARKET_LORE",
+      "claim_id": "CLAIM-000001",
+      "claim_text": "It is commonly believed that RSI above 70 is overbought and RSI below 30 is oversold.",
+      "claim_type": "PREDICTIVE_SIGNAL",
+      "claim_version": 1,
+      "conditions": "RSI(14) beyond 70/30 thresholds",
+      "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+      "direction": "mean-reverting",
+      "epistemic_status": "SOURCE_CLAIM",
+      "evidence_reference": "",
+      "extraction_method": "manual verbatim quotation from stored snapshot (README section 10, RSI Pattern Recognition)",
+      "instrument_scope": "unspecified (source discusses stocks)",
+      "mechanism": "RSI thresholds as overbought/oversold state markers implying mean reversion",
+      "source_id": "SRC2-000001",
+      "source_version": 1,
+      "supporting_context": "Source itself hedges: 'The effectiveness of any divergence strategy on RSI is rather debatable.'",
+      "timeframe_scope": "daily (source context)",
+      "verification_status": "FORMALIZED"
+    },
+    "CLAIM-000002": {
+      "claim_classification": "HEURISTIC",
+      "claim_id": "CLAIM-000002",
+      "claim_text": "MACD ... holds the belief that upward/downward momentum has more impact on short term moving average than long term moving average.",
+      "claim_type": "PREDICTIVE_SIGNAL",
+      "claim_version": 1,
+      "conditions": "UNKNOWN",
+      "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+      "direction": "momentum-following",
+      "epistemic_status": "SOURCE_CLAIM",
+      "evidence_reference": "",
+      "extraction_method": "manual verbatim quotation (README section 1, MACD oscillator; ellipsis marks omitted words, none added)",
+      "instrument_scope": "unspecified",
+      "mechanism": "momentum differentially moves short- vs long-window moving averages",
+      "source_id": "SRC2-000001",
+      "source_version": 1,
+      "supporting_context": "",
+      "timeframe_scope": "unspecified",
+      "verification_status": "EXTRACTED"
+    },
+    "CLAIM-000003": {
+      "claim_classification": "EMPIRICAL",
+      "claim_id": "CLAIM-000003",
+      "claim_text": "The RF-R2-001 walk-forward evaluation tested the 1-bar-ahead direction target on real EURUSD/GBPUSD H1 data with momentum/RSI/ATR/volatility-regime features and found no predictive signal at that horizon (IC ~0.015-0.030, directional accuracy 51.2-51.8%).",
+      "claim_type": "PREDICTIVE_SIGNAL",
+      "claim_version": 1,
+      "conditions": "UNKNOWN",
+      "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+      "direction": "none found",
+      "epistemic_status": "FACT_ESTABLISHED",
+      "evidence_reference": "ML-001-STRAT-000001-FAILURE-FORENSIC-REPORT.md + reports/factory/strategy_registry.json (STRAT-000001 REJECTED)",
+      "extraction_method": "summarized from the report's own headline findings (sections A, D-F)",
+      "instrument_scope": "EURUSD, GBPUSD",
+      "mechanism": "coverage fact: the 1-bar horizon is already-tested territory for this feature set",
+      "source_id": "SRC2-000004",
+      "source_version": 1,
+      "supporting_context": "",
+      "timeframe_scope": "H1",
+      "verification_status": "EXTRACTED"
+    }
+  },
+  "history": {
+    "CLAIM-000001": [
+      {
+        "reason": "registered",
+        "status": "UNEXTRACTED",
+        "timestamp": "2026-08-19T01:04:19.116978+00:00"
+      },
+      {
+        "reason": "verbatim extraction from snapshot",
+        "status": "EXTRACTED",
+        "timestamp": "2026-08-19T01:04:19.117314+00:00"
+      },
+      {
+        "reason": "hypothesis drafted",
+        "status": "FORMALIZATION_PENDING",
+        "timestamp": "2026-08-19T01:04:19.123041+00:00"
+      },
+      {
+        "reason": "formalized as HYP-000001",
+        "status": "FORMALIZED",
+        "timestamp": "2026-08-19T01:04:19.123491+00:00"
+      }
+    ],
+    "CLAIM-000002": [
+      {
+        "reason": "registered",
+        "status": "UNEXTRACTED",
+        "timestamp": "2026-08-19T01:04:19.118203+00:00"
+      },
+      {
+        "reason": "verbatim extraction from snapshot",
+        "status": "EXTRACTED",
+        "timestamp": "2026-08-19T01:04:19.118624+00:00"
+      }
+    ],
+    "CLAIM-000003": [
+      {
+        "reason": "registered",
+        "status": "UNEXTRACTED",
+        "timestamp": "2026-08-19T01:04:19.119655+00:00"
+      },
+      {
+        "reason": "extracted from own committed evidence",
+        "status": "EXTRACTED",
+        "timestamp": "2026-08-19T01:04:19.120127+00:00"
+      }
+    ]
+  },
+  "next_id": 4
+}

@@ -1,0 +1,252 @@
+{
+  "events": [
+    {
+      "artifact_reference": "snapshot:16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000001",
+      "event_type": "SOURCE_INGESTED",
+      "feature_ids": [],
+      "reason": "real external source fetched and checksummed",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "SRC2-000001",
+      "timestamp": "2026-08-19T01:04:19.112238+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000002",
+      "event_type": "SOURCE_INGESTED",
+      "feature_ids": [],
+      "reason": "access attempt recorded as ACCESS_FAILED; content never reached",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "SRC2-000002",
+      "timestamp": "2026-08-19T01:04:19.113229+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000003",
+      "event_type": "SOURCE_INGESTED",
+      "feature_ids": [],
+      "reason": "access attempt recorded as ACCESS_FAILED; content never reached",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "SRC2-000003",
+      "timestamp": "2026-08-19T01:04:19.114347+00:00"
+    },
+    {
+      "artifact_reference": "snapshot:c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000004",
+      "event_type": "SOURCE_INGESTED",
+      "feature_ids": [],
+      "reason": "internal committed research report registered",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "SRC2-000004",
+      "timestamp": "2026-08-19T01:04:19.116466+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000005",
+      "event_type": "CLAIM_CREATED",
+      "feature_ids": [],
+      "reason": "verbatim MARKET_LORE claim; source-says only",
+      "result": "",
+      "search_space_id": null,
+      "source_id": "SRC2-000001",
+      "subject_id": "CLAIM-000001",
+      "timestamp": "2026-08-19T01:04:19.117563+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000006",
+      "event_type": "CLAIM_CREATED",
+      "feature_ids": [],
+      "reason": "verbatim HEURISTIC claim; extracted, not formalized in this generation",
+      "result": "",
+      "search_space_id": null,
+      "source_id": "SRC2-000001",
+      "subject_id": "CLAIM-000002",
+      "timestamp": "2026-08-19T01:04:19.118936+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000007",
+      "event_type": "CLAIM_CREATED",
+      "feature_ids": [],
+      "reason": "FACT_ESTABLISHED coverage claim with evidence reference",
+      "result": "",
+      "search_space_id": null,
+      "source_id": "SRC2-000004",
+      "subject_id": "CLAIM-000003",
+      "timestamp": "2026-08-19T01:04:19.120509+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000008",
+      "event_type": "HYPOTHESIS_CREATED",
+      "feature_ids": [],
+      "reason": "derived from real public-strategy claim",
+      "result": "",
+      "search_space_id": null,
+      "source_id": "SRC2-000001",
+      "subject_id": "HYP-000001",
+      "timestamp": "2026-08-19T01:04:19.121845+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000009",
+      "event_type": "HYPOTHESIS_FORMALIZED",
+      "feature_ids": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "reason": "9-component formalization complete",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000001",
+      "timestamp": "2026-08-19T01:04:19.123845+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000010",
+      "event_type": "HYPOTHESIS_CREATED",
+      "feature_ids": [],
+      "reason": "cross-source synthesis; the internal parent contributes COVERAGE knowledge only (which horizon is already tested), per the Phase 16 feedback rule -- no performance number was used to choose parameters",
+      "result": "",
+      "search_space_id": null,
+      "source_id": "SRC2-000001",
+      "subject_id": "HYP-000002",
+      "timestamp": "2026-08-19T01:04:19.125815+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000011",
+      "event_type": "HYPOTHESIS_FORMALIZED",
+      "feature_ids": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "reason": "synthesis formalized",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000002",
+      "timestamp": "2026-08-19T01:04:19.127330+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000012",
+      "event_type": "HYPOTHESIS_CREATED",
+      "feature_ids": [],
+      "reason": "AI-generated hypothesis; UNVERIFIED; AI plausibility is not evidence",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000003",
+      "timestamp": "2026-08-19T01:04:19.129613+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000013",
+      "event_type": "HYPOTHESIS_FORMALIZED",
+      "feature_ids": [
+        "rsi_14",
+        "volatility_regime",
+        "atr_14"
+      ],
+      "reason": "AI hypothesis formalized",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000003",
+      "timestamp": "2026-08-19T01:04:19.131364+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000014",
+      "event_type": "HYPOTHESIS_STATUS_CHANGED",
+      "feature_ids": [],
+      "reason": "assigned to FAMILY-000001 (HYPOTHESIS_FAMILY)",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000001",
+      "timestamp": "2026-08-19T01:04:19.132201+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000015",
+      "event_type": "HYPOTHESIS_STATUS_CHANGED",
+      "feature_ids": [],
+      "reason": "assigned to FAMILY-000002 (HYPOTHESIS_FAMILY)",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000002",
+      "timestamp": "2026-08-19T01:04:19.133027+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000016",
+      "event_type": "HYPOTHESIS_STATUS_CHANGED",
+      "feature_ids": [],
+      "reason": "assigned to FAMILY-000003 (HYPOTHESIS_FAMILY)",
+      "result": "",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000003",
+      "timestamp": "2026-08-19T01:04:19.133957+00:00"
+    },
+    {
+      "artifact_reference": "",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000017",
+      "event_type": "SEARCH_SPACE_CREATED",
+      "feature_ids": [],
+      "reason": "8 combinations declared for HYP-000001",
+      "result": "",
+      "search_space_id": "SEARCHSPACE-000001",
+      "source_id": null,
+      "subject_id": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T01:04:19.136250+00:00"
+    },
+    {
+      "artifact_reference": "dna:3c50b667625fd785fb13b6efbeba4cb7a08681fc6b713580ac484c9977a06946",
+      "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+      "event_id": "LEDGER-00000018",
+      "event_type": "CANDIDATE_GENERATED",
+      "feature_ids": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "reason": "first real production candidate from a real externally-sourced hypothesis; NOT validated, NOT an edge claim; param_draw coherence-chosen (holding=hypothesis horizon), documented rather than presented as random",
+      "result": "state=GENERATED",
+      "search_space_id": "SEARCHSPACE-000001",
+      "source_id": "SRC2-000001",
+      "subject_id": "STRAT-000002",
+      "timestamp": "2026-08-19T01:04:19.139630+00:00"
+    }
+  ],
+  "next_seq": 19
+}

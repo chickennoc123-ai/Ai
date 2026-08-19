@@ -1,0 +1,24 @@
+{
+  "snapshots": {
+    "16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d": {
+      "byte_count": 31556,
+      "license_basis": "PERMISSIVE_LICENSE",
+      "media_type": "text/markdown",
+      "notes": "Apache-2.0 verified by fetching the repository's LICENSE file at retrieval time",
+      "representation": "FULL_TEXT",
+      "snapshot_id": "16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+      "source_id": "SRC2-000001",
+      "stored_timestamp": "2026-08-19T01:04:19.110442+00:00"
+    },
+    "c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827": {
+      "byte_count": 17392,
+      "license_basis": "OWN_WORK",
+      "media_type": "text/markdown",
+      "notes": "",
+      "representation": "FULL_TEXT",
+      "snapshot_id": "c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827",
+      "source_id": "SRC2-000004",
+      "stored_timestamp": "2026-08-19T01:04:19.115693+00:00"
+    }
+  }
+}

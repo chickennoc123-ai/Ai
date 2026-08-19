@@ -1,0 +1,169 @@
+{
+  "budget_usage": {
+    "candidates": 1,
+    "hypotheses": 3,
+    "per_family_candidates": {
+      "FAMILY-000004": 1
+    },
+    "sources": 4
+  },
+  "candidate": {
+    "candidate_checksum": "f38087385217026cdc5b2e950186b74976072c1a63744c8fb4194ff121f0ae38",
+    "dna_family_fingerprint": "fbe43b65049b0de8ae5aebbb38769814cc92fe1ccc1eeb3f598f1c9722b5bb19",
+    "dna_fingerprint": "3c50b667625fd785fb13b6efbeba4cb7a08681fc6b713580ac484c9977a06946",
+    "hypothesis_id": "HYP-000001",
+    "id": "STRAT-000002",
+    "search_space_id": "SEARCHSPACE-000001",
+    "state": "GENERATED"
+  },
+  "claims": {
+    "CLAIM-000001": {
+      "classification": "MARKET_LORE",
+      "epistemic": "SOURCE_CLAIM",
+      "source": "SRC2-000001"
+    },
+    "CLAIM-000002": {
+      "classification": "HEURISTIC",
+      "epistemic": "SOURCE_CLAIM",
+      "source": "SRC2-000001"
+    },
+    "CLAIM-000003": {
+      "classification": "EMPIRICAL",
+      "epistemic": "FACT_ESTABLISHED",
+      "source": "SRC2-000004"
+    }
+  },
+  "families": {
+    "FAMILY-000001": {
+      "kind": "HYPOTHESIS_FAMILY",
+      "members": [
+        "HYP-000001"
+      ]
+    },
+    "FAMILY-000002": {
+      "kind": "HYPOTHESIS_FAMILY",
+      "members": [
+        "HYP-000002"
+      ]
+    },
+    "FAMILY-000003": {
+      "kind": "HYPOTHESIS_FAMILY",
+      "members": [
+        "HYP-000003"
+      ]
+    },
+    "FAMILY-000004": {
+      "kind": "STRATEGY_FAMILY",
+      "members": [
+        "STRAT-000002"
+      ]
+    }
+  },
+  "holdout_access_events": 0,
+  "hypotheses": {
+    "HYP-000001": {
+      "checksum": "6216df29e2259ded92cbaa5e274a272fc3643e2b6e2bb91f29dcdc23b8a04499",
+      "origin": "PUBLIC_STRATEGY_DERIVED",
+      "parents": [
+        "CLAIM-000001"
+      ],
+      "status": "ELIGIBLE"
+    },
+    "HYP-000002": {
+      "checksum": "79655d37456d98e7419999fb0fb826b390bd38b2ce8d64b80ef2591edcb0a3ea",
+      "origin": "CROSS_SOURCE_SYNTHESIS",
+      "parents": [
+        "CLAIM-000001",
+        "CLAIM-000003"
+      ],
+      "status": "FORMALIZED"
+    },
+    "HYP-000003": {
+      "checksum": "c09a20ec5c51e9d35aec33bf29a43aa8cf649821922a2b8076466898c3d1ff21",
+      "origin": "AI_DERIVED",
+      "parents": [
+        "CLAIM-000001",
+        "CLAIM-000003"
+      ],
+      "status": "FORMALIZED"
+    }
+  },
+  "ledger_checksum": "58ea121798ac9f6f0fabd09bbc6cb3fc6a3af59bb08bee7e19dd9de818059d96",
+  "note": "no economic evaluation performed; no edge claimed; PURE_HOLDOUT untouched",
+  "phase": "GENERATION_3_REAL_RESEARCH_INTAKE",
+  "priorities": {
+    "HYP-000001": {
+      "dimensions": {
+        "computational_cost_efficiency": 0.8,
+        "data_availability": 1.0,
+        "expected_information_gain": 0.7333333333333334,
+        "lineage_quality": 1.0,
+        "mechanism_plausibility": 0.5,
+        "novelty": 0.5,
+        "research_diversity_contribution": 0.5,
+        "testability": 0.9
+      },
+      "meaning": "research scheduling priority -- NOT economic edge probability",
+      "total": 0.7416666666666667
+    },
+    "HYP-000002": {
+      "dimensions": {
+        "computational_cost_efficiency": 0.8,
+        "data_availability": 1.0,
+        "expected_information_gain": 0.9,
+        "lineage_quality": 1.0,
+        "mechanism_plausibility": 0.5,
+        "novelty": 1.0,
+        "research_diversity_contribution": 0.5,
+        "testability": 0.9
+      },
+      "meaning": "research scheduling priority -- NOT economic edge probability",
+      "total": 0.825
+    },
+    "HYP-000003": {
+      "dimensions": {
+        "computational_cost_efficiency": 0.8,
+        "data_availability": 1.0,
+        "expected_information_gain": 0.9,
+        "lineage_quality": 1.0,
+        "mechanism_plausibility": 0.5,
+        "novelty": 1.0,
+        "research_diversity_contribution": 0.5,
+        "testability": 0.9
+      },
+      "meaning": "research scheduling priority -- NOT economic edge probability",
+      "total": 0.825
+    }
+  },
+  "search_space": {
+    "checksum": "980ea6ebdf8491ee5df90936257bd857420d0754ba450b61fbb9661d8e29b358",
+    "combinations": 8,
+    "id": "SEARCHSPACE-000001"
+  },
+  "sources": {
+    "SRC2-000001": {
+      "access": "ACCESSED",
+      "checksum": "16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+      "type": "OPEN_SOURCE_CODE",
+      "verification": "PROVISIONALLY_VERIFIED"
+    },
+    "SRC2-000002": {
+      "access": "ACCESS_FAILED",
+      "checksum": "UNKNOWN",
+      "type": "ACADEMIC_PAPER",
+      "verification": "ACCESS_FAILED"
+    },
+    "SRC2-000003": {
+      "access": "ACCESS_FAILED",
+      "checksum": "UNKNOWN",
+      "type": "ACADEMIC_PAPER",
+      "verification": "ACCESS_FAILED"
+    },
+    "SRC2-000004": {
+      "access": "ACCESSED",
+      "checksum": "c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827",
+      "type": "INTERNAL_RESEARCH_REPORT",
+      "verification": "VERIFIED"
+    }
+  }
+}

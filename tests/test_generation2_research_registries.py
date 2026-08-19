@@ -80,8 +80,23 @@ class TestResearchSourceRegistry:
         with pytest.raises(SourceSpecError):
             _source(source_type="TIKTOK")
 
-    def test_all_14_source_types_are_supported(self) -> None:
-        assert len(SOURCE_TYPES) == 14
+    def test_all_original_source_types_remain_supported(self) -> None:
+        """Updated for Generation 3 (documented contract change, not a
+        weakening): this test originally asserted len(SOURCE_TYPES) == 14,
+        which encoded the Generation 2 snapshot of the set. Generation 3's
+        execution contract explicitly requires the architecture to admit
+        future source types without invalidating historical records, so
+        the fixed-count assertion is replaced by the invariant that
+        actually matters: every original Generation 2 type remains
+        present (nothing was removed or renamed), and every member of the
+        set constructs a valid record."""
+        original_gen2_types = {
+            "ACADEMIC_PAPER", "WORKING_PAPER", "BOOK", "TEXTBOOK", "RESEARCH_REPORT",
+            "WEBSITE", "YOUTUBE", "PUBLIC_STRATEGY", "OPEN_SOURCE_CODE", "HUMAN_HYPOTHESIS",
+            "AI_GENERATED_HYPOTHESIS", "MARKET_OBSERVATION", "MACRO_DATA_SOURCE",
+            "ALTERNATIVE_DATA_SOURCE",
+        }
+        assert original_gen2_types.issubset(SOURCE_TYPES)
         for st in SOURCE_TYPES:
             _source(source_id=f"SRC2-{hash(st) % 100000:06d}", source_type=st)
 

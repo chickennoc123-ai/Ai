@@ -1,0 +1,31 @@
+{
+  "failures": [
+    {
+      "entity_id": "SRC2-000002",
+      "evidence_reference": "",
+      "failure_category": "SOURCE_ACCESS_FAILED",
+      "failure_id": "FAIL-000001",
+      "failure_reason": "network policy blocks https://arxiv.org",
+      "failure_stage": "INTAKE",
+      "related_family": "",
+      "related_features": [],
+      "related_market": "",
+      "related_search_space": "",
+      "timestamp": "2026-08-19T01:04:19.112985+00:00"
+    },
+    {
+      "entity_id": "SRC2-000003",
+      "evidence_reference": "",
+      "failure_category": "SOURCE_ACCESS_FAILED",
+      "failure_id": "FAIL-000002",
+      "failure_reason": "network policy blocks https://papers.ssrn.com",
+      "failure_stage": "INTAKE",
+      "related_family": "",
+      "related_features": [],
+      "related_market": "",
+      "related_search_space": "",
+      "timestamp": "2026-08-19T01:04:19.114058+00:00"
+    }
+  ],
+  "next_id": 3
+}
