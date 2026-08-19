@@ -290,35 +290,33 @@ def test_no_synthetic_data_entered_the_economic_evidence():
     assert snapshot["dataset_identity"]["provenance_status"] in ("VERIFIED", "VERIFIED_WITH_QUALIFICATION")
 
 
-def test_generation6_has_not_started():
-    """No Generation 6 *execution* may exist.
+def test_generation7_has_not_started():
+    """No Generation 7 *execution* may exist.
 
     Governance note (contract change, documented not silent): this test
-    was originally named ``test_generation5_has_not_started`` and asserted
-    that NO Generation 5 execution existed at all. That became the wrong
-    boundary the moment the product owner issued the full Generation 5
-    execution contract ("INSTRUMENTATION, RESEARCH MEMORY & CONTROLLED
-    DISCOVERY") -- Generation 5 code, tests, and
-    ``reports/generation5/`` artifacts are now the AUTHORIZED, IN-PROGRESS
-    deliverable of that contract, not evidence of an unauthorized jump
-    ahead. The boundary this project must keep enforcing is the one the
-    contract itself states explicitly: Generation 5 may complete, but
-    Generation 6 may not begin.
+    was originally named ``test_generation5_has_not_started``, then
+    ``test_generation6_has_not_started``. The boundary moves as each
+    generation completes: the pattern is that once a generation's full
+    execution contract is authorized and completed, the boundary moves to
+    prevent the NEXT generation from starting prematurely.
 
-    The assertions below are the Generation-6 analogue of the original
-    Generation-5 guard, plus budget-bounded (not frozen-at-zero) checks on
-    the candidate/hypothesis population, since Generation 5's own
-    execution contract explicitly permits a small number of new
-    hypotheses/candidates under ``core.factory.generation5_budget``.
+    Generation 6 is now COMPLETE (infrastructure only; zero new candidates
+    per OGD-4). The boundary now enforces: Generation 6 may complete, but
+    Generation 7 may not begin.
+
+    The assertions below check that no Generation 7 run artifacts,
+    implementation code, or documents exist yet, and that the
+    candidate/hypothesis population has not grown beyond what the
+    immutable budgets permit.
     """
-    # no Generation 6 run artifacts or implementation code
-    assert not (REPO_ROOT / "reports" / "generation6").exists()
-    assert not list((REPO_ROOT / "core" / "factory").glob("*generation6*"))
-    assert not list((REPO_ROOT / "scripts").glob("*generation6*"))
-    assert not list((REPO_ROOT / "scripts").glob("*run_generation6*"))
+    # no Generation 7 run artifacts or implementation code
+    assert not (REPO_ROOT / "reports" / "generation7").exists()
+    assert not list((REPO_ROOT / "core" / "factory").glob("*generation7*"))
+    assert not list((REPO_ROOT / "scripts").glob("*generation7*"))
+    assert not list((REPO_ROOT / "scripts").glob("*run_generation7*"))
 
     # STRAT-000001 and STRAT-000002 remain terminal and are never
-    # resurrected, regardless of how many new candidates Generation 5 adds.
+    # resurrected, regardless of how many new candidates later generations add.
     registry = StrategyRegistry()
     ids = {c.candidate_id for c in registry.list_all()}
     assert {"STRAT-000001", "STRAT-000002"} <= ids
@@ -327,6 +325,7 @@ def test_generation6_has_not_started():
 
     # the candidate/hypothesis population may grow, but only within
     # Generation 5's own declared, immutable budget -- never silently.
+    # (Generation 6 did not generate new candidates, so population is unchanged)
     from core.factory.generation5_budget import GenerationFiveBudgetStore
     from core.factory.hypothesis import HypothesisRegistry
 
@@ -342,5 +341,7 @@ def test_generation6_has_not_started():
         assert len(new_hyp_ids) <= budget["max_new_hypotheses"]
         assert len(new_candidate_ids) <= budget["max_new_candidates"]
 
-    # no Generation 6 document exists at all yet.
-    assert not list(REPO_ROOT.glob("ML-001-GENERATION-6-*.md"))
+    # no Generation 7 documents exist yet (but Generation 6 documents should exist).
+    assert not list(REPO_ROOT.glob("ML-001-GENERATION-7-*.md"))
+    assert list(REPO_ROOT.glob("ML-001-G6-*.md")), "Generation 6 is complete; its documents should exist"
+    assert list(REPO_ROOT.glob("ML-001-GENERATION-6-REPORT.md")), "Generation 6 final report must exist"
