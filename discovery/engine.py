@@ -26,6 +26,7 @@ No randomness. Same observation registry -> byte-identical queue.
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -262,6 +263,56 @@ class DiscoveryEngine:
                 gross_effect=gross,
             )
 
+    def op_cost_amortization(self) -> None:
+        """
+        CYCLE-2 operator, failure-informed (not curve-fitting): cycle-1
+        evaluation showed every 1-bar-horizon hypothesis had positive GROSS
+        expectancy but died to the fixed 1.1-pip roundtrip cost
+        (streak fade gross ~0.19 pips/trade; gap fade ~0.89 pips/trade).
+        The mechanical response is to amortize the fixed cost over a longer
+        holding period / larger target -- a new, testable structure, generated
+        BEFORE looking at internal-validation data (cycle-1 failures were all
+        at the TRAIN gate; validation remains unconsumed for these families).
+        """
+        streak3 = self.significant.get("OBS-TRENDPERSIST-K3")
+        if streak3:
+            for horizon in (4, 8):
+                gross = 2 * abs(streak3["effect_size"]) * 0.00085 * math.sqrt(horizon)
+                self._emit(
+                    "OP-COST-AMORTIZED", ["OBS-TRENDPERSIST-K3"],
+                    mechanism=(f"fade 3-bar streaks and hold {horizon} bars: amortize the "
+                               f"fixed roundtrip cost over a {horizon}-hour reversion swing"),
+                    what=f"streak anti-persistence (t={streak3['t_stat']}) re-tested at "
+                         f"{horizon}-bar horizon after 1-bar horizon proved cost-dominated",
+                    why="cycle-1 failure analysis: gross edge positive but < cost at "
+                        "1-bar horizon; if reversion persists beyond one bar, expectancy "
+                        "scales with horizon while cost stays fixed",
+                    prediction=f"{horizon}-bar streak fade clears cost on train AND "
+                               f"internal validation",
+                    test={"type": "streak_fade", "k": 3, "horizon_bars": horizon},
+                    gross_effect=gross,
+                )
+        gap = self.significant.get("OBS-WKND-GAPFILL")
+        if gap:
+            for min_gap_pips, hold in ((8, 24), (8, 48)):
+                gross = 0.0004 * (0.5 + gap["effect_size"])
+                self._emit(
+                    "OP-COST-AMORTIZED", ["OBS-WKND-GAPFILL"],
+                    mechanism=(f"fade only weekend gaps larger than {min_gap_pips} pips "
+                               f"toward Friday close with a {hold}-bar time stop: "
+                               f"condition on target size exceeding cost several times over"),
+                    what=f"gap-fill tendency (t={gap['t_stat']}) conditioned on gap size "
+                         f"after unconditioned version proved cost-marginal",
+                    why="cycle-1 failure analysis: median gap 5.1 pips vs 1.1-pip cost "
+                        "left ~0 net; large gaps carry proportionally larger targets "
+                        "for the same fixed cost",
+                    prediction=f"large-gap fade (>{min_gap_pips} pips, {hold}-bar stop) "
+                               f"has positive net expectancy on train AND validation",
+                    test={"type": "gap_fade", "horizon_bars": hold,
+                          "min_gap": min_gap_pips / 10000.0},
+                    gross_effect=gross,
+                )
+
     # ------------------------------------------------------------------
     # Filters
     # ------------------------------------------------------------------
@@ -309,6 +360,7 @@ class DiscoveryEngine:
         self.op_compression_persistence()
         self.op_session_conditioning()
         self.op_regime_recombination()
+        self.op_cost_amortization()
         self.filter_refuted_families()
         self.filter_batch_novelty()
         self.apply_budget()

@@ -7,7 +7,7 @@
   },
   "budget": 20,
   "assumed_roundtrip_cost": 0.00011,
-  "queue_size": 6,
+  "queue_size": 8,
   "hypotheses": [
     {
       "hyp_id": "DISC-C16ABFE3FB",
@@ -38,6 +38,32 @@
       }
     },
     {
+      "hyp_id": "DISC-13AE393975",
+      "operator": "OP-COST-AMORTIZED",
+      "what_was_discovered": "gap-fill tendency (t=22.366) conditioned on gap size after unconditioned version proved cost-marginal",
+      "why_interesting": "cycle-1 failure analysis: median gap 5.1 pips vs 1.1-pip cost left ~0 net; large gaps carry proportionally larger targets for the same fixed cost",
+      "evidence_obs_ids": [
+        "OBS-WKND-GAPFILL"
+      ],
+      "mechanism": "fade only weekend gaps larger than 8 pips toward Friday close with a 24-bar time stop: condition on target size exceeding cost several times over",
+      "testable_prediction": "large-gap fade (>8 pips, 24-bar stop) has positive net expectancy on train AND validation",
+      "proposed_test": {
+        "type": "gap_fade",
+        "horizon_bars": 24,
+        "min_gap": 0.0008
+      },
+      "expected_gross_effect": 0.0003503,
+      "effect_vs_cost": 3.184,
+      "economic_flag": "VIABLE",
+      "priority": 67.098,
+      "family_signature": "f8a200815ddac09dafd20a86bb7079f9f41d85a8442215a05ef5d4fd6f635f3b",
+      "information_gain_inputs": {
+        "min_t": 22.366,
+        "min_n": 386,
+        "complexity": 1.0
+      }
+    },
+    {
       "hyp_id": "DISC-18CAAD908A",
       "operator": "OP-EVENT-SEQUENCE",
       "what_was_discovered": "P(gap fill within 24 bars) = 0.876 over 386 weekends",
@@ -61,6 +87,32 @@
       "information_gain_inputs": {
         "min_t": 22.366,
         "min_n": 386,
+        "complexity": 1.0
+      }
+    },
+    {
+      "hyp_id": "DISC-BE615E0241",
+      "operator": "OP-COST-AMORTIZED",
+      "what_was_discovered": "streak anti-persistence (t=-7.346) re-tested at 8-bar horizon after 1-bar horizon proved cost-dominated",
+      "why_interesting": "cycle-1 failure analysis: gross edge positive but < cost at 1-bar horizon; if reversion persists beyond one bar, expectancy scales with horizon while cost stays fixed",
+      "evidence_obs_ids": [
+        "OBS-TRENDPERSIST-K3"
+      ],
+      "mechanism": "fade 3-bar streaks and hold 8 bars: amortize the fixed roundtrip cost over a 8-hour reversion swing",
+      "testable_prediction": "8-bar streak fade clears cost on train AND internal validation",
+      "proposed_test": {
+        "type": "streak_fade",
+        "k": 3,
+        "horizon_bars": 8
+      },
+      "expected_gross_effect": 0.00025,
+      "effect_vs_cost": 2.273,
+      "economic_flag": "VIABLE",
+      "priority": 16.697,
+      "family_signature": "71a7c193c17dad2931307726792400838683df2b53d935c685bf9ff4b6d9862e",
+      "information_gain_inputs": {
+        "min_t": 7.346,
+        "min_n": 4989,
         "complexity": 1.0
       }
     },
@@ -174,6 +226,14 @@
     }
   ],
   "rejections": [
+    {
+      "hyp_id": "DISC-89182E7900",
+      "reason": "near-duplicate within batch"
+    },
+    {
+      "hyp_id": "DISC-F356C0F178",
+      "reason": "near-duplicate within batch"
+    },
     {
       "hyp_id": "DISC-92DA6C8131",
       "reason": "near-duplicate within batch"
