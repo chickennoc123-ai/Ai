@@ -1,0 +1,25 @@
+{
+  "audit_type": "CANDIDACY_AUDIT",
+  "file": "EURUSD_H1_2022-2026.csv",
+  "checksum_verified": "f65a4db0a544c849e2dc44d92b9e733eda0826900723b5537e49419b670ff989",
+  "rows": 24620,
+  "period_start": "2022-01-02T17:00:00",
+  "period_end": "2026-01-30T16:00:00",
+  "gaps": 901,
+  "gap_hours": 11116.0,
+  "tests_passed": 11,
+  "tests_failed": 2,
+  "ohlc_validity": "FAIL",
+  "temporal_independence": "PASS",
+  "governance_authorization": "FAIL (NOT approved as primary holdout)",
+  "recommendation": "CONDITIONAL (pass technical tests, fail governance authorization)",
+  "primary_holdout_unchanged": true,
+  "generation_7_status": "NOT_STARTED",
+  "preserved_governance": {
+    "ogd4_status": "UNCHANGED",
+    "primary_holdout": "Dukascopy EURUSD H1 2022-2026",
+    "strat_000003": "NOT CREATED",
+    "new_hypotheses": "NONE",
+    "pure_holdout_sealed": "YES (read-only)"
+  }
+}
