@@ -85,6 +85,78 @@
           "reason": "registered",
           "state": "GENERATED",
           "timestamp": "2026-08-19T01:04:19.137628+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/DATA_ELIGIBILITY.json",
+          "reason": "data eligibility audit ELIGIBLE on real market data",
+          "state": "DATA_VALIDATED",
+          "timestamp": "2026-08-19T03:03:53.396051+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/EVALUATION_DEVELOPMENT.json",
+          "reason": "signal generation completed under RULE-R4-001; the frozen candidate specifies no model, so there is nothing to train and no hyperparameters or seed to select",
+          "state": "TRAINED",
+          "timestamp": "2026-08-19T03:03:53.397715+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/EVALUATION_OOS.json",
+          "reason": "OOS (VALIDATION partition) evaluated: {'trades': 157, 'net_profit': -3050.02, 'profit_factor': 0.7927, 'win_rate': 0.4459, 'expectancy': -19.4269, 'sharpe': -0.9513, 'max_drawdown': 4006.46}",
+          "state": "OOS_TESTED",
+          "timestamp": "2026-08-19T03:03:53.399363+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/WALK_FORWARD.json",
+          "reason": "walk-forward completed: {'n_windows': 90, 'positive_window_fraction': 0.35555555555555557, 'total_net_profit': -18557.806387312005, 'concentration': 'DISTRIBUTED'}",
+          "state": "WFA_TESTED",
+          "timestamp": "2026-08-19T03:03:53.400881+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/ROBUSTNESS.json",
+          "reason": "robustness surface evaluated: NONE",
+          "state": "ROBUSTNESS_TESTED",
+          "timestamp": "2026-08-19T03:03:53.403088+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/COST_STRESS.json",
+          "reason": "cost stress completed: NOT_COST_DEPENDENT: the strategy is unprofitable even with all execution costs removed, so costs are not what is destroying it. The signal itself has no edge.",
+          "state": "COST_TESTED",
+          "timestamp": "2026-08-19T03:03:53.404740+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/STATISTICAL_VALIDATION.json",
+          "reason": "bootstrap confidence intervals computed",
+          "state": "STATISTICALLY_VALIDATED",
+          "timestamp": "2026-08-19T03:03:53.406243+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/MULTIPLE_TESTING.json",
+          "reason": "multiple-testing accounting completed: NOT_SUPPORTED",
+          "state": "MULTIPLE_TESTING_REVIEWED",
+          "timestamp": "2026-08-19T03:03:53.407876+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/CANDIDATE_FREEZE_SNAPSHOT.json",
+          "reason": "candidate frozen for PURE_HOLDOUT access; snapshot=6b1c63d014d4a7be59bb09a1536cbfb9dcc8b3b81cf67afef00184e8ec53cf9a",
+          "state": "FROZEN",
+          "timestamp": "2026-08-19T03:03:53.409533+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/EVALUATION_PURE_HOLDOUT.json",
+          "reason": "PURE_HOLDOUT evaluated exactly once under the frozen specification (6b1c63d014d4a7be): {'trades': 142, 'net_profit': -3948.86, 'profit_factor': 0.6534, 'win_rate': 0.4085, 'expectancy': -27.8089, 'sharpe': -1.4021, 'max_drawdown': 4341.35}",
+          "state": "HOLDOUT_TESTED",
+          "timestamp": "2026-08-19T03:03:55.488843+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/EVG_REPORT.json",
+          "reason": "EVG consumed the complete evidence chain; verdict=FAIL",
+          "state": "EVG_REVIEW",
+          "timestamp": "2026-08-19T03:03:55.537569+00:00"
+        },
+        {
+          "evidence_reference": "reports/generation4/EVG_REPORT.json",
+          "reason": "[EVG] Economic Validation Gate returned FAIL on the complete Generation 4 evidence chain. Negative expectancy after realistic costs on development, OOS and PURE_HOLDOUT alike; no parameter neighbourhood is viable; the strategy is not merely cost-sensitive but unprofitable before costs as well.",
+          "state": "REJECTED",
+          "timestamp": "2026-08-19T03:03:55.542040+00:00"
         }
       ],
       "hypothesis_id": "HYP-000001",
@@ -107,7 +179,7 @@
         "timeframe": "H1",
         "transaction_cost_model": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)"
       },
-      "state": "GENERATED",
+      "state": "REJECTED",
       "version": 1
     }
   },
@@ -144,27 +216,195 @@
         "candidate_id": "STRAT-000002",
         "event": "generated",
         "timestamp": "2026-08-19T01:04:19.137638+00:00"
+      },
+      {
+        "event": "selection_bias_status_changed",
+        "from": "UNACCOUNTED",
+        "justification": "A Deflated Sharpe Ratio correction was computed and applied over 2 evaluated candidate(s) (reports/generation4/MULTIPLE_TESTING.json). The accounting is complete and the correction is real, but with this few trials it has almost no discriminating power -- passing it would not have demonstrated freedom from selection bias. Recording the low power in the status itself prevents a future reader from mistaking 'corrected' for 'shown to be unbiased'.",
+        "timestamp": "2026-08-19T03:03:53.394614+00:00",
+        "to": "STATISTICAL_CORRECTION_APPLIED_LOW_POWER"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "data eligibility audit ELIGIBLE on real market data",
+        "timestamp": "2026-08-19T03:03:53.396071+00:00",
+        "to_state": "DATA_VALIDATED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "signal generation completed under RULE-R4-001; the frozen candidate specifies no model, so there is nothing to train and no hyperparameters or seed to select",
+        "timestamp": "2026-08-19T03:03:53.397728+00:00",
+        "to_state": "TRAINED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "OOS (VALIDATION partition) evaluated: {'trades': 157, 'net_profit': -3050.02, 'profit_factor': 0.7927, 'win_rate': 0.4459, 'expectancy': -19.4269, 'sharpe': -0.9513, 'max_drawdown': 4006.46}",
+        "timestamp": "2026-08-19T03:03:53.399373+00:00",
+        "to_state": "OOS_TESTED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "walk-forward completed: {'n_windows': 90, 'positive_window_fraction': 0.35555555555555557, 'total_net_profit': -18557.806387312005, 'concentration': 'DISTRIBUTED'}",
+        "timestamp": "2026-08-19T03:03:53.400894+00:00",
+        "to_state": "WFA_TESTED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "robustness surface evaluated: NONE",
+        "timestamp": "2026-08-19T03:03:53.403099+00:00",
+        "to_state": "ROBUSTNESS_TESTED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "cost stress completed: NOT_COST_DEPENDENT: the strategy is unprofitable even with all execution costs removed, so costs are not what is destroying it. The signal itself has no edge.",
+        "timestamp": "2026-08-19T03:03:53.404750+00:00",
+        "to_state": "COST_TESTED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "bootstrap confidence intervals computed",
+        "timestamp": "2026-08-19T03:03:53.406293+00:00",
+        "to_state": "STATISTICALLY_VALIDATED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "multiple-testing accounting completed: NOT_SUPPORTED",
+        "timestamp": "2026-08-19T03:03:53.407887+00:00",
+        "to_state": "MULTIPLE_TESTING_REVIEWED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "candidate frozen for PURE_HOLDOUT access; snapshot=6b1c63d014d4a7be59bb09a1536cbfb9dcc8b3b81cf67afef00184e8ec53cf9a",
+        "timestamp": "2026-08-19T03:03:53.409543+00:00",
+        "to_state": "FROZEN"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "PURE_HOLDOUT evaluated exactly once under the frozen specification (6b1c63d014d4a7be): {'trades': 142, 'net_profit': -3948.86, 'profit_factor': 0.6534, 'win_rate': 0.4085, 'expectancy': -27.8089, 'sharpe': -1.4021, 'max_drawdown': 4341.35}",
+        "timestamp": "2026-08-19T03:03:55.488861+00:00",
+        "to_state": "HOLDOUT_TESTED"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "EVG consumed the complete evidence chain; verdict=FAIL",
+        "timestamp": "2026-08-19T03:03:55.537585+00:00",
+        "to_state": "EVG_REVIEW"
+      },
+      {
+        "candidate_id": "STRAT-000002",
+        "event": "transition",
+        "reason": "[EVG] Economic Validation Gate returned FAIL on the complete Generation 4 evidence chain. Negative expectancy after realistic costs on development, OOS and PURE_HOLDOUT alike; no parameter neighbourhood is viable; the strategy is not merely cost-sensitive but unprofitable before costs as well.",
+        "timestamp": "2026-08-19T03:03:55.542050+00:00",
+        "to_state": "REJECTED"
       }
     ],
-    "feature_search_space": {},
-    "model_search_count": 0,
-    "model_search_space": {},
-    "parameter_search_count": 0,
-    "parameter_search_space": {},
-    "search_method": "none (single pre-specified hypothesis)",
-    "search_space": {
-      "note": "ORIGINAL_HYPOTHESIS is not drawn from a search space; it is the single specified candidate under ML-001-R2-CLEAN-REBUILD-SPEC.md"
+    "feature_search_space": {
+      "features": [
+        "rsi_14",
+        "atr_14"
+      ]
     },
-    "selection_bias_status": "UNACCOUNTED",
-    "selection_criteria": "N/A - only one candidate exists; no selection-among-alternatives has occurred",
-    "symbol_search_space": {},
-    "timeframe_search_space": {},
+    "model_search_count": 0,
+    "model_search_space": {
+      "models": [],
+      "note": "no model is specified by this candidate"
+    },
+    "parameter_search_count": 8,
+    "parameter_search_space": {
+      "feature_parameters": {
+        "rsi_oversold_threshold": [
+          30
+        ]
+      },
+      "holding_periods": [
+        12,
+        24
+      ],
+      "stop_loss_options": [
+        "1.5xATR",
+        "2.0xATR"
+      ],
+      "take_profit_options": [
+        "2.0xATR",
+        "3.0xATR"
+      ]
+    },
+    "search_method": "MANUAL search space (SEARCHSPACE-000001) drawn from an ingested public-source claim; one candidate drawn from it (STRAT-000002). STRAT-000001 predates this space and was a single pre-specified hypothesis.",
+    "search_space": {
+      "cost_model": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)",
+      "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+      "entry_conditions": [
+        "rsi_14 crosses back above 30 from below"
+      ],
+      "exit_conditions": [
+        "stop_or_target_or_maxhold"
+      ],
+      "feature_parameters": {
+        "rsi_oversold_threshold": [
+          30
+        ]
+      },
+      "features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "generation_method": "MANUAL",
+      "generation_seed": null,
+      "holding_periods": [
+        12,
+        24
+      ],
+      "position_sizing_options": [
+        "fixed_fractional"
+      ],
+      "regimes": [
+        "any"
+      ],
+      "search_space_id": "SEARCHSPACE-000001",
+      "stop_loss_options": [
+        "1.5xATR",
+        "2.0xATR"
+      ],
+      "symbols": [
+        "EURUSD"
+      ],
+      "take_profit_options": [
+        "2.0xATR",
+        "3.0xATR"
+      ],
+      "timeframes": [
+        "H1"
+      ]
+    },
+    "selection_bias_status": "STATISTICAL_CORRECTION_APPLIED_LOW_POWER",
+    "selection_criteria": "No selection among alternatives has occurred: exactly one parameter draw was taken from SEARCHSPACE-000001 and it was taken BEFORE any economic result existed. No candidate was chosen for being the best-performing of several.",
+    "symbol_search_space": {
+      "symbols": [
+        "EURUSD"
+      ]
+    },
+    "timeframe_search_space": {
+      "timeframes": [
+        "H1"
+      ]
+    },
     "total_hypotheses_ingested": 3,
     "total_strategies_failed": 0,
     "total_strategies_generated": 2,
     "total_strategies_passed": 0,
-    "total_strategies_rejected": 1,
-    "total_strategies_surviving": 0,
-    "total_strategies_tested": 1
+    "total_strategies_rejected": 2,
+    "total_strategies_surviving": 1,
+    "total_strategies_tested": 2
   }
 }

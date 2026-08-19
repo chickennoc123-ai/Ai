@@ -1,0 +1,202 @@
+{
+  "assumptions": {
+    "applied_legs": "spread on entry; slippage on entry AND exit; commission per round turn",
+    "commission_per_lot_round_turn": 7.0,
+    "commission_source": "core.ml_r2.backtest_r2.BacktestConfig",
+    "confirmed_against_broker_feed": false,
+    "latency_and_market_impact": "folded into the slippage multiples rather than modelled as separate additive terms; see this module's docstring for why",
+    "open_governance_item": "ML-001-R2-CLEAN-REBUILD-SPEC.md \u00a717 Open Item #2 remains open",
+    "pip_value_per_lot": 10.0,
+    "slippage_pips": 0.2,
+    "slippage_source": "ML-001-R2-CLEAN-REBUILD-SPEC.md \u00a77 / candidate's frozen transaction_cost_model",
+    "spread_source": "core.utils.INSTRUMENTS['EURUSD'].typical_spread_pips (pre-existing committed value)",
+    "swap_financing": "NOT MODELLED. Max holding period is 12 H1 bars, so most trades never cross a rollover; those that do would incur an additional cost, making these results optimistic rather than pessimistic.",
+    "typical_spread_pips": 1.6
+  },
+  "candidate_id": "STRAT-000002",
+  "degradation": {
+    "1X_SLIPPAGE": {
+      "expectancy": -13.574171392910564,
+      "max_drawdown_delta_vs_base": 0.0,
+      "net_profit_delta_vs_base": 0.0,
+      "profit_factor": 0.6855604408215996,
+      "trade_count_delta_vs_base": 0
+    },
+    "2X_SLIPPAGE": {
+      "expectancy": -13.914574308093021,
+      "max_drawdown_delta_vs_base": 246.601189652396,
+      "net_profit_delta_vs_base": -261.6440061321464,
+      "profit_factor": 0.6618478487456813,
+      "trade_count_delta_vs_base": 3
+    },
+    "3X_SLIPPAGE": {
+      "expectancy": -14.175513818216476,
+      "max_drawdown_delta_vs_base": 418.75456914451934,
+      "net_profit_delta_vs_base": -445.1692620204849,
+      "profit_factor": 0.6408715761530004,
+      "trade_count_delta_vs_base": 4
+    },
+    "BASE": {
+      "expectancy": -13.574171392910564,
+      "max_drawdown_delta_vs_base": 0.0,
+      "net_profit_delta_vs_base": 0.0,
+      "profit_factor": 0.6855604408215996,
+      "trade_count_delta_vs_base": 0
+    },
+    "REALISTIC_SPREAD": {
+      "expectancy": -13.850280718551334,
+      "max_drawdown_delta_vs_base": 221.44229207922945,
+      "net_profit_delta_vs_base": -233.76774723814196,
+      "profit_factor": 0.6662734735065913,
+      "trade_count_delta_vs_base": 4
+    },
+    "SPREAD_WIDENING_2X": {
+      "expectancy": -14.547049604434791,
+      "max_drawdown_delta_vs_base": 717.4880733545779,
+      "net_profit_delta_vs_base": -759.4027710845639,
+      "profit_factor": 0.592802437251362,
+      "trade_count_delta_vs_base": 9
+    },
+    "STRESSED": {
+      "expectancy": -14.801559514936283,
+      "max_drawdown_delta_vs_base": 914.7953210046526,
+      "net_profit_delta_vs_base": -970.5114410078495,
+      "profit_factor": 0.5434234609512419,
+      "trade_count_delta_vs_base": 12
+    },
+    "ZERO_COST": {
+      "expectancy": -7.312428912469862,
+      "max_drawdown_delta_vs_base": -3224.522095647584,
+      "net_profit_delta_vs_base": 4140.147218226802,
+      "profit_factor": 0.8855271312727743,
+      "trade_count_delta_vs_base": -13
+    }
+  },
+  "partition_name": "DEVELOPMENT_AND_VALIDATION",
+  "scenarios": [
+    {
+      "commission_per_lot_round_turn": 0.0,
+      "expectancy": -7.312428912469862,
+      "gross_pnl_before_costs": -4628.767501593423,
+      "label": "ZERO_COST",
+      "max_drawdown": 5862.609338145756,
+      "net_profit": -4628.767501593423,
+      "note": "Diagnostic only. Never economic evidence -- no account trades at zero cost.",
+      "profit_factor": 0.8855271312727743,
+      "slippage_price": 0.0,
+      "spread_price": 0.0,
+      "total_costs_paid": 0.0,
+      "trade_count": 633,
+      "win_rate": 0.45023696682464454
+    },
+    {
+      "commission_per_lot_round_turn": 7.0,
+      "expectancy": -13.574171392910564,
+      "gross_pnl_before_costs": -2772.457442090728,
+      "label": "BASE",
+      "max_drawdown": 9087.13143379334,
+      "net_profit": -8768.914719820224,
+      "note": "The candidate's own frozen transaction_cost_model.",
+      "profit_factor": 0.6855604408215996,
+      "slippage_price": 2e-05,
+      "spread_price": 0.00016,
+      "total_costs_paid": 5996.457277729479,
+      "trade_count": 646,
+      "win_rate": 0.413312693498452
+    },
+    {
+      "commission_per_lot_round_turn": 7.0,
+      "expectancy": -13.850280718551334,
+      "gross_pnl_before_costs": -2431.500408292009,
+      "label": "REALISTIC_SPREAD",
+      "max_drawdown": 9308.57372587257,
+      "net_profit": -9002.682467058366,
+      "note": "Typical spread understates the session-average; +25% approximates a realistic blend.",
+      "profit_factor": 0.6662734735065913,
+      "slippage_price": 2e-05,
+      "spread_price": 0.0002,
+      "total_costs_paid": 6571.182058766363,
+      "trade_count": 650,
+      "win_rate": 0.40615384615384614
+    },
+    {
+      "commission_per_lot_round_turn": 7.0,
+      "expectancy": -13.574171392910564,
+      "gross_pnl_before_costs": -2772.457442090728,
+      "label": "1X_SLIPPAGE",
+      "max_drawdown": 9087.13143379334,
+      "net_profit": -8768.914719820224,
+      "note": "Identical to BASE by construction; retained so the ladder's rungs are explicit.",
+      "profit_factor": 0.6855604408215996,
+      "slippage_price": 2e-05,
+      "spread_price": 0.00016,
+      "total_costs_paid": 5996.457277729479,
+      "trade_count": 646,
+      "win_rate": 0.413312693498452
+    },
+    {
+      "commission_per_lot_round_turn": 7.0,
+      "expectancy": -13.914574308093021,
+      "gross_pnl_before_costs": -2569.5442787109478,
+      "label": "2X_SLIPPAGE",
+      "max_drawdown": 9333.732623445736,
+      "net_profit": -9030.55872595237,
+      "note": "Doubled slippage: news/rollover execution degradation.",
+      "profit_factor": 0.6618478487456813,
+      "slippage_price": 4e-05,
+      "spread_price": 0.00016,
+      "total_costs_paid": 6461.014447241418,
+      "trade_count": 649,
+      "win_rate": 0.4083204930662558
+    },
+    {
+      "commission_per_lot_round_turn": 7.0,
+      "expectancy": -14.175513818216476,
+      "gross_pnl_before_costs": -2315.561814994235,
+      "label": "3X_SLIPPAGE",
+      "max_drawdown": 9505.88600293786,
+      "net_profit": -9214.08398184071,
+      "note": "Tripled slippage: stressed liquidity.",
+      "profit_factor": 0.6408715761530004,
+      "slippage_price": 6.000000000000001e-05,
+      "spread_price": 0.00016,
+      "total_costs_paid": 6898.522166846487,
+      "trade_count": 650,
+      "win_rate": 0.40307692307692305
+    },
+    {
+      "commission_per_lot_round_turn": 7.0,
+      "expectancy": -14.547049604434791,
+      "gross_pnl_before_costs": -2110.566393362386,
+      "label": "SPREAD_WIDENING_2X",
+      "max_drawdown": 9804.619507147918,
+      "net_profit": -9528.317490904788,
+      "note": "Doubled spread: illiquid sessions, event windows.",
+      "profit_factor": 0.592802437251362,
+      "slippage_price": 2e-05,
+      "spread_price": 0.00032,
+      "total_costs_paid": 7417.751097542403,
+      "trade_count": 655,
+      "win_rate": 0.3816793893129771
+    },
+    {
+      "commission_per_lot_round_turn": 7.0,
+      "expectancy": -14.801559514936283,
+      "gross_pnl_before_costs": -2028.0204220837402,
+      "label": "STRESSED",
+      "max_drawdown": 10001.926754797993,
+      "net_profit": -9739.426160828074,
+      "note": "Combined widening and slippage degradation.",
+      "profit_factor": 0.5434234609512419,
+      "slippage_price": 6.000000000000001e-05,
+      "spread_price": 0.00032,
+      "total_costs_paid": 7711.405738744325,
+      "trade_count": 658,
+      "win_rate": 0.3677811550151976
+    }
+  ],
+  "symbol": "EURUSD",
+  "timestamp": "2026-08-19T03:03:49.260349+00:00",
+  "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+  "zero_cost_dependency": "NOT_COST_DEPENDENT: the strategy is unprofitable even with all execution costs removed, so costs are not what is destroying it. The signal itself has no edge."
+}

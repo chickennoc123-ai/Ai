@@ -38,6 +38,22 @@ EVENT_TYPES = frozenset(
         "EVALUATION_REQUESTED",
         "EVALUATION_BLOCKED",
         "DUPLICATE_DETECTED",
+        # --- Generation 4 (candidate economic validation) ---
+        # Additive only: no existing event type was renamed, removed or
+        # given a new meaning, so every ledger entry written by
+        # Generations 1-3 still loads and still means exactly what it did.
+        "DATA_ELIGIBILITY_AUDITED",
+        "LEAKAGE_AUDITED",
+        "EVALUATION_COMPLETED",
+        "HOLDOUT_RELEASED",
+        "HOLDOUT_EVALUATED",
+        "WFA_COMPLETED",
+        "ROBUSTNESS_COMPLETED",
+        "COST_STRESS_COMPLETED",
+        "STATISTICS_COMPLETED",
+        "MULTIPLE_TESTING_COMPLETED",
+        "EVG_VERDICT",
+        "CANDIDATE_CLASSIFIED",
     }
 )
 

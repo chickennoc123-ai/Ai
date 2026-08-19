@@ -1,0 +1,32 @@
+{
+  "audit_timestamp": "2026-08-19T03:01:16.470641+00:00",
+  "boundary_check": "PASS",
+  "candidate_id": "STRAT-000002",
+  "horizon_conformance": "PASS",
+  "overlap_check": "PASS",
+  "partition_name": "DEVELOPMENT",
+  "post_exit_perturbation": "PASS",
+  "post_signal_decision_invariance": "PASS",
+  "signal_to_entry_lag_bars": {
+    "max": 1,
+    "min": 1,
+    "n": 488
+  },
+  "target_construction": {
+    "decision_timestamp": "bar close of t -- identical to the signal timestamp",
+    "entry_timestamp": "open of bar t+1",
+    "exit_timestamp": "the bar at which STOP_LOSS/TAKE_PROFIT/MAX_HOLDING_PERIOD first fires",
+    "forecast_horizon_bars": 12,
+    "horizon_note": "HYP-000001 states a 12-bar forward-return horizon; the frozen candidate realizes it as max_hold_bars=12 with earlier exit on stop or target. These are consistent but not identical: a stopped-out trade realizes a shorter horizon than the hypothesis states. This is a property of the frozen specification, recorded here, not corrected here.",
+    "hypothesis_horizon_bars": 12,
+    "learned_label": null,
+    "learned_label_note": "STRAT-000002 specifies no model and therefore no learned label. The economically meaningful target is the realized net P&L of each executed trade.",
+    "overlap_policy": "one open position at a time; outcomes are non-overlapping by construction",
+    "signal_timestamp": "bar close of t (features computed from bars <= t only)",
+    "target_type": "REALIZED_TRADE_PNL"
+  },
+  "trades_audited": 488,
+  "unclosed_trade_handling": "PASS",
+  "verdict": "PASS",
+  "violations": []
+}

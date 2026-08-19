@@ -25,7 +25,103 @@
       "related_market": "",
       "related_search_space": "",
       "timestamp": "2026-08-19T01:04:19.114058+00:00"
+    },
+    {
+      "entity_id": "STRAT-000002",
+      "evidence_reference": "reports/generation4/EVALUATION_DEVELOPMENT.json",
+      "failure_category": "NEGATIVE_EXPECTANCY",
+      "failure_id": "FAIL-000003",
+      "failure_reason": "DEVELOPMENT partition net -8273.63 on 488 trades, PF 0.6727",
+      "failure_stage": "TRAINING",
+      "related_family": "FAMILY-000004",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD H1",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T03:03:55.539653+00:00"
+    },
+    {
+      "entity_id": "STRAT-000002",
+      "evidence_reference": "reports/generation4/EVALUATION_OOS.json",
+      "failure_category": "NEGATIVE_EXPECTANCY",
+      "failure_id": "FAIL-000004",
+      "failure_reason": "OOS (VALIDATION) net -3050.02 on 157 trades, PF 0.7927",
+      "failure_stage": "OOS",
+      "related_family": "FAMILY-000004",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD H1",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T03:03:55.539987+00:00"
+    },
+    {
+      "entity_id": "STRAT-000002",
+      "evidence_reference": "reports/generation4/EVALUATION_PURE_HOLDOUT.json",
+      "failure_category": "NEGATIVE_EXPECTANCY",
+      "failure_id": "FAIL-000005",
+      "failure_reason": "PURE_HOLDOUT net -3948.86 on 142 trades, PF 0.6534",
+      "failure_stage": "HOLDOUT",
+      "related_family": "FAMILY-000004",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD H1",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T03:03:55.540519+00:00"
+    },
+    {
+      "entity_id": "STRAT-000002",
+      "evidence_reference": "reports/generation4/WALK_FORWARD.json",
+      "failure_category": "WFA_FAILURE",
+      "failure_id": "FAIL-000006",
+      "failure_reason": "only 0.3556 of 90 traded windows were net positive; losses are distributed",
+      "failure_stage": "WFA",
+      "related_family": "FAMILY-000004",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD H1",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T03:03:55.540882+00:00"
+    },
+    {
+      "entity_id": "STRAT-000002",
+      "evidence_reference": "reports/generation4/ROBUSTNESS.json",
+      "failure_category": "PARAMETER_FRAGILITY",
+      "failure_id": "FAIL-000007",
+      "failure_reason": "no point in the declared parameter neighbourhood achieves PF > 1; the failure is a property of the rule family, not of the chosen parameters",
+      "failure_stage": "ROBUSTNESS",
+      "related_family": "FAMILY-000004",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD H1",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T03:03:55.541265+00:00"
+    },
+    {
+      "entity_id": "STRAT-000002",
+      "evidence_reference": "reports/generation4/MULTIPLE_TESTING.json",
+      "failure_category": "STATISTICAL_FAILURE",
+      "failure_id": "FAIL-000008",
+      "failure_reason": "The observed annualized Sharpe is -1.3807, i.e. negative. A multiple-testing correction can only reduce confidence in a positive result; it has nothing to correct here. The candidate is refuted before multiplicity is even considered, and the deflated probability (0.000009) simply restates that.",
+      "failure_stage": "MULTIPLE_TESTING",
+      "related_family": "FAMILY-000004",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD H1",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T03:03:55.541621+00:00"
     }
   ],
-  "next_id": 3
+  "next_id": 9
 }

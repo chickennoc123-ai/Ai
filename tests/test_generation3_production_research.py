@@ -125,7 +125,19 @@ class TestFirstRealCandidate:
     def test_full_reverse_lineage_from_candidate_to_source(self) -> None:
         src_reg, claim_reg, hyp_reg, ss_reg, strat_reg = _registries()
         c = strat_reg.get("STRAT-000002")
-        assert c.state == CandidateState.GENERATED  # created, never validated -- not an edge claim
+        # Updated for Generation 4 (documented contract change, not a
+        # weakening). This originally asserted GENERATED, encoding the
+        # Generation 3 end-state where the candidate had been created but
+        # never evaluated. Generation 4 evaluated it and rejected it. The
+        # point the assertion was protecting -- that this candidate is not
+        # an edge claim -- is now stronger, not weaker, and is asserted
+        # directly: it is terminally REJECTED and never reached any state
+        # that would constitute a passing verdict.
+        assert c.state == CandidateState.REJECTED
+        states = [h["state"] for h in c.history]
+        assert "RESEARCH_CANDIDATE" not in states
+        assert "PAPER_VALIDATION" not in states
+        assert "LIVE_CANDIDATE" not in states
         h = hyp_reg.get(c.hypothesis_id)
         claim = claim_reg.get(h.source_claim_id)
         source = src_reg.get(claim.source_id)
@@ -175,13 +187,39 @@ class TestLedgerAndSafetyState:
         ks = ResearchKillSwitch(path=FACTORY / "research_kill_switch.json")
         ks.assert_not_tripped()
 
-    def test_no_holdout_access_event_exists_anywhere(self) -> None:
-        """Research discovery never touched PURE_HOLDOUT: no candidate has
-        ever entered HOLDOUT_TESTED, and the audit artifact records zero
-        holdout access events."""
+    def test_holdout_was_never_touched_by_research_discovery(self) -> None:
+        """Retargeted for Generation 4, and deliberately not deleted.
+
+        The original assertion was "no candidate has ever entered
+        HOLDOUT_TESTED". Generation 4 legitimately entered it for
+        STRAT-000002, after the full pre-holdout evidence chain and after
+        the candidate was FROZEN. Deleting the test would lose the
+        property it was protecting, so it is retargeted to the property
+        that still holds and still matters: *research discovery* never
+        touched PURE_HOLDOUT, and any holdout access that does exist is a
+        Generation 4 economic-validation access on a frozen candidate,
+        never a discovery-time one.
+        """
         *_, strat_reg = _registries()
         for c in strat_reg.list_all():
-            assert "HOLDOUT_TESTED" not in [h["state"] for h in c.history]
+            states = [h["state"] for h in c.history]
+            if "HOLDOUT_TESTED" not in states:
+                continue
+            assert c.candidate_id == "STRAT-000002", (
+                "only the Generation 4 candidate may have touched PURE_HOLDOUT"
+            )
+            # It must have been frozen first, and the transition must carry
+            # a real evidence reference rather than a bare reason string.
+            assert states.index("FROZEN") < states.index("HOLDOUT_TESTED")
+            entry = next(h for h in c.history if h["state"] == "HOLDOUT_TESTED")
+            assert entry.get("evidence_reference"), "holdout access must reference its evidence"
+            # And exactly once: a second access would break "evaluated once".
+            assert states.count("HOLDOUT_TESTED") == 1
+
+        # The Generation 3 audit artifact is a frozen record of Generation
+        # 3's own end-state and must still say zero -- if this ever became
+        # non-zero, a discovery-phase holdout access would have been
+        # back-dated into Generation 3's record.
         audit = json.loads((FACTORY / "GENERATION3_RESEARCH_AUDIT.json").read_text())
         assert audit["holdout_access_events"] == 0
 

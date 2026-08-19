@@ -1,0 +1,74 @@
+{
+  "audit_timestamp": "2026-08-19T03:01:03.321049+00:00",
+  "cross_symbol_dependency": "STRUCTURALLY_ABSENT: build_feature_matrix takes exactly one symbol's OHLCV frame and has no parameter, import or global through which another symbol's data could reach it",
+  "cut_points_tested": [
+    650,
+    4779,
+    8908,
+    13037,
+    17166,
+    21295,
+    25425,
+    29554,
+    33683,
+    37812,
+    41941,
+    46070
+  ],
+  "dependency_records": {
+    "atr_14": {
+      "aggregation_behavior": "recursive mean of true range",
+      "availability_time": "bar close of t",
+      "cross_symbol_dependencies": "none",
+      "forward_fill_behavior": "none",
+      "lookback_bars": 14,
+      "missing_data_behavior": "an internal NaN after the seed raises WilderSmoothingError (fails closed)",
+      "normalization": "none; absolute price units",
+      "rolling_window_semantics": "seeded Wilder recurrence over true_range; expanding-backward, never forward",
+      "shift_semantics": "true_range uses close.shift(+1) as the prior close",
+      "source_columns": [
+        "high",
+        "low",
+        "close"
+      ],
+      "timestamp_alignment": "right (recursive average ending at t)",
+      "warmup_bars": 100
+    },
+    "rsi_14": {
+      "aggregation_behavior": "recursive mean of gains/losses",
+      "availability_time": "bar close of t",
+      "cross_symbol_dependencies": "none",
+      "forward_fill_behavior": "none",
+      "lookback_bars": 14,
+      "missing_data_behavior": "an internal NaN after the seed raises WilderSmoothingError (fails closed)",
+      "normalization": "bounded 0-100 by construction; no fitted scaler",
+      "rolling_window_semantics": "seeded Wilder recurrence over close.diff(); expanding-backward, never forward",
+      "shift_semantics": "close.diff() = close - close.shift(+1)",
+      "source_columns": [
+        "close"
+      ],
+      "timestamp_alignment": "right (recursive average ending at t)",
+      "warmup_bars": 100
+    }
+  },
+  "feature_version": "FE-R2-003",
+  "features_audited": [
+    "rsi_14",
+    "atr_14"
+  ],
+  "future_perturbation_invariance": {
+    "atr_14": "PASS",
+    "rsi_14": "PASS"
+  },
+  "same_timestamp_leakage": {
+    "atr_14": "PASS",
+    "rsi_14": "PASS"
+  },
+  "scaler_or_imputation_state": "STRUCTURALLY_ABSENT: FE-R2-003 fits no scaler and performs no imputation. Warmup rows are set to NaN and later dropped by alignment; they are never filled. There is no fit/transform object whose fitted state could span the train/test boundary",
+  "truncation_invariance": {
+    "atr_14": "PASS",
+    "rsi_14": "PASS"
+  },
+  "verdict": "PASS",
+  "violations": []
+}

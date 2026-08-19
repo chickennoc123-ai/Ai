@@ -1,0 +1,122 @@
+{
+  "candidate_id": "STRAT-000002",
+  "drawdown_distribution": {
+    "max_observed_in_resamples": 9018.448320027828,
+    "median": 4239.895512667017,
+    "method": "BLOCK_BOOTSTRAP over the trade-P&L sequence",
+    "observed": 4325.836030152677,
+    "p95": 6417.8497625518985,
+    "p99": 7458.043678924736
+  },
+  "intervals": [
+    {
+      "block_size": 20,
+      "ci_lower": -45.22320374166688,
+      "ci_upper": -6.0019829762558,
+      "confidence_level": 0.95,
+      "iterations": 10000,
+      "method": "BLOCK_BOOTSTRAP",
+      "point_estimate": -27.808899014192534,
+      "statistic": "expectancy_per_trade",
+      "straddles_zero": false
+    },
+    {
+      "block_size": 20,
+      "ci_lower": 0.49589189054096716,
+      "ci_upper": 0.9124384837857702,
+      "confidence_level": 0.95,
+      "iterations": 10000,
+      "method": "BLOCK_BOOTSTRAP",
+      "point_estimate": 0.6533887629709139,
+      "statistic": "profit_factor",
+      "straddles_zero": false
+    },
+    {
+      "block_size": 20,
+      "ci_lower": -6421.694931316697,
+      "ci_upper": -852.2815826283236,
+      "confidence_level": 0.95,
+      "iterations": 10000,
+      "method": "BLOCK_BOOTSTRAP",
+      "point_estimate": -3948.86366001534,
+      "statistic": "net_profit",
+      "straddles_zero": false
+    },
+    {
+      "block_size": null,
+      "ci_lower": -51.1766083369359,
+      "ci_upper": -4.469500159131881,
+      "confidence_level": 0.95,
+      "iterations": 10000,
+      "method": "IID_BOOTSTRAP",
+      "point_estimate": -27.808899014192534,
+      "statistic": "expectancy_per_trade",
+      "straddles_zero": false
+    },
+    {
+      "block_size": null,
+      "ci_lower": 0.44527703374581357,
+      "ci_upper": 0.9343979609278735,
+      "confidence_level": 0.95,
+      "iterations": 10000,
+      "method": "IID_BOOTSTRAP",
+      "point_estimate": 0.6533887629709139,
+      "statistic": "profit_factor",
+      "straddles_zero": false
+    },
+    {
+      "block_size": null,
+      "ci_lower": -7267.078383844898,
+      "ci_upper": -634.669022596727,
+      "confidence_level": 0.95,
+      "iterations": 10000,
+      "method": "IID_BOOTSTRAP",
+      "point_estimate": -3948.86366001534,
+      "statistic": "net_profit",
+      "straddles_zero": false
+    }
+  ],
+  "methodology": {
+    "block_size_rationale": "20 consecutive trades spans roughly one market month at this trade frequency, which is the scale at which regime persistence shows up in the P&L sequence. Chosen before any interval was computed and not varied afterward.",
+    "block_size_trades": 20,
+    "deterministic": true,
+    "iterations": 10000,
+    "not_computed": [
+      "p-value against a no-edge null (see multiple_testing.py -- a single-candidate p-value would ignore the search that produced the candidate)",
+      "parametric probability of ruin (would require a distributional assumption the data does not support)"
+    ],
+    "primary_method": "moving-block bootstrap",
+    "secondary_method": "IID bootstrap, reported only to expose how much narrower the independence assumption would have made the intervals",
+    "seed": 20260819
+  },
+  "partition_name": "PURE_HOLDOUT",
+  "probability_of_ruin": {
+    "caveat": "This is a statement about resamples of the OBSERVED trade sequence only. It is not a forward-looking probability and must not be read as one.",
+    "definition": "fraction of block-bootstrap resampled trade sequences whose peak-to-trough drawdown exceeds the stated fraction of the starting equity",
+    "initial_equity": 10000.0,
+    "p_drawdown_exceeds_20pct": 0.977,
+    "p_drawdown_exceeds_30pct": 0.8555,
+    "p_drawdown_exceeds_50pct": 0.2735
+  },
+  "return_distribution": {
+    "kurtosis": 51.946876650311175,
+    "mean": -4.119454254742879e-05,
+    "n": 11519,
+    "skew": 0.2578366859213474,
+    "std": 0.00232093325990938
+  },
+  "seed": 20260819,
+  "sharpe_uncertainty": {
+    "analytic_standard_error": 1.0364634614900117,
+    "block_bootstrap_ci_lower": -2.7627098494062343,
+    "block_bootstrap_ci_upper": 0.052830691317659155,
+    "confidence_level": 0.95,
+    "n_return_observations": 11519,
+    "note": "Computed on per-bar equity returns. The analytic standard error assumes IID normal returns and is shown only as a reference point against the resampled interval.",
+    "observed_annualized_sharpe": -1.4020688065697433
+  },
+  "timestamp": "2026-08-19T03:03:55.487795+00:00",
+  "trade_count": 142,
+  "trade_count_sufficiency": "SUFFICIENT: 142 trades supports a resampled interval.",
+  "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be"
+}

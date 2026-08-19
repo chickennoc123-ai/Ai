@@ -245,42 +245,78 @@ class TestMultipleTestingAccountingIsHonest:
     aspirational -- they come from the real, on-disk production registry."""
 
     def test_production_registry_counters_match_the_real_population(self) -> None:
-        """Updated for Generation 3 (documented contract change, not a
-        weakening): this test originally asserted total_strategies_generated
-        == 1, encoding the Generation 2-era population. Generation 3's
-        execution contract (rule 23 / Phase 24) explicitly authorized the
-        next production candidate when a real hypothesis legitimately
-        qualified -- STRAT-000002 was generated from HYP-000001 (real
-        public-strategy source SRC2-000001) with full lineage, and remains
-        GENERATED (never tested, never validated). The invariant that
-        actually matters is strengthened, not relaxed: the stored counters
-        must equal counts RECOMPUTED from the actual candidate population,
-        so neither inflation nor deflation can hide."""
+        """Updated for Generation 4 (documented contract change, not a
+        weakening).
+
+        History of this test, kept visible on purpose: it first asserted
+        total_strategies_generated == 1 (Generation 2's population), was
+        updated for Generation 3 when STRAT-000002 was generated from
+        HYP-000001, and is updated again now that Generation 4 has
+        evaluated and rejected STRAT-000002. Each update moved the
+        *expected population*; none of them relaxed the invariant.
+
+        The invariant is and remains: every stored counter must equal a
+        count RECOMPUTED from the actual candidate population, so neither
+        inflation nor deflation can hide. It is asserted more tightly here
+        than before -- the rejected count, the tested count and the
+        passed count are all now derived from the population rather than
+        written as literals.
+        """
         if not DEFAULT_REGISTRY_PATH.exists():
             pytest.skip("production registry not present in this checkout")
         reg = StrategyRegistry(path=DEFAULT_REGISTRY_PATH)
         summary = reg.search_history_summary()
         population = reg.list_all()
+
         assert summary["total_strategies_generated"] == len(population) == 2
         assert summary["total_strategies_rejected"] == sum(
             1 for c in population if c.state == CandidateState.REJECTED
+        ) == 2
+        assert summary["total_strategies_tested"] == sum(
+            1 for c in population
+            if c.state not in (CandidateState.GENERATED, CandidateState.DATA_VALIDATED)
+        ) == 2
+        assert summary["total_strategies_passed"] == sum(
+            1 for c in population
+            if "RESEARCH_CANDIDATE" in [h["state"] for h in c.history]
+        ) == 0
+        assert summary["total_strategies_failed"] == sum(
+            1 for c in population if c.state == CandidateState.FAILED
+        ) == 0
+
+        # total_strategies_surviving is a MONOTONIC counter (incremented on
+        # first entry to STATISTICALLY_VALIDATED, never decremented), not a
+        # count of currently-surviving candidates. STRAT-000002 passed that
+        # gate and was subsequently rejected, so the counter is 1 while
+        # zero candidates actually survive. Asserted explicitly, both ways,
+        # so the divergence is pinned down rather than discovered later as
+        # a surprise -- see ML-001-GENERATION-4-REPORT.md, open governance
+        # item on this field's name.
+        assert summary["total_strategies_surviving"] == sum(
+            1 for c in population
+            if "STATISTICALLY_VALIDATED" in [h["state"] for h in c.history]
         ) == 1
-        assert summary["total_strategies_tested"] == 1  # only STRAT-000001 ever reached DATA_VALIDATED
-        assert summary["total_strategies_passed"] == 0
-        assert summary["total_strategies_failed"] == 0
-        assert summary["total_strategies_surviving"] == 0
-        # STRAT-000002 exists but is GENERATED only -- never validated/tested
-        assert reg.get("STRAT-000002").state == CandidateState.GENERATED
+        assert sum(1 for c in population
+                   if c.state not in (CandidateState.REJECTED, CandidateState.FAILED)) == 0
+
+        assert reg.get("STRAT-000002").state == CandidateState.REJECTED
 
     def test_selection_bias_status_is_not_silently_marked_pass(self) -> None:
         if not DEFAULT_REGISTRY_PATH.exists():
             pytest.skip("production registry not present in this checkout")
         reg = StrategyRegistry(path=DEFAULT_REGISTRY_PATH)
         summary = reg.search_history_summary()
-        # with exactly one candidate ever tested, there is no selection
-        # among alternatives to correct for -- PASS would misrepresent a
-        # formal multiple-testing correction that was never performed.
+        # Generation 4 applied a real Deflated Sharpe correction, so the
+        # status is no longer merely UNACCOUNTED -- but it must still never
+        # read as a bare PASS, because with two evaluated candidates the
+        # correction has almost no discriminating power. The status string
+        # itself is required to carry that limitation.
         assert summary["selection_bias_status"] != "PASS"
+        assert summary["selection_bias_status"] != "CORRECTED"
+        if summary["selection_bias_status"].startswith("STATISTICAL_CORRECTION_APPLIED"):
+            assert "LOW_POWER" in summary["selection_bias_status"], (
+                "a correction applied over too few trials must say so in its own status"
+            )
 
     def test_strat_000001_is_rejected_in_production_registry(self) -> None:
         if not DEFAULT_REGISTRY_PATH.exists():

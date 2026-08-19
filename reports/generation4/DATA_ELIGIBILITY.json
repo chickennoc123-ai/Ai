@@ -1,0 +1,38 @@
+{
+  "audit_timestamp": "2026-08-19T03:00:45.775582+00:00",
+  "checksum_matches_registry": true,
+  "chronology_ok": true,
+  "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+  "declared_file_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+  "declared_integrity_status": "PASS",
+  "declared_provenance_status": "VERIFIED_WITH_QUALIFICATION",
+  "declared_row_count": 57600,
+  "declared_synthetic": false,
+  "duplicate_timestamp_count": 0,
+  "extreme_jump_count": 0,
+  "findings": [],
+  "gap_classification": {
+    "admitted_by_reason": {
+      "ADMITTED": 502
+    },
+    "admitted_real_gaps": 502,
+    "total_missing_intervals": 502,
+    "unexplained_gaps": 0,
+    "unexplained_samples": []
+  },
+  "inferred_bar_interval_seconds": 3600,
+  "nan_price_count": 0,
+  "non_positive_price_count": 0,
+  "observed_coverage_end": "2022-03-05 04:00:00+00:00",
+  "observed_coverage_start": "2012-11-16 05:00:00+00:00",
+  "observed_file_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+  "observed_row_count": 57600,
+  "observed_symbol": "EURUSD",
+  "observed_timeframe": "H1",
+  "observed_timezone": "UTC",
+  "observed_usable_bars": 57600,
+  "ohlc_violation_count": 0,
+  "real_market_data": true,
+  "verdict": "ELIGIBLE",
+  "weekend_bar_count": 0
+}

@@ -1,0 +1,14 @@
+{
+  "candidate_checksum": "f38087385217026cdc5b2e950186b74976072c1a63744c8fb4194ff121f0ae38",
+  "candidate_id": "STRAT-000002",
+  "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+  "development_evidence_reference": "reports/generation4/EVALUATION_DEVELOPMENT.json, reports/generation4/EVALUATION_OOS.json, reports/generation4/WALK_FORWARD.json",
+  "holdout_dataset_checksum": "6f644c21cc86b43b81a2604471a5e35af281b896259eb4db2570b68be6aff034",
+  "holdout_end": "2022-03-05 04:00:00+00:00",
+  "holdout_rows": 11520,
+  "holdout_start": "2020-04-29 16:00:00+00:00",
+  "reason_for_release": "The complete pre-holdout evidence chain is closed (data eligibility, feature temporal safety, target-leakage audit, development evaluation, OOS, walk-forward, robustness, cost stress, statistics, multiple-testing accounting) and the candidate has entered FROZEN. Generation 4 completion criterion 10 requires PURE_HOLDOUT to be evaluated under the frozen specification. Disclosure: the candidate is already refuted on reusable data; the holdout is opened to complete the required evidence, not in the expectation that it will change the verdict, and no modification of any kind is permitted after this point.",
+  "release_timestamp": "2026-08-19T03:03:53.426275+00:00",
+  "snapshot_checksum": "6b1c63d014d4a7be59bb09a1536cbfb9dcc8b3b81cf67afef00184e8ec53cf9a",
+  "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be"
+}

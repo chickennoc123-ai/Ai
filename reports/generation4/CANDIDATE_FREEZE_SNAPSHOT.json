@@ -1,0 +1,115 @@
+{
+  "candidate_checksum": "f38087385217026cdc5b2e950186b74976072c1a63744c8fb4194ff121f0ae38",
+  "candidate_id": "STRAT-000002",
+  "candidate_state_at_freeze": "GENERATED",
+  "candidate_version": 1,
+  "code_version": "23fb460",
+  "cost_model": {
+    "apply_exit_slippage": true,
+    "commission_per_lot_round_turn": 7.0,
+    "label": "BASE",
+    "pip_size": 0.0001,
+    "pip_value_per_lot": 10.0,
+    "slippage_price": 2e-05,
+    "spread_price": 0.00016
+  },
+  "dataset_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+  "dataset_identity": {
+    "coverage_end": "2022-03-05 04:00:00+00:00",
+    "coverage_start": "2012-11-16 05:00:00+00:00",
+    "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+    "dataset_version": "v1",
+    "file_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+    "file_path": "data/csv/EURUSD_H1.csv",
+    "instrument": "EURUSD",
+    "provenance_status": "VERIFIED_WITH_QUALIFICATION",
+    "record_checksum": "1b29ca23bdc7b2645ae48a0ccb06108263b69e586bdc7d0ba40e66d1e5966eb9",
+    "row_count": 57600,
+    "synthetic": false,
+    "timeframe": "H1",
+    "timezone": "UTC (converted from assumed raw UTC-5, see source record notes)"
+  },
+  "feature_schema_checksum": "be28db3bdeba2e22dba37dfd89aae4417d7dc6d2b04925857e82b7f993db9ea0",
+  "feature_specification": {
+    "feature_version": "FE-R2-003",
+    "features_used": [
+      "rsi_14",
+      "atr_14"
+    ],
+    "full_schema": {
+      "definitions": {
+        "atr_14": "Seeded Wilder ATR of True Range, period=14: seeded as the simple mean of the first 14 True Range values, then avg[t]=(avg[t-1]*13+TR[t])/14",
+        "momentum_20": "(close[t]-close[t-20])/close[t-20]",
+        "momentum_5": "(close[t]-close[t-5])/close[t-5]",
+        "rsi_14": "Seeded Wilder RSI, period=14: avg_gain/avg_loss seeded as the simple mean of the first 14 values, then avg[t]=(avg[t-1]*13+value[t])/14; RSI=100-100/(1+avg_gain/avg_loss); flat market (0/0) -> RSI=50",
+        "volatility_regime": "ordinal {0,1,2} from atr_14 vs. trailing 500-bar 33rd/67th percentile"
+      },
+      "feature_order": [
+        "momentum_5",
+        "momentum_20",
+        "rsi_14",
+        "atr_14",
+        "volatility_regime"
+      ],
+      "feature_version": "FE-R2-003",
+      "warmup_bars": {
+        "atr_14": 100,
+        "momentum_20": 20,
+        "momentum_5": 5,
+        "rsi_14": 100,
+        "volatility_regime": 600
+      }
+    }
+  },
+  "freeze_protocol_version": "G4-FREEZE-001",
+  "freeze_timestamp": "2026-08-19T03:00:45.227315+00:00",
+  "hyperparameters": {},
+  "hypothesis_id": "HYP-000001",
+  "instrument_scope": [
+    "EURUSD"
+  ],
+  "model_specification": "NONE_DETERMINISTIC_RULE",
+  "position_sizing": "fixed_fractional",
+  "risk_rules": {
+    "max_holding_bars": 12,
+    "max_positions": 1,
+    "risk_per_trade": 0.02,
+    "stop_loss_atr_mult": 1.5,
+    "take_profit_atr_mult": 2.0
+  },
+  "search_space_checksum": "5181dd64fcf910ccfaeb19ea249798d1e645e0ba899047a53636127303468cdc",
+  "search_space_id": "SEARCHSPACE-000001",
+  "seed_policy": {
+    "bootstrap": 20260819,
+    "execution": "NO_SEED_REQUIRED (deterministic)",
+    "robustness_perturbation": "deterministic grid, no sampling",
+    "seed_selection_policy": "seeds are fixed constants; no seed is chosen by result",
+    "signal_generation": "NO_SEED_REQUIRED (deterministic rule)"
+  },
+  "snapshot_checksum": "6b1c63d014d4a7be59bb09a1536cbfb9dcc8b3b81cf67afef00184e8ec53cf9a",
+  "spec_checksum": "78fc420ca2c253d370f810a3c105e55390fc7162bb1bc85091d8f4c08e7ba8c3",
+  "specification": {
+    "direction": "long_only",
+    "entry_rule": "rsi_14 < 30 (source's oversold threshold) => rsi_14 crosses back above 30 from below :: rsi_14 crosses back above 30 from below",
+    "exit_rule": "stop_or_target_or_maxhold",
+    "features": [
+      "rsi_14",
+      "atr_14"
+    ],
+    "max_hold_bars": 12,
+    "position_sizing": "fixed_fractional",
+    "research_scope": "SINGLE_INSTRUMENT",
+    "stop_loss": "1.5xATR",
+    "take_profit": "2.0xATR",
+    "timeframe": "H1",
+    "transaction_cost_model": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)"
+  },
+  "target_specification": {
+    "horizon_bars": 12,
+    "learned_label": null,
+    "source_hypothesis_target": "forward return over 12 bars on EURUSD H1 (HYP-000001)",
+    "target_type": "REALIZED_TRADE_PNL"
+  },
+  "timeframe": "H1",
+  "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be"
+}

@@ -1,0 +1,18 @@
+{
+  "dataset_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+  "dataset_id": "DATASET-EURUSD-H1-KOMO135-V1",
+  "declared_timestamp": "2026-08-19T03:00:45.927812+00:00",
+  "derivation": "core.ml_r2.walkforward_r2.compute_temporal_split at its committed DEVELOPMENT_FRACTION=0.6/VALIDATION_FRACTION=0.2 defaults (committed 2026-08-18, before STRAT-000002 was generated and before any Generation 4 result existed). Strictly chronological; no dates were chosen by this generation and none were chosen after observing any performance number.",
+  "development_fraction": 0.6,
+  "development_rows": 34560,
+  "holdout_end": "2022-03-05 04:00:00+00:00",
+  "holdout_fraction": 0.2,
+  "holdout_rows": 11520,
+  "holdout_start": "2020-04-29 16:00:00+00:00",
+  "train_end": "2018-06-19 23:00:00+00:00",
+  "train_start": "2012-11-16 05:00:00+00:00",
+  "validation_end": "2020-04-29 15:00:00+00:00",
+  "validation_fraction": 0.2,
+  "validation_rows": 11520,
+  "validation_start": "2018-06-20 00:00:00+00:00"
+}

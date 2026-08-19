@@ -473,6 +473,35 @@ class StrategyRegistry:
         self._search_history["model_search_space"] = model_search_space or {}
         self._save()
 
+    def set_selection_bias_status(self, status: str, *, justification: str) -> None:
+        """Set ``selection_bias_status`` explicitly, with a recorded reason.
+
+        ML-001-STRATEGY-FACTORY-SPEC.md §7 requires this field to be moved
+        off its ``UNACCOUNTED`` default only by the phase that actually did
+        the work, never silently. ``justification`` is required and is
+        appended to the search-history event log, so the status can never
+        appear in the registry without a statement of what earned it.
+        """
+        if not status or not status.strip():
+            raise EAFactoryError("selection_bias_status must be a non-empty status string")
+        if not justification or not justification.strip():
+            raise EAFactoryError(
+                "a selection_bias_status change requires a justification -- an unexplained status "
+                "is exactly the unaccounted-for claim this field exists to prevent"
+            )
+        previous = self._search_history.get("selection_bias_status")
+        self._search_history["selection_bias_status"] = status
+        self._search_history["events"].append(
+            {
+                "event": "selection_bias_status_changed",
+                "from": previous,
+                "to": status,
+                "justification": justification,
+                "timestamp": utcnow().isoformat(),
+            }
+        )
+        self._save()
+
     def record_hypothesis_ingested(self) -> None:
         """Increment ``total_hypotheses_ingested`` (ML-001-STRATEGY-FACTORY-
         SPEC.md §7). Call once per ``HypothesisRecord`` registered in

@@ -1,0 +1,16 @@
+{
+  "entry_rule_source": "rsi_14 < 30 (source's oversold threshold) => rsi_14 crosses back above 30 from below :: rsi_14 crosses back above 30 from below",
+  "risk_rules": {
+    "max_holding_bars": 12,
+    "max_positions": 1,
+    "risk_per_trade": 0.02,
+    "stop_loss_atr_mult": 1.5,
+    "take_profit_atr_mult": 2.0
+  },
+  "rule": {
+    "crossing_direction": "up",
+    "direction": 1,
+    "feature": "rsi_14",
+    "threshold": 30.0
+  }
+}

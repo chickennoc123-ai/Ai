@@ -1,0 +1,229 @@
+{
+  "blocking_reasons": [],
+  "candidate_checksum": "f38087385217026cdc5b2e950186b74976072c1a63744c8fb4194ff121f0ae38",
+  "candidate_id": "STRAT-000002",
+  "evidence": [
+    {
+      "artifact_reference": "reports/generation4/CANDIDATE_FREEZE_SNAPSHOT.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "6b1c63d014d4a7be59bb09a1536cbfb9dcc8b3b81cf67afef00184e8ec53cf9a",
+      "name": "CANDIDATE_FREEZE",
+      "summary": {
+        "reason": "candidate frozen and verified unchanged before every subsequent phase"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "PASS"
+    },
+    {
+      "artifact_reference": "reports/generation4/COST_STRESS.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "b9015ed0446e76cfdc6a2797fe1253be8e071fc4c044410d4082352098ccf71f",
+      "name": "COST_STRESS",
+      "summary": {
+        "reason": "NOT_COST_DEPENDENT: the strategy is unprofitable even with all execution costs removed, so costs are not what is destroying it. The signal itself has no edge."
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "FAIL"
+    },
+    {
+      "artifact_reference": "reports/generation4/DATA_ELIGIBILITY.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "ef40334f26ddf8a4f9991e65293ca5627361281417c6a9ef26dcac1052f1cd5f",
+      "name": "DATA_INTEGRITY",
+      "summary": {
+        "reason": "no integrity findings"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "ELIGIBLE"
+    },
+    {
+      "artifact_reference": "reports/generation4/EVALUATION_DEVELOPMENT.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "8deda1033eb1b261f18e90afb1a878fc250c94b450fb2f3f4a10c1090e4f53da",
+      "name": "DEVELOPMENT_EVALUATION",
+      "summary": {
+        "metrics": {
+          "expectancy": -16.9541,
+          "max_drawdown": 8626.87,
+          "net_profit": -8273.63,
+          "profit_factor": 0.6727,
+          "sharpe": -1.5316,
+          "trades": 488,
+          "win_rate": 0.4016
+        },
+        "reason": "profit factor 0.6727 < 1 on 488 trades; net -8273.63"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "FAIL"
+    },
+    {
+      "artifact_reference": "reports/generation4/EVALUATION_PURE_HOLDOUT.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "febe48ac8b5ffb9fcb606109b0b3323d7b50eb1438f2e34bfb387bd3764e0b62",
+      "name": "HOLDOUT",
+      "summary": {
+        "metrics": {
+          "expectancy": -27.8089,
+          "max_drawdown": 4341.35,
+          "net_profit": -3948.86,
+          "profit_factor": 0.6534,
+          "sharpe": -1.4021,
+          "trades": 142,
+          "win_rate": 0.4085
+        },
+        "reason": "profit factor 0.6534 < 1 on 142 trades; net -3948.86"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "FAIL"
+    },
+    {
+      "artifact_reference": "reports/generation4/FEATURE_TEMPORAL_AUDIT.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "806730095548918c518e4ab705e47c05ee7366ab025df83bf6c6347fbc8edffc",
+      "name": "LEAKAGE_AUDIT",
+      "summary": {
+        "reason": "no temporal violations found"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "PASS"
+    },
+    {
+      "artifact_reference": "reports/generation4/MULTIPLE_TESTING.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "3f17e2ac6633f1092408b6bf00762c10f4b56fb92d6c6eb66bb8f1dfe2f1e74d",
+      "name": "MULTIPLE_TESTING",
+      "summary": {
+        "reason": "The observed annualized Sharpe is -1.3807, i.e. negative. A multiple-testing correction can only reduce confidence in a positive result; it has nothing to correct here. The candidate is refuted before multiplicity is even considered, and the deflated probability (0.000009) simply restates that."
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "NOT_SUPPORTED"
+    },
+    {
+      "artifact_reference": "reports/generation4/EVALUATION_OOS.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "6e07592315f4b3bfa99526e93e0510461995dcd04040116cad50198ab9e4f7f1",
+      "name": "OOS",
+      "summary": {
+        "metrics": {
+          "expectancy": -19.4269,
+          "max_drawdown": 4006.46,
+          "net_profit": -3050.02,
+          "profit_factor": 0.7927,
+          "sharpe": -0.9513,
+          "trades": 157,
+          "win_rate": 0.4459
+        },
+        "reason": "profit factor 0.7927 < 1 on 157 trades; net -3050.02"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "FAIL"
+    },
+    {
+      "artifact_reference": "reports/generation4/DATA_ELIGIBILITY.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "ef40334f26ddf8a4f9991e65293ca5627361281417c6a9ef26dcac1052f1cd5f",
+      "name": "REAL_DATA",
+      "summary": {
+        "reason": "dataset is real market data with verified provenance"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "PASS"
+    },
+    {
+      "artifact_reference": "reports/generation4/ROBUSTNESS.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "1399bb7eb6de9370b40fff4db8f3716c52ef8d24fe6d16b07dceda87e75268ee",
+      "name": "ROBUSTNESS",
+      "summary": {
+        "reason": "viable region: NONE; 0 of 360 grid points have PF > 1"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "FAIL"
+    },
+    {
+      "artifact_reference": "reports/generation4/STATISTICAL_VALIDATION.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "14c72fc1865cdf5a1e21b61393801e6d5c05709c2158ca168fff6e0a971cef10",
+      "name": "STATISTICS",
+      "summary": {
+        "reason": "block-bootstrap 95% CI for per-trade expectancy is [-19.4201, -7.1071] -- entirely below zero"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "FAIL"
+    },
+    {
+      "artifact_reference": "reports/generation4/TARGET_LEAKAGE_AUDIT.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "847c13813ee888ed1ecfd231d74e4785b2fdfd81867b17c76abdabfa34820aa2",
+      "name": "TARGET_AUDIT",
+      "summary": {
+        "reason": "no target-construction violations found"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "PASS"
+    },
+    {
+      "artifact_reference": "reports/generation4/EVALUATION_DEVELOPMENT.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "48e37dd7a98e3abe495baa10ffacecc9f05601b69a81e0ce995cc9b59df1a7ff",
+      "name": "TRAINING",
+      "summary": {
+        "reason": "no model to train (deterministic rule); signal generation deterministic and provenance-recorded"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "PASS"
+    },
+    {
+      "artifact_reference": "reports/generation4/WALK_FORWARD.json",
+      "candidate_id": "STRAT-000002",
+      "checksum": "1e46d5ecceaba1f0f4c3efda28e8ef4294350e6bc8498bb1209860002e190289",
+      "name": "WFA",
+      "summary": {
+        "reason": "90 windows, positive fraction 0.3556, total net -18557.81, DISTRIBUTED"
+      },
+      "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+      "verdict": "FAIL"
+    }
+  ],
+  "evidence_missing": [],
+  "evidence_present": [
+    "REAL_DATA",
+    "DATA_INTEGRITY",
+    "LEAKAGE_AUDIT",
+    "TARGET_AUDIT",
+    "CANDIDATE_FREEZE",
+    "TRAINING",
+    "DEVELOPMENT_EVALUATION",
+    "HOLDOUT",
+    "OOS",
+    "WFA",
+    "ROBUSTNESS",
+    "COST_STRESS",
+    "STATISTICS",
+    "MULTIPLE_TESTING"
+  ],
+  "insufficiency_observations": [],
+  "refuting_observations": [
+    "DEVELOPMENT_EVALUATION: FAIL -- profit factor 0.6727 < 1 on 488 trades; net -8273.63",
+    "HOLDOUT: FAIL -- profit factor 0.6534 < 1 on 142 trades; net -3948.86",
+    "OOS: FAIL -- profit factor 0.7927 < 1 on 157 trades; net -3050.02",
+    "WFA: FAIL -- 90 windows, positive fraction 0.3556, total net -18557.81, DISTRIBUTED",
+    "ROBUSTNESS: FAIL -- viable region: NONE; 0 of 360 grid points have PF > 1",
+    "COST_STRESS: FAIL -- NOT_COST_DEPENDENT: the strategy is unprofitable even with all execution costs removed, so costs are not what is destroying it. The signal itself has no edge.",
+    "STATISTICS: FAIL -- block-bootstrap 95% CI for per-trade expectancy is [-19.4201, -7.1071] -- entirely below zero",
+    "MULTIPLE_TESTING: NOT_SUPPORTED -- The observed annualized Sharpe is -1.3807, i.e. negative. A multiple-testing correction can only reduce confidence in a positive result; it has nothing to correct here. The candidate is refuted before multiplicity is even considered, and the deflated probability (0.000009) simply restates that."
+  ],
+  "snapshot_checksum": "6b1c63d014d4a7be59bb09a1536cbfb9dcc8b3b81cf67afef00184e8ec53cf9a",
+  "supporting_observations": [
+    "REAL_DATA: PASS",
+    "DATA_INTEGRITY: ELIGIBLE",
+    "LEAKAGE_AUDIT: PASS",
+    "TARGET_AUDIT: PASS",
+    "CANDIDATE_FREEZE: PASS",
+    "TRAINING: PASS"
+  ],
+  "timestamp": "2026-08-19T03:03:55.536625+00:00",
+  "validation_run_id": "G4RUN-STRAT-000002-6b1c63d014d4a7be",
+  "verdict": "FAIL",
+  "verdict_basis": "8 gate(s) produced refuting evidence against the frozen candidate. The complete chain was present, so this is a conclusion, not a gap."
+}

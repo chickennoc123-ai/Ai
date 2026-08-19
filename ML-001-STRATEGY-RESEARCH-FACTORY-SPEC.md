@@ -1,7 +1,11 @@
 # ML-001 Strategy Research Factory — Generation 1 Canonical Specification
 
-**Status**: CANONICAL for Generation 1 (Foundation), superseded as the top-level document by `ML-001-GENERATION-2-SPEC.md` for anything Generation 2 added (research pipeline: source/claim/hypothesis/search-space/candidate-generation/ledger/accounting) — this document remains the authoritative source for Generation 1's own scope (Data Factory, Market Universe, Feature Factory) and is not restated or invalidated by Generation 2. This is the top-level specification for the Strategy Research Factory as a whole at the time it was written; it does not restate the candidate-lifecycle detail already canonical in `ML-001-STRATEGY-FACTORY-SPEC.md` §1-§12, it incorporates that document by reference and adds the Generation 1 scope this task introduced: Data Factory, Market Universe, Feature Factory, and generation boundaries.
-**Date**: August 18, 2026 (Generation 1); Generation 2 status noted August 19, 2026 — see `ML-001-GENERATION-2-REPORT.md`; Generation 3 (Real Research Intake + Hypothesis Factory) completed August 19, 2026 — canonical: `ML-001-GENERATION-3-SPEC.md`, report: `ML-001-GENERATION-3-REPORT.md`. Generation 3 note: the production registries now contain a real ingested research seed set (4 sources, 3 claims, 3 hypotheses) and a second production candidate, `STRAT-000002` (state `GENERATED`, full lineage, **not validated, not an edge claim** — authorized by Generation 3's execution contract rule 23/Phase 24). Nothing in this document's Generation 1 scope is invalidated.
+**Status**: CANONICAL for Generation 1 (Foundation), superseded as the top-level document by `ML-001-GENERATION-2-SPEC.md` for anything Generation 2 added (research pipeline: source/claim/hypothesis/search-space/candidate-generation/ledger/accounting) and by `ML-001-GENERATION-4-SPEC.md` for anything Generation 4 added (candidate freeze, data eligibility, temporal/target leakage auditing, holdout sealing, rule execution, walk-forward, robustness, cost stress, statistics, multiple-testing correction, EVG) — this document remains the authoritative source for Generation 1's own scope (Data Factory, Market Universe, Feature Factory) and is not restated or invalidated by Generation 2. This is the top-level specification for the Strategy Research Factory as a whole at the time it was written; it does not restate the candidate-lifecycle detail already canonical in `ML-001-STRATEGY-FACTORY-SPEC.md` §1-§12, it incorporates that document by reference and adds the Generation 1 scope this task introduced: Data Factory, Market Universe, Feature Factory, and generation boundaries.
+**Date**: August 18, 2026 (Generation 1); Generation 2 status noted August 19, 2026 — see `ML-001-GENERATION-2-REPORT.md`; Generation 3 (Real Research Intake + Hypothesis Factory) completed August 19, 2026 — canonical: `ML-001-GENERATION-3-SPEC.md`, report: `ML-001-GENERATION-3-REPORT.md`; **Generation 4 (Candidate Economic Validation) completed August 19, 2026** — canonical: `ML-001-GENERATION-4-SPEC.md`, report: `ML-001-GENERATION-4-REPORT.md`.
+
+**Generation 3 note**: the production registries contain a real ingested research seed set (4 sources, 3 claims, 3 hypotheses) and a second production candidate, `STRAT-000002` (then state `GENERATED`, full lineage, **not validated, not an edge claim** — authorized by Generation 3's execution contract rule 23/Phase 24).
+
+**Generation 4 note**: `STRAT-000002` has since been frozen, economically validated across the complete evidence chain, and **REJECTED**. `EVG_VERDICT = FAIL`; `EDGE_STATUS = NO_EDGE_FOUND`. Both candidates this Factory has produced are now rejected, and no candidate has ever reached `RESEARCH_CANDIDATE` or beyond. Nothing in this document's Generation 1 scope is invalidated by any of the above.
 
 **Generation 1's three MEDIUM audit findings** (`ML-001-GENERATION-1-INDEPENDENT-AUDIT.md` §11: production wiring not complete, holdout access linkage weak, one vacuous test assertion) **are now CLOSED** — see `ML-001-GENERATION-2-SPEC.md` §6 for what changed and where. No claim in this document about Generation 1's own scope was invalidated by that remediation; the fixes are additive (`core/factory/research_pipeline.py`, `core/factory/holdout_access.py`, both new files) plus one corrected test assertion.
 
@@ -10,6 +14,8 @@
 ## §1. Mission
 
 Build a rigorous, reproducible research foundation capable of supporting large-scale strategy research **without**: data fabrication, synthetic-data substitution presented as real, temporal leakage, holdout contamination, undocumented search, hidden selection bias, candidate mutation, provenance loss, silent governance relaxation, or fabricated PASS states. Finding a winning strategy is explicitly **not** this generation's objective — `STRAT-000001` remains `REJECTED`, `STRAT-000002` remains `NOT_CREATED`, and Generation 1 succeeds or fails independent of either fact.
+
+> *Historical note (Generation 4):* the clause "`STRAT-000002` remains `NOT_CREATED`" was true when this section was written and is preserved unedited. `STRAT-000002` was subsequently created (Generation 3) and is now `REJECTED` (Generation 4). The sentence's actual claim — that Generation 1 succeeds or fails independent of whether any candidate works — is unaffected, and has now been borne out twice: the foundation held while both candidates it supports were rejected.
 
 ## §2. Scope — Generation 1 vs. later generations
 
@@ -25,6 +31,15 @@ Build a rigorous, reproducible research foundation capable of supporting large-s
 
 **Generation 2 and later — explicitly out of scope here, not implemented, not started**: hypothesis ingestion at scale (`ML-001-HYPOTHESIS-SOURCE-CONTRACT.md` defines the *contract*, Generation 1 does not use it), YouTube/internet strategy ingestion, candidate generation at scale, `STRAT-000002` or any new candidate, automated strategy discovery, new economic strategy experiments, paper trading, live trading, production promotion. Generation 1 builds the foundation these would run on; it does not run any of them.
 
+**What has since been built on top of this foundation** (recorded here for navigation only — none of it changes Generation 1's own scope or claims):
+
+| Generation | Scope | Canonical spec | Outcome |
+|---|---|---|---|
+| 2 | Research pipeline: source → claim → hypothesis → search space → candidate; ledger; accounting | `ML-001-GENERATION-2-SPEC.md` | COMPLETE |
+| 3 | Real research intake + hypothesis factory; first sourced candidate `STRAT-000002` | `ML-001-GENERATION-3-SPEC.md` | COMPLETE |
+| 4 | Candidate economic validation of `STRAT-000002` | `ML-001-GENERATION-4-SPEC.md` | COMPLETE — **REJECTED, NO EDGE FOUND** |
+| 5 | — | — | **NOT STARTED** |
+
 ## §3. Terminology
 
 - **Candidate**: one `StrategyCandidate` in the Factory registry (`core/factory/registry.py`) — a specific, immutable trading-rule specification moving through the lifecycle in `ML-001-STRATEGY-FACTORY-SPEC.md` §2.
@@ -37,6 +52,8 @@ Build a rigorous, reproducible research foundation capable of supporting large-s
 ## §4. Candidate Lifecycle & State Machine
 
 Fully specified in `ML-001-STRATEGY-FACTORY-SPEC.md` §2-§9 — not restated here. Summary for orientation: `GENERATED → DATA_VALIDATED → TRAINED → OOS_TESTED → WFA_TESTED → ROBUSTNESS_TESTED → COST_TESTED → STATISTICALLY_VALIDATED → MULTIPLE_TESTING_REVIEWED → FROZEN → HOLDOUT_TESTED → EVG_REVIEW → RESEARCH_CANDIDATE → PAPER_VALIDATION → LIVE_CANDIDATE`, terminal `REJECTED`/`FAILED`/`RETIRED` reachable from most states.
+
+**First complete traversal (Generation 4)**: `STRAT-000002` walked this spine end to end — `GENERATED → DATA_VALIDATED → TRAINED → OOS_TESTED → WFA_TESTED → ROBUSTNESS_TESTED → COST_TESTED → STATISTICALLY_VALIDATED → MULTIPLE_TESTING_REVIEWED → FROZEN → HOLDOUT_TESTED → EVG_REVIEW → REJECTED`. This was the first time the machine was exercised against real economic evidence rather than tested in isolation, and it held: `HOLDOUT_TESTED` was reachable only after `FROZEN` and only on presentation of a validated `HoldoutAccessEvent`, and `REJECTED` proved terminal. See `ML-001-GENERATION-4-REPORT.md` §11.
 
 ## §5. Version Semantics & Rejection Semantics
 
@@ -57,6 +74,8 @@ A downstream artifact (a trained model, an evaluation result, an audit report) m
 
 Fully specified in `ML-001-SEARCH-SPACE-AND-MULTIPLE-TESTING-CONTRACT.md` and `ML-001-STRATEGY-FACTORY-SPEC.md` §7-§8 — extended by this generation's `symbol_search_space`/`timeframe_search_space`/`feature_search_space` fields (already present in `StrategyRegistry._empty_search_history()`, populated by `set_search_space()`), which Generation 2 will use once it actually begins expanding along those axes. Generation 1 populates zero of them beyond what already existed for `STRAT-000001`.
 
+**Generation 4 update**: these fields are now populated for `SEARCHSPACE-000001`, and `selection_bias_status` has moved from `UNACCOUNTED` (Generation 1) through `ACCOUNTING_ONLY` (Generation 3) to `STATISTICAL_CORRECTION_APPLIED_LOW_POWER`. Read the whole string: a Deflated Sharpe correction really was computed and applied, but over 2 evaluated candidates it has almost no discriminating power, so passing it would not have demonstrated freedom from selection bias. `StrategyRegistry.set_selection_bias_status` refuses to change the field without a recorded justification, and the `LOW_POWER` suffix is enforced by test. See `ML-001-R4-MULTIPLE-TESTING-REPORT.md`.
+
 ## §9. Audit Requirements
 
 Every Generation 1 subsystem must be independently re-checkable, not merely asserted:
@@ -66,5 +85,7 @@ Every Generation 1 subsystem must be independently re-checkable, not merely asse
 - Adversarial attempts (wrong symbol, wrong timeframe, altered dataset, synthetic-flag mismatch, missing provenance, duplicate data, future-leaking feature, invalid gap handling, frozen-candidate mutation, holdout misuse) must be rejected, not silently accepted (`tests/test_generation1_foundation_integration.py::TestAdversarialAudit`).
 
 ## §10. Future Generation Boundaries
+
+**Reading note**: the stop conditions in this section are *Generation 1's* stop conditions, recorded as they stood when this document was written. They were satisfied at the time and were later lifted by the explicit execution contracts of Generations 2, 3 and 4, each of which authorized the next step in writing. They are preserved verbatim rather than edited, because a governance boundary that gets quietly rewritten once it is crossed is not a boundary. The **current** stop condition is Generation 4's: do not start Generation 5, and do not create a new candidate merely because `STRAT-000002` failed (`ML-001-GENERATION-4-SPEC.md` §8).
 
 Generation 1 delivers infrastructure; it does not use it to make a new economic claim. The explicit stop condition (repeated from the task's own instruction, not invented here): **do not create `STRAT-000002`**, do not ingest a hypothesis, do not add a new symbol's real data, do not add a new feature beyond the existing five, do not begin paper or live promotion. `ML-001-GENERATION-1-FOUNDATION-REPORT.md` records the final gate status and is the last artifact this task produces — Generation 2 begins, per the task's own words, "only after Generation 1 has been independently reviewed," which this document does not attempt to substitute for.

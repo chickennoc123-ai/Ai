@@ -1,0 +1,57 @@
+{
+  "compared_pairs": [
+    {
+      "recomputed_key": "TOTAL_CANDIDATES_GENERATED",
+      "stored_key": "total_strategies_generated"
+    },
+    {
+      "recomputed_key": "TOTAL_CANDIDATES_REJECTED",
+      "stored_key": "total_strategies_rejected"
+    },
+    {
+      "recomputed_key": "TOTAL_CANDIDATES_TESTED",
+      "stored_key": "total_strategies_tested"
+    }
+  ],
+  "definitional_divergences": [
+    {
+      "counter": "surviving",
+      "reason": "These two fields do not mean the same thing. The registry's total_strategies_surviving is a monotonic counter incremented on first entry to STATISTICALLY_VALIDATED and never decremented, so it counts candidates that ever reached that gate. compute_search_accounting_summary's TOTAL_CANDIDATES_SURVIVING is derived from CURRENT state and counts candidates not presently REJECTED/FAILED. STRAT-000002 passed the statistics gate and was subsequently rejected, so it is counted by the first and not by the second. Both numbers are correct for their own definition; the field NAME is what is misleading. Raised as an open governance item in ML-001-GENERATION-4-REPORT.md rather than fixed here, because renaming a Generation-1 registry field during Generation 4 would itself be a silent governance change.",
+      "recomputed": 0,
+      "stored": 1
+    }
+  ],
+  "mismatches": [],
+  "note": "Counters are compared where the two sources define them identically. Where they do not, the difference is enumerated under definitional_divergences with both values and the reason -- never dropped from the comparison. A mismatch on an identically-defined counter sets status=FAIL; a documented definitional divergence does not, because the two numbers are answers to different questions.",
+  "recomputed": {
+    "FEATURE_COMBINATIONS": 2,
+    "GENERATION_METHOD": [
+      "MANUAL"
+    ],
+    "PARAMETER_COMBINATIONS": 8,
+    "SEARCH_SPACE_SIZE": 8,
+    "SELECTION_BIAS_STATUS": "ACCOUNTING_ONLY",
+    "SYMBOL_COMBINATIONS": 1,
+    "TOTAL_CANDIDATES_FROZEN": 0,
+    "TOTAL_CANDIDATES_GENERATED": 2,
+    "TOTAL_CANDIDATES_REJECTED": 2,
+    "TOTAL_CANDIDATES_SURVIVING": 0,
+    "TOTAL_CANDIDATES_TESTED": 2,
+    "TOTAL_CLAIMS": 3,
+    "TOTAL_FORMALIZED_HYPOTHESES": 3,
+    "TOTAL_HYPOTHESES": 3,
+    "TOTAL_SEARCH_SPACES": 1,
+    "TOTAL_SOURCES": 4
+  },
+  "status": "PASS",
+  "stored": {
+    "selection_bias_status": "STATISTICAL_CORRECTION_APPLIED_LOW_POWER",
+    "total_hypotheses_ingested": 3,
+    "total_strategies_failed": 0,
+    "total_strategies_generated": 2,
+    "total_strategies_passed": 0,
+    "total_strategies_rejected": 2,
+    "total_strategies_surviving": 1,
+    "total_strategies_tested": 2
+  }
+}
