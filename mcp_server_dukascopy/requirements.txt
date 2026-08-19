@@ -1,0 +1,11 @@
+# MCP Server for Dukascopy Data Fetching
+# Requirements to run the MCP server on personal machine with unrestricted internet
+
+# MCP SDK for Claude Code integration
+mcp>=0.1.0
+
+# Dukascopy data fetching library
+dukascopy-tick>=0.1.0
+
+# Standard library dependencies
+python-dateutil>=2.8.0
