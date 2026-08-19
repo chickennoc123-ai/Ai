@@ -28,7 +28,7 @@ from core.factory.registry import (
 )
 from core.factory.state_machine import CandidateState, IllegalStateTransitionError, assert_legal_transition
 from core.provenance_enforcement import DataAccessAction, DataState, DataStateViolationError, ProvenanceEnforcer
-from tests.test_factory_registry import _spec, _walk_to_frozen
+from tests.test_factory_registry import _holdout_event, _spec, _walk_to_frozen, _walk_to_holdout_tested
 
 
 class TestRejectedCandidateImmutability:
@@ -149,8 +149,7 @@ class TestFinalHoldoutSemantics:
         HOLDOUT_TESTED itself, its spec is still immutable."""
         reg = StrategyRegistry(path=tmp_path / "registry.json")
         c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
-        _walk_to_frozen(reg, c.candidate_id)
-        reg.transition(c.candidate_id, CandidateState.HOLDOUT_TESTED, reason="holdout evaluated")
+        _walk_to_holdout_tested(reg, c.candidate_id)
         with pytest.raises(FrozenCandidateMutationError):
             reg.assert_mutation_allowed(c.candidate_id)
 
@@ -206,7 +205,10 @@ class TestEVGOnlyAfterRequiredEvidence:
         _walk_to_frozen(reg, c.candidate_id)
         with pytest.raises(IllegalStateTransitionError):
             reg.transition(c.candidate_id, CandidateState.EVG_REVIEW, reason="skip holdout")
-        reg.transition(c.candidate_id, CandidateState.HOLDOUT_TESTED, reason="holdout evaluated")
+        reg.transition(
+            c.candidate_id, CandidateState.HOLDOUT_TESTED, reason="holdout evaluated",
+            holdout_access_event=_holdout_event(reg, c.candidate_id),
+        )
         reg.transition(c.candidate_id, CandidateState.EVG_REVIEW, reason="ok, now legal")
         assert reg.get(c.candidate_id).state == CandidateState.EVG_REVIEW
 

@@ -35,6 +35,7 @@ from core.factory.candidate import (
     StrategyCandidate,
     StrategyCandidateSpec,
 )
+from core.factory.holdout_access import HoldoutAccessEvent, validate_holdout_access_event
 from core.factory.state_machine import (
     CandidateState,
     assert_legal_transition,
@@ -89,6 +90,13 @@ class MultipleTestingAccountingRequiredError(EAFactoryError):
     registry. Per ML-001-STRATEGY-FACTORY-SPEC.md §7: the search-space
     accounting must exist BEFORE this gate is passed, not be a label
     applied after the fact with nothing behind it."""
+
+
+class HoldoutAccessEventRequiredError(EAFactoryError):
+    """Raised when a candidate attempts HOLDOUT_TESTED without presenting
+    a ``core.factory.holdout_access.HoldoutAccessEvent`` (closes
+    Generation 1 finding G1-M2: HOLDOUT_TESTED must not be enterable by a
+    bare state-transition request alone)."""
 
 
 def _empty_search_history() -> Dict[str, Any]:
@@ -197,6 +205,8 @@ class StrategyRegistry:
         candidate_id: Optional[str] = None,
         instrument_universe: Tuple[DatasetProvenanceRecord, ...] = (),
         hypothesis_id: Optional[str] = None,
+        search_space_id: Optional[str] = None,
+        candidate_checksum: str = "",
     ) -> StrategyCandidate:
         """Register a new candidate in state GENERATED. Updates search-history counters.
 
@@ -208,6 +218,10 @@ class StrategyRegistry:
         ``hypothesis_id`` links back to a ``core.factory.hypothesis
         .HypothesisRecord`` if this candidate originated from an ingested
         external source claim rather than a directly-specified hypothesis.
+        ``search_space_id``/``candidate_checksum`` (Generation 2, Phase 10)
+        link back to the exact ``core.factory.search_space.SearchSpace``
+        this candidate was drawn from and record its own generation-time
+        content checksum.
         """
         cid = candidate_id or self.allocate_candidate_id()
         if cid in self._candidates:
@@ -227,6 +241,8 @@ class StrategyRegistry:
             history=[{"state": CandidateState.GENERATED.value, "timestamp": utcnow().isoformat(), "reason": "registered"}],
             instrument_universe=tuple(instrument_universe),
             hypothesis_id=hypothesis_id,
+            search_space_id=search_space_id,
+            candidate_checksum=candidate_checksum,
         )
         self._candidates[cid] = candidate
         self._search_history["total_strategies_generated"] += 1
@@ -249,6 +265,7 @@ class StrategyRegistry:
         *,
         reason: str,
         evidence_reference: Optional[str] = None,
+        holdout_access_event: Optional[HoldoutAccessEvent] = None,
     ) -> StrategyCandidate:
         """Move ``candidate_id`` to ``new_state``, enforcing the state machine.
 
@@ -257,7 +274,15 @@ class StrategyRegistry:
         move. Raises ``MultipleTestingAccountingRequiredError`` if
         ``new_state`` is ``MULTIPLE_TESTING_REVIEWED`` but
         ``set_search_space`` has never been called on this registry (§7:
-        the accounting must exist before this gate can be passed). Every
+        the accounting must exist before this gate can be passed). Raises
+        ``HoldoutAccessEventRequiredError`` if ``new_state`` is
+        ``HOLDOUT_TESTED`` but ``holdout_access_event`` is not provided,
+        and re-raises ``core.factory.holdout_access.
+        HoldoutAccessEventError`` if a provided event does not match this
+        candidate's id/version (closes Generation 1 finding G1-M2: a bare
+        ``reason`` string is no longer sufficient to enter
+        ``HOLDOUT_TESTED`` — a real, structured event must be presented
+        and is cross-checked, not merely accepted at face value). Every
         transition is appended to the candidate's ``history``, never
         overwritten, and the search-history counters are updated for the
         terminal outcomes (REJECTED/FAILED) and for first-time entry into
@@ -273,6 +298,19 @@ class StrategyRegistry:
                 "must exist first, not be backfilled after the fact",
                 candidate_id=candidate_id,
             )
+
+        if new_state is CandidateState.HOLDOUT_TESTED:
+            if holdout_access_event is None:
+                raise HoldoutAccessEventRequiredError(
+                    "cannot enter HOLDOUT_TESTED without presenting a HoldoutAccessEvent -- "
+                    "a bare reason string is not sufficient evidence that a real PURE_HOLDOUT "
+                    "access occurred",
+                    candidate_id=candidate_id,
+                )
+            validate_holdout_access_event(
+                holdout_access_event, candidate_id=candidate_id, candidate_version=candidate.version
+            )
+            evidence_reference = evidence_reference or f"holdout_access_event:{holdout_access_event.event_checksum()}"
 
         candidate.state = new_state
         candidate.history.append(

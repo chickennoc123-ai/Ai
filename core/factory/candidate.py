@@ -184,6 +184,20 @@ class StrategyCandidate:
     #: ML-001-R2-CLEAN-REBUILD-SPEC.md) rather than an ingested external
     #: source claim.
     hypothesis_id: Optional[str] = None
+    #: Links this candidate back to the exact core.factory.search_space
+    #: .SearchSpace it was drawn from (Generation 2, Phase 10) -- None for
+    #: candidates generated outside a declared search space (e.g.
+    #: STRAT-000001, the single pre-specified hypothesis, drawn from no
+    #: search space at all).
+    search_space_id: Optional[str] = None
+    #: A checksum of this candidate's own generation-defining content
+    #: (spec + hypothesis + search space identity), distinct from
+    #: ``spec.spec_checksum()`` -- Phase 10 requires "candidate checksum"
+    #: as its own field; computed via ``compute_candidate_checksum``
+    #: below at generation time, stored (not recomputed on every access)
+    #: so it survives exactly as it was at generation even if unrelated
+    #: code changes what ``spec_checksum()`` would produce today.
+    candidate_checksum: str = ""
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -214,6 +228,8 @@ class StrategyCandidate:
                 DatasetProvenanceRecord.from_dict(p) for p in d.get("instrument_universe", [])
             ),
             hypothesis_id=d.get("hypothesis_id"),
+            search_space_id=d.get("search_space_id"),
+            candidate_checksum=d.get("candidate_checksum", ""),
         )
 
     def new_version_with(self, **spec_overrides: Any) -> "StrategyCandidateSpec":

@@ -1,7 +1,9 @@
 # ML-001 Strategy Research Factory — Generation 1 Canonical Specification
 
-**Status**: CANONICAL for Generation 1 (Foundation). This is the top-level specification for the Strategy Research Factory as a whole; it does not restate the candidate-lifecycle detail already canonical in `ML-001-STRATEGY-FACTORY-SPEC.md` §1-§12, it incorporates that document by reference and adds the Generation 1 scope this task introduced: Data Factory, Market Universe, Feature Factory, and generation boundaries.
-**Date**: August 18, 2026
+**Status**: CANONICAL for Generation 1 (Foundation), superseded as the top-level document by `ML-001-GENERATION-2-SPEC.md` for anything Generation 2 added (research pipeline: source/claim/hypothesis/search-space/candidate-generation/ledger/accounting) — this document remains the authoritative source for Generation 1's own scope (Data Factory, Market Universe, Feature Factory) and is not restated or invalidated by Generation 2. This is the top-level specification for the Strategy Research Factory as a whole at the time it was written; it does not restate the candidate-lifecycle detail already canonical in `ML-001-STRATEGY-FACTORY-SPEC.md` §1-§12, it incorporates that document by reference and adds the Generation 1 scope this task introduced: Data Factory, Market Universe, Feature Factory, and generation boundaries.
+**Date**: August 18, 2026 (Generation 1); Generation 2 status noted August 19, 2026 — see `ML-001-GENERATION-2-REPORT.md`.
+
+**Generation 1's three MEDIUM audit findings** (`ML-001-GENERATION-1-INDEPENDENT-AUDIT.md` §11: production wiring not complete, holdout access linkage weak, one vacuous test assertion) **are now CLOSED** — see `ML-001-GENERATION-2-SPEC.md` §6 for what changed and where. No claim in this document about Generation 1's own scope was invalidated by that remediation; the fixes are additive (`core/factory/research_pipeline.py`, `core/factory/holdout_access.py`, both new files) plus one corrected test assertion.
 
 ---
 

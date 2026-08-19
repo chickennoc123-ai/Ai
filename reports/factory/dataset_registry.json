@@ -10,6 +10,7 @@
       "download_timestamp": "2026-08-18T12:00:00Z",
       "duplicate_count": 0,
       "file_checksum": "94400954ab8a91c74efa03b8b2fc2af28288ff64bc2c499c15052824901c5f6c",
+      "file_path": "data/csv/EURUSD_H1.csv",
       "gap_report": {
         "admitted_gap_count": 502,
         "feature_version_at_admission": "FE-R2-003",
@@ -40,6 +41,7 @@
       "download_timestamp": "2026-08-18T12:00:00Z",
       "duplicate_count": 0,
       "file_checksum": "24a5f1ffa0056f3b58708a27d9020829833f43ef826e7738262411c96afd52de",
+      "file_path": "data/csv/GBPUSD_H1.csv",
       "gap_report": {
         "admitted_gap_count": 500,
         "feature_version_at_admission": "FE-R2-003",

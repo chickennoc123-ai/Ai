@@ -61,6 +61,40 @@ def _walk_to_frozen(reg: StrategyRegistry, candidate_id: str) -> None:
     reg.transition(candidate_id, CandidateState.FROZEN, reason="freeze for holdout")
 
 
+def _holdout_event(reg: StrategyRegistry, candidate_id: str, **overrides) -> "HoldoutAccessEvent":
+    """A synthetic, test-only HoldoutAccessEvent (Generation 2, closing
+    G1-M2) -- NEVER references real holdout data. ``dataset_checksum``
+    and ``holdout_partition_identity`` below are fixture strings, not
+    derived from data/csv/*_H1.csv."""
+    from core.factory.holdout_access import HoldoutAccessEvent
+
+    candidate = reg.get(candidate_id)
+    base = dict(
+        candidate_id=candidate_id,
+        candidate_version=candidate.version,
+        dataset_id="TEST-DATASET-FIXTURE",
+        dataset_checksum="deadbeef" * 8,
+        holdout_partition_identity="TEST-PURE-HOLDOUT-FIXTURE-PARTITION",
+        access_timestamp="2026-01-01T00:00:00+00:00",
+        frozen_state_confirmed=True,
+        evidence_reference="test-fixture, not a real holdout evaluation",
+    )
+    base.update(overrides)
+    return HoldoutAccessEvent(**base)
+
+
+def _walk_to_holdout_tested(reg: StrategyRegistry, candidate_id: str) -> None:
+    """``_walk_to_frozen`` plus the final, event-backed step into
+    HOLDOUT_TESTED."""
+    _walk_to_frozen(reg, candidate_id)
+    reg.transition(
+        candidate_id,
+        CandidateState.HOLDOUT_TESTED,
+        reason="holdout evaluated (test fixture)",
+        holdout_access_event=_holdout_event(reg, candidate_id),
+    )
+
+
 class TestSpecCompleteness:
     def test_complete_spec_constructs(self) -> None:
         _spec()

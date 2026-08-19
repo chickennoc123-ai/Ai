@@ -17,7 +17,7 @@ import pytest
 from core.factory.candidate import FrozenCandidateMutationError
 from core.factory.registry import MultipleTestingAccountingRequiredError, StrategyRegistry
 from core.factory.state_machine import CandidateState, IllegalStateTransitionError, assert_legal_transition
-from tests.test_factory_registry import _spec, _walk_to_frozen
+from tests.test_factory_registry import _holdout_event, _spec, _walk_to_frozen, _walk_to_holdout_tested
 
 
 class TestPhase0NamedTransitionAudit:
@@ -63,16 +63,14 @@ class TestPhase0NamedTransitionAudit:
     def test_holdout_to_no_mutation(self, tmp_path) -> None:
         reg = StrategyRegistry(path=tmp_path / "registry.json")
         c = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
-        _walk_to_frozen(reg, c.candidate_id)
-        reg.transition(c.candidate_id, CandidateState.HOLDOUT_TESTED, reason="evaluated")
+        _walk_to_holdout_tested(reg, c.candidate_id)
         with pytest.raises(FrozenCandidateMutationError):
             reg.assert_mutation_allowed(c.candidate_id)
 
     def test_any_modified_post_holdout_candidate_becomes_a_new_version(self, tmp_path) -> None:
         reg = StrategyRegistry(path=tmp_path / "registry.json")
         parent = reg.register(_spec(), generator_id="G", generator_parameters={}, code_version="abc", dataset_id="D")
-        _walk_to_frozen(reg, parent.candidate_id)
-        reg.transition(parent.candidate_id, CandidateState.HOLDOUT_TESTED, reason="evaluated")
+        _walk_to_holdout_tested(reg, parent.candidate_id)
         reg.reject(parent.candidate_id, reason="failed holdout", failed_phase="HOLDOUT")
 
         child = reg.derive_new_version(

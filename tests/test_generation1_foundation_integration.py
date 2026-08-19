@@ -81,15 +81,54 @@ class TestEndToEndFoundationPath:
         assert all(trace.values())
 
     def test_audit_artifact_exists_and_is_internally_consistent(self) -> None:
+        """Closes Generation 1 finding G1-M3 (independent audit
+        ML-001-GENERATION-1-INDEPENDENT-AUDIT.md §11, finding T1): the
+        original version of this test guarded on
+        ``"is_real_market_data_eligible" in audit["dataset_record"]``, a
+        key ``DatasetRecord.to_dict()`` (via ``dataclasses.asdict()``)
+        can never produce because ``is_real_market_data_eligible`` is a
+        ``@property``, not a field -- so the guard was always False and
+        the assertion always vacuously passed regardless of the actual
+        data. Fixed by reconstructing the real ``DatasetRecord`` object
+        from the artifact and asserting on the real property directly,
+        which genuinely fails if the underlying data is not eligible."""
         import json
 
         audit_path = REPO_ROOT / "reports" / "factory" / "GENERATION1_FOUNDATION_AUDIT.json"
         if not audit_path.exists():
             pytest.skip("GENERATION1_FOUNDATION_AUDIT.json not present in this checkout")
         audit = json.loads(audit_path.read_text())
-        assert audit["dataset_record"]["is_real_market_data_eligible"] is True if "is_real_market_data_eligible" in audit["dataset_record"] else True
+
+        dataset_record = DatasetRecord.from_dict(audit["dataset_record"])
+        assert dataset_record.is_real_market_data_eligible is True
+        assert_real_market_data_eligible(dataset_record)  # must not raise
+
         assert audit["feature_schema_identity"] == canonical_schema_identity()
         assert set(audit["feature_contracts"].keys()) == set(FEATURE_ORDER)
+
+    def test_audit_artifact_eligibility_assertion_actually_fails_on_ineligible_data(self) -> None:
+        """Adversarial negative case for the fix above: prove the new
+        assertion style can genuinely fail, by mutating the real
+        artifact's dataset record just enough to make it ineligible
+        (flip synthetic=True + provenance_status=KNOWN_SYNTHETIC) and
+        confirming both the property and the assert-helper correctly
+        reject it. A test that can only ever pass is not a real test --
+        this demonstrates the replacement one can actually fail."""
+        import json
+
+        audit_path = REPO_ROOT / "reports" / "factory" / "GENERATION1_FOUNDATION_AUDIT.json"
+        if not audit_path.exists():
+            pytest.skip("GENERATION1_FOUNDATION_AUDIT.json not present in this checkout")
+        audit = json.loads(audit_path.read_text())
+
+        mutated = dict(audit["dataset_record"])
+        mutated["synthetic"] = True
+        mutated["provenance_status"] = "KNOWN_SYNTHETIC"
+        ineligible_record = DatasetRecord.from_dict(mutated)
+
+        assert ineligible_record.is_real_market_data_eligible is False
+        with pytest.raises(RealMarketDataEligibilityError):
+            assert_real_market_data_eligible(ineligible_record)
 
 
 class TestReproducibilityAcrossFreshProcesses:

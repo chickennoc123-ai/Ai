@@ -70,6 +70,19 @@ class RealMarketDataEligibilityError(EAFactoryError):
     """Raised when code attempts to treat a non-eligible dataset as real-market evidence."""
 
 
+class DatasetPathNotRecordedError(EAFactoryError):
+    """Raised when ``load_verified_dataframe`` is called on a dataset with no
+    recorded (or non-existent) ``file_path`` -- closing G1-M1: nothing is
+    guessed, the caller must re-register with a real path."""
+
+
+class DatasetIntegrityViolationError(EAFactoryError):
+    """Raised when a registered dataset's on-disk file no longer matches
+    its recorded ``file_checksum`` -- closing G1-M1: the canonical load
+    path refuses to proceed on a mismatch rather than silently trusting
+    whatever bytes are currently on disk."""
+
+
 def compute_file_checksum(path: Path) -> str:
     """SHA-256 of the raw file bytes on disk — the same style of check
     already used for model artifacts (``core.ml_r2.model_r2._checksum_
@@ -108,6 +121,13 @@ class DatasetRecord:
     integrity_status: str
     dataset_version: str = "v1"
     verification_method: str = ""
+    #: Relative, repo-root-relative path to the on-disk normalized file
+    #: (e.g. "data/csv/EURUSD_H1.csv"). Additive (Generation 2, closing
+    #: G1-M1): absent/"" for records registered before this field existed
+    #: -- ``load_verified_dataframe`` requires it to be set, so an old
+    #: record without it simply cannot be used for the wired production
+    #: path until re-registered with a path, rather than guessing one.
+    file_path: str = ""
 
     def __post_init__(self) -> None:
         required = (
@@ -252,3 +272,51 @@ class DatasetRegistry:
         callers should treat it as one)."""
         record = self.get(dataset_id)
         return compute_file_checksum(file_path) == record.file_checksum
+
+    def load_verified_dataframe(self, dataset_id: str, repo_root: Optional[Path] = None) -> "pd.DataFrame":
+        """The one canonical, wired way to load a registered dataset's
+        real content for use in the economic pipeline (Generation 2,
+        closing G1-M1). Raises rather than silently proceeding if:
+
+        - the dataset is not registered at all (``DatasetNotFoundError``);
+        - it fails the real-market-data eligibility contract
+          (``RealMarketDataEligibilityError``, ``ML-001-DATA-FACTORY-
+          SPEC.md`` §4);
+        - it has no recorded ``file_path`` (``DatasetPathNotRecordedError``
+          -- a record registered before this field existed cannot be
+          loaded this way until re-registered with a path; nothing is
+          guessed);
+        - the on-disk file's checksum no longer matches the registered
+          ``file_checksum`` (``DatasetIntegrityViolationError`` -- the
+          file was altered, replaced, or corrupted since cataloguing).
+
+        This is the function any real training/evaluation script should
+        call instead of independently ``pd.read_csv``-ing a path it
+        constructed itself — the whole point is that there is exactly one
+        sanctioned, checked way to get a registered dataset's real
+        content, not a second, unofficial bypass.
+        """
+        import pandas as pd
+
+        record = self.get(dataset_id)
+        assert_real_market_data_eligible(record)
+        if not record.file_path:
+            raise DatasetPathNotRecordedError(
+                "dataset has no recorded file_path -- cannot be loaded via the canonical "
+                "wired path; re-register with file_path set",
+                dataset_id=dataset_id,
+            )
+        root = Path(repo_root) if repo_root is not None else Path.cwd()
+        full_path = root / record.file_path
+        if not full_path.exists():
+            raise DatasetPathNotRecordedError(
+                "recorded file_path does not exist on disk", dataset_id=dataset_id, file_path=str(full_path)
+            )
+        if not self.verify_file_checksum(dataset_id, full_path):
+            raise DatasetIntegrityViolationError(
+                "on-disk file no longer matches the registered file_checksum -- refusing to "
+                "load a dataset whose content may have changed since cataloguing",
+                dataset_id=dataset_id,
+                file_path=str(full_path),
+            )
+        return pd.read_csv(full_path, index_col="timestamp", parse_dates=True)
