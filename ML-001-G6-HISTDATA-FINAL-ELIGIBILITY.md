@@ -1,3 +1,14 @@
+# ⚠️ SUPERSEDED — SEE ML-001-G6-OGD4-AMENDMENT-1.md (2026-08-19)
+#
+# The REJECT verdict below was based on a timezone-semantics error:
+# HistData timestamps are EST (GMT-5, no DST), not UTC. The "877 trading-hour
+# gaps / 68.9% coverage" were ordinary forex weekends misclassified under the
+# wrong timezone. True coverage vs. trading hours is ~96.5%. After EST→UTC
+# correction, trimming the DEVELOPMENT overlap (2022-01-02..2022-03-05), and
+# quarantining the degraded 2023 file, the window 2024-01-01→2026-01-30 passed
+# all gates and is SEALED as the primary holdout. This document is retained
+# unmodified below as an audit-trail record of the erroneous analysis.
+
 # ML-001 GENERATION 6 PHASE B: HISTDATA FINAL ELIGIBILITY DECISION
 
 **Date**: August 19, 2026  

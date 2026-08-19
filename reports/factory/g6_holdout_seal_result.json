@@ -1,0 +1,126 @@
+{
+  "generated_at": "2026-08-19",
+  "script": "scripts/ml_001_g6_holdout_rebuild_and_seal.py",
+  "timezone_correction": "HistData EST (GMT-5, no DST) -> UTC via +5h",
+  "m1_files": [
+    "DAT_MS_EURUSD_M1_2022.csv",
+    "DAT_MS_EURUSD_M1_2023.csv",
+    "DAT_MS_EURUSD_M1_2024.csv",
+    "DAT_MS_EURUSD_M1_2025.csv",
+    "DAT_MS_EURUSD_M1_202601.csv"
+  ],
+  "m1_checksums": {
+    "DAT_MS_EURUSD_M1_2022.csv": "559f2c5889dbdb83893011fe91bac9efbbcc4922f9615b3c30b5aa6c1eb34b50",
+    "DAT_MS_EURUSD_M1_2023.csv": "be923385b922ea2cea4b333f49c5888b5929e96d0a60f069340a571826a193c6",
+    "DAT_MS_EURUSD_M1_2024.csv": "8c6a69401f528fa7e918caf5dc63cbda0bd213e3e667dc045aff8bc1f62a32a7",
+    "DAT_MS_EURUSD_M1_2025.csv": "263b02981550f0e689f93db4a83a6bced734c5094ac87f0ef9724be10b1a4f27",
+    "DAT_MS_EURUSD_M1_202601.csv": "4d5b3165a157ff284b20f587da9113a87073d1083f3d6a35da15791ca443219a"
+  },
+  "m1_rows_processed": 1470115,
+  "full_artifact": {
+    "path": "data/holdout/EURUSD_H1_2022-2026_UTC_FULL.csv",
+    "bars": 24620,
+    "sha256": "a7741c61d9b0f939e0dabdb3e6e4cc18a57b2255e4298f22c0f886eaa0f6375b"
+  },
+  "holdout_artifact": {
+    "path": "data/holdout/EURUSD_H1_HOLDOUT_20240101_20260130_UTC.csv",
+    "bars": 12972,
+    "sha256": "ccc056b26afafbc8e0ffec2e829a85acff6fed42ae296cb2022867395b8176cd",
+    "development_overlap_bars_removed": 1080
+  },
+  "secondary_artifact": {
+    "path": "data/holdout/EURUSD_H1_SECONDARY_20220306_20221231_UTC.csv",
+    "bars": 5159,
+    "sha256": "f4e0b34928127e2773236ccadeed79f042bac08dcf71cb50cb13107c931011f0",
+    "status": "PRESERVED_UNSEALED_UNEXPOSED"
+  },
+  "quarantined_2023": {
+    "bars": 5409,
+    "status": "SOURCE_DEGRADED_EXCLUDED",
+    "evidence": "owner-supplied 2023 M1 file has ~830 whole trading hours absent (~13% of 2023) with alternating-hour holes; 2022/2024/2025/2026 files show 0-5 residual missing hours each"
+  },
+  "audit": {
+    "first_bar_utc": "2024-01-01T22:00:00",
+    "last_bar_utc": "2026-01-30T21:00:00",
+    "bars": 12972,
+    "expected_trading_hours": 13056,
+    "missing_trading_hours": 91,
+    "missing_holiday_hours": 78,
+    "missing_market_edge_hours": 8,
+    "missing_residual_hours": 5,
+    "residual_examples": [
+      "2024-01-15T19:00:00",
+      "2024-01-16T17:00:00",
+      "2024-01-16T21:00:00",
+      "2024-01-16T22:00:00",
+      "2024-01-16T23:00:00"
+    ],
+    "coverage_vs_trading_hours": 0.993,
+    "residual_gap_share": 0.00038,
+    "ohlc_errors": 0,
+    "economic_gate": {
+      "min_coverage_required": 0.95,
+      "max_residual_share": 0.01,
+      "coverage_pass": true,
+      "residual_pass": true,
+      "verdict": "PASS"
+    }
+  },
+  "gates": {
+    "source": {
+      "source_id": "SRC-HISTDATA-OWNER-SUPPLIED",
+      "source_name": "HistData.com M1 (owner-supplied archives)",
+      "source_url": "https://www.histdata.com/download-free-forex-historical-data/?/metatrader/1-minute-bar-quotes/eurusd",
+      "source_type": "user_provided",
+      "publisher": "HistData.com",
+      "claimed_origin": "HistData.com generic M1 bid quotes (EST GMT-5, no DST)",
+      "actual_origin_evidence": "Owner-supplied HistData.com ZIP archives (HISTDATA_COM_MS_EURUSD_M1{2022,2023,2024,2025,202601}) downloaded by the owner from https://www.histdata.com/download-free-forex-historical-data/?/metatrader/1-minute-bar-quotes/eurusd ; M1 CSV SHA-256 inventory: DAT_MS_EURUSD_M1_2022.csv=559f2c5889dbdb83...; DAT_MS_EURUSD_M1_2023.csv=be923385b922ea2c...; DAT_MS_EURUSD_M1_2024.csv=8c6a69401f528fa7...; DAT_MS_EURUSD_M1_2025.csv=263b02981550f0e6...; DAT_MS_EURUSD_M1_202601.csv=4d5b3165a157ff28... ; deterministic EST(+5h)->UTC H1 aggregation via scripts/ml_001_g6_holdout_rebuild_and_seal.py (this file, git-tracked); rebuilt-artifact checksum reproducible from the same inputs.",
+      "access_status": "AVAILABLE",
+      "network_status": "N/A (owner-supplied files; no network fetch)",
+      "license_status": "HistData free historical data terms",
+      "download_method": "owner manual download + upload to session",
+      "download_timestamp": "2026-08-19T16:17:00",
+      "provenance_status": "VERIFIED",
+      "identity_status": "SOURCE_IDENTITY_VERIFIED_VIA_MIRROR_EVIDENCE",
+      "eligibility_status": "ELIGIBLE",
+      "notes": "Timezone semantics corrected: EST->UTC (+5h). Trimmed to start after DEVELOPMENT_END to restore LEVEL_3 temporal independence."
+    },
+    "validation": {
+      "passed": true,
+      "row_count": 12972,
+      "ohlc_violations": 0,
+      "duplicates": 0,
+      "monotonic": true,
+      "file_checksum": "ccc056b26afafbc8e0ffec2e829a85acff6fed42ae296cb2022867395b8176cd",
+      "failure_reasons": []
+    },
+    "independence": {
+      "temporal_overlap": "NONE",
+      "research_exposure": "ZERO",
+      "passed": true,
+      "reasons": []
+    },
+    "decision": "ELIGIBLE",
+    "decision_reasons": [],
+    "sealed": true,
+    "dataset_id": "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130",
+    "seal_hash": "57074631dd4b2520cba54885a6d4082b279663c63065048f97b2d7bce6778eaa",
+    "vault_path": "reports/factory/evidence_vault.json"
+  },
+  "fresh_process_verification": {
+    "returncode": 0,
+    "stdout": [
+      "VERIFY_OK",
+      "STATUS sealed",
+      "TAMPER_DETECTED"
+    ],
+    "stderr": "",
+    "passed": true
+  },
+  "evaluation_authorized": false,
+  "prior_misclassification": {
+    "old_verdict": "REJECT (68.9% coverage, 877 trading-hour gaps)",
+    "root_cause": "EST timestamps mislabeled as UTC; forex weekends misclassified as trading-hour gaps",
+    "second_defect": "2022-01-02..2022-03-05 overlap with DEVELOPMENT was reported as PASS by a phase that had errored"
+  }
+}

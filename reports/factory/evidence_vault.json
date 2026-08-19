@@ -1,0 +1,35 @@
+{
+  "authorizations": {},
+  "consumptions": [],
+  "datasets": {
+    "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130": {
+      "combined_seal_hash": "57074631dd4b2520cba54885a6d4082b279663c63065048f97b2d7bce6778eaa",
+      "coverage_end": "2026-01-30T21:00:00",
+      "coverage_start": "2024-01-01T22:00:00",
+      "created_at": "2026-08-19T21:38:25.095063",
+      "data_checksum": "ccc056b26afafbc8e0ffec2e829a85acff6fed42ae296cb2022867395b8176cd",
+      "dataset_id": "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130",
+      "download_method": "owner manual download + upload; rebuild via scripts/ml_001_g6_holdout_rebuild_and_seal.py",
+      "download_timestamp": "2026-08-19T16:17:00",
+      "independence_level": "LEVEL_3",
+      "instrument": "EURUSD",
+      "metadata_checksum": "29d88dcfd6909a32bee0f79ecaef0bd99c29e73d6e290bec8104378d6f7ebde5",
+      "price_type": "OHLC(bid)",
+      "research_exposure": "UNEXPOSED",
+      "row_count": 12972,
+      "seal_hash_reproducible": false,
+      "seal_status": "sealed",
+      "seal_timestamp": "2026-08-19T21:38:25.097742",
+      "seal_version": "1.0",
+      "source": "HistData.com M1 (owner-supplied) -> deterministic EST->UTC H1 aggregation",
+      "source_url": "https://www.histdata.com/download-free-forex-historical-data/?/metatrader/1-minute-bar-quotes/eurusd",
+      "source_verified": true,
+      "timeframe": "H1",
+      "timezone": "UTC"
+    }
+  },
+  "research_exposed": [],
+  "seals": {
+    "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130": "57074631dd4b2520cba54885a6d4082b279663c63065048f97b2d7bce6778eaa"
+  }
+}
