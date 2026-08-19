@@ -1,0 +1,100 @@
+{
+  "decision_phase": "GENERATION_6_PHASE_B",
+  "decision_type": "ECONOMIC_COMPATIBILITY_GATE",
+  "decision_date": "2026-08-19",
+  "dataset": "HistData_EURUSD_H1_2022-2026",
+  "verdict": "REJECT",
+  "reason": "Economic incompatibility - 68.9% coverage, 877 trading-hour gaps materially invalidate evaluation semantics",
+
+  "verification_results": {
+    "file_integrity": {
+      "status": "PASS",
+      "checksum": "f65a4db0a544c849e2dc44d92b9e733eda0826900723b5537e49419b670ff989",
+      "checksum_verified": true,
+      "file_size_bytes": 1416525
+    },
+    "data_structure": {
+      "status": "PASS",
+      "row_count": 24620,
+      "first_timestamp": "2022-01-02T17:00:00+00:00",
+      "last_timestamp": "2026-01-30T16:00:00+00:00",
+      "span_days": 1488
+    },
+    "ohlc_integrity": {
+      "status": "PASS",
+      "ohlc_errors": 0,
+      "duplicate_timestamps": 0,
+      "non_monotonic_timestamps": 0
+    },
+    "gap_analysis": {
+      "status": "FAIL",
+      "total_span_hours": 35735,
+      "data_hours": 24620,
+      "coverage_percentage": 68.89604029662796,
+      "total_gaps": 901,
+      "trading_hour_gaps": 877,
+      "weekend_gaps": 24,
+      "total_gap_hours": 11116
+    },
+    "economic_compatibility": {
+      "status": "FAIL",
+      "grade": "F",
+      "coverage_threshold_required": 85,
+      "coverage_actual": 68.89604029662796,
+      "trading_gaps_threshold": 10,
+      "trading_gaps_actual": 877,
+      "impact": "Entry signals unreliable, exit signals corrupt, holding periods invalid, WFA compromised, regime detection broken, trade stats invalid"
+    }
+  },
+
+  "governance_preservation": {
+    "primary_holdout": "Dukascopy_EURUSD_H1_2022-2026",
+    "primary_holdout_status": "UNCHANGED",
+    "ogd4_decision": "UNCHANGED",
+    "strat_000003_created": false,
+    "generation_7_started": false,
+    "pure_holdout_sealed": true,
+    "pure_holdout_consumptions": 1,
+    "new_hypotheses_generated": 0,
+    "new_candidates_generated": 0
+  },
+
+  "histdata_disposition": {
+    "file_preserved": true,
+    "file_location": "mcp_server_dukascopy/EURUSD_H1_2022-2026.csv",
+    "seal_created": false,
+    "seal_authorized": false,
+    "future_use": "Fallback only if Dukascopy remains inaccessible AND economic tolerance improves",
+    "recommendation": "Archive for reference, do NOT use for primary evaluation"
+  },
+
+  "blocker_status": {
+    "data_acquisition_blocker": "ACTIVE",
+    "dukascopy_api_access": "BLOCKED (HTTP 403 organizational policy)",
+    "minimum_acquisition_path_a": "Google Colab (simplest, one-time)",
+    "minimum_acquisition_path_b": "MCP Server on personal machine",
+    "histdata_fallback": "REJECTED (economic incompatibility)"
+  },
+
+  "next_phase": {
+    "phase": "GENERATION_6_PHASE_D",
+    "task": "Factory readiness audit for edge discovery",
+    "gate_question": "Can Factory efficiently search for new edge without weakening scientific controls?",
+    "pending_items": [
+      "Hypothesis diversity (frozen)",
+      "Refuted-family memory (in place)",
+      "Search-space diversity (known)",
+      "Candidate generation (ready)",
+      "Early rejection (in place)",
+      "Information gain (measurable)",
+      "Research budget (limited)",
+      "Multiple-testing accounting (in place)",
+      "Failure-library reuse (available)",
+      "Lineage traceability (git-tracked)",
+      "Reproducibility (deterministic)",
+      "Candidate immutability (enforced)",
+      "Holdout firewall (ready once Dukascopy acquired)",
+      "Selection-bias accounting (in place)"
+    ]
+  }
+}
