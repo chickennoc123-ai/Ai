@@ -54,6 +54,17 @@ EVENT_TYPES = frozenset(
         "MULTIPLE_TESTING_COMPLETED",
         "EVG_VERDICT",
         "CANDIDATE_CLASSIFIED",
+        # --- Generation 5 (instrumentation, research memory, controlled
+        # discovery) --- Additive only: no existing event type is renamed,
+        # removed, or given a new meaning.
+        "RESEARCH_ACCESS_REVIEWED",
+        "GOVERNANCE_DECISION_RECORDED",
+        "BUDGET_DECLARED",
+        "BUDGET_EXHAUSTED",
+        "FAMILY_REFUTATION_STATUS_COMPUTED",
+        "INSTRUMENTATION_REPLAY_COMPLETED",
+        "FAILURE_KNOWLEDGE_ENRICHED",
+        "HORIZON_CONSISTENCY_AUDITED",
     }
 )
 

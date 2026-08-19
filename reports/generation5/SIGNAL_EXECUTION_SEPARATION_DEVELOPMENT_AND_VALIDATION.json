@@ -1,0 +1,20 @@
+{
+  "classification": "SIGNAL_FAILURE",
+  "execution_profitable": "False",
+  "materiality_floor": 0.000168922807175992,
+  "note": "SIGNAL ECONOMICS (raw forward return at a fixed horizon, no stops/targets/timeouts) + EXECUTION ECONOMICS (what the stop/target/max-hold geometry does to it) = OBSERVED ECONOMICS (the actual traded result). This decomposition is diagnostic; it does not revise STRAT-000002's terminal verdict.",
+  "observed_profit_factor": 0.6855604408215996,
+  "signal_has_edge": false,
+  "signal_quality": {
+    "conditional_forward_return_win_rate": 0.5202702702702703,
+    "conditional_mean_forward_return": 5.927330353384333e-05,
+    "horizon_bars": 12,
+    "information_coefficient": 0.003426565884855351,
+    "measurement_basis": "raw price path only -- no stop-loss, take-profit, or max-holding-period involved; this measures the SIGNAL, independent of the EXECUTION mechanics that separately determine the observed traded result",
+    "n_bars": 46068,
+    "n_signals": 740,
+    "signal_edge": 9.539550393431118e-05,
+    "unconditional_mean_forward_return": -3.6122200400467844e-05,
+    "verdict": "POSITIVE_EDGE_AT_THIS_HORIZON"
+  }
+}

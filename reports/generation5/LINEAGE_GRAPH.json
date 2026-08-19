@@ -1,0 +1,470 @@
+[
+  {
+    "candidates": [
+      {
+        "candidate_id": "STRAT-000002",
+        "state": "REJECTED"
+      }
+    ],
+    "claims": [
+      {
+        "claim_classification": "MARKET_LORE",
+        "claim_id": "CLAIM-000001",
+        "claim_text": "It is commonly believed that RSI above 70 is overbought and RSI below 30 is oversold.",
+        "claim_type": "PREDICTIVE_SIGNAL",
+        "claim_version": 1,
+        "conditions": "RSI(14) beyond 70/30 thresholds",
+        "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "direction": "mean-reverting",
+        "epistemic_status": "SOURCE_CLAIM",
+        "evidence_reference": "",
+        "extraction_method": "manual verbatim quotation from stored snapshot (README section 10, RSI Pattern Recognition)",
+        "instrument_scope": "unspecified (source discusses stocks)",
+        "mechanism": "RSI thresholds as overbought/oversold state markers implying mean reversion",
+        "source_id": "SRC2-000001",
+        "source_version": 1,
+        "supporting_context": "Source itself hedges: 'The effectiveness of any divergence strategy on RSI is rather debatable.'",
+        "timeframe_scope": "daily (source context)",
+        "verification_status": "REFUTED"
+      }
+    ],
+    "failures": [
+      {
+        "confidence": "",
+        "entity_id": "HYP-000001",
+        "evidence_reference": "ML-001-GENERATION-4-REPORT.md + reports/generation4/GENERATION4_SUMMARY.json",
+        "failure_category": "NEGATIVE_EXPECTANCY",
+        "failure_id": "FAIL-000009",
+        "failure_reason": "hypothesis-level refutation: pre-registered falsification condition met. RSI(14) oversold-reversion on EURUSD H1, 12-bar horizon: expectancy negative in DEVELOPMENT (-16.95), VALIDATION (-19.43) and PURE_HOLDOUT (-27.81); no partition positive.",
+        "failure_stage": "HOLDOUT",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000001",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T07:15:49.565080+00:00"
+      },
+      {
+        "confidence": "",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation4/EVALUATION_DEVELOPMENT.json",
+        "failure_category": "NEGATIVE_EXPECTANCY",
+        "failure_id": "FAIL-000003",
+        "failure_reason": "DEVELOPMENT partition net -8273.63 on 488 trades, PF 0.6727",
+        "failure_stage": "TRAINING",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000004",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T03:03:55.539653+00:00"
+      },
+      {
+        "confidence": "",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation4/EVALUATION_OOS.json",
+        "failure_category": "NEGATIVE_EXPECTANCY",
+        "failure_id": "FAIL-000004",
+        "failure_reason": "OOS (VALIDATION) net -3050.02 on 157 trades, PF 0.7927",
+        "failure_stage": "OOS",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000004",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T03:03:55.539987+00:00"
+      },
+      {
+        "confidence": "",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation4/EVALUATION_PURE_HOLDOUT.json",
+        "failure_category": "NEGATIVE_EXPECTANCY",
+        "failure_id": "FAIL-000005",
+        "failure_reason": "PURE_HOLDOUT net -3948.86 on 142 trades, PF 0.6534",
+        "failure_stage": "HOLDOUT",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000004",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T03:03:55.540519+00:00"
+      },
+      {
+        "confidence": "",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation4/WALK_FORWARD.json",
+        "failure_category": "WFA_FAILURE",
+        "failure_id": "FAIL-000006",
+        "failure_reason": "only 0.3556 of 90 traded windows were net positive; losses are distributed",
+        "failure_stage": "WFA",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000004",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T03:03:55.540882+00:00"
+      },
+      {
+        "confidence": "",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation4/ROBUSTNESS.json",
+        "failure_category": "PARAMETER_FRAGILITY",
+        "failure_id": "FAIL-000007",
+        "failure_reason": "no point in the declared parameter neighbourhood achieves PF > 1; the failure is a property of the rule family, not of the chosen parameters",
+        "failure_stage": "ROBUSTNESS",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000004",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T03:03:55.541265+00:00"
+      },
+      {
+        "confidence": "",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation4/MULTIPLE_TESTING.json",
+        "failure_category": "STATISTICAL_FAILURE",
+        "failure_id": "FAIL-000008",
+        "failure_reason": "The observed annualized Sharpe is -1.3807, i.e. negative. A multiple-testing correction can only reduce confidence in a positive result; it has nothing to correct here. The candidate is refuted before multiplicity is even considered, and the deflated probability (0.000009) simply restates that.",
+        "failure_stage": "MULTIPLE_TESTING",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000004",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T03:03:55.541621+00:00"
+      },
+      {
+        "confidence": "",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation4/ROBUSTNESS.json",
+        "failure_category": "PARAMETER_FRAGILITY",
+        "failure_id": "FAIL-000011",
+        "failure_reason": "MECHANICAL FINDING (transferable, not signal-specific): realized reward:risk is systematically BELOW nominal across the whole 360-point surface -- median 76% of nominal, falling to 53% at nominal RR 3.0 and rising to 99.7% at nominal RR 0.75; by holding cap, 64.2% (6 bars), 72.8% (12), 85.0% (24). Mechanism: a distant take-profit needs both time and a favourable path, and the max-holding-bar timer truncates would-be winners while the nearer stop still fires at full size. Consequence: the breakeven win rate a candidate must actually clear is HIGHER than its specified geometry implies (frozen point: 50.7% realized vs 42.9% nominal). Derived algebraically from per-point profit_factor and win_rate (realized_RR = PF*(1-wr)/wr), exact given those aggregates but an inference from them, not from per-trade avg_win/avg_loss records.",
+        "failure_stage": "ROBUSTNESS",
+        "future_research_implication": "",
+        "mechanism": "",
+        "prevention_rule": "",
+        "related_family": "FAMILY-000001",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD",
+        "related_search_space": "SEARCHSPACE-000001",
+        "reusability": "",
+        "scope": "",
+        "timestamp": "2026-08-19T07:15:49.565963+00:00"
+      },
+      {
+        "confidence": "DIRECTLY_MEASURED",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation5/EXIT_MECHANISM_DEVELOPMENT_AND_VALIDATION.json",
+        "failure_category": "EXIT_MECHANISM_EROSION",
+        "failure_id": "FAIL-000012",
+        "failure_reason": "DIRECT PER-TRADE MEASUREMENT (not algebraic inference): realized reward:risk = 76.4629% of nominal on DEVELOPMENT+VALIDATION (74.2114% on PURE_HOLDOUT), confirming the Generation 4 post-mortem's algebraic estimate (77.1% at the frozen point) via genuine per-trade data.",
+        "failure_stage": "ROBUSTNESS",
+        "future_research_implication": "A hypothesis that wants to use a distant take-profit should pair it with either no max-hold cap or a cap generous enough that MAX_HOLDING_PERIOD exits are rare, not with a tight cap that truncates most winners before they arrive.",
+        "mechanism": "Measured directly per exit reason on 646 DEVELOPMENT+VALIDATION trades: TAKE_PROFIT exits average +1.29R (near nominal); STOP_LOSS exits average -1.04R (slightly worse than nominal -1.0R from slippage); MAX_HOLDING_PERIOD exits average only +0.13R -- the time-out chops would-be winners down to a small fraction of the nominal target before they can reach it.",
+        "prevention_rule": "Before freezing a candidate with a max-holding-bar cap, check what fraction of the nominal reward the average MAX_HOLDING_PERIOD exit actually achieves in-sample; if it is a small fraction of 1R, the effective breakeven win rate is materially higher than the nominal-RR breakeven and the candidate should be evaluated against THAT bar, not the nominal one.",
+        "related_family": "FAMILY-000004",
+        "related_features": [
+          "rsi_14",
+          "atr_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "",
+        "reusability": "ARCHITECTURE_TRANSFERABLE",
+        "scope": "Transferable to ANY future candidate in this Factory using ATR-multiple take-profits with a max-holding-bar cap, regardless of entry signal -- the mechanism is about the exit geometry, not this RSI rule specifically.",
+        "timestamp": "2026-08-19T08:57:57.467233+00:00"
+      },
+      {
+        "confidence": "DIRECTLY_MEASURED",
+        "entity_id": "STRAT-000002",
+        "evidence_reference": "reports/generation5/SIGNAL_EXECUTION_SEPARATION_DEVELOPMENT_AND_VALIDATION.json",
+        "failure_category": "SIGNAL_MATERIALITY_INSUFFICIENT",
+        "failure_id": "FAIL-000013",
+        "failure_reason": "Independent signal-only measurement (no stop/target/max-hold involved): conditional 12-bar forward-return edge = 0.000095, which is smaller than the round-trip transaction cost expressed as a return fraction. Classified SIGNAL_FAILURE, not EXECUTION_FAILURE: even before any exit mechanics are applied, the entry signal carries no economically material edge.",
+        "failure_stage": "TRAINING",
+        "future_research_implication": "A future RSI-family hypothesis at a DIFFERENT horizon or regime condition (e.g. HYP-000002, HYP-000003) is not pre-refuted by this finding, but should be measured with this same signal-only test before any execution layer is built around it.",
+        "mechanism": "RSI(14) oversold-reversion crossing has near-zero correlation with forward returns at a 12-bar horizon on EURUSD H1, measured directly from the price path with no trading-rule mechanics involved -- confirms Generation 4 post-mortem section 3's finding at nominal RR 0.75 (where geometry erosion is minimal) that the signal has no edge on its own.",
+        "prevention_rule": "Before formalizing an ATR-based execution layer around an entry signal, measure the signal's raw forward-return edge independent of any stop/target/hold, and compare it to round-trip transaction cost -- an edge below that floor cannot be rescued by exit-mechanics tuning.",
+        "related_family": "FAMILY-000001",
+        "related_features": [
+          "rsi_14"
+        ],
+        "related_market": "EURUSD H1",
+        "related_search_space": "",
+        "reusability": "FAMILY_TRANSFERABLE",
+        "scope": "Specific to RSI(14) crossing 30 from below, EURUSD H1, 12-bar horizon -- not a claim about RSI mechanisms generally, and not evidence about any other instrument/timeframe.",
+        "timestamp": "2026-08-19T08:57:57.468420+00:00"
+      }
+    ],
+    "hypothesis_id": "HYP-000001",
+    "refutation_basis": {
+      "candidates_responsible": [
+        "STRAT-000002"
+      ],
+      "cost_assumptions": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)",
+      "evidence_level": "CANDIDATE_TESTED_NO_EDGE",
+      "falsification_conditions": "conditional expectancy <= 0 after realistic costs on out-of-sample walk-forward, OR confidence interval straddles economically irrelevant values, OR effect absent OOS",
+      "holding_period": "12 bars",
+      "instrument_scope": "EURUSD",
+      "refuted": true,
+      "regime_conditions": "any (unconditional; source states no regime)",
+      "target_definition": "forward return over 12 bars on EURUSD H1"
+    },
+    "sources": [
+      {
+        "access_status": "ACCESSED",
+        "artifact_reference": "snapshot:16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+        "author": "je-suis-tm (GitHub)",
+        "content_checksum": "16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+        "license_status": "PERMISSIVE",
+        "notes": "Fetched live via curl; SHA-256 recorded; Apache-2.0 LICENSE fetched from the same repository. PROVISIONALLY_VERIFIED: content and license verified directly; the author's own empirical assertions are NOT independently corroborated and remain source claims only.",
+        "provenance_status": "PARTIALLY_VERIFIED",
+        "publication_timestamp": "UNKNOWN",
+        "publisher": "GitHub",
+        "retrieval_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "source_id": "SRC2-000001",
+        "source_type": "OPEN_SOURCE_CODE",
+        "source_url": "https://raw.githubusercontent.com/je-suis-tm/quant-trading/master/README.md",
+        "source_version": 1,
+        "supersedes_source_id": null,
+        "title": "je-suis-tm/quant-trading repository README (technical-indicator strategy descriptions)",
+        "verification_status": "PROVISIONALLY_VERIFIED"
+      }
+    ]
+  },
+  {
+    "candidates": [],
+    "claims": [
+      {
+        "claim_classification": "MARKET_LORE",
+        "claim_id": "CLAIM-000001",
+        "claim_text": "It is commonly believed that RSI above 70 is overbought and RSI below 30 is oversold.",
+        "claim_type": "PREDICTIVE_SIGNAL",
+        "claim_version": 1,
+        "conditions": "RSI(14) beyond 70/30 thresholds",
+        "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "direction": "mean-reverting",
+        "epistemic_status": "SOURCE_CLAIM",
+        "evidence_reference": "",
+        "extraction_method": "manual verbatim quotation from stored snapshot (README section 10, RSI Pattern Recognition)",
+        "instrument_scope": "unspecified (source discusses stocks)",
+        "mechanism": "RSI thresholds as overbought/oversold state markers implying mean reversion",
+        "source_id": "SRC2-000001",
+        "source_version": 1,
+        "supporting_context": "Source itself hedges: 'The effectiveness of any divergence strategy on RSI is rather debatable.'",
+        "timeframe_scope": "daily (source context)",
+        "verification_status": "REFUTED"
+      },
+      {
+        "claim_classification": "EMPIRICAL",
+        "claim_id": "CLAIM-000003",
+        "claim_text": "The RF-R2-001 walk-forward evaluation tested the 1-bar-ahead direction target on real EURUSD/GBPUSD H1 data with momentum/RSI/ATR/volatility-regime features and found no predictive signal at that horizon (IC ~0.015-0.030, directional accuracy 51.2-51.8%).",
+        "claim_type": "PREDICTIVE_SIGNAL",
+        "claim_version": 1,
+        "conditions": "UNKNOWN",
+        "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "direction": "none found",
+        "epistemic_status": "FACT_ESTABLISHED",
+        "evidence_reference": "ML-001-STRAT-000001-FAILURE-FORENSIC-REPORT.md + reports/factory/strategy_registry.json (STRAT-000001 REJECTED)",
+        "extraction_method": "summarized from the report's own headline findings (sections A, D-F)",
+        "instrument_scope": "EURUSD, GBPUSD",
+        "mechanism": "coverage fact: the 1-bar horizon is already-tested territory for this feature set",
+        "source_id": "SRC2-000004",
+        "source_version": 1,
+        "supporting_context": "",
+        "timeframe_scope": "H1",
+        "verification_status": "EXTRACTED"
+      }
+    ],
+    "failures": [],
+    "hypothesis_id": "HYP-000002",
+    "refutation_basis": {
+      "formalization_status": "FORMALIZED",
+      "refuted": false
+    },
+    "sources": [
+      {
+        "access_status": "ACCESSED",
+        "artifact_reference": "snapshot:16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+        "author": "je-suis-tm (GitHub)",
+        "content_checksum": "16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+        "license_status": "PERMISSIVE",
+        "notes": "Fetched live via curl; SHA-256 recorded; Apache-2.0 LICENSE fetched from the same repository. PROVISIONALLY_VERIFIED: content and license verified directly; the author's own empirical assertions are NOT independently corroborated and remain source claims only.",
+        "provenance_status": "PARTIALLY_VERIFIED",
+        "publication_timestamp": "UNKNOWN",
+        "publisher": "GitHub",
+        "retrieval_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "source_id": "SRC2-000001",
+        "source_type": "OPEN_SOURCE_CODE",
+        "source_url": "https://raw.githubusercontent.com/je-suis-tm/quant-trading/master/README.md",
+        "source_version": 1,
+        "supersedes_source_id": null,
+        "title": "je-suis-tm/quant-trading repository README (technical-indicator strategy descriptions)",
+        "verification_status": "PROVISIONALLY_VERIFIED"
+      },
+      {
+        "access_status": "ACCESSED",
+        "artifact_reference": "snapshot:c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827",
+        "author": "ML-001 project",
+        "content_checksum": "c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827",
+        "license_status": "PERMISSIVE",
+        "notes": "Own committed work; checksum reproducible from the working tree at any time.",
+        "provenance_status": "VERIFIED",
+        "publication_timestamp": "UNKNOWN",
+        "publisher": "this repository",
+        "retrieval_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "source_id": "SRC2-000004",
+        "source_type": "INTERNAL_RESEARCH_REPORT",
+        "source_url": "repo:ML-001-STRAT-000001-FAILURE-FORENSIC-REPORT.md",
+        "source_version": 1,
+        "supersedes_source_id": null,
+        "title": "ML-001-STRAT-000001-FAILURE-FORENSIC-REPORT.md (this project's own committed forensic evidence)",
+        "verification_status": "VERIFIED"
+      }
+    ]
+  },
+  {
+    "candidates": [],
+    "claims": [
+      {
+        "claim_classification": "MARKET_LORE",
+        "claim_id": "CLAIM-000001",
+        "claim_text": "It is commonly believed that RSI above 70 is overbought and RSI below 30 is oversold.",
+        "claim_type": "PREDICTIVE_SIGNAL",
+        "claim_version": 1,
+        "conditions": "RSI(14) beyond 70/30 thresholds",
+        "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "direction": "mean-reverting",
+        "epistemic_status": "SOURCE_CLAIM",
+        "evidence_reference": "",
+        "extraction_method": "manual verbatim quotation from stored snapshot (README section 10, RSI Pattern Recognition)",
+        "instrument_scope": "unspecified (source discusses stocks)",
+        "mechanism": "RSI thresholds as overbought/oversold state markers implying mean reversion",
+        "source_id": "SRC2-000001",
+        "source_version": 1,
+        "supporting_context": "Source itself hedges: 'The effectiveness of any divergence strategy on RSI is rather debatable.'",
+        "timeframe_scope": "daily (source context)",
+        "verification_status": "REFUTED"
+      },
+      {
+        "claim_classification": "EMPIRICAL",
+        "claim_id": "CLAIM-000003",
+        "claim_text": "The RF-R2-001 walk-forward evaluation tested the 1-bar-ahead direction target on real EURUSD/GBPUSD H1 data with momentum/RSI/ATR/volatility-regime features and found no predictive signal at that horizon (IC ~0.015-0.030, directional accuracy 51.2-51.8%).",
+        "claim_type": "PREDICTIVE_SIGNAL",
+        "claim_version": 1,
+        "conditions": "UNKNOWN",
+        "creation_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "direction": "none found",
+        "epistemic_status": "FACT_ESTABLISHED",
+        "evidence_reference": "ML-001-STRAT-000001-FAILURE-FORENSIC-REPORT.md + reports/factory/strategy_registry.json (STRAT-000001 REJECTED)",
+        "extraction_method": "summarized from the report's own headline findings (sections A, D-F)",
+        "instrument_scope": "EURUSD, GBPUSD",
+        "mechanism": "coverage fact: the 1-bar horizon is already-tested territory for this feature set",
+        "source_id": "SRC2-000004",
+        "source_version": 1,
+        "supporting_context": "",
+        "timeframe_scope": "H1",
+        "verification_status": "EXTRACTED"
+      }
+    ],
+    "failures": [],
+    "hypothesis_id": "HYP-000003",
+    "refutation_basis": {
+      "formalization_status": "FORMALIZED",
+      "refuted": false
+    },
+    "sources": [
+      {
+        "access_status": "ACCESSED",
+        "artifact_reference": "snapshot:16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+        "author": "je-suis-tm (GitHub)",
+        "content_checksum": "16510c4fe4c925f452fe56261fd6faa6eb95cca31b8d1e66cc9279bfcce17d0d",
+        "license_status": "PERMISSIVE",
+        "notes": "Fetched live via curl; SHA-256 recorded; Apache-2.0 LICENSE fetched from the same repository. PROVISIONALLY_VERIFIED: content and license verified directly; the author's own empirical assertions are NOT independently corroborated and remain source claims only.",
+        "provenance_status": "PARTIALLY_VERIFIED",
+        "publication_timestamp": "UNKNOWN",
+        "publisher": "GitHub",
+        "retrieval_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "source_id": "SRC2-000001",
+        "source_type": "OPEN_SOURCE_CODE",
+        "source_url": "https://raw.githubusercontent.com/je-suis-tm/quant-trading/master/README.md",
+        "source_version": 1,
+        "supersedes_source_id": null,
+        "title": "je-suis-tm/quant-trading repository README (technical-indicator strategy descriptions)",
+        "verification_status": "PROVISIONALLY_VERIFIED"
+      },
+      {
+        "access_status": "ACCESSED",
+        "artifact_reference": "snapshot:c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827",
+        "author": "ML-001 project",
+        "content_checksum": "c9e858f73c3b65da4780484aaac3554ab5c2ce59676e8892a979312d5dc4b827",
+        "license_status": "PERMISSIVE",
+        "notes": "Own committed work; checksum reproducible from the working tree at any time.",
+        "provenance_status": "VERIFIED",
+        "publication_timestamp": "UNKNOWN",
+        "publisher": "this repository",
+        "retrieval_timestamp": "2026-08-19T01:04:19.109670+00:00",
+        "source_id": "SRC2-000004",
+        "source_type": "INTERNAL_RESEARCH_REPORT",
+        "source_url": "repo:ML-001-STRAT-000001-FAILURE-FORENSIC-REPORT.md",
+        "source_version": 1,
+        "supersedes_source_id": null,
+        "title": "ML-001-STRAT-000001-FAILURE-FORENSIC-REPORT.md (this project's own committed forensic evidence)",
+        "verification_status": "VERIFIED"
+      }
+    ]
+  }
+]

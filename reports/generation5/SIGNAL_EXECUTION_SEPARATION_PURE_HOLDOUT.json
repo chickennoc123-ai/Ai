@@ -1,0 +1,4 @@
+{
+  "reason": "same holdout-once restriction as MFE/MAE above -- forward-return computation would require re-reading holdout price bars beyond the already-extracted trade records.",
+  "verdict": "NOT_COMPUTED"
+}

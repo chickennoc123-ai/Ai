@@ -1,0 +1,28 @@
+{
+  "DEVELOPMENT_AND_VALIDATION": {
+    "exit_reason_counts": {
+      "MAX_HOLDING_PERIOD": 178,
+      "STOP_LOSS": 311,
+      "TAKE_PROFIT": 157
+    },
+    "mfe_mae_available": true,
+    "n_trades": 646,
+    "observed_profit_factor": 0.6855604408215996,
+    "realized_vs_nominal_pct": 76.4629,
+    "signal_edge": 9.539550393431118e-05,
+    "signal_execution_classification": "SIGNAL_FAILURE"
+  },
+  "PURE_HOLDOUT": {
+    "exit_reason_counts": {
+      "MAX_HOLDING_PERIOD": 43,
+      "STOP_LOSS": 67,
+      "TAKE_PROFIT": 32
+    },
+    "mfe_mae_available": false,
+    "n_trades": 142,
+    "realized_vs_nominal_pct": 74.2114,
+    "source": "reports/generation4/EVALUATION_PURE_HOLDOUT.json (already-committed, single legitimate access)"
+  },
+  "candidate_id": "STRAT-000002",
+  "note": "FORENSIC REPLAY -- no registry mutation, no new verdict"
+}

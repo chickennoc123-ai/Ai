@@ -1,0 +1,7 @@
+{
+  "mae_r_distribution": null,
+  "mfe_r_distribution": null,
+  "n_trades": 142,
+  "reason": "MFE/MAE requires the intra-trade price path, which is not present in the already-committed EVALUATION_PURE_HOLDOUT.json trade records and cannot be obtained without a second access to the sealed PURE_HOLDOUT partition. PURE_HOLDOUT has been consumed exactly once in this Factory's entire history (Generation 4); a second access -- even read-only, even for diagnostics -- is forbidden by Non-Negotiable Principles 5-7. DEVELOPMENT_AND_VALIDATION (reusable data) carries the full MFE/MAE analysis instead.",
+  "verdict": "NOT_COMPUTED"
+}

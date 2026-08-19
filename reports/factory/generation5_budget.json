@@ -1,0 +1,18 @@
+{
+  "budget": {
+    "max_candidates_per_family": 1,
+    "max_new_candidates": 1,
+    "max_new_hypotheses": 3,
+    "max_research_branches": 3,
+    "max_research_retries": 2,
+    "max_search_space_size_per_hypothesis": 50
+  },
+  "declared_at": "2026-08-19T08:44:27.495377+00:00",
+  "exhausted": {},
+  "family_candidate_usage": {},
+  "justification": "Generation 5 mission is instrumentation, research memory and controlled discovery, not volume search (core principle: DO NOT SEARCH FASTER THAN THE FACTORY CAN LEARN). Prior generations tested 2 candidates total; this budget permits at most 1 more, and at most 3 new hypotheses, so the Factory cannot respond to STRAT-000002 failing by scaling up. max_candidates_per_family=1 forecloses re-testing minor variants of a refuted family (Principle 10). max_search_space_size_per_hypothesis=50 forecloses a brute-force grid (design doc Non-Negotiable #9). Declared BEFORE any Generation 5 hypothesis or candidate is generated.",
+  "usage": {
+    "new_candidates": 0,
+    "new_hypotheses": 0
+  }
+}

@@ -51,8 +51,17 @@ FAILURE_CATEGORIES = frozenset(
         "SEARCH_SPACE_INVALID",
         "SOURCE_ACCESS_FAILED",
         "FORMALIZATION_INCOMPLETE",
+        # --- Generation 5 additions (additive; no existing category is
+        # renamed, removed, or reinterpreted) ---
+        "EXIT_MECHANISM_EROSION",
+        "SIGNAL_MATERIALITY_INSUFFICIENT",
+        "MAX_HOLD_TRUNCATION",
     }
 )
+
+#: Generation 5, Phase 10: how directly a reusability field's guidance may
+#: be reused by a future hypothesis without re-deriving it from scratch.
+REUSABILITY_LEVELS = frozenset({"MECHANISM_SPECIFIC", "FAMILY_TRANSFERABLE", "ARCHITECTURE_TRANSFERABLE"})
 
 
 class FailureLibraryError(EAFactoryError):
@@ -72,6 +81,15 @@ class FailureRecord:
     related_features: tuple = ()
     related_market: str = ""
     related_search_space: str = ""
+    # --- Generation 5 additions (Phase 10): additive, defaulted, so every
+    # Generation 1-4 record still loads unchanged and every existing
+    # caller of record() still works without passing these. ---
+    mechanism: str = ""                    # WHY it failed, mechanistically (not just what)
+    scope: str = ""                        # what this finding does/does not generalize to
+    confidence: str = ""                   # e.g. DIRECTLY_MEASURED / ALGEBRAIC_INFERENCE / HEURISTIC
+    reusability: str = ""                  # one of REUSABILITY_LEVELS, or "" if not yet classified
+    prevention_rule: str = ""              # an actionable rule a future hypothesis/candidate can be checked against
+    future_research_implication: str = ""  # what this should change about what gets tested next
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -129,6 +147,12 @@ class FailureLibrary:
         related_features: tuple = (),
         related_market: str = "",
         related_search_space: str = "",
+        mechanism: str = "",
+        scope: str = "",
+        confidence: str = "",
+        reusability: str = "",
+        prevention_rule: str = "",
+        future_research_implication: str = "",
     ) -> FailureRecord:
         if failure_stage not in FAILURE_STAGES:
             raise FailureLibraryError("unknown failure_stage", failure_stage=failure_stage, allowed=sorted(FAILURE_STAGES))
@@ -136,6 +160,8 @@ class FailureLibrary:
             raise FailureLibraryError(
                 "unknown failure_category", failure_category=failure_category, allowed=sorted(FAILURE_CATEGORIES)
             )
+        if reusability and reusability not in REUSABILITY_LEVELS:
+            raise FailureLibraryError("unknown reusability level", reusability=reusability, allowed=sorted(REUSABILITY_LEVELS))
         record = FailureRecord(
             failure_id=f"FAIL-{self._next_id:06d}",
             entity_id=entity_id,
@@ -148,6 +174,8 @@ class FailureLibrary:
             related_features=tuple(related_features),
             related_market=related_market,
             related_search_space=related_search_space,
+            mechanism=mechanism, scope=scope, confidence=confidence, reusability=reusability,
+            prevention_rule=prevention_rule, future_research_implication=future_research_implication,
         )
         self._next_id += 1
         self._failures.append(record)

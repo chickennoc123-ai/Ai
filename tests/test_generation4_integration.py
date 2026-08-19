@@ -290,45 +290,57 @@ def test_no_synthetic_data_entered_the_economic_evidence():
     assert snapshot["dataset_identity"]["provenance_status"] in ("VERIFIED", "VERIFIED_WITH_QUALIFICATION")
 
 
-def test_generation5_has_not_started():
-    """No Generation 5 *execution* may exist.
+def test_generation6_has_not_started():
+    """No Generation 6 *execution* may exist.
 
     Governance note (contract change, documented not silent): this test
-    originally also asserted `not list(REPO_ROOT.glob("ML-001-GENERATION-5-*.md"))`.
-    That filename glob was a proxy for "Generation 5 has not started", and
-    it became wrong when the product owner explicitly authorised the
-    post-G4 sequence GOVERNANCE CLOSURE -> POST-MORTEM -> FAILURE
-    KNOWLEDGE EXTRACTION -> GENERATION 5 **DESIGN**. Design and governance
-    documents are deliverables of that authorised work, not evidence that
-    Generation 5 began.
+    was originally named ``test_generation5_has_not_started`` and asserted
+    that NO Generation 5 execution existed at all. That became the wrong
+    boundary the moment the product owner issued the full Generation 5
+    execution contract ("INSTRUMENTATION, RESEARCH MEMORY & CONTROLLED
+    DISCOVERY") -- Generation 5 code, tests, and
+    ``reports/generation5/`` artifacts are now the AUTHORIZED, IN-PROGRESS
+    deliverable of that contract, not evidence of an unauthorized jump
+    ahead. The boundary this project must keep enforcing is the one the
+    contract itself states explicitly: Generation 5 may complete, but
+    Generation 6 may not begin.
 
-    The replacement assertions are strictly stronger: they check for
-    Generation 5 *execution* -- run artifacts, implementation modules, new
-    candidates, and new hypotheses -- rather than for the existence of
-    prose. A real Generation 5 start now trips this test even if it
-    creates no file matching the old glob.
+    The assertions below are the Generation-6 analogue of the original
+    Generation-5 guard, plus budget-bounded (not frozen-at-zero) checks on
+    the candidate/hypothesis population, since Generation 5's own
+    execution contract explicitly permits a small number of new
+    hypotheses/candidates under ``core.factory.generation5_budget``.
     """
-    # no Generation 5 run artifacts
-    assert not (REPO_ROOT / "reports" / "generation5").exists()
-    # no Generation 5 implementation code
-    assert not list((REPO_ROOT / "core" / "factory").glob("*generation5*"))
-    assert not list((REPO_ROOT / "scripts").glob("*generation5*"))
-    assert not list((REPO_ROOT / "scripts").glob("*run_generation5*"))
-    # the candidate population is unchanged, and both are terminal
+    # no Generation 6 run artifacts or implementation code
+    assert not (REPO_ROOT / "reports" / "generation6").exists()
+    assert not list((REPO_ROOT / "core" / "factory").glob("*generation6*"))
+    assert not list((REPO_ROOT / "scripts").glob("*generation6*"))
+    assert not list((REPO_ROOT / "scripts").glob("*run_generation6*"))
+
+    # STRAT-000001 and STRAT-000002 remain terminal and are never
+    # resurrected, regardless of how many new candidates Generation 5 adds.
     registry = StrategyRegistry()
-    assert {c.candidate_id for c in registry.list_all()} == {"STRAT-000001", "STRAT-000002"}
-    assert all(c.state == CandidateState.REJECTED for c in registry.list_all())
-    # no new hypotheses were generated (the three are Generation 3's)
+    ids = {c.candidate_id for c in registry.list_all()}
+    assert {"STRAT-000001", "STRAT-000002"} <= ids
+    original = [c for c in registry.list_all() if c.candidate_id in ("STRAT-000001", "STRAT-000002")]
+    assert all(c.state == CandidateState.REJECTED for c in original)
+
+    # the candidate/hypothesis population may grow, but only within
+    # Generation 5's own declared, immutable budget -- never silently.
+    from core.factory.generation5_budget import GenerationFiveBudgetStore
     from core.factory.hypothesis import HypothesisRegistry
 
     hypothesis_registry = HypothesisRegistry(path=REPO_ROOT / "reports" / "factory" / "hypothesis_registry.json")
-    assert {h.hypothesis_id for h in hypothesis_registry.list_all()} == {
-        "HYP-000001", "HYP-000002", "HYP-000003",
-    }
-    # any Generation 5 document present must be design/governance only --
-    # never an execution report claiming results
-    for doc in REPO_ROOT.glob("ML-001-GENERATION-5-*.md"):
-        assert doc.name in {
-            "ML-001-GENERATION-5-DESIGN.md",
-            "ML-001-GENERATION-5-GOVERNANCE-CLOSURE.md",
-        }, f"unexpected Generation 5 document implying execution: {doc.name}"
+    original_hyp_ids = {"HYP-000001", "HYP-000002", "HYP-000003"}
+    new_hyp_ids = {h.hypothesis_id for h in hypothesis_registry.list_all()} - original_hyp_ids
+    new_candidate_ids = ids - {"STRAT-000001", "STRAT-000002"}
+
+    if new_hyp_ids or new_candidate_ids:
+        store = GenerationFiveBudgetStore()
+        assert store.declared, "new hypotheses/candidates exist but no Generation 5 budget was ever declared"
+        budget = store.usage_summary()["budget"]
+        assert len(new_hyp_ids) <= budget["max_new_hypotheses"]
+        assert len(new_candidate_ids) <= budget["max_new_candidates"]
+
+    # no Generation 6 document exists at all yet.
+    assert not list(REPO_ROOT.glob("ML-001-GENERATION-6-*.md"))

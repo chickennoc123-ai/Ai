@@ -1,0 +1,153 @@
+{
+  "avg_loss_R": -0.8932158880455981,
+  "avg_win_R": 0.8838244767161536,
+  "exit_reason_breakdown": {
+    "MAX_HOLDING_PERIOD": {
+      "count": 43,
+      "holding_bars": {
+        "count": 43,
+        "max": 12.0,
+        "mean": 12.0,
+        "median": 12.0,
+        "min": 12.0,
+        "p25": 12.0,
+        "p75": 12.0,
+        "p90": 12.0
+      },
+      "mae_r": {
+        "count": 0,
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "p25": null,
+        "p75": null,
+        "p90": null
+      },
+      "mfe_r": {
+        "count": 0,
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "p25": null,
+        "p75": null,
+        "p90": null
+      },
+      "percentage": 30.2817,
+      "realized_R": {
+        "count": 43,
+        "max": 1.1409435091879332,
+        "mean": 0.12032579687396887,
+        "median": 0.09578429171150546,
+        "min": -0.8844304444327631,
+        "p25": -0.1888054107318315,
+        "p75": 0.3676953971259584,
+        "p90": 0.6690120697590732
+      }
+    },
+    "STOP_LOSS": {
+      "count": 67,
+      "holding_bars": {
+        "count": 67,
+        "max": 12.0,
+        "mean": 3.8507462686567164,
+        "median": 2.0,
+        "min": 0.0,
+        "p25": 1.0,
+        "p75": 7.0,
+        "p90": 10.399999999999999
+      },
+      "mae_r": {
+        "count": 0,
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "p25": null,
+        "p75": null,
+        "p90": null
+      },
+      "mfe_r": {
+        "count": 0,
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "p25": null,
+        "p75": null,
+        "p90": null
+      },
+      "percentage": 47.1831,
+      "realized_R": {
+        "count": 67,
+        "max": -1.024331765795452,
+        "mean": -1.0453969037206343,
+        "median": -1.0452511883811462,
+        "min": -1.0757642293371334,
+        "p25": -1.0521028223394064,
+        "p75": -1.036310521950403,
+        "p90": -1.0296008663682144
+      }
+    },
+    "TAKE_PROFIT": {
+      "count": 32,
+      "holding_bars": {
+        "count": 32,
+        "max": 12.0,
+        "mean": 5.4375,
+        "median": 4.0,
+        "min": 0.0,
+        "p25": 2.0,
+        "p75": 9.0,
+        "p90": 10.0
+      },
+      "mae_r": {
+        "count": 0,
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "p25": null,
+        "p75": null,
+        "p90": null
+      },
+      "mfe_r": {
+        "count": 0,
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "p25": null,
+        "p75": null,
+        "p90": null
+      },
+      "percentage": 22.5352,
+      "realized_R": {
+        "count": 32,
+        "max": 1.3119704863939754,
+        "mean": 1.2843521355440155,
+        "median": 1.2821152002469658,
+        "min": 1.2621276490260986,
+        "p25": 1.2792095765659228,
+        "p75": 1.2921094230981152,
+        "p90": 1.2974002357317693
+      }
+    }
+  },
+  "measurement_basis": "DIRECT_PER_TRADE: realized_reward_risk_measured = mean(realized_R | win) / abs(mean(realized_R | loss)), computed from each trade's own recorded outcome -- NOT the Generation 4 post-mortem's aggregate-PF/win_rate algebraic inference (realized_RR = PF*(1-wr)/wr). This is the confirming direct measurement Phase 5 exists to provide.",
+  "n_trades": 142,
+  "nominal_reward_risk": 1.3333333333333333,
+  "realized_R_overall": {
+    "count": 142,
+    "max": 1.3119704863939754,
+    "mean": -0.16738249962178406,
+    "median": -0.3530861253731574,
+    "min": -1.0757642293371334,
+    "p25": -1.0438681241132624,
+    "p75": 0.834342288344945,
+    "p90": 1.2829784530148678
+  },
+  "realized_reward_risk_measured": 0.9894858438423062,
+  "realized_vs_nominal_pct": 74.2114
+}

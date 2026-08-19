@@ -1,0 +1,29 @@
+[
+  {
+    "candidate_horizon": "STRAT-000002",
+    "classification": "EXPLICIT_MECHANISTIC_TRANSFORMATION",
+    "holding_horizon": "12 bars",
+    "hypothesis_horizon": "12 bars",
+    "hypothesis_id": "HYP-000001",
+    "source_horizon": "SEE_SOURCE_TEXT",
+    "transformation_reason": "hypothesis explicitly states horizon=12 bars is this project's own testable framing, not asserted by the source -- recorded in formalized_trading_rule/transformation_history, not silent"
+  },
+  {
+    "candidate_horizon": null,
+    "classification": "EXPLICIT_MECHANISTIC_TRANSFORMATION",
+    "holding_horizon": "24 bars",
+    "hypothesis_horizon": "24 bars",
+    "hypothesis_id": "HYP-000002",
+    "source_horizon": "SEE_SOURCE_TEXT",
+    "transformation_reason": "hypothesis explicitly states horizon=24 bars is this project's own testable framing, not asserted by the source -- recorded in formalized_trading_rule/transformation_history, not silent"
+  },
+  {
+    "candidate_horizon": null,
+    "classification": "SILENT_HORIZON_DRIFT",
+    "holding_horizon": "12 bars",
+    "hypothesis_horizon": "12 bars",
+    "hypothesis_id": "HYP-000003",
+    "source_horizon": "UNSPECIFIED",
+    "transformation_reason": "hypothesis specifies a horizon with no recorded explanation of why it differs from the (unspecified or different) source horizon"
+  }
+]
