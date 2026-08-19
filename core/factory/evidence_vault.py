@@ -3,14 +3,28 @@ OGD-4 Implementation: Evidence Vault with Cryptographic Sealing
 
 A durable, immutable store for independent evaluation datasets.
 Provides pre-research firewall: metadata visible, observations locked until authorization.
+
+Persists to disk (``reports/factory/evidence_vault.json`` by default) using the
+same atomic-write pattern as ``core.factory.dataset_registry.DatasetRegistry``,
+so a seal recorded in one process is verifiable in a later, independent process —
+without that, "sealed" would mean nothing beyond the lifetime of a single script.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import Optional, Dict, List, Any
 from datetime import datetime
+from pathlib import Path
 import hashlib
 import json
+import os
+import tempfile
+
+DEFAULT_EVIDENCE_VAULT_PATH = Path("reports/factory/evidence_vault.json")
+
+
+class EvidenceVaultCorruptionError(ValueError):
+    """Raised when the persisted vault file exists but is not valid JSON."""
 
 
 class EvidenceSealStatus(Enum):
@@ -72,6 +86,27 @@ class EvidenceDatasetMetadata:
     created_at: datetime = field(default_factory=datetime.utcnow)
     seal_hash_reproducible: bool = False  # Verified by fresh-process test
 
+    def to_dict(self) -> Dict[str, Any]:
+        d = asdict(self)
+        d["coverage_start"] = self.coverage_start.isoformat()
+        d["coverage_end"] = self.coverage_end.isoformat()
+        d["download_timestamp"] = self.download_timestamp.isoformat()
+        d["seal_timestamp"] = self.seal_timestamp.isoformat() if self.seal_timestamp else None
+        d["created_at"] = self.created_at.isoformat()
+        d["seal_status"] = self.seal_status.value
+        return d
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]) -> "EvidenceDatasetMetadata":
+        d = dict(d)
+        d["coverage_start"] = datetime.fromisoformat(d["coverage_start"])
+        d["coverage_end"] = datetime.fromisoformat(d["coverage_end"])
+        d["download_timestamp"] = datetime.fromisoformat(d["download_timestamp"])
+        d["seal_timestamp"] = datetime.fromisoformat(d["seal_timestamp"]) if d.get("seal_timestamp") else None
+        d["created_at"] = datetime.fromisoformat(d["created_at"])
+        d["seal_status"] = EvidenceSealStatus(d["seal_status"])
+        return EvidenceDatasetMetadata(**d)
+
 
 @dataclass
 class EvidenceEvaluationAuthorization:
@@ -89,6 +124,19 @@ class EvidenceEvaluationAuthorization:
     evaluated_at: Optional[datetime] = None
     result_checksum: Optional[str] = None
 
+    def to_dict(self) -> Dict[str, Any]:
+        d = asdict(self)
+        d["authorization_timestamp"] = self.authorization_timestamp.isoformat()
+        d["evaluated_at"] = self.evaluated_at.isoformat() if self.evaluated_at else None
+        return d
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]) -> "EvidenceEvaluationAuthorization":
+        d = dict(d)
+        d["authorization_timestamp"] = datetime.fromisoformat(d["authorization_timestamp"])
+        d["evaluated_at"] = datetime.fromisoformat(d["evaluated_at"]) if d.get("evaluated_at") else None
+        return EvidenceEvaluationAuthorization(**d)
+
 
 @dataclass
 class EvidenceConsumptionRecord:
@@ -103,6 +151,17 @@ class EvidenceConsumptionRecord:
     cumulative_trials: int  # How many trials against this dataset total?
     bonferroni_threshold: float  # Adjusted significance threshold
 
+    def to_dict(self) -> Dict[str, Any]:
+        d = asdict(self)
+        d["evaluation_timestamp"] = self.evaluation_timestamp.isoformat()
+        return d
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]) -> "EvidenceConsumptionRecord":
+        d = dict(d)
+        d["evaluation_timestamp"] = datetime.fromisoformat(d["evaluation_timestamp"])
+        return EvidenceConsumptionRecord(**d)
+
 
 class EvidenceVault:
     """
@@ -112,12 +171,56 @@ class EvidenceVault:
     SEALED OBSERVATIONS (locked until authorized evaluation).
     """
 
-    def __init__(self):
+    def __init__(self, path: Path = DEFAULT_EVIDENCE_VAULT_PATH):
+        self.path = Path(path)
         self.datasets: Dict[str, EvidenceDatasetMetadata] = {}
         self.seals: Dict[str, str] = {}  # dataset_id -> combined_seal_hash
         self.authorizations: Dict[str, EvidenceEvaluationAuthorization] = {}
         self.consumptions: List[EvidenceConsumptionRecord] = []
         self.research_exposed: set = set()  # dataset_ids that Factory accessed before seal
+        self._load()
+
+    # ============================================================
+    # PERSISTENCE (atomic write; same pattern as DatasetRegistry)
+    # ============================================================
+
+    def _load(self) -> None:
+        if not self.path.exists():
+            return
+        try:
+            raw = json.loads(self.path.read_text())
+        except json.JSONDecodeError as exc:
+            raise EvidenceVaultCorruptionError(
+                f"evidence vault file is not valid JSON; refusing to load: {self.path}"
+            ) from exc
+        self.datasets = {
+            did: EvidenceDatasetMetadata.from_dict(d) for did, d in raw.get("datasets", {}).items()
+        }
+        self.seals = dict(raw.get("seals", {}))
+        self.authorizations = {
+            k: EvidenceEvaluationAuthorization.from_dict(d) for k, d in raw.get("authorizations", {}).items()
+        }
+        self.consumptions = [EvidenceConsumptionRecord.from_dict(d) for d in raw.get("consumptions", [])]
+        self.research_exposed = set(raw.get("research_exposed", []))
+
+    def _save(self) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "datasets": {did: m.to_dict() for did, m in self.datasets.items()},
+            "seals": self.seals,
+            "authorizations": {k: a.to_dict() for k, a in self.authorizations.items()},
+            "consumptions": [c.to_dict() for c in self.consumptions],
+            "research_exposed": sorted(self.research_exposed),
+        }
+        fd, tmp_path = tempfile.mkstemp(dir=str(self.path.parent), suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w") as f:
+                json.dump(payload, f, indent=2, sort_keys=True)
+            os.replace(tmp_path, self.path)
+        except BaseException:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+            raise
 
     # ============================================================
     # PHASE 1: ACQUISITION & METADATA SETUP (BEFORE SEAL)
@@ -167,6 +270,7 @@ class EvidenceVault:
         )
 
         self.datasets[dataset_id] = metadata
+        self._save()
         return metadata
 
     # ============================================================
@@ -232,6 +336,7 @@ class EvidenceVault:
         # Store seal for later verification
         self.seals[dataset_id] = combined_seal_hash
 
+        self._save()
         return combined_seal_hash
 
     def verify_seal(self, dataset_id: str, data_bytes: bytes) -> bool:
@@ -361,6 +466,12 @@ class EvidenceVault:
         auth_key = f"{dataset_id}:{candidate_id}"
         self.authorizations[auth_key] = auth
 
+        # SEALED -> AUTHORIZED: consume_dataset() below requires this transition
+        # to have happened, so evaluation can never skip straight from SEALED to
+        # CONSUMED without an authorization on record.
+        metadata.seal_status = EvidenceSealStatus.AUTHORIZED
+
+        self._save()
         return auth
 
     def consume_dataset(self,
@@ -372,6 +483,9 @@ class EvidenceVault:
         Mark dataset as CONSUMED after evaluation completes.
 
         This is a one-way transition. The dataset cannot be re-evaluated after this.
+        Requires a prior authorize_evaluation() call for this exact
+        (dataset_id, candidate_id) pair -- SEALED -> CONSUMED without ever
+        passing through AUTHORIZED is rejected.
         """
         if dataset_id not in self.datasets:
             raise ValueError(f"Dataset {dataset_id} not found")
@@ -380,6 +494,18 @@ class EvidenceVault:
 
         if metadata.seal_status == EvidenceSealStatus.CONSUMED:
             raise ValueError(f"Dataset {dataset_id} is already consumed")
+
+        if metadata.seal_status != EvidenceSealStatus.AUTHORIZED:
+            raise ValueError(
+                f"Dataset {dataset_id} is not authorized for evaluation "
+                f"(status={metadata.seal_status.value}); call authorize_evaluation() first"
+            )
+
+        auth_key = f"{dataset_id}:{candidate_id}"
+        if auth_key not in self.authorizations:
+            raise ValueError(
+                f"No authorization on record for candidate {candidate_id} against dataset {dataset_id}"
+            )
 
         # Record consumption
         record = EvidenceConsumptionRecord(
@@ -397,6 +523,7 @@ class EvidenceVault:
         # Mark dataset as consumed
         metadata.seal_status = EvidenceSealStatus.CONSUMED
 
+        self._save()
         return record
 
     # ============================================================
