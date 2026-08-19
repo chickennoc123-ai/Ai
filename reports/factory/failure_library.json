@@ -121,7 +121,54 @@
       "related_market": "EURUSD H1",
       "related_search_space": "SEARCHSPACE-000001",
       "timestamp": "2026-08-19T03:03:55.541621+00:00"
+    },
+    {
+      "entity_id": "HYP-000001",
+      "evidence_reference": "ML-001-GENERATION-4-REPORT.md + reports/generation4/GENERATION4_SUMMARY.json",
+      "failure_category": "NEGATIVE_EXPECTANCY",
+      "failure_id": "FAIL-000009",
+      "failure_reason": "hypothesis-level refutation: pre-registered falsification condition met. RSI(14) oversold-reversion on EURUSD H1, 12-bar horizon: expectancy negative in DEVELOPMENT (-16.95), VALIDATION (-19.43) and PURE_HOLDOUT (-27.81); no partition positive.",
+      "failure_stage": "HOLDOUT",
+      "related_family": "FAMILY-000001",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T07:15:49.565080+00:00"
+    },
+    {
+      "entity_id": "CLAIM-000001",
+      "evidence_reference": "ML-001-GENERATION-4-REPORT.md + reports/generation4/GENERATION4_SUMMARY.json",
+      "failure_category": "NO_SIGNAL",
+      "failure_id": "FAIL-000010",
+      "failure_reason": "source-claim level: the RSI 70/30 overbought/oversold lore did not yield an exploitable edge in its tested operationalisation. Entry signal produced a 41.3% win rate where 50.7% was required at the frozen point's REALIZED payoff geometry -- short by 9.4 points.",
+      "failure_stage": "HOLDOUT",
+      "related_family": "FAMILY-000001",
+      "related_features": [
+        "rsi_14"
+      ],
+      "related_market": "EURUSD",
+      "related_search_space": "",
+      "timestamp": "2026-08-19T07:15:49.565525+00:00"
+    },
+    {
+      "entity_id": "STRAT-000002",
+      "evidence_reference": "reports/generation4/ROBUSTNESS.json",
+      "failure_category": "PARAMETER_FRAGILITY",
+      "failure_id": "FAIL-000011",
+      "failure_reason": "MECHANICAL FINDING (transferable, not signal-specific): realized reward:risk is systematically BELOW nominal across the whole 360-point surface -- median 76% of nominal, falling to 53% at nominal RR 3.0 and rising to 99.7% at nominal RR 0.75; by holding cap, 64.2% (6 bars), 72.8% (12), 85.0% (24). Mechanism: a distant take-profit needs both time and a favourable path, and the max-holding-bar timer truncates would-be winners while the nearer stop still fires at full size. Consequence: the breakeven win rate a candidate must actually clear is HIGHER than its specified geometry implies (frozen point: 50.7% realized vs 42.9% nominal). Derived algebraically from per-point profit_factor and win_rate (realized_RR = PF*(1-wr)/wr), exact given those aggregates but an inference from them, not from per-trade avg_win/avg_loss records.",
+      "failure_stage": "ROBUSTNESS",
+      "related_family": "FAMILY-000001",
+      "related_features": [
+        "rsi_14",
+        "atr_14"
+      ],
+      "related_market": "EURUSD",
+      "related_search_space": "SEARCHSPACE-000001",
+      "timestamp": "2026-08-19T07:15:49.565963+00:00"
     }
   ],
-  "next_id": 9
+  "next_id": 12
 }

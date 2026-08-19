@@ -418,7 +418,46 @@
       "source_id": null,
       "subject_id": "STRAT-000002",
       "timestamp": "2026-08-19T03:03:55.543865+00:00"
+    },
+    {
+      "artifact_reference": "ML-001-GENERATION-4-REPORT.md + reports/generation4/GENERATION4_SUMMARY.json",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000032",
+      "event_type": "HYPOTHESIS_REJECTED",
+      "feature_ids": [],
+      "reason": "falsification condition met on real out-of-sample and holdout evidence; hypothesis REFUTED",
+      "result": "REFUTED",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "HYP-000001",
+      "timestamp": "2026-08-19T07:15:49.561736+00:00"
+    },
+    {
+      "artifact_reference": "ML-001-GENERATION-4-REPORT.md + reports/generation4/GENERATION4_SUMMARY.json",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000033",
+      "event_type": "CLAIM_STATUS_CHANGED",
+      "feature_ids": [],
+      "reason": "SOURCE_CLAIM tested and refuted for the tested operationalisation only",
+      "result": "REFUTED",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "CLAIM-000001",
+      "timestamp": "2026-08-19T07:15:49.563991+00:00"
+    },
+    {
+      "artifact_reference": "ML-001-GENERATION-4-POST-MORTEM.md",
+      "dataset_id": null,
+      "event_id": "LEDGER-00000034",
+      "event_type": "CANDIDATE_CLASSIFIED",
+      "feature_ids": [],
+      "reason": "post-mortem knowledge extracted to the Failure Library: signal-level (no edge) and mechanical (realized-vs-nominal payoff geometry) findings",
+      "result": "KNOWLEDGE_EXTRACTED",
+      "search_space_id": null,
+      "source_id": null,
+      "subject_id": "STRAT-000002",
+      "timestamp": "2026-08-19T07:15:49.566389+00:00"
     }
   ],
-  "next_seq": 32
+  "next_seq": 35
 }

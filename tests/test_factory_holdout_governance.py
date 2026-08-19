@@ -284,18 +284,25 @@ class TestMultipleTestingAccountingIsHonest:
             1 for c in population if c.state == CandidateState.FAILED
         ) == 0
 
-        # total_strategies_surviving is a MONOTONIC counter (incremented on
-        # first entry to STATISTICALLY_VALIDATED, never decremented), not a
-        # count of currently-surviving candidates. STRAT-000002 passed that
-        # gate and was subsequently rejected, so the counter is 1 while
-        # zero candidates actually survive. Asserted explicitly, both ways,
-        # so the divergence is pinned down rather than discovered later as
-        # a surprise -- see ML-001-GENERATION-4-REPORT.md, open governance
-        # item on this field's name.
-        assert summary["total_strategies_surviving"] == sum(
+        # total_strategies_ever_statistically_validated is a MONOTONIC
+        # counter (incremented on first entry to STATISTICALLY_VALIDATED,
+        # never decremented), not a count of currently-surviving
+        # candidates. STRAT-000002 passed that gate and was subsequently
+        # rejected, so the counter is 1 while zero candidates actually
+        # survive. Asserted explicitly, both ways, so the divergence stays
+        # pinned rather than resurfacing later as a surprise.
+        #
+        # The field was renamed from `total_strategies_surviving` during
+        # Generation 5 Governance Closure, which closes G4's OGD-2: the old
+        # name read as a current-state count and invited exactly the
+        # misreading this assertion guards against. The number and its
+        # semantics are unchanged; only the name now matches them.
+        assert summary["total_strategies_ever_statistically_validated"] == sum(
             1 for c in population
             if "STATISTICALLY_VALIDATED" in [h["state"] for h in c.history]
         ) == 1
+        # the legacy key must not reappear under any code path
+        assert "total_strategies_surviving" not in summary
         assert sum(1 for c in population
                    if c.state not in (CandidateState.REJECTED, CandidateState.FAILED)) == 0
 

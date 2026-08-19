@@ -9,14 +9,14 @@
       "cost_assumptions": "realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7)",
       "date_captured": "2026-08-19T01:04:19.121020+00:00",
       "economic_mechanism": "rsi_14 < 30 (source's oversold threshold) => rsi_14 crosses back above 30 from below",
-      "evidence_level": "CANDIDATE_GENERATED",
+      "evidence_level": "CANDIDATE_TESTED_NO_EDGE",
       "expected_direction": "positive",
       "falsification_conditions": "conditional expectancy <= 0 after realistic costs on out-of-sample walk-forward, OR confidence interval straddles economically irrelevant values, OR effect absent OOS",
       "feature_dependencies": [
         "rsi_14",
         "atr_14"
       ],
-      "formalization_status": "ELIGIBLE",
+      "formalization_status": "REFUTED",
       "formalized_trading_rule": "IF rsi_14 < 30 (source's oversold threshold) AND rsi_14 crosses back above 30 from below THEN expect positive movement in forward return over 12 bars on EURUSD H1 (horizon=12 bars, regime=any (unconditional; source states no regime)); falsified if conditional expectancy <= 0 after realistic costs on out-of-sample walk-forward, OR confidence interval straddles economically irrelevant values, OR effect absent OOS (costs: realistic median spread + 0.2 pip slippage (ML-001-R2-CLEAN-REBUILD-SPEC.md sec 7))",
       "holding_period": "12 bars",
       "hypothesis_id": "HYP-000001",
@@ -61,6 +61,21 @@
           "detail": "STRAT-000002",
           "event": "candidate_linked",
           "timestamp": "2026-08-19T01:04:19.138895+00:00"
+        },
+        {
+          "detail": "ELIGIBLE -> TESTED: STRAT-000002 completed the full Generation 4 evidence chain through PURE_HOLDOUT and EVG; see ML-001-GENERATION-4-REPORT.md + reports/generation4/GENERATION4_SUMMARY.json",
+          "event": "formalization_status_changed",
+          "timestamp": "2026-08-19T07:15:49.558870+00:00"
+        },
+        {
+          "detail": "TESTED -> REFUTED: pre-registered falsification condition MET: OOS expectancy -19.4269/trade and holdout expectancy -27.8089/trade (95% block-bootstrap CI [-45.22, -6.00], does not straddle zero) after realistic costs; WFA net -18,557.81 over 90 windows with only 35.6% positive windows. Refuted on its own stated terms, not reinterpreted.",
+          "event": "formalization_status_changed",
+          "timestamp": "2026-08-19T07:15:49.559897+00:00"
+        },
+        {
+          "detail": "CANDIDATE_GENERATED -> CANDIDATE_TESTED_NO_EDGE: linked candidate STRAT-000002 terminally REJECTED by EVG with verdict FAIL",
+          "event": "evidence_level_changed",
+          "timestamp": "2026-08-19T07:15:49.561043+00:00"
         }
       ]
     },

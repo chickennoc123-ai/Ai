@@ -400,11 +400,11 @@
       ]
     },
     "total_hypotheses_ingested": 3,
+    "total_strategies_ever_statistically_validated": 1,
     "total_strategies_failed": 0,
     "total_strategies_generated": 2,
     "total_strategies_passed": 0,
     "total_strategies_rejected": 2,
-    "total_strategies_surviving": 1,
     "total_strategies_tested": 2
   }
 }

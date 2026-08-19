@@ -105,7 +105,16 @@ def _empty_search_history() -> Dict[str, Any]:
         "total_strategies_tested": 0,
         "total_strategies_rejected": 0,
         "total_strategies_failed": 0,
-        "total_strategies_surviving": 0,
+        # Renamed from "total_strategies_surviving" during Generation 5
+        # Governance Closure (closes G4 OGD-2). The old name read as a
+        # current-state count of surviving candidates; the field has ALWAYS
+        # been a monotonic "ever reached the statistics gate" counter that
+        # is never decremented. The name now says what the number is.
+        # `_load()` migrates the old key forward, so no historical count is
+        # lost and no registry file needs hand-editing. For a current-state
+        # answer use core.factory.research_accounting's
+        # TOTAL_CANDIDATES_SURVIVING, which is derived from live state.
+        "total_strategies_ever_statistically_validated": 0,
         "total_strategies_passed": 0,
         "total_hypotheses_ingested": 0,
         "search_space": {},
@@ -154,7 +163,19 @@ class StrategyRegistry:
         # (e.g. total_hypotheses_ingested, the explicit *_search_space
         # dicts) still loads with that field correctly defaulted, instead
         # of silently missing it.
-        self._search_history = {**_empty_search_history(), **raw.get("search_history", {})}
+        stored_history = dict(raw.get("search_history", {}))
+        # Generation 5 Governance Closure (G4 OGD-2) migration: a registry
+        # written before the rename carries the old key. Carry its value
+        # forward to the new key rather than letting the new key silently
+        # default to 0 (which would DESTROY a real historical count), then
+        # drop the stale key so exactly one name for the number survives.
+        # If both keys are somehow present, the already-migrated new key
+        # wins and the legacy one is discarded -- it is by definition the
+        # older writer's value.
+        legacy_surviving = stored_history.pop("total_strategies_surviving", None)
+        if legacy_surviving is not None and "total_strategies_ever_statistically_validated" not in stored_history:
+            stored_history["total_strategies_ever_statistically_validated"] = legacy_surviving
+        self._search_history = {**_empty_search_history(), **stored_history}
         self._candidates = {
             cid: StrategyCandidate.from_dict(cdata)
             for cid, cdata in raw.get("candidates", {}).items()
@@ -329,7 +350,7 @@ class StrategyRegistry:
         elif new_state is CandidateState.FAILED:
             self._search_history["total_strategies_failed"] += 1
         elif new_state is CandidateState.STATISTICALLY_VALIDATED:
-            self._search_history["total_strategies_surviving"] += 1
+            self._search_history["total_strategies_ever_statistically_validated"] += 1
         elif new_state is CandidateState.EVG_REVIEW:
             pass  # EVG outcome (PASS/FAIL/INSUFFICIENT) is recorded by the caller separately
         elif new_state is CandidateState.RESEARCH_CANDIDATE:

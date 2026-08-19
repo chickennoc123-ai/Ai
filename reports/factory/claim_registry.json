@@ -18,7 +18,7 @@
       "source_version": 1,
       "supporting_context": "Source itself hedges: 'The effectiveness of any divergence strategy on RSI is rather debatable.'",
       "timeframe_scope": "daily (source context)",
-      "verification_status": "FORMALIZED"
+      "verification_status": "REFUTED"
     },
     "CLAIM-000002": {
       "claim_classification": "HEURISTIC",
@@ -82,6 +82,16 @@
         "reason": "formalized as HYP-000001",
         "status": "FORMALIZED",
         "timestamp": "2026-08-19T01:04:19.123491+00:00"
+      },
+      {
+        "reason": "tested via HYP-000001 -> STRAT-000002 through the full Generation 4 evidence chain",
+        "status": "TESTED",
+        "timestamp": "2026-08-19T07:15:49.562896+00:00"
+      },
+      {
+        "reason": "refuted as an exploitable rule for EURUSD H1 at a 12-bar horizon under the frozen cost model. Scope note: this refutes the tested operationalisation, NOT the universal claim -- the source stated no instrument, timeframe, horizon or cost model, so other operationalisations remain untested. See ML-001-GENERATION-4-REPORT.md + reports/generation4/GENERATION4_SUMMARY.json",
+        "status": "REFUTED",
+        "timestamp": "2026-08-19T07:15:49.563612+00:00"
       }
     ],
     "CLAIM-000002": [
