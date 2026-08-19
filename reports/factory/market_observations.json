@@ -1,0 +1,577 @@
+{
+  "generated_by": "discovery/observatory.py (GEN 8)",
+  "data_source": "data/csv/EURUSD_H1.csv",
+  "observation_window": {
+    "start": "2012-11-16T05:00:00",
+    "end": "2020-04-29T15:00:00",
+    "bars": 46080
+  },
+  "reserved_internal_validation_bars": 11520,
+  "significance_threshold_t": 3.5,
+  "observation_count": 36,
+  "significant_count": 14,
+  "observations": [
+    {
+      "obs_id": "OBS-AC-RET-L1",
+      "family": "AUTOCORRELATION",
+      "description": "lag-1 autocorrelation of H1 log returns = 0.0022",
+      "mechanism_hint": "positive serial correlation (short-horizon continuation in returns)",
+      "effect_size": 0.002238,
+      "t_stat": 0.48,
+      "sample_size": 46078,
+      "significant": false,
+      "details": {
+        "lag": 1
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-AC-RET-L2",
+      "family": "AUTOCORRELATION",
+      "description": "lag-2 autocorrelation of H1 log returns = -0.0057",
+      "mechanism_hint": "negative serial correlation (short-horizon mean reversion in returns)",
+      "effect_size": -0.005661,
+      "t_stat": -1.215,
+      "sample_size": 46077,
+      "significant": false,
+      "details": {
+        "lag": 2
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-AC-RET-L3",
+      "family": "AUTOCORRELATION",
+      "description": "lag-3 autocorrelation of H1 log returns = -0.0073",
+      "mechanism_hint": "negative serial correlation (short-horizon mean reversion in returns)",
+      "effect_size": -0.007335,
+      "t_stat": -1.574,
+      "sample_size": 46076,
+      "significant": false,
+      "details": {
+        "lag": 3
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-AC-RET-L6",
+      "family": "AUTOCORRELATION",
+      "description": "lag-6 autocorrelation of H1 log returns = -0.0015",
+      "mechanism_hint": "negative serial correlation (short-horizon mean reversion in returns)",
+      "effect_size": -0.001455,
+      "t_stat": -0.312,
+      "sample_size": 46073,
+      "significant": false,
+      "details": {
+        "lag": 6
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-AC-RET-L12",
+      "family": "AUTOCORRELATION",
+      "description": "lag-12 autocorrelation of H1 log returns = -0.0098",
+      "mechanism_hint": "negative serial correlation (short-horizon mean reversion in returns)",
+      "effect_size": -0.009763,
+      "t_stat": -2.095,
+      "sample_size": 46067,
+      "significant": false,
+      "details": {
+        "lag": 12
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-AC-RET-L24",
+      "family": "AUTOCORRELATION",
+      "description": "lag-24 autocorrelation of H1 log returns = 0.0104",
+      "mechanism_hint": "positive serial correlation (short-horizon continuation in returns)",
+      "effect_size": 0.010427,
+      "t_stat": 2.238,
+      "sample_size": 46055,
+      "significant": false,
+      "details": {
+        "lag": 24
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-VOLCLUST-L1",
+      "family": "VOLATILITY",
+      "description": "lag-1 autocorrelation of |returns| = 0.2492 (volatility clustering)",
+      "mechanism_hint": "volatility is persistent: high-vol hours cluster; regime conditioning is meaningful",
+      "effect_size": 0.249174,
+      "t_stat": 53.487,
+      "sample_size": 46078,
+      "significant": true,
+      "details": {
+        "lag": 1
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-VOLCLUST-L24",
+      "family": "VOLATILITY",
+      "description": "lag-24 autocorrelation of |returns| = 0.2023 (volatility clustering)",
+      "mechanism_hint": "volatility is persistent: high-vol hours cluster; regime conditioning is meaningful",
+      "effect_size": 0.202267,
+      "t_stat": 43.407,
+      "sample_size": 46055,
+      "significant": true,
+      "details": {
+        "lag": 24
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-TRENDPERSIST-K2",
+      "family": "TREND",
+      "description": "P(up | 2 consecutive up bars) = 0.4584 vs unconditional 0.5014",
+      "mechanism_hint": "streaks reverse (exhaustion after consecutive moves)",
+      "effect_size": -0.042966,
+      "t_stat": -8.965,
+      "sample_size": 10883,
+      "significant": true,
+      "details": {
+        "k": 2,
+        "base_p": 0.5014
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-TRENDPERSIST-K3",
+      "family": "TREND",
+      "description": "P(up | 3 consecutive up bars) = 0.4494 vs unconditional 0.5014",
+      "mechanism_hint": "streaks reverse (exhaustion after consecutive moves)",
+      "effect_size": -0.051999,
+      "t_stat": -7.346,
+      "sample_size": 4989,
+      "significant": true,
+      "details": {
+        "k": 3,
+        "base_p": 0.5014
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-TRENDPERSIST-K4",
+      "family": "TREND",
+      "description": "P(up | 4 consecutive up bars) = 0.4465 vs unconditional 0.5014",
+      "mechanism_hint": "streaks reverse (exhaustion after consecutive moves)",
+      "effect_size": -0.054911,
+      "t_stat": -5.2,
+      "sample_size": 2242,
+      "significant": true,
+      "details": {
+        "k": 4,
+        "base_p": 0.5014
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-MRSHOCK-Z2",
+      "family": "MEAN_REVERSION",
+      "description": "mean next-bar return OPPOSING a |z|>=2.0 shock = -0.000032 (3669 events)",
+      "mechanism_hint": "liquidity-provision snapback after outsized single-bar moves",
+      "effect_size": -3.2e-05,
+      "t_stat": -1.313,
+      "sample_size": 3669,
+      "significant": false,
+      "details": {
+        "z_threshold": 2.0,
+        "vol_window": 20
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-MRSHOCK-Z3",
+      "family": "MEAN_REVERSION",
+      "description": "mean next-bar return OPPOSING a |z|>=3.0 shock = -0.000080 (1487 events)",
+      "mechanism_hint": "liquidity-provision snapback after outsized single-bar moves",
+      "effect_size": -8e-05,
+      "t_stat": -1.818,
+      "sample_size": 1487,
+      "significant": false,
+      "details": {
+        "z_threshold": 3.0,
+        "vol_window": 20
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-MOMCONT-Z2-H4",
+      "family": "MOMENTUM",
+      "description": "mean 4-bar continuation after |z|>=2.0 bar = 0.000042",
+      "mechanism_hint": "information diffusion: large moves keep drifting",
+      "effect_size": 4.2e-05,
+      "t_stat": 0.942,
+      "sample_size": 3669,
+      "significant": false,
+      "details": {
+        "z_threshold": 2.0,
+        "horizon": 4
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-04",
+      "family": "SESSION",
+      "description": "hour 04 UTC: mean ret t=-6.98, range ratio 0.59x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": -8.8e-05,
+      "t_stat": -6.983,
+      "sample_size": 1814,
+      "significant": true,
+      "details": {
+        "hour_utc": 4,
+        "range_ratio": 0.592
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-05",
+      "family": "SESSION",
+      "description": "hour 05 UTC: mean ret t=0.41, range ratio 0.59x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": 1e-05,
+      "t_stat": 0.408,
+      "sample_size": 1919,
+      "significant": false,
+      "details": {
+        "hour_utc": 5,
+        "range_ratio": 0.589
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-06",
+      "family": "SESSION",
+      "description": "hour 06 UTC: mean ret t=4.49, range ratio 0.58x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": 5.9e-05,
+      "t_stat": 4.494,
+      "sample_size": 1920,
+      "significant": true,
+      "details": {
+        "hour_utc": 6,
+        "range_ratio": 0.582
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-09",
+      "family": "SESSION",
+      "description": "hour 09 UTC: mean ret t=2.57, range ratio 0.70x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": 4e-05,
+      "t_stat": 2.567,
+      "sample_size": 1919,
+      "significant": false,
+      "details": {
+        "hour_utc": 9,
+        "range_ratio": 0.702
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-11",
+      "family": "SESSION",
+      "description": "hour 11 UTC: mean ret t=-0.37, range ratio 0.53x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": -4e-06,
+      "t_stat": -0.366,
+      "sample_size": 1926,
+      "significant": false,
+      "details": {
+        "hour_utc": 11,
+        "range_ratio": 0.531
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-12",
+      "family": "SESSION",
+      "description": "hour 12 UTC: mean ret t=1.75, range ratio 0.58x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": 2e-05,
+      "t_stat": 1.751,
+      "sample_size": 1926,
+      "significant": false,
+      "details": {
+        "hour_utc": 12,
+        "range_ratio": 0.579
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-16",
+      "family": "SESSION",
+      "description": "hour 16 UTC: mean ret t=-3.37, range ratio 1.25x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": -8.8e-05,
+      "t_stat": -3.368,
+      "sample_size": 1929,
+      "significant": false,
+      "details": {
+        "hour_utc": 16,
+        "range_ratio": 1.255
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-18",
+      "family": "SESSION",
+      "description": "hour 18 UTC: mean ret t=-2.96, range ratio 1.11x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": -7e-05,
+      "t_stat": -2.957,
+      "sample_size": 1929,
+      "significant": false,
+      "details": {
+        "hour_utc": 18,
+        "range_ratio": 1.111
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-19",
+      "family": "SESSION",
+      "description": "hour 19 UTC: mean ret t=-3.04, range ratio 1.36x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": -9.1e-05,
+      "t_stat": -3.036,
+      "sample_size": 1929,
+      "significant": false,
+      "details": {
+        "hour_utc": 19,
+        "range_ratio": 1.363
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-20",
+      "family": "SESSION",
+      "description": "hour 20 UTC: mean ret t=0.99, range ratio 1.71x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": 3.9e-05,
+      "t_stat": 0.986,
+      "sample_size": 1929,
+      "significant": false,
+      "details": {
+        "hour_utc": 20,
+        "range_ratio": 1.712
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-21",
+      "family": "SESSION",
+      "description": "hour 21 UTC: mean ret t=-0.35, range ratio 1.61x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": -1.2e-05,
+      "t_stat": -0.353,
+      "sample_size": 1927,
+      "significant": false,
+      "details": {
+        "hour_utc": 21,
+        "range_ratio": 1.613
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-22",
+      "family": "SESSION",
+      "description": "hour 22 UTC: mean ret t=-0.54, range ratio 1.61x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": -1.8e-05,
+      "t_stat": -0.537,
+      "sample_size": 1929,
+      "significant": false,
+      "details": {
+        "hour_utc": 22,
+        "range_ratio": 1.613
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-HOUR-23",
+      "family": "SESSION",
+      "description": "hour 23 UTC: mean ret t=2.34, range ratio 1.25x",
+      "mechanism_hint": "session-specific liquidity/participation structure",
+      "effect_size": 5.9e-05,
+      "t_stat": 2.34,
+      "sample_size": 1928,
+      "significant": false,
+      "details": {
+        "hour_utc": 23,
+        "range_ratio": 1.252
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-SESSVOL-ASIA",
+      "family": "SESSION",
+      "description": "ASIA true-range ratio vs all hours = 0.784x",
+      "mechanism_hint": "volatility concentrates where the active sessions are",
+      "effect_size": -0.216131,
+      "t_stat": -35.193,
+      "sample_size": 13333,
+      "significant": true,
+      "details": {
+        "session": "ASIA"
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-SESSVOL-LONDON",
+      "family": "SESSION",
+      "description": "LONDON true-range ratio vs all hours = 0.641x",
+      "mechanism_hint": "volatility concentrates where the active sessions are",
+      "effect_size": -0.358667,
+      "t_stat": -76.214,
+      "sample_size": 11530,
+      "significant": true,
+      "details": {
+        "session": "LONDON"
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-SESSVOL-NY_OVERLAP",
+      "family": "SESSION",
+      "description": "NY_OVERLAP true-range ratio vs all hours = 1.214x",
+      "mechanism_hint": "volatility concentrates where the active sessions are",
+      "effect_size": 0.213595,
+      "t_stat": 23.793,
+      "sample_size": 7717,
+      "significant": true,
+      "details": {
+        "session": "NY_OVERLAP"
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-SESSVOL-NY_LATE",
+      "family": "SESSION",
+      "description": "NY_LATE true-range ratio vs all hours = 1.384x",
+      "mechanism_hint": "volatility concentrates where the active sessions are",
+      "effect_size": 0.383755,
+      "t_stat": 37.229,
+      "sample_size": 9643,
+      "significant": true,
+      "details": {
+        "session": "NY_LATE"
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-NR7-EXPAND",
+      "family": "RANGE",
+      "description": "after a 7-bar narrowest-range hour, next-bar range = 0.711x the recent median",
+      "mechanism_hint": "compression precedes expansion (volatility cycle)",
+      "effect_size": -0.289399,
+      "t_stat": -49.626,
+      "sample_size": 7825,
+      "significant": true,
+      "details": {
+        "lookback": 7
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-WKND-GAPFILL",
+      "family": "GAP",
+      "description": "P(weekend gap fills within 24 bars) = 0.876 over 386 weekends, median gap 5.1 pips-e4",
+      "mechanism_hint": "weekend gaps revert to Friday close (positioning unwind)",
+      "effect_size": 0.375648,
+      "t_stat": 22.366,
+      "sample_size": 386,
+      "significant": true,
+      "details": {},
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-VOLREG-LOW-AC1",
+      "family": "REGIME",
+      "description": "LOW-vol regime: conditional lag-1 return autocorrelation = 0.0145",
+      "mechanism_hint": "serial dependence differs by volatility regime (LOW)",
+      "effect_size": 0.014462,
+      "t_stat": 1.791,
+      "sample_size": 15344,
+      "significant": false,
+      "details": {
+        "regime": "LOW",
+        "vol_window": 50,
+        "mean_abs_ret": 0.000452
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-VOLREG-HIGH-AC1",
+      "family": "REGIME",
+      "description": "HIGH-vol regime: conditional lag-1 return autocorrelation = -0.0037",
+      "mechanism_hint": "serial dependence differs by volatility regime (HIGH)",
+      "effect_size": -0.003744,
+      "t_stat": -0.464,
+      "sample_size": 15343,
+      "significant": false,
+      "details": {
+        "regime": "HIGH",
+        "vol_window": 50,
+        "mean_abs_ret": 0.00088
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    },
+    {
+      "obs_id": "OBS-TAILS",
+      "family": "TAILS",
+      "description": "excess kurtosis 21.5; 3-sigma tails: 417 down vs 407 up (asymmetry +0.01)",
+      "mechanism_hint": "fat tails imply stop placement/expectancy dominated by rare bars",
+      "effect_size": 21.520082,
+      "t_stat": 942.953,
+      "sample_size": 46079,
+      "significant": true,
+      "details": {
+        "neg_tail_3sig": 417,
+        "pos_tail_3sig": 407
+      },
+      "window_start": "2012-11-16T05:00:00",
+      "window_end": "2020-04-29T15:00:00"
+    }
+  ]
+}
