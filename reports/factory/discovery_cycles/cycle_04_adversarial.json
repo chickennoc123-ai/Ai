@@ -1,0 +1,324 @@
+{
+  "cycle_id": "CYCLE-4-ECONOMIC-STRUCTURE",
+  "stage": "GEN 12 adversarial",
+  "seed": 20260820,
+  "extra_parameter_evaluations": 21,
+  "survived": [
+    {
+      "symbol": "XAUUSD",
+      "family": "B2_TURN_OF_MONTH",
+      "params": {
+        "window": [
+          1,
+          1
+        ],
+        "dir": 1,
+        "hold_days": 2
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00267192,
+              "t": 2.766,
+              "n": 160
+            },
+            "2.0x": {
+              "mean_net": 0.00257192,
+              "t": 2.662,
+              "n": 160
+            },
+            "3.0x": {
+              "mean_net": 0.00237192,
+              "t": 2.455,
+              "n": 160
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_day": {
+              "mean_net": 0.00125522,
+              "t": 1.193,
+              "n": 159
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "w[1, 1]_h1": {
+              "mean_net": 0.00089797,
+              "t": 1.195,
+              "n": 160
+            },
+            "w[1, 1]_h3": {
+              "mean_net": 0.00236771,
+              "t": 1.972,
+              "n": 159
+            },
+            "w[2, 1]_h1": {
+              "mean_net": -0.0006351,
+              "t": -1.004,
+              "n": 160
+            },
+            "w[2, 1]_h3": {
+              "mean_net": 0.00233682,
+              "t": 2.13,
+              "n": 160
+            },
+            "w[1, 2]_h1": {
+              "mean_net": 0.00089797,
+              "t": 1.195,
+              "n": 160
+            },
+            "w[1, 2]_h3": {
+              "mean_net": 0.00236771,
+              "t": 1.972,
+              "n": 159
+            }
+          },
+          "positive": 5,
+          "total": 6,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 39,
+              "mean_net": 0.003556,
+              "t": 1.534
+            },
+            {
+              "block": 1,
+              "n": 40,
+              "mean_net": 0.00061963,
+              "t": 0.31
+            },
+            {
+              "block": 2,
+              "n": 40,
+              "mean_net": 0.00195702,
+              "t": 1.304
+            },
+            {
+              "block": 3,
+              "n": 41,
+              "mean_net": 0.00492092,
+              "t": 2.662
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        },
+        "symbol_shift": {
+          "detail": {
+            "EURUSD": {
+              "mean_net": -1.98e-05,
+              "t": -0.036,
+              "n": 112
+            },
+            "GBPUSD": {
+              "mean_net": -0.00150923,
+              "t": -2.747,
+              "n": 154
+            },
+            "USDCAD": {
+              "mean_net": -0.00057096,
+              "t": -1.067,
+              "n": 154
+            },
+            "USDCHF": {
+              "mean_net": 0.00013445,
+              "t": 0.249,
+              "n": 154
+            },
+            "USDJPY": {
+              "mean_net": 0.00015455,
+              "t": 0.284,
+              "n": 154
+            }
+          },
+          "advisory": true,
+          "positive_symbols": 2
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 21,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    }
+  ],
+  "detail": [
+    {
+      "symbol": "XAUUSD",
+      "family": "B2_TURN_OF_MONTH",
+      "params": {
+        "window": [
+          1,
+          1
+        ],
+        "dir": 1,
+        "hold_days": 2
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00267192,
+              "t": 2.766,
+              "n": 160
+            },
+            "2.0x": {
+              "mean_net": 0.00257192,
+              "t": 2.662,
+              "n": 160
+            },
+            "3.0x": {
+              "mean_net": 0.00237192,
+              "t": 2.455,
+              "n": 160
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_day": {
+              "mean_net": 0.00125522,
+              "t": 1.193,
+              "n": 159
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "w[1, 1]_h1": {
+              "mean_net": 0.00089797,
+              "t": 1.195,
+              "n": 160
+            },
+            "w[1, 1]_h3": {
+              "mean_net": 0.00236771,
+              "t": 1.972,
+              "n": 159
+            },
+            "w[2, 1]_h1": {
+              "mean_net": -0.0006351,
+              "t": -1.004,
+              "n": 160
+            },
+            "w[2, 1]_h3": {
+              "mean_net": 0.00233682,
+              "t": 2.13,
+              "n": 160
+            },
+            "w[1, 2]_h1": {
+              "mean_net": 0.00089797,
+              "t": 1.195,
+              "n": 160
+            },
+            "w[1, 2]_h3": {
+              "mean_net": 0.00236771,
+              "t": 1.972,
+              "n": 159
+            }
+          },
+          "positive": 5,
+          "total": 6,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 39,
+              "mean_net": 0.003556,
+              "t": 1.534
+            },
+            {
+              "block": 1,
+              "n": 40,
+              "mean_net": 0.00061963,
+              "t": 0.31
+            },
+            {
+              "block": 2,
+              "n": 40,
+              "mean_net": 0.00195702,
+              "t": 1.304
+            },
+            {
+              "block": 3,
+              "n": 41,
+              "mean_net": 0.00492092,
+              "t": 2.662
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        },
+        "symbol_shift": {
+          "detail": {
+            "EURUSD": {
+              "mean_net": -1.98e-05,
+              "t": -0.036,
+              "n": 112
+            },
+            "GBPUSD": {
+              "mean_net": -0.00150923,
+              "t": -2.747,
+              "n": 154
+            },
+            "USDCAD": {
+              "mean_net": -0.00057096,
+              "t": -1.067,
+              "n": 154
+            },
+            "USDCHF": {
+              "mean_net": 0.00013445,
+              "t": 0.249,
+              "n": 154
+            },
+            "USDJPY": {
+              "mean_net": 0.00015455,
+              "t": 0.284,
+              "n": 154
+            }
+          },
+          "advisory": true,
+          "positive_symbols": 2
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 21,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "cycle_id": "CYCLE-4-ECONOMIC-STRUCTURE",
+  "stage": "Phase 6 survivor interrogation",
+  "candidates_interrogated": 1,
+  "extra_parameter_evaluations": 36,
+  "confirmed_survivors": 1,
+  "detail": [
+    {
+      "symbol": "XAUUSD",
+      "family": "B2_TURN_OF_MONTH",
+      "params": {
+        "window": [
+          1,
+          1
+        ],
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 127,
+        "gross_mean": 0.00957471,
+        "mean_net": 0.00243412,
+        "t_stat": 2.203,
+        "profit_factor": 1.685,
+        "win_rate": 0.5748,
+        "gross_over_cost": 47.874,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 33,
+        "gross_mean": 0.00952733,
+        "mean_net": 0.00407194,
+        "t_stat": 2.057,
+        "profit_factor": 2.515,
+        "win_rate": 0.697,
+        "gross_over_cost": 47.637,
+        "median_hold_hours": 48.0
+      },
+      "extra_parameter_evaluations": 36,
+      "cond6_subperiod": {
+        "pass": true,
+        "positive_blocks": 3,
+        "required": 3,
+        "blocks": [
+          {
+            "block": 0,
+            "n": 31,
+            "mean_net": 0.00534086,
+            "t": 1.998
+          },
+          {
+            "block": 1,
+            "n": 32,
+            "mean_net": -0.00029104,
+            "t": -0.128
+          },
+          {
+            "block": 2,
+            "n": 32,
+            "mean_net": 0.00083041,
+            "t": 0.446
+          },
+          {
+            "block": 3,
+            "n": 32,
+            "mean_net": 0.00394709,
+            "t": 2.051
+          }
+        ]
+      },
+      "cond7_parameter_robustness": {
+        "pass": true,
+        "both_positive_fraction": 0.8,
+        "required": 0.6,
+        "neighbourhood": [
+          {
+            "window": [
+              1,
+              1
+            ],
+            "hold": 2,
+            "train_net": 0.00243412,
+            "train_t": 2.203,
+            "val_net": 0.00407194,
+            "val_t": 2.057
+          },
+          {
+            "window": [
+              1,
+              1
+            ],
+            "hold": 3,
+            "train_net": 0.00200149,
+            "train_t": 1.476,
+            "val_net": 0.00382117,
+            "val_t": 1.467
+          },
+          {
+            "window": [
+              1,
+              1
+            ],
+            "hold": 4,
+            "train_net": 0.00212247,
+            "train_t": 1.338,
+            "val_net": 0.00552999,
+            "val_t": 1.638
+          },
+          {
+            "window": [
+              1,
+              2
+            ],
+            "hold": 2,
+            "train_net": 0.00243412,
+            "train_t": 2.203,
+            "val_net": 0.00407194,
+            "val_t": 2.057
+          },
+          {
+            "window": [
+              1,
+              2
+            ],
+            "hold": 3,
+            "train_net": 0.00200149,
+            "train_t": 1.476,
+            "val_net": 0.00382117,
+            "val_t": 1.467
+          },
+          {
+            "window": [
+              1,
+              2
+            ],
+            "hold": 4,
+            "train_net": 0.00212247,
+            "train_t": 1.338,
+            "val_net": 0.00552999,
+            "val_t": 1.638
+          },
+          {
+            "window": [
+              2,
+              1
+            ],
+            "hold": 2,
+            "train_net": -0.00047869,
+            "train_t": -0.461,
+            "val_net": 0.00387485,
+            "val_t": 1.934
+          },
+          {
+            "window": [
+              2,
+              1
+            ],
+            "hold": 3,
+            "train_net": 0.00155777,
+            "train_t": 1.247,
+            "val_net": 0.00517902,
+            "val_t": 2.252
+          },
+          {
+            "window": [
+              2,
+              1
+            ],
+            "hold": 4,
+            "train_net": 0.00112514,
+            "train_t": 0.771,
+            "val_net": 0.00463067,
+            "val_t": 1.596
+          },
+          {
+            "window": [
+              2,
+              2
+            ],
+            "hold": 2,
+            "train_net": -0.00047869,
+            "train_t": -0.461,
+            "val_net": 0.00387485,
+            "val_t": 1.934
+          },
+          {
+            "window": [
+              2,
+              2
+            ],
+            "hold": 3,
+            "train_net": 0.00155777,
+            "train_t": 1.247,
+            "val_net": 0.00517902,
+            "val_t": 2.252
+          },
+          {
+            "window": [
+              2,
+              2
+            ],
+            "hold": 4,
+            "train_net": 0.00112514,
+            "train_t": 0.771,
+            "val_net": 0.00463067,
+            "val_t": 1.596
+          },
+          {
+            "window": [
+              2,
+              3
+            ],
+            "hold": 2,
+            "train_net": -0.00047869,
+            "train_t": -0.461,
+            "val_net": 0.00387485,
+            "val_t": 1.934
+          },
+          {
+            "window": [
+              2,
+              3
+            ],
+            "hold": 3,
+            "train_net": 0.00155777,
+            "train_t": 1.247,
+            "val_net": 0.00517902,
+            "val_t": 2.252
+          },
+          {
+            "window": [
+              2,
+              3
+            ],
+            "hold": 4,
+            "train_net": 0.00112514,
+            "train_t": 0.771,
+            "val_net": 0.00463067,
+            "val_t": 1.596
+          }
+        ]
+      },
+      "cond8_mechanism_interpretable": true,
+      "cond9_family_not_refuted": true,
+      "cond_realized_hold_ok": true,
+      "all_conditions_pass": true
+    }
+  ]
+}

@@ -1,45 +1,55 @@
 {
-  "families": {
-    "FAMILY-000001": {
-      "creation_timestamp": "2026-08-19T01:04:19.131957+00:00",
-      "description": "mechanism: rsi_14 < 30 (source's oversold threshold) => rsi_14 crosses back above 30 from b",
-      "family_id": "FAMILY-000001",
-      "family_kind": "HYPOTHESIS_FAMILY",
-      "family_signature": "86273fd41c602f30b1a27202e0113d8f90a09c4a53c561dbf57de200abe5bc57",
-      "members": [
-        "HYP-000001"
-      ]
-    },
-    "FAMILY-000002": {
-      "creation_timestamp": "2026-08-19T01:04:19.132778+00:00",
-      "description": "mechanism: rsi_14 < 30 => rsi_14 crosses back above 30 from below",
-      "family_id": "FAMILY-000002",
-      "family_kind": "HYPOTHESIS_FAMILY",
-      "family_signature": "57ad398b5f1382e385b5ef48825da9d591e70e42eb7bb04076e796494780acc6",
-      "members": [
-        "HYP-000002"
-      ]
-    },
-    "FAMILY-000003": {
-      "creation_timestamp": "2026-08-19T01:04:19.133691+00:00",
-      "description": "mechanism: volatility_regime == 2 (high) AND rsi_14 < 30 => rsi_14 crosses back above 30 fr",
-      "family_id": "FAMILY-000003",
-      "family_kind": "HYPOTHESIS_FAMILY",
-      "family_signature": "2c89c281d7ea3e5dda999627c0d3837716e0d9764a64324001ba605339b6710b",
-      "members": [
-        "HYP-000003"
-      ]
-    },
-    "FAMILY-000004": {
-      "creation_timestamp": "2026-08-19T01:04:19.138571+00:00",
-      "description": "rsi oversold mean-reversion, EURUSD H1",
-      "family_id": "FAMILY-000004",
-      "family_kind": "STRATEGY_FAMILY",
-      "family_signature": "fbe43b65049b0de8ae5aebbb38769814cc92fe1ccc1eeb3f598f1c9722b5bb19",
-      "members": [
-        "STRAT-000002"
-      ]
-    }
+ "families": {
+  "FAMILY-000001": {
+   "creation_timestamp": "2026-08-19T01:04:19.131957+00:00",
+   "description": "mechanism: rsi_14 < 30 (source's oversold threshold) => rsi_14 crosses back above 30 from b",
+   "family_id": "FAMILY-000001",
+   "family_kind": "HYPOTHESIS_FAMILY",
+   "family_signature": "86273fd41c602f30b1a27202e0113d8f90a09c4a53c561dbf57de200abe5bc57",
+   "members": [
+    "HYP-000001"
+   ]
   },
-  "next_id": 5
+  "FAMILY-000002": {
+   "creation_timestamp": "2026-08-19T01:04:19.132778+00:00",
+   "description": "mechanism: rsi_14 < 30 => rsi_14 crosses back above 30 from below",
+   "family_id": "FAMILY-000002",
+   "family_kind": "HYPOTHESIS_FAMILY",
+   "family_signature": "57ad398b5f1382e385b5ef48825da9d591e70e42eb7bb04076e796494780acc6",
+   "members": [
+    "HYP-000002"
+   ]
+  },
+  "FAMILY-000003": {
+   "creation_timestamp": "2026-08-19T01:04:19.133691+00:00",
+   "description": "mechanism: volatility_regime == 2 (high) AND rsi_14 < 30 => rsi_14 crosses back above 30 fr",
+   "family_id": "FAMILY-000003",
+   "family_kind": "HYPOTHESIS_FAMILY",
+   "family_signature": "2c89c281d7ea3e5dda999627c0d3837716e0d9764a64324001ba605339b6710b",
+   "members": [
+    "HYP-000003"
+   ]
+  },
+  "FAMILY-000004": {
+   "creation_timestamp": "2026-08-19T01:04:19.138571+00:00",
+   "description": "rsi oversold mean-reversion, EURUSD H1",
+   "family_id": "FAMILY-000004",
+   "family_kind": "STRATEGY_FAMILY",
+   "family_signature": "fbe43b65049b0de8ae5aebbb38769814cc92fe1ccc1eeb3f598f1c9722b5bb19",
+   "members": [
+    "STRAT-000002"
+   ]
+  },
+  "FAMILY-H1-PRICE-PATTERN": {
+   "creation_timestamp": "2026-08-20T08:47:54.080594+00:00",
+   "description": "H1 intrabar price-pattern models: streak reversal, weekend gap fade, NR7 range compression, N-bar breakout, hour-of-day drift, and any volatility/session filter layered on them, held for 1-240 H1 bars, on EURUSD GBPUSD USDCAD USDCHF USDJPY XAUUSD. Refuted by FAIL-000029: gross effect is smaller than the round-trip cost on every instrument tested; cross-sectional breadth does not defeat a cost floor.",
+   "family_id": "FAMILY-H1-PRICE-PATTERN",
+   "family_kind": "HYPOTHESIS_FAMILY",
+   "family_signature": "fbec617fe07b25421af292a24b1a08e2d9a577a3ffc61a05967c125345ef14fd",
+   "members": [],
+   "refuted_by": "FAIL-000029",
+   "status": "REFUTED"
+  }
+ },
+ "next_id": 5
 }

@@ -99,6 +99,11 @@ class FamilyRecord:
     description: str
     creation_timestamp: str
     members: Tuple[str, ...] = ()  # hypothesis/candidate ids -- preserved, append-only
+    # --- Cycle 4 additions: additive and defaulted, so every earlier record
+    # still loads unchanged. A family whose search space has been eliminated is
+    # marked REFUTED here so the GEN 7 firewall can block its variants. ---
+    status: str = ""          # "" (untested/tested) or "REFUTED"
+    refuted_by: str = ""      # failure_id that eliminated this search space
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
