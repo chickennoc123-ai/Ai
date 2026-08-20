@@ -262,6 +262,33 @@ def sig_E1_convergence(a: List[DayBar], b: List[DayBar], lookback: int,
     return out
 
 
+def to_weekly(days: List[DayBar]) -> List[DayBar]:
+    """
+    ISO-week resample from DayBar list. No new data source required -- this
+    is a pure resampling of the H1 data already in data/csv/.
+    """
+    out: List[DayBar] = []
+    cur_key = None
+    o = h = l = c = None
+    cnt = 0
+    last = None
+    week_start = None
+    for d in days:
+        key = d.date.isocalendar()[:2]   # (iso_year, iso_week)
+        if key != cur_key:
+            if cur_key is not None:
+                out.append(DayBar(week_start, o, h, l, c, cnt, last))
+            cur_key, week_start = key, d.date
+            o, h, l, c, cnt = d.open, d.high, d.low, d.close, d.bars
+        else:
+            h, l, c = max(h, d.high), min(l, d.low), d.close
+            cnt += d.bars
+        last = d.last_ts
+    if cur_key is not None:
+        out.append(DayBar(week_start, o, h, l, c, cnt, last))
+    return out
+
+
 # ----------------------------------------------------------------- sweep
 
 def _gate(tr: Stats, va: Stats) -> Tuple[str, str]:

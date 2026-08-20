@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "events": 28354,
+  "window": {
+    "start": "2010-01-01T01:00:00",
+    "end": "2022-03-04T15:00:00"
+  },
+  "gates": {
+    "G-E4_release_minute_clustering": {
+      "pass": true,
+      "dominant_minute": 30,
+      "concentration": 0.455,
+      "note": "flat minute distribution indicates import-stamped times"
+    },
+    "G-E5_dst_shift_present": {
+      "pass": true,
+      "events_with_multiple_utc_hours": 375,
+      "recurring_event_types": 347
+    },
+    "G-E6_dev_window_coverage": {
+      "pass": true,
+      "covered_fraction": 1.309,
+      "required": 0.8
+    },
+    "G-E7_sufficient_instances": {
+      "pass": true,
+      "event_types_with_30_plus": 275,
+      "top": [
+        [
+          "Unemployment Rate",
+          665
+        ],
+        [
+          "Retail Sales m/m",
+          649
+        ],
+        [
+          "Crude Oil Inventories",
+          566
+        ],
+        [
+          "Unemployment Claims",
+          549
+        ],
+        [
+          "Trade Balance",
+          524
+        ],
+        [
+          "CPI y/y",
+          410
+        ],
+        [
+          "CPI m/m",
+          368
+        ],
+        [
+          "Current Account",
+          306
+        ],
+        [
+          "Core Retail Sales m/m",
+          305
+        ],
+        [
+          "Employment Change",
+          297
+        ]
+      ]
+    }
+  },
+  "impact_distribution": {
+    "HIGH": 12015,
+    "MEDIUM": 16170,
+    "LOW": 169
+  },
+  "currency_distribution": {
+    "USD": 8546,
+    "EUR": 4604,
+    "GBP": 4193,
+    "CAD": 2881,
+    "AUD": 2841,
+    "JPY": 1502,
+    "NZD": 1433,
+    "CNY": 1327,
+    "CHF": 1025,
+    "ALL": 2
+  },
+  "surprise_available": 19406,
+  "source_file": "data/events/raw/forexfactory_2010_2023.csv",
+  "dev_window": {
+    "start": "2012-11-16T05:00:00",
+    "end": "2022-03-05T04:00:00"
+  }
+}

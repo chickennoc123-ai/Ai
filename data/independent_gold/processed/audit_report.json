@@ -1,0 +1,145 @@
+{
+  "source_A_gc_futures": {
+    "provenance": "CME GC continuous futures, Investing.com export, github.com/Arghyadeep/Gold-and-Silver-Price-Prediction...",
+    "provenance_confidence": "MEDIUM -- disclosed original vendor (Investing.com) and disclosed instrument (CME futures, not spot); student-project repo, no independent QA",
+    "rows": 2605,
+    "start": "2008-10-28",
+    "end": "2018-11-28",
+    "gaps_over_4_days": []
+  },
+  "source_B_ejtraderlabs": {
+    "provenance": "XAUUSD D1, github.com/ejtraderLabs/historical-data",
+    "provenance_confidence": "LOW -- original broker/vendor NOT disclosed in the repo; usable only as a weak secondary cross-check, not as a strong independent confirmation",
+    "rows": 2400,
+    "start": "2012-11-14",
+    "end": "2022-03-04",
+    "gaps_over_4_days": [],
+    "scale_correction_applied": "divided raw values by 100 (verified by sanity range)"
+  },
+  "our_series_daily_resample": {
+    "rows": 4130,
+    "start": "2009-12-03",
+    "end": "2023-04-03"
+  },
+  "cross_check_gc_vs_ours": {
+    "overlap_days": 2304,
+    "first_overlap": "2009-12-03",
+    "last_overlap": "2018-11-28",
+    "median_relative_diff": 0.00097,
+    "max_relative_diff": 0.03253,
+    "fraction_within_2pct": 0.9991,
+    "sample_gc_futures_vs_our_histdata": [
+      {
+        "date": "2009-12-03",
+        "gc_futures": 1217.4,
+        "our_histdata": 1216.45
+      },
+      {
+        "date": "2011-09-30",
+        "gc_futures": 1620.4,
+        "our_histdata": 1622.68
+      },
+      {
+        "date": "2013-07-26",
+        "gc_futures": 1321.7,
+        "our_histdata": 1322.68
+      },
+      {
+        "date": "2015-05-06",
+        "gc_futures": 1190.3,
+        "our_histdata": 1190.29
+      },
+      {
+        "date": "2017-02-14",
+        "gc_futures": 1223.9,
+        "our_histdata": 1225.74
+      },
+      {
+        "date": "2018-11-23",
+        "gc_futures": 1229.1,
+        "our_histdata": 1222.88
+      }
+    ]
+  },
+  "cross_check_ej_vs_ours": {
+    "overlap_days": 2400,
+    "first_overlap": "2012-11-14",
+    "last_overlap": "2022-03-04",
+    "median_relative_diff": 0.00081,
+    "max_relative_diff": 0.01879,
+    "fraction_within_2pct": 1.0,
+    "sample_ejtrader_vs_our_histdata": [
+      {
+        "date": "2012-11-14",
+        "ejtrader": 1726.72,
+        "our_histdata": 1728.96
+      },
+      {
+        "date": "2014-09-25",
+        "ejtrader": 1221.5,
+        "our_histdata": 1222.27
+      },
+      {
+        "date": "2016-08-05",
+        "ejtrader": 1336.87,
+        "our_histdata": 1338.64
+      },
+      {
+        "date": "2018-06-18",
+        "ejtrader": 1278.2,
+        "our_histdata": 1279.14
+      },
+      {
+        "date": "2020-04-28",
+        "ejtrader": 1707.65,
+        "our_histdata": 1706.81
+      }
+    ]
+  },
+  "cross_check_gc_vs_ej": {
+    "overlap_days": 1555,
+    "first_overlap": "2012-11-14",
+    "last_overlap": "2018-11-28",
+    "median_relative_diff": 0.0014,
+    "max_relative_diff": 0.04299,
+    "fraction_within_2pct": 0.9987,
+    "sample_gc_futures_vs_ejtrader": [
+      {
+        "date": "2012-11-14",
+        "gc_futures": 1729.5,
+        "ejtrader": 1726.72
+      },
+      {
+        "date": "2014-02-04",
+        "gc_futures": 1251.7,
+        "ejtrader": 1254.66
+      },
+      {
+        "date": "2015-04-21",
+        "gc_futures": 1202.9,
+        "ejtrader": 1202.05
+      },
+      {
+        "date": "2016-07-04",
+        "gc_futures": 1352.0,
+        "ejtrader": 1350.83
+      },
+      {
+        "date": "2017-09-15",
+        "gc_futures": 1320.4,
+        "ejtrader": 1320.29
+      }
+    ]
+  },
+  "usable_independent_overlap_with_our_dev_window": {
+    "gc_futures_overlap": [
+      "2009-12-03",
+      "2018-11-28"
+    ],
+    "ejtrader_overlap": [
+      "2012-11-14",
+      "2022-03-04"
+    ],
+    "note": "Neither source covers our full dev window (2009-12..2023-06). GC futures ends 2018-11 (misses 2019-2023, including the 2020 COVID year that supplies 26% of B2's measured profit). ejtraderLabs ends 2022-03 and DOES cover 2020, but its provenance is undisclosed."
+  }
+}
