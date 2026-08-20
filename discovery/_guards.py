@@ -1,9 +1,18 @@
 """
-Holdout firewall for the discovery layer.
+Holdout firewall for the discovery layer (OGD-4 Amendment 3).
 
-The sealed independent holdout lives under data/holdout/. Nothing in
-GEN 7-11 may ever read it. guard_path() is called by every data loader in
-this package; it raises before a single byte is read.
+Governance rule: GEN 7-13 (discovery/evaluation/adversarial) may access ONLY
+development data. The sealed holdout (data/holdout/) is invisible to these layers.
+
+  GEN 7-13: Development data only (holdout firewall via guard_path)
+  GEN 14:   Exclusive authorized access (via holdout_authorization gate)
+
+guard_path() is called by every data loader; it raises HoldoutFirewallViolation
+before a single byte of holdout data is read by any layer before GEN 14.
+
+Once GEN 14 evaluation completes, result is terminal (PASS/FAIL immutable).
+Failed candidates cannot be re-tuned and retested against same holdout
+(enforced via candidate_spec_registry freeze + holdout_authorization gates).
 """
 
 from pathlib import Path
