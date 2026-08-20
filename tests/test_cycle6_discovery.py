@@ -176,15 +176,39 @@ class TestGovernanceNotBypassed:
         with pytest.raises(FrozenSpecViolation):
             reg.update_candidate("CAND-C2-NFP-USDJPY", parameters={"post_hours": 8})
 
-    def test_no_gen14_authorization_was_requested(self):
+    def test_gen14_results_are_terminal_not_silently_reopened(self):
+        """
+        Written immediately after Cycle 6 froze these 4 candidates, when GEN 14
+        had not yet run, so it originally asserted no authorization existed at
+        all. A real, explicitly-authorized GEN 14 run has since evaluated all
+        four (0/4 PASS -- see ML-001-GEN14-C2-NFP-FINAL-VERDICT.md). The
+        invariant worth protecting now is that each has a TERMINAL result and
+        cannot be re-authorized, not that authorization never happened.
+        """
         gate = HoldoutAuthorizationGate(REPO_ROOT / "reports/factory/holdout_authorization_registry.json")
+        reg = CandidateSpecRegistry(REPO_ROOT / "reports/factory/candidate_spec_registry.json")
         for cid in ("CAND-C2-NFP-GBPUSD", "CAND-C2-NFP-USDCHF",
                    "CAND-C2-NFP-USDJPY", "CAND-C2-NFP-XAUUSD"):
-            assert not gate.is_gen14_authorized(cid)
+            assert gate.is_gen14_authorized(cid)
+            assert gate.has_gen14_result(cid)
+            assert gate.authorizations[cid].result == "FAIL"
+            with pytest.raises(ValueError, match="already has GEN 14 result"):
+                gate.authorize_gen14_access(cid, reg.get_hash(cid))
 
-    def test_holdout_still_unconsumed(self):
+    def test_holdout_consumption_matches_the_terminal_gen14_verdict(self):
+        """
+        Same staleness as above, for the evidence vault. Now checks the four
+        datasets are CONSUMED with FAIL results (matching the authorization
+        gate above), not that the vault is empty.
+        """
         ev = json.loads((REPO_ROOT / "reports/factory/evidence_vault.json").read_text())
-        assert ev["authorizations"] == {} and ev["consumptions"] == []
+        for sym in ("GBPUSD", "USDCHF", "USDJPY", "XAUUSD"):
+            did = next(d for d in ev["datasets"] if d.startswith(f"DS-HOLDOUT-{sym}-"))
+            assert ev["datasets"][did]["seal_status"] == "consumed"
+        gen14_consumptions = [c for c in ev["consumptions"]
+                              if c["candidate_id"].startswith("CAND-C2-NFP-")]
+        assert len(gen14_consumptions) == 4
+        assert all(c["result_summary"] == "FAIL" for c in gen14_consumptions)
 
     def test_ledger_recorded_the_cycle_exactly_once(self):
         lg = json.loads((REPO_ROOT / "reports/factory/multiple_testing_ledger.json").read_text())
