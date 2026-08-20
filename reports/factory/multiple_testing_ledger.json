@@ -1,8 +1,8 @@
 {
   "cumulative_hypotheses_generated": 58,
-  "cumulative_parameter_evaluations": 251,
+  "cumulative_parameter_evaluations": 312,
   "cumulative_survivors": 0,
-  "cycle_count": 3,
+  "cycle_count": 4,
   "cycles": [
     {
       "cycle_id": "CYCLE-01",
@@ -49,6 +49,22 @@
       "notes": "",
       "parameter_evaluations": 0,
       "started_at": "2026-08-20T01:33:53.564562+00:00",
+      "survivors": 0
+    },
+    {
+      "cycle_id": "CYCLE-3-MULTIASSET-EVAL",
+      "families_touched": [
+        "EURUSD",
+        "GBPUSD",
+        "USDCAD",
+        "USDCHF",
+        "USDJPY",
+        "XAUUSD"
+      ],
+      "hypotheses_generated": 0,
+      "notes": "GEN 9-11 internal evaluation of the Cycle 3 multi-asset queue on DEVELOPMENT data only. Hypotheses were counted in CYCLE-3-MULTIASSET; this row carries the parameter evaluations so the cumulative multiple-testing denominator stays honest.",
+      "parameter_evaluations": 61,
+      "started_at": "2026-08-20T07:13:27.142899+00:00",
       "survivors": 0
     }
   ],

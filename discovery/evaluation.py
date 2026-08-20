@@ -312,12 +312,20 @@ def evaluate_queue(queue_path: Path = DEFAULT_QUEUE,
                               "filtered": _stats(tr_filt).to_dict()}
             entry["validation"] = {"base": _stats(va_base).to_dict(),
                                    "filtered": _stats(va_filt).to_dict()}
-            train_improve = (_stats(tr_filt).mean_net - _stats(tr_base).mean_net)
-            val_improve = (_stats(va_filt).mean_net - _stats(va_base).mean_net)
+            st_f, sv_f = _stats(tr_filt), _stats(va_filt)
+            train_improve = (st_f.mean_net - _stats(tr_base).mean_net)
+            val_improve = (sv_f.mean_net - _stats(va_base).mean_net)
             entry["train_filter_improvement"] = round(train_improve, 7)
             entry["validation_filter_improvement"] = round(val_improve, 7)
+            # The filtered variant must clear the SAME pre-registered bar as every
+            # other hypothesis. A filter that merely shrinks a loss is not an edge.
+            tradable = (st_f.n >= VAL_MIN_TRADES and st_f.mean_net > 0
+                        and st_f.t_stat >= TRAIN_MIN_T
+                        and sv_f.n >= VAL_MIN_TRADES and sv_f.mean_net > 0
+                        and sv_f.t_stat >= VAL_MIN_T)
+            entry["filtered_variant_tradable"] = tradable
             entry["verdict"] = ("SURVIVES_INTERNAL"
-                                if train_improve > 0 and val_improve > 0
+                                if (train_improve > 0 and val_improve > 0 and tradable)
                                 else "REFUTED_INTERNAL")
             results.append(entry)
             continue

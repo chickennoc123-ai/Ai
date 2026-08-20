@@ -1,0 +1,34 @@
+{
+  "cycle_id": "CYCLE-3-MULTIASSET",
+  "completed_at": "2026-08-20T07:13:27.143552+00:00",
+  "hypotheses_evaluated": 43,
+  "parameter_evaluations_this_pass": 61,
+  "cumulative_parameter_evaluations": 312,
+  "cumulative_hypotheses": 58,
+  "internal_survivors": 0,
+  "gen12_adversarial": [],
+  "gen13_frozen": [],
+  "gen14_qualified": [],
+  "ea_packages": [],
+  "outcome": "NO_EDGE_FOUND",
+  "holdout_status": "SEALED_UNCONSUMED",
+  "explanation": "0 of 43 Cycle 3 hypotheses cleared the pre-registered internal-validation gates on development data. No candidate was frozen, no authorization was issued, and the sealed holdout was not opened. Standards were not relaxed to manufacture a survivor.",
+  "failure_record": "FAIL-000029",
+  "governance": {
+    "holdout_authorizations": {
+      "total_authorizations": 0,
+      "holdout_consumed": 0,
+      "results_recorded": {
+        "PASS": 0,
+        "FAIL": 0
+      },
+      "in_progress": 0
+    },
+    "frozen_specifications": {
+      "total_candidates": 0,
+      "frozen_for_gen14": 0,
+      "still_mutable": 0
+    },
+    "gates_relaxed": false
+  }
+}

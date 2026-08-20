@@ -562,7 +562,26 @@
       "reusability": "ARCHITECTURE_TRANSFERABLE",
       "scope": "Applies to ANY single-instrument horizon-extension search on this ~9.5-year dev window -- not specific to any one family.",
       "timestamp": "2026-08-19T22:52:38.384952+00:00"
+    },
+    {
+      "confidence": "DIRECTLY_MEASURED",
+      "entity_id": "CYCLE-3-MULTIASSET",
+      "evidence_reference": "reports/factory/discovery_cycles/cycle_03_evaluation.json",
+      "failure_category": "NEGATIVE_EXPECTANCY",
+      "failure_id": "FAIL-000029",
+      "failure_reason": "Cycle 3 multi-asset sweep: 0/43 hypotheses across 6 instruments cleared train (t>=2.0) and internal validation (t>=1.5, n>=30) after the frozen per-symbol round-trip cost.",
+      "failure_stage": "STATISTICS",
+      "future_research_implication": "Next cycles must change the economics, not the sample: lower-cost execution, larger-effect event windows, or genuinely multi-leg structures whose gross effect scales past the cost floor.",
+      "mechanism": "Every surviving-in-gross H1 pattern the observatory found is smaller than the round-trip cost on every instrument tested. Widening the instrument cross-section multiplied the sample but did not change the sign of net expectancy: the cost floor, not the sample size, is the binding constraint.",
+      "prevention_rule": "Do not re-test single-instrument H1 price-pattern families by adding more instruments. Cross-sectional breadth does not defeat a cost floor; only a larger gross effect or a lower cost does.",
+      "related_family": "MULTI_ASSET_CROSS_SECTION",
+      "related_features": [],
+      "related_market": "EURUSD,GBPUSD,USDCAD,USDCHF,USDJPY,XAUUSD",
+      "related_search_space": "",
+      "reusability": "ARCHITECTURE_TRANSFERABLE",
+      "scope": "H1 bars, 6 major/commodity instruments, retail-realistic cost. Says nothing about lower timeframes, other asset classes, or execution models with materially lower cost.",
+      "timestamp": "2026-08-20T07:13:27.143580+00:00"
     }
   ],
-  "next_id": 29
+  "next_id": 30
 }

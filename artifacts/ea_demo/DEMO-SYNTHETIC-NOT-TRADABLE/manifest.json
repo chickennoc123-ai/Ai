@@ -1,0 +1,19 @@
+{
+  "candidate_id": "DEMO-SYNTHETIC-NOT-TRADABLE",
+  "symbol": "EURUSD",
+  "spec_hash": "1a14fb2368f053159269e0bfcfeb9732f42728c1eff20d57d434f4ddfde2dc7b",
+  "mechanism": "DEMONSTRATION ONLY -- fade the 3rd consecutive same-direction H1 bar",
+  "framework": "streak_fade",
+  "parameters": {
+    "k": 3,
+    "horizon": 4,
+    "hours": [
+      7,
+      17
+    ],
+    "vol_above_median": true
+  },
+  "gen14_verdict": "PASS",
+  "generated_at": "2026-08-20T07:15:23.373364+00:00",
+  "warning": "Parameters are frozen. Any modification voids the GEN 14 qualification and the EA must not be traded."
+}

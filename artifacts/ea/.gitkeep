@@ -1,0 +1,5 @@
+Empty by design.
+
+A tradable EA package appears here only after a candidate passes GEN 14
+against the sealed holdout. Cycle 3 produced no such candidate
+(NO_EDGE_FOUND), so this directory is empty -- the correct and honest state.
