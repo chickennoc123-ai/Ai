@@ -1,0 +1,38 @@
+{
+  "audit_trail": "Holds one-way authorizations; no deletion/modification allowed",
+  "authorizations": {
+    "CAND-C2-NFP-GBPUSD": {
+      "authorized_at": "2026-08-20T15:48:48.699039+00:00",
+      "candidate_id": "CAND-C2-NFP-GBPUSD",
+      "gen14_phase": "GEN14-C2-NFP",
+      "holdout_consumed": true,
+      "result": "FAIL",
+      "spec_hash": "9783eac9cfeb7bc2b0636743ceeff53cfb14e6b81f15cd854b82b834eea9f384"
+    },
+    "CAND-C2-NFP-USDCHF": {
+      "authorized_at": "2026-08-20T15:48:48.917465+00:00",
+      "candidate_id": "CAND-C2-NFP-USDCHF",
+      "gen14_phase": "GEN14-C2-NFP",
+      "holdout_consumed": true,
+      "result": "FAIL",
+      "spec_hash": "508849726d132688d7528c71747b56fa0f6606799bd2c89759c39e97d906ded9"
+    },
+    "CAND-C2-NFP-USDJPY": {
+      "authorized_at": "2026-08-20T15:48:49.129366+00:00",
+      "candidate_id": "CAND-C2-NFP-USDJPY",
+      "gen14_phase": "GEN14-C2-NFP",
+      "holdout_consumed": true,
+      "result": "FAIL",
+      "spec_hash": "b3a0f258ce1fe632ea3d1bc3e3420f95a8bdafe9bd80e68ae822ec1a1a0b075f"
+    },
+    "CAND-C2-NFP-XAUUSD": {
+      "authorized_at": "2026-08-20T15:48:49.341876+00:00",
+      "candidate_id": "CAND-C2-NFP-XAUUSD",
+      "gen14_phase": "GEN14-C2-NFP",
+      "holdout_consumed": true,
+      "result": "FAIL",
+      "spec_hash": "45eca9c61dae04395bbe4fcf589c52e8e0ea450d2318fac99abc661576602816"
+    }
+  },
+  "governance_rule": "GEN 14 only; frozen spec; one-time holdout consumption"
+}

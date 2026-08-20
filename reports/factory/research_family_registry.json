@@ -42,7 +42,7 @@
   },
   "FAMILY-C2-SURPRISE-REACTION-NFP-USD": {
    "creation_timestamp": "2026-08-20T15:21:21.338127+00:00",
-   "description": "mechanism: NFP actual > forecast => long USD (direction corrected for quote currency), held 4h post-release. First family to produce a DISCOVERY_SURVIVOR that passed all 10 conditions and all 5 GEN 12 adversarial attacks. NOT yet an edge -- GEN 14 sealed-holdout authorization has not been requested.",
+   "description": "mechanism: NFP actual > forecast => long USD (direction corrected for quote currency), held 4h post-release. First family to produce a DISCOVERY_SURVIVOR that passed all 10 conditions and all 5 GEN 12 adversarial attacks. NOT yet an edge -- GEN 14 sealed-holdout authorization has not been requested. TERMINAL: GEN 14 sealed-holdout evaluation FAILED for all 4 members (0/4 PASS, all failed G5 Bonferroni at M=1222). Holdout consumed; not retestable.",
    "family_id": "FAMILY-C2-SURPRISE-REACTION-NFP-USD",
    "family_kind": "HYPOTHESIS_FAMILY",
    "family_signature": "e5c12279085662f9a3740bc8c59d3c378a066bd3b39655c04377caf2daa70cd4",
@@ -52,7 +52,8 @@
     "USDJPY-NFP-FOLLOW-4h",
     "XAUUSD-NFP-FADE-4h"
    ],
-   "status": "DISCOVERY_SURVIVOR_PENDING_GEN14"
+   "refuted_by": "FAIL-000037",
+   "status": "REFUTED"
   },
   "FAMILY-H1-PRICE-PATTERN": {
    "creation_timestamp": "2026-08-20T08:47:54.080594+00:00",

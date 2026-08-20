@@ -1,0 +1,203 @@
+{
+  "run_id": "GEN14-C2-NFP-EXPLICIT-USER-AUTHORIZATION",
+  "authorized_at": "2026-08-20T15:48:49.563819+00:00",
+  "fixed_M": 1222,
+  "candidates_evaluated": 4,
+  "passed": 0,
+  "failed": 4,
+  "mechanism_note": "4/4 candidates net-positive on holdout (sign consistency with the Cycle 6 dev-window mechanism); 0/4 cleared every GEN 14 gate",
+  "individual_results": [
+    {
+      "candidate_id": "CAND-C2-NFP-GBPUSD",
+      "symbol": "GBPUSD",
+      "spec_hash": "9783eac9cfeb7bc2b0636743ceeff53cfb14e6b81f15cd854b82b834eea9f384",
+      "holdout_dataset_id": "DS-HOLDOUT-GBPUSD-H1-20230602-20260820",
+      "evaluated_at": "2026-08-20T15:48:48.913586+00:00",
+      "event_source_note": "NFP events in [2023-06-02T15:00:00, 2026-01-30T00:00:00]; acquired calendar coverage ends 2026-01-30T00:00:00, 202 days of the holdout tail have NO acquired event data and are excluded, not imputed",
+      "holdout_period_full": {
+        "start": "2023-06-02T15:00:00",
+        "end": "2026-08-20T04:00:00"
+      },
+      "holdout_period_evaluated": {
+        "start": "2023-06-02T15:00:00",
+        "end": "2026-01-30T00:00:00"
+      },
+      "params": {
+        "event": "Non-Farm Employment Change",
+        "currency": "USD",
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "gates": {
+        "G1_min_trades": "FAIL",
+        "G2_positive_expectancy": "PASS",
+        "G3_significance": "PASS",
+        "G4_profit_factor": "PASS",
+        "G5_multiple_testing": "FAIL"
+      },
+      "verdict": "FAIL",
+      "first_failed_gate": "G1_min_trades",
+      "multiple_testing": {
+        "fixed_M": 1222,
+        "bonferroni_alpha": 4.091653027823241e-05,
+        "observed_p": 0.0016781138
+      },
+      "holdout_statistics": {
+        "n": 29,
+        "gross_mean": 0.00347057,
+        "mean_net": 0.00213314,
+        "t_stat": 3.142,
+        "profit_factor": 4.293,
+        "win_rate": 0.6552,
+        "gross_over_cost": 28.921,
+        "median_hold_hours": 4.0
+      },
+      "terminal": true,
+      "vault_status_after": "consumed"
+    },
+    {
+      "candidate_id": "CAND-C2-NFP-USDCHF",
+      "symbol": "USDCHF",
+      "spec_hash": "508849726d132688d7528c71747b56fa0f6606799bd2c89759c39e97d906ded9",
+      "holdout_dataset_id": "DS-HOLDOUT-USDCHF-H1-20230602-20260820",
+      "evaluated_at": "2026-08-20T15:48:49.125913+00:00",
+      "event_source_note": "NFP events in [2023-06-02T18:00:00, 2026-01-30T00:00:00]; acquired calendar coverage ends 2026-01-30T00:00:00, 202 days of the holdout tail have NO acquired event data and are excluded, not imputed",
+      "holdout_period_full": {
+        "start": "2023-06-02T18:00:00",
+        "end": "2026-08-20T04:00:00"
+      },
+      "holdout_period_evaluated": {
+        "start": "2023-06-02T18:00:00",
+        "end": "2026-01-30T00:00:00"
+      },
+      "params": {
+        "event": "Non-Farm Employment Change",
+        "currency": "USD",
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "gates": {
+        "G1_min_trades": "FAIL",
+        "G2_positive_expectancy": "PASS",
+        "G3_significance": "PASS",
+        "G4_profit_factor": "PASS",
+        "G5_multiple_testing": "FAIL"
+      },
+      "verdict": "FAIL",
+      "first_failed_gate": "G1_min_trades",
+      "multiple_testing": {
+        "fixed_M": 1222,
+        "bonferroni_alpha": 4.091653027823241e-05,
+        "observed_p": 0.0018147946
+      },
+      "holdout_statistics": {
+        "n": 29,
+        "gross_mean": 0.00427535,
+        "mean_net": 0.00266197,
+        "t_stat": 3.119,
+        "profit_factor": 4.425,
+        "win_rate": 0.6552,
+        "gross_over_cost": 22.502,
+        "median_hold_hours": 4.0
+      },
+      "terminal": true,
+      "vault_status_after": "consumed"
+    },
+    {
+      "candidate_id": "CAND-C2-NFP-USDJPY",
+      "symbol": "USDJPY",
+      "spec_hash": "b3a0f258ce1fe632ea3d1bc3e3420f95a8bdafe9bd80e68ae822ec1a1a0b075f",
+      "holdout_dataset_id": "DS-HOLDOUT-USDJPY-H1-20230603-20260820",
+      "evaluated_at": "2026-08-20T15:48:49.337894+00:00",
+      "event_source_note": "NFP events in [2023-06-03T01:00:00, 2026-01-30T00:00:00]; acquired calendar coverage ends 2026-01-30T00:00:00, 202 days of the holdout tail have NO acquired event data and are excluded, not imputed",
+      "holdout_period_full": {
+        "start": "2023-06-03T01:00:00",
+        "end": "2026-08-20T04:00:00"
+      },
+      "holdout_period_evaluated": {
+        "start": "2023-06-03T01:00:00",
+        "end": "2026-01-30T00:00:00"
+      },
+      "params": {
+        "event": "Non-Farm Employment Change",
+        "currency": "USD",
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "gates": {
+        "G1_min_trades": "FAIL",
+        "G2_positive_expectancy": "PASS",
+        "G3_significance": "PASS",
+        "G4_profit_factor": "PASS",
+        "G5_multiple_testing": "FAIL"
+      },
+      "verdict": "FAIL",
+      "first_failed_gate": "G1_min_trades",
+      "multiple_testing": {
+        "fixed_M": 1222,
+        "bonferroni_alpha": 4.091653027823241e-05,
+        "observed_p": 0.0046403979
+      },
+      "holdout_statistics": {
+        "n": 29,
+        "gross_mean": 0.004735,
+        "mean_net": 0.00284374,
+        "t_stat": 2.831,
+        "profit_factor": 4.057,
+        "win_rate": 0.6552,
+        "gross_over_cost": 47.35,
+        "median_hold_hours": 4.0
+      },
+      "terminal": true,
+      "vault_status_after": "consumed"
+    },
+    {
+      "candidate_id": "CAND-C2-NFP-XAUUSD",
+      "symbol": "XAUUSD",
+      "spec_hash": "45eca9c61dae04395bbe4fcf589c52e8e0ea450d2318fac99abc661576602816",
+      "holdout_dataset_id": "DS-HOLDOUT-XAUUSD-H1-20230403-20260820",
+      "evaluated_at": "2026-08-20T15:48:49.560212+00:00",
+      "event_source_note": "NFP events in [2023-04-03T08:00:00, 2026-01-30T00:00:00]; acquired calendar coverage ends 2026-01-30T00:00:00, 202 days of the holdout tail have NO acquired event data and are excluded, not imputed",
+      "holdout_period_full": {
+        "start": "2023-04-03T08:00:00",
+        "end": "2026-08-20T04:00:00"
+      },
+      "holdout_period_evaluated": {
+        "start": "2023-04-03T08:00:00",
+        "end": "2026-01-30T00:00:00"
+      },
+      "params": {
+        "event": "Non-Farm Employment Change",
+        "currency": "USD",
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "gates": {
+        "G1_min_trades": "PASS",
+        "G2_positive_expectancy": "PASS",
+        "G3_significance": "PASS",
+        "G4_profit_factor": "PASS",
+        "G5_multiple_testing": "FAIL"
+      },
+      "verdict": "FAIL",
+      "first_failed_gate": "G5_multiple_testing",
+      "multiple_testing": {
+        "fixed_M": 1222,
+        "bonferroni_alpha": 4.091653027823241e-05,
+        "observed_p": 0.0035116976
+      },
+      "holdout_statistics": {
+        "n": 31,
+        "gross_mean": 0.00477825,
+        "mean_net": 0.00286214,
+        "t_stat": 2.919,
+        "profit_factor": 4.095,
+        "win_rate": 0.6452,
+        "gross_over_cost": 23.891,
+        "median_hold_hours": 4.0
+      },
+      "terminal": true,
+      "vault_status_after": "consumed"
+    }
+  ]
+}

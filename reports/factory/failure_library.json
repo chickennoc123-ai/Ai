@@ -714,7 +714,26 @@
       "reusability": "FAMILY_TRANSFERABLE",
       "scope": "H1 resolution, 7 major scheduled event types, dev windows through 2022-2023.",
       "timestamp": "2026-08-20T15:21:21.334083+00:00"
+    },
+    {
+      "confidence": "DIRECTLY_MEASURED",
+      "entity_id": "CAND-C2-NFP-GBPUSD,CAND-C2-NFP-USDCHF,CAND-C2-NFP-USDJPY,CAND-C2-NFP-XAUUSD",
+      "evidence_reference": "reports/factory/gen14_c2_nfp_qualification.json",
+      "failure_category": "STATISTICAL_FAILURE",
+      "failure_id": "FAIL-000037",
+      "failure_reason": "GEN 14 sealed-holdout evaluation, single shot, all 4 frozen C2 NFP-surprise candidates (Cycle 6): 0/4 cleared every gate. All 4 failed G5 (Bonferroni multiple-testing, M=1222 fixed before the run). 3/4 (GBPUSD, USDCHF, USDJPY) also failed G1 (n>=30) by exactly one trade, due to a 202-day tail gap in the acquired economic calendar (coverage ends 2026-01-30; each symbol's holdout runs to 2026-08-20) that was disclosed in the qualification module's docstring before the holdout was ever read, not discovered afterward.",
+      "failure_stage": "HOLDOUT",
+      "future_research_implication": "The sign-consistency finding is worth carrying forward as a WEAK prior for future NFP-surprise research on fresh data, not as grounds to retest this exact candidate. Any future economic-calendar acquisition should prioritise closing coverage gaps before a symbol's holdout end, not just before its dev-window end -- the same 202-day tail gap that cost G1 here will recur for any GEN 14 evaluation run before the calendar is extended past 2026-01-30.",
+      "mechanism": "All 4 candidates were net-positive on holdout with the same sign as the Cycle 6 dev-window mechanism (long USD on a stronger-than-forecast NFP print) -- this is out-of-sample sign replication, genuine evidence the underlying effect is not pure dev-window overfitting. It failed specifically because the strict cumulative multiple-testing correction (M=1222, from 6 discovery cycles of search) demands |t|~4.1, a bar the dev-window candidates themselves only partially cleared (their weakest, XAUUSD, showed dev-window train-block t as low as 3.06-3.31). The combination of a genuinely large search history and a short, gap-affected holdout sample was always going to make this bar very hard to clear, independent of whether the mechanism is real.",
+      "prevention_rule": "TERMINAL. These 4 candidates (frozen spec, this exact holdout) may never be retuned, re-parameterised, or resubmitted against the same sealed data -- the holdout is consumed. A successor mechanism must be a structurally different candidate, evaluated against different or freshly-sealed evidence, not a parameter variant of this one.",
+      "related_family": "FAMILY-C2-SURPRISE-REACTION-NFP-USD",
+      "related_features": [],
+      "related_market": "GBPUSD,USDCHF,USDJPY,XAUUSD",
+      "related_search_space": "",
+      "reusability": "MECHANISM_SPECIFIC",
+      "scope": "H1 NFP-surprise reaction, 4h hold, GBPUSD/USDCHF/USDJPY/XAUUSD, evaluated on the portion of each holdout with acquired event coverage (through 2026-01-30 only).",
+      "timestamp": "2026-08-20T15:50:24.592644+00:00"
     }
   ],
-  "next_id": 37
+  "next_id": 38
 }
