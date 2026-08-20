@@ -56,6 +56,186 @@
       },
       "spec_hash": "45eca9c61dae04395bbe4fcf589c52e8e0ea450d2318fac99abc661576602816",
       "test_framework": "c2_surprise"
+    },
+    "CAND-SC-EURUSD-US10Y-15M": {
+      "candidate_id": "CAND-SC-EURUSD-US10Y-15M",
+      "created_at": "2026-08-20T22:13:52.824780+00:00",
+      "frozen_at": "2026-08-20T22:13:52.825251+00:00",
+      "mechanism": "SC_SURPRISE_CONFIRMATION: EURUSD vs US10Y driver, 15min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.",
+      "parameters": {
+        "driver": "US10Y",
+        "entry_delay_sec": 60,
+        "event_types": [
+          "Non-Farm Employment Change",
+          "CPI y/y",
+          "ADP Non-Farm Employment Change"
+        ],
+        "evidence_status": "STILL_UNDERPOWERED",
+        "impulse_window_min": 5,
+        "last_measured": {
+          "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+          "train_n": 149,
+          "train_t": 2.388,
+          "val_n": 23,
+          "val_t": 0.438
+        },
+        "mechanism_code": "SC_SURPRISE_CONFIRMATION",
+        "roundtrip_cost": null,
+        "symbol": "EURUSD",
+        "window_min": 15
+      },
+      "spec_hash": "ef9f2eea5c9e313acf1120db5f6854a89521eedeffb0f9122e9692c4cd550004",
+      "test_framework": "SC_SURPRISE_CONFIRMATION"
+    },
+    "CAND-SC-EURUSD-US10Y-5M": {
+      "candidate_id": "CAND-SC-EURUSD-US10Y-5M",
+      "created_at": "2026-08-20T22:13:52.823723+00:00",
+      "frozen_at": "2026-08-20T22:13:52.824345+00:00",
+      "mechanism": "SC_SURPRISE_CONFIRMATION: EURUSD vs US10Y driver, 5min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.",
+      "parameters": {
+        "driver": "US10Y",
+        "entry_delay_sec": 60,
+        "event_types": [
+          "Non-Farm Employment Change",
+          "CPI y/y",
+          "ADP Non-Farm Employment Change"
+        ],
+        "evidence_status": "STILL_UNDERPOWERED",
+        "impulse_window_min": 5,
+        "last_measured": {
+          "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+          "train_n": 149,
+          "train_t": 3.939,
+          "val_n": 23,
+          "val_t": 1.074
+        },
+        "mechanism_code": "SC_SURPRISE_CONFIRMATION",
+        "roundtrip_cost": null,
+        "symbol": "EURUSD",
+        "window_min": 5
+      },
+      "spec_hash": "f4cee7b1c6458eed8e4dff13e9130065549d1c159f64808c7336b30e01903520",
+      "test_framework": "SC_SURPRISE_CONFIRMATION"
+    },
+    "CAND-SC-GBPUSD-US10Y-5M": {
+      "candidate_id": "CAND-SC-GBPUSD-US10Y-5M",
+      "created_at": "2026-08-20T22:13:52.825713+00:00",
+      "frozen_at": "2026-08-20T22:13:52.826295+00:00",
+      "mechanism": "SC_SURPRISE_CONFIRMATION: GBPUSD vs US10Y driver, 5min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.",
+      "parameters": {
+        "driver": "US10Y",
+        "entry_delay_sec": 60,
+        "event_types": [
+          "Non-Farm Employment Change",
+          "CPI y/y",
+          "ADP Non-Farm Employment Change"
+        ],
+        "evidence_status": "STILL_UNDERPOWERED",
+        "impulse_window_min": 5,
+        "last_measured": {
+          "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+          "train_n": 149,
+          "train_t": 2.917,
+          "val_n": 23,
+          "val_t": -0.097
+        },
+        "mechanism_code": "SC_SURPRISE_CONFIRMATION",
+        "roundtrip_cost": null,
+        "symbol": "GBPUSD",
+        "window_min": 5
+      },
+      "spec_hash": "e739b69d2b1a70e2daf8b2caf924cc1b1896e5368297b4ae7f66adf8aa76a511",
+      "test_framework": "SC_SURPRISE_CONFIRMATION"
+    },
+    "CAND-SC-USDCHF-SPX500-240M": {
+      "candidate_id": "CAND-SC-USDCHF-SPX500-240M",
+      "created_at": "2026-08-20T22:13:52.829563+00:00",
+      "frozen_at": "2026-08-20T22:13:52.830352+00:00",
+      "mechanism": "SC_SURPRISE_CONFIRMATION: USDCHF vs SPX500 driver, 240min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.",
+      "parameters": {
+        "driver": "SPX500",
+        "entry_delay_sec": 60,
+        "event_types": [
+          "Non-Farm Employment Change",
+          "CPI y/y",
+          "ADP Non-Farm Employment Change"
+        ],
+        "evidence_status": "STILL_UNDERPOWERED",
+        "impulse_window_min": 5,
+        "last_measured": {
+          "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+          "train_n": 121,
+          "train_t": 5.111,
+          "val_n": 23,
+          "val_t": 0.572
+        },
+        "mechanism_code": "SC_SURPRISE_CONFIRMATION",
+        "roundtrip_cost": null,
+        "symbol": "USDCHF",
+        "window_min": 240
+      },
+      "spec_hash": "3d0b75642ed6e8896d63dc350f22de802e72f59999756de7e79358e9faec0f88",
+      "test_framework": "SC_SURPRISE_CONFIRMATION"
+    },
+    "CAND-SC-USDJPY-SPX500-240M": {
+      "candidate_id": "CAND-SC-USDJPY-SPX500-240M",
+      "created_at": "2026-08-20T22:13:52.828124+00:00",
+      "frozen_at": "2026-08-20T22:13:52.828869+00:00",
+      "mechanism": "SC_SURPRISE_CONFIRMATION: USDJPY vs SPX500 driver, 240min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.",
+      "parameters": {
+        "driver": "SPX500",
+        "entry_delay_sec": 60,
+        "event_types": [
+          "Non-Farm Employment Change",
+          "CPI y/y",
+          "ADP Non-Farm Employment Change"
+        ],
+        "evidence_status": "STILL_UNDERPOWERED",
+        "impulse_window_min": 5,
+        "last_measured": {
+          "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+          "train_n": 121,
+          "train_t": 7.31,
+          "val_n": 23,
+          "val_t": 1.79
+        },
+        "mechanism_code": "SC_SURPRISE_CONFIRMATION",
+        "roundtrip_cost": null,
+        "symbol": "USDJPY",
+        "window_min": 240
+      },
+      "spec_hash": "c9d7872e76886b9b4e5bc373b7775a2725e328f90e6affa93fd22222acefedbb",
+      "test_framework": "SC_SURPRISE_CONFIRMATION"
+    },
+    "CAND-SC-XAUUSD-WTICO-5M": {
+      "candidate_id": "CAND-SC-XAUUSD-WTICO-5M",
+      "created_at": "2026-08-20T22:13:52.826903+00:00",
+      "frozen_at": "2026-08-20T22:13:52.827533+00:00",
+      "mechanism": "SC_SURPRISE_CONFIRMATION: XAUUSD vs WTICO driver, 5min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.",
+      "parameters": {
+        "driver": "WTICO",
+        "entry_delay_sec": 60,
+        "event_types": [
+          "Non-Farm Employment Change",
+          "CPI y/y",
+          "ADP Non-Farm Employment Change"
+        ],
+        "evidence_status": "STILL_UNDERPOWERED",
+        "impulse_window_min": 5,
+        "last_measured": {
+          "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+          "train_n": 131,
+          "train_t": 3.566,
+          "val_n": 22,
+          "val_t": 0.107
+        },
+        "mechanism_code": "SC_SURPRISE_CONFIRMATION",
+        "roundtrip_cost": null,
+        "symbol": "XAUUSD",
+        "window_min": 5
+      },
+      "spec_hash": "f1c9e9a78178b9dfb3a1947eab450ef3e8283f58b7e075e68bff460663c35946",
+      "test_framework": "SC_SURPRISE_CONFIRMATION"
     }
   }
 }

@@ -1,0 +1,134 @@
+{
+  "product": "SC_SURPRISE_CONFIRMATION",
+  "evidence_status": "EXPERIMENTAL_UNRESOLVED",
+  "warning": "No combination in this file has cleared internal validation. None is authorized for GEN 14. None has been evaluated against the sealed holdout. This is NOT a proven edge. Do not trade this with real capital based on this evidence alone.",
+  "cost_model_id": "COST-REL-V1-FROZEN-20260820",
+  "event_types": [
+    "Non-Farm Employment Change",
+    "CPI y/y",
+    "ADP Non-Farm Employment Change"
+  ],
+  "combinations": [
+    {
+      "candidate_id": "CAND-SC-EURUSD-US10Y-5M",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "base_dir": 1,
+      "surprise_fx_dir": -1,
+      "entry_delay_sec": 60,
+      "impulse_window_min": 5,
+      "roundtrip_cost": 0.0001,
+      "spec_hash": "f4cee7b1c6458eed8e4dff13e9130065549d1c159f64808c7336b30e01903520",
+      "evidence_status": "STILL_UNDERPOWERED",
+      "last_measured": {
+        "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+        "train_n": 149,
+        "train_t": 3.939,
+        "val_n": 23,
+        "val_t": 1.074
+      }
+    },
+    {
+      "candidate_id": "CAND-SC-EURUSD-US10Y-15M",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "base_dir": 1,
+      "surprise_fx_dir": -1,
+      "entry_delay_sec": 60,
+      "impulse_window_min": 5,
+      "roundtrip_cost": 0.0001,
+      "spec_hash": "ef9f2eea5c9e313acf1120db5f6854a89521eedeffb0f9122e9692c4cd550004",
+      "evidence_status": "STILL_UNDERPOWERED",
+      "last_measured": {
+        "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+        "train_n": 149,
+        "train_t": 2.388,
+        "val_n": 23,
+        "val_t": 0.438
+      }
+    },
+    {
+      "candidate_id": "CAND-SC-GBPUSD-US10Y-5M",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "base_dir": 1,
+      "surprise_fx_dir": -1,
+      "entry_delay_sec": 60,
+      "impulse_window_min": 5,
+      "roundtrip_cost": 0.00012,
+      "spec_hash": "e739b69d2b1a70e2daf8b2caf924cc1b1896e5368297b4ae7f66adf8aa76a511",
+      "evidence_status": "STILL_UNDERPOWERED",
+      "last_measured": {
+        "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+        "train_n": 149,
+        "train_t": 2.917,
+        "val_n": 23,
+        "val_t": -0.097
+      }
+    },
+    {
+      "candidate_id": "CAND-SC-XAUUSD-WTICO-5M",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 5,
+      "base_dir": 1,
+      "surprise_fx_dir": -1,
+      "entry_delay_sec": 60,
+      "impulse_window_min": 5,
+      "roundtrip_cost": 0.0002,
+      "spec_hash": "f1c9e9a78178b9dfb3a1947eab450ef3e8283f58b7e075e68bff460663c35946",
+      "evidence_status": "STILL_UNDERPOWERED",
+      "last_measured": {
+        "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+        "train_n": 131,
+        "train_t": 3.566,
+        "val_n": 22,
+        "val_t": 0.107
+      }
+    },
+    {
+      "candidate_id": "CAND-SC-USDJPY-SPX500-240M",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 240,
+      "base_dir": 1,
+      "surprise_fx_dir": 1,
+      "entry_delay_sec": 60,
+      "impulse_window_min": 5,
+      "roundtrip_cost": 0.0001,
+      "spec_hash": "c9d7872e76886b9b4e5bc373b7775a2725e328f90e6affa93fd22222acefedbb",
+      "evidence_status": "STILL_UNDERPOWERED",
+      "last_measured": {
+        "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+        "train_n": 121,
+        "train_t": 7.31,
+        "val_n": 23,
+        "val_t": 1.79
+      }
+    },
+    {
+      "candidate_id": "CAND-SC-USDCHF-SPX500-240M",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 240,
+      "base_dir": 1,
+      "surprise_fx_dir": 1,
+      "entry_delay_sec": 60,
+      "impulse_window_min": 5,
+      "roundtrip_cost": 0.00019,
+      "spec_hash": "3d0b75642ed6e8896d63dc350f22de802e72f59999756de7e79358e9faec0f88",
+      "evidence_status": "STILL_UNDERPOWERED",
+      "last_measured": {
+        "source_artifact": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+        "train_n": 121,
+        "train_t": 5.111,
+        "val_n": 23,
+        "val_t": 0.572
+      }
+    }
+  ],
+  "spec_bundle_hash": "34412a67f7cc99e44f4032bfa3be1bae7c5343ddfd2dd087f7b3c5b766638089"
+}

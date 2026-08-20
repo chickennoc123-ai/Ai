@@ -1,0 +1,10 @@
+{
+  "_comment": "Example operator configuration. One of the 6 frozen combinations, verbatim. Changing any value will be REJECTED by config_validator.validate() and by the MQL5 EA's ValidateFrozenConfig().",
+  "candidate_id": "CAND-SC-USDJPY-SPX500-240M",
+  "symbol": "USDJPY",
+  "driver": "SPX500",
+  "window_min": 240,
+  "entry_delay_sec": 60,
+  "impulse_window_min": 5,
+  "_note_on_choice": "USDJPY/SPX500/240M carries the strongest train-side signal of the 6 frozen combinations (t=+7.31, n=121) but is STILL VALIDATION_UNDERPOWERED (val n=23, need 30). It is shown here as the example only because it is the most-discussed candidate in the research reports, NOT because it is recommended for live use."
+}
