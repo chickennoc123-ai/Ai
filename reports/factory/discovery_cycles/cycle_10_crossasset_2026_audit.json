@@ -1,0 +1,179 @@
+{
+  "cycle_id": "CYCLE-10-CROSSASSET-DATA-ACQUISITION",
+  "no_experiments_run": true,
+  "no_holdout_price_touched": true,
+  "no_sc_mechanism_modified": true,
+  "no_ledger_change": true,
+  "sources_found": {
+    "SPX500": {
+      "vendor": "getdata.finance (via GitHub sample repo getdata-finance/spx500-1m-ohlcv-index-historical-data)",
+      "acquisition_method": "anonymous git clone (raw.githubusercontent.com-equivalent path; git proxy allows public repo reads even though the vendor's own site is blocked)",
+      "github_sample_window": "2026-02-01 .. 2026-07-31 (rolling 6-month evaluation sample, refreshed weekly; NOT the full archive)",
+      "full_archive_claimed": "2008-08-19 .. 2026-07-30, 5,782,916 1m rows, ~389.53MB, 11 timeframes",
+      "full_archive_access": "BLOCKED -- requires purchase/download from getdata.finance directly; that host returns connection code 000 (policy denial) from this environment, same as every other direct financial data host tried across Cycles 4-10"
+    },
+    "USOIL": {
+      "vendor": "getdata.finance (via GitHub sample repo getdata-finance/usoil-1m-ohlcv-commodities-historical-data)",
+      "note": "identical pattern to SPX500 -- 6-month rolling sample on GitHub, full archive (2008-09-10..2026-07-30, 5,948,540 rows) paywalled and blocked",
+      "instrument_note": "'USOIL' is the standard CFD-market name for WTI crude (distinct from 'UKOIL'/Brent, also offered by this vendor); treated as the WTI proxy requested"
+    },
+    "US10Y": {
+      "vendor": null,
+      "status": "NOT FOUND",
+      "search_performed": [
+        "direct network probes: stooq, dukascopy, yahoo finance, investing.com, nasdaq data link -- all connection code 000 (blocked)",
+        "WebSearch for github M1/intraday US10Y/treasury sources",
+        "getdata-finance org: checked naming convention against 8 plausible repo-name variants (us10y-1m-*, ust10y-1m-*, tnx-1m-*, etc) -- all 404",
+        "getdata-finance org repository search filtered by '10y' and 'bond' -- zero matches out of the org's 307 repositories"
+      ],
+      "conclusion": "No free, network-accessible M1 US10Y source was found extending past FutureSharks/financial-data's 2020-05 cutoff."
+    }
+  },
+  "audit": {
+    "SPX500": {
+      "rows": 177911,
+      "span_start": "2026-02-01 23:00:00",
+      "span_end": "2026-07-31 20:44:00",
+      "price_range": [
+        6311.820000000001,
+        7624.04
+      ],
+      "bad_ohlc_rows": 0,
+      "gaps_over_1h": 129,
+      "gaps_over_24h": 25,
+      "sample_gaps_over_24h": [
+        {
+          "from": "2026-02-06 21:44:00",
+          "to": "2026-02-08 23:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-02-13 21:44:00",
+          "to": "2026-02-15 23:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-02-20 21:44:00",
+          "to": "2026-02-22 23:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-02-27 21:44:00",
+          "to": "2026-03-01 23:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-03-06 21:44:00",
+          "to": "2026-03-08 22:00:00",
+          "hours": 48.3
+        },
+        {
+          "from": "2026-03-13 20:44:00",
+          "to": "2026-03-15 22:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-03-20 20:44:00",
+          "to": "2026-03-22 22:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-03-27 20:44:00",
+          "to": "2026-03-29 22:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-04-03 13:14:00",
+          "to": "2026-04-05 22:00:00",
+          "hours": 56.8
+        },
+        {
+          "from": "2026-04-10 20:44:00",
+          "to": "2026-04-12 22:00:00",
+          "hours": 49.3
+        }
+      ],
+      "overlaps_fx_holdout_for": [
+        "GBPUSD",
+        "USDCAD",
+        "USDCHF",
+        "USDJPY",
+        "XAUUSD"
+      ]
+    },
+    "USOIL": {
+      "rows": 176824,
+      "span_start": "2026-02-01 23:01:00",
+      "span_end": "2026-07-31 20:44:00",
+      "price_range": [
+        61.158,
+        118.724
+      ],
+      "bad_ohlc_rows": 0,
+      "gaps_over_1h": 128,
+      "gaps_over_24h": 25,
+      "sample_gaps_over_24h": [
+        {
+          "from": "2026-02-06 21:44:00",
+          "to": "2026-02-08 23:01:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-02-13 21:44:00",
+          "to": "2026-02-15 23:01:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-02-20 21:44:00",
+          "to": "2026-02-22 23:01:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-02-27 21:44:00",
+          "to": "2026-03-01 23:02:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-03-06 21:44:00",
+          "to": "2026-03-08 22:00:00",
+          "hours": 48.3
+        },
+        {
+          "from": "2026-03-13 20:44:00",
+          "to": "2026-03-15 22:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-03-20 20:44:00",
+          "to": "2026-03-22 22:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-03-27 20:44:00",
+          "to": "2026-03-29 22:00:00",
+          "hours": 49.3
+        },
+        {
+          "from": "2026-04-02 20:59:00",
+          "to": "2026-04-05 22:01:00",
+          "hours": 73.0
+        },
+        {
+          "from": "2026-04-10 20:44:00",
+          "to": "2026-04-12 22:00:00",
+          "hours": 49.3
+        }
+      ],
+      "overlaps_fx_holdout_for": [
+        "GBPUSD",
+        "USDCAD",
+        "USDCHF",
+        "USDJPY",
+        "XAUUSD"
+      ]
+    }
+  },
+  "power_bottleneck_resolved": false,
+  "reason": "Two real, integrity-audited samples were acquired (SPX500, USOIL), but neither closes the gap this project actually needs. The event calendar (data/events/raw/forexfactory_2010_2023.csv) only extends to 2023 -- there is no verified NFP/CPI/ADP event data for 2024 onward. The acquired samples cover 2026-02..2026-07, which is AFTER the event calendar ends, not inside the 2020-06..2023-12 window the SC mechanism's event pool actually spans. A temporal gap of roughly 5.5 years (2020-06 to 2026-02) remains completely uncovered for SPX500/USOIL, and no source at all was found for US10Y at any date past 2020-05.",
+  "additional_governance_note": "The acquired 2026-02..2026-07 window overlaps the SEALED holdout period for GBPUSD, USDCAD, USDCHF, USDJPY, and XAUUSD (each extends through 2026-08-20) -- only EURUSD's sealed window (ending 2026-01-30) sits just before it. Any future use of this cross-asset sample paired with those five FX legs would require the same GEN 14 authorization gate as touching their price holdout directly, not casual use as ordinary development data. This is noted for future cycles, not acted on now."
+}
