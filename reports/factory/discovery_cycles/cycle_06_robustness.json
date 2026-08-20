@@ -1,0 +1,437 @@
+{
+  "cycle_id": "CYCLE-06-EVENT-DRIVEN-REAL-CALENDAR",
+  "stage": "Phase 6 survivor interrogation",
+  "candidates_interrogated": 4,
+  "extra_parameter_evaluations": 64,
+  "confirmed_survivors": 4,
+  "detail": [
+    {
+      "symbol": "GBPUSD",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "train": {
+        "n": 126,
+        "gross_mean": 0.00245141,
+        "mean_net": 0.00101173,
+        "t_stat": 4.023,
+        "profit_factor": 2.44,
+        "win_rate": 0.6349,
+        "gross_over_cost": 20.428,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 32,
+        "gross_mean": 0.00313852,
+        "mean_net": 0.00157464,
+        "t_stat": 2.318,
+        "profit_factor": 3.073,
+        "win_rate": 0.6875,
+        "gross_over_cost": 26.154,
+        "median_hold_hours": 4.0
+      },
+      "extra_parameter_evaluations": 16,
+      "cond6_subperiod": {
+        "pass": true,
+        "positive_blocks": 4,
+        "required": 3,
+        "blocks": [
+          {
+            "block": 0,
+            "n": 26,
+            "mean_net": 0.00082064,
+            "t": 1.539
+          },
+          {
+            "block": 1,
+            "n": 32,
+            "mean_net": 0.00219203,
+            "t": 5.54
+          },
+          {
+            "block": 2,
+            "n": 33,
+            "mean_net": 0.0008754,
+            "t": 1.394
+          },
+          {
+            "block": 3,
+            "n": 35,
+            "mean_net": 0.0002031,
+            "t": 0.537
+          }
+        ]
+      },
+      "cond7_parameter_robustness": {
+        "pass": true,
+        "both_positive_fraction": 0.6,
+        "required": 0.6,
+        "neighbourhood": [
+          {
+            "post_hours": 1,
+            "train_net": -0.00022306,
+            "train_t": -2.024,
+            "val_net": -0.00020914,
+            "val_t": -1.315
+          },
+          {
+            "post_hours": 4,
+            "train_net": 0.00101173,
+            "train_t": 4.023,
+            "val_net": 0.00157464,
+            "val_t": 2.318
+          },
+          {
+            "post_hours": 12,
+            "train_net": 0.00097105,
+            "train_t": 2.513,
+            "val_net": 0.00031977,
+            "val_t": 0.274
+          },
+          {
+            "post_hours": 24,
+            "train_net": 0.00073389,
+            "train_t": 1.806,
+            "val_net": 0.00038497,
+            "val_t": 0.316
+          },
+          {
+            "post_hours": 48,
+            "train_net": 0.0005897,
+            "train_t": 1.422,
+            "val_net": -0.00026965,
+            "val_t": -0.235
+          }
+        ]
+      },
+      "cond8_mechanism_interpretable": true,
+      "cond9_family_not_refuted": true,
+      "cond_realized_hold_ok": true,
+      "all_conditions_pass": true
+    },
+    {
+      "symbol": "USDCHF",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "train": {
+        "n": 126,
+        "gross_mean": 0.00329523,
+        "mean_net": 0.00187165,
+        "t_stat": 5.24,
+        "profit_factor": 3.743,
+        "win_rate": 0.627,
+        "gross_over_cost": 17.343,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 33,
+        "gross_mean": 0.00357978,
+        "mean_net": 0.00168694,
+        "t_stat": 2.396,
+        "profit_factor": 2.88,
+        "win_rate": 0.7576,
+        "gross_over_cost": 18.841,
+        "median_hold_hours": 4.0
+      },
+      "extra_parameter_evaluations": 16,
+      "cond6_subperiod": {
+        "pass": true,
+        "positive_blocks": 4,
+        "required": 3,
+        "blocks": [
+          {
+            "block": 0,
+            "n": 26,
+            "mean_net": 0.00274585,
+            "t": 2.821
+          },
+          {
+            "block": 1,
+            "n": 32,
+            "mean_net": 0.00302385,
+            "t": 5.126
+          },
+          {
+            "block": 2,
+            "n": 33,
+            "mean_net": 0.00150752,
+            "t": 1.83
+          },
+          {
+            "block": 3,
+            "n": 35,
+            "mean_net": 0.00051212,
+            "t": 1.249
+          }
+        ]
+      },
+      "cond7_parameter_robustness": {
+        "pass": true,
+        "both_positive_fraction": 0.8,
+        "required": 0.6,
+        "neighbourhood": [
+          {
+            "post_hours": 1,
+            "train_net": -0.00017608,
+            "train_t": -1.797,
+            "val_net": 8e-06,
+            "val_t": 0.056
+          },
+          {
+            "post_hours": 4,
+            "train_net": 0.00187165,
+            "train_t": 5.24,
+            "val_net": 0.00168694,
+            "val_t": 2.396
+          },
+          {
+            "post_hours": 12,
+            "train_net": 0.00181336,
+            "train_t": 3.818,
+            "val_net": 0.00091967,
+            "val_t": 0.836
+          },
+          {
+            "post_hours": 24,
+            "train_net": 0.00180177,
+            "train_t": 3.479,
+            "val_net": 0.00105162,
+            "val_t": 0.919
+          },
+          {
+            "post_hours": 48,
+            "train_net": 0.00180871,
+            "train_t": 3.443,
+            "val_net": 0.00054967,
+            "val_t": 0.518
+          }
+        ]
+      },
+      "cond8_mechanism_interpretable": true,
+      "cond9_family_not_refuted": true,
+      "cond_realized_hold_ok": true,
+      "all_conditions_pass": true
+    },
+    {
+      "symbol": "USDJPY",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "train": {
+        "n": 126,
+        "gross_mean": 0.00330131,
+        "mean_net": 0.0025892,
+        "t_stat": 8.32,
+        "profit_factor": 8.875,
+        "win_rate": 0.754,
+        "gross_over_cost": 33.013,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 33,
+        "gross_mean": 0.00347204,
+        "mean_net": 0.00201005,
+        "t_stat": 2.715,
+        "profit_factor": 3.818,
+        "win_rate": 0.6364,
+        "gross_over_cost": 34.72,
+        "median_hold_hours": 4.0
+      },
+      "extra_parameter_evaluations": 16,
+      "cond6_subperiod": {
+        "pass": true,
+        "positive_blocks": 4,
+        "required": 3,
+        "blocks": [
+          {
+            "block": 0,
+            "n": 26,
+            "mean_net": 0.00416497,
+            "t": 5.486
+          },
+          {
+            "block": 1,
+            "n": 32,
+            "mean_net": 0.00379335,
+            "t": 6.29
+          },
+          {
+            "block": 2,
+            "n": 33,
+            "mean_net": 0.00183033,
+            "t": 2.796
+          },
+          {
+            "block": 3,
+            "n": 35,
+            "mean_net": 0.00103319,
+            "t": 3.218
+          }
+        ]
+      },
+      "cond7_parameter_robustness": {
+        "pass": true,
+        "both_positive_fraction": 0.8,
+        "required": 0.6,
+        "neighbourhood": [
+          {
+            "post_hours": 1,
+            "train_net": -7.339e-05,
+            "train_t": -0.971,
+            "val_net": 7.631e-05,
+            "val_t": 0.722
+          },
+          {
+            "post_hours": 4,
+            "train_net": 0.0025892,
+            "train_t": 8.32,
+            "val_net": 0.00201005,
+            "val_t": 2.715
+          },
+          {
+            "post_hours": 12,
+            "train_net": 0.00234138,
+            "train_t": 5.23,
+            "val_net": 0.00098492,
+            "val_t": 0.815
+          },
+          {
+            "post_hours": 24,
+            "train_net": 0.00227452,
+            "train_t": 4.318,
+            "val_net": 0.00130415,
+            "val_t": 0.909
+          },
+          {
+            "post_hours": 48,
+            "train_net": 0.00224643,
+            "train_t": 4.206,
+            "val_net": 0.00070324,
+            "val_t": 0.509
+          }
+        ]
+      },
+      "cond8_mechanism_interpretable": true,
+      "cond9_family_not_refuted": true,
+      "cond_realized_hold_ok": true,
+      "all_conditions_pass": true
+    },
+    {
+      "symbol": "XAUUSD",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "train": {
+        "n": 127,
+        "gross_mean": 0.00562967,
+        "mean_net": 0.00406232,
+        "t_stat": 7.686,
+        "profit_factor": 6.535,
+        "win_rate": 0.7402,
+        "gross_over_cost": 28.148,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 33,
+        "gross_mean": 0.0053624,
+        "mean_net": 0.00192709,
+        "t_stat": 1.748,
+        "profit_factor": 2.129,
+        "win_rate": 0.5455,
+        "gross_over_cost": 26.812,
+        "median_hold_hours": 4.0
+      },
+      "extra_parameter_evaluations": 16,
+      "cond6_subperiod": {
+        "pass": true,
+        "positive_blocks": 4,
+        "required": 3,
+        "blocks": [
+          {
+            "block": 0,
+            "n": 31,
+            "mean_net": 0.00440994,
+            "t": 4.766
+          },
+          {
+            "block": 1,
+            "n": 31,
+            "mean_net": 0.00551237,
+            "t": 4.751
+          },
+          {
+            "block": 2,
+            "n": 31,
+            "mean_net": 0.00410681,
+            "t": 3.058
+          },
+          {
+            "block": 3,
+            "n": 34,
+            "mean_net": 0.00238269,
+            "t": 3.315
+          }
+        ]
+      },
+      "cond7_parameter_robustness": {
+        "pass": true,
+        "both_positive_fraction": 0.8,
+        "required": 0.6,
+        "neighbourhood": [
+          {
+            "post_hours": 1,
+            "train_net": -6.821e-05,
+            "train_t": -0.649,
+            "val_net": -0.00029614,
+            "val_t": -1.6
+          },
+          {
+            "post_hours": 4,
+            "train_net": 0.00406232,
+            "train_t": 7.686,
+            "val_net": 0.00192709,
+            "val_t": 1.748
+          },
+          {
+            "post_hours": 12,
+            "train_net": 0.00501772,
+            "train_t": 5.782,
+            "val_net": 5.876e-05,
+            "val_t": 0.031
+          },
+          {
+            "post_hours": 24,
+            "train_net": 0.00459412,
+            "train_t": 5.23,
+            "val_net": 0.00072929,
+            "val_t": 0.252
+          },
+          {
+            "post_hours": 48,
+            "train_net": 0.00454135,
+            "train_t": 5.144,
+            "val_net": 0.00013519,
+            "val_t": 0.046
+          }
+        ]
+      },
+      "cond8_mechanism_interpretable": true,
+      "cond9_family_not_refuted": true,
+      "cond_realized_hold_ok": true,
+      "all_conditions_pass": true
+    }
+  ]
+}

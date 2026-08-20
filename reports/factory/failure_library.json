@@ -695,7 +695,26 @@
       "reusability": "MECHANISM_SPECIFIC",
       "scope": "XAUUSD H1 development window 2009-2023, one vendor series.",
       "timestamp": "2026-08-20T11:21:09.188511+00:00"
+    },
+    {
+      "confidence": "DIRECTLY_MEASURED",
+      "entity_id": "CYCLE-06-C1-C3-C4-REAL-CALENDAR",
+      "evidence_reference": "reports/factory/discovery_cycles/cycle_06_event_sweep.json",
+      "failure_category": "NEGATIVE_EXPECTANCY",
+      "failure_id": "FAIL-000036",
+      "failure_reason": "C1 (pre-event positioning), C3 (post-release volatility expansion) and C4 (event sequence conditioning), re-run on the real acquired calendar across 7 pre-registered event types (NFP, CPI y/y, Federal Funds Rate, FOMC Statement, BOE Official Bank Rate, ECB Main Refinancing Rate, BOJ Monetary Policy Statement) and every economically-grounded symbol pairing: 0 of 289 evaluations cleared the economic filter. 170 net-negative, 89 insignificant, 1 validation failure.",
+      "failure_stage": "STATISTICS",
+      "future_research_implication": "All future event-driven discovery should center on C2-style surprise families; C1/C3/C4 are exhausted for the event types tested.",
+      "mechanism": "Confirms FAIL-000034 with real data instead of a derived approximation: pre-event positioning, the release's own volatility footprint, and cross-event sequencing all carry no exploitable directional information. Only the SURPRISE -- actual vs a published consensus -- does. Timing and volatility are public and anticipated; a consensus miss is not.",
+      "prevention_rule": "Do not re-test event-timing-only or event-volatility-only families without a surprise measure. This is now confirmed on real data across 7 event types, not just NFP -- the finding generalizes.",
+      "related_family": "C1_PRE_EVENT_POSITIONING,C3_VOLATILITY_EXPANSION,C4_EVENT_SEQUENCE",
+      "related_features": [],
+      "related_market": "EURUSD,GBPUSD,USDCAD,USDCHF,USDJPY,XAUUSD",
+      "related_search_space": "",
+      "reusability": "FAMILY_TRANSFERABLE",
+      "scope": "H1 resolution, 7 major scheduled event types, dev windows through 2022-2023.",
+      "timestamp": "2026-08-20T15:21:21.334083+00:00"
     }
   ],
-  "next_id": 36
+  "next_id": 37
 }

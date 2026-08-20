@@ -40,6 +40,20 @@
     "STRAT-000002"
    ]
   },
+  "FAMILY-C2-SURPRISE-REACTION-NFP-USD": {
+   "creation_timestamp": "2026-08-20T15:21:21.338127+00:00",
+   "description": "mechanism: NFP actual > forecast => long USD (direction corrected for quote currency), held 4h post-release. First family to produce a DISCOVERY_SURVIVOR that passed all 10 conditions and all 5 GEN 12 adversarial attacks. NOT yet an edge -- GEN 14 sealed-holdout authorization has not been requested.",
+   "family_id": "FAMILY-C2-SURPRISE-REACTION-NFP-USD",
+   "family_kind": "HYPOTHESIS_FAMILY",
+   "family_signature": "e5c12279085662f9a3740bc8c59d3c378a066bd3b39655c04377caf2daa70cd4",
+   "members": [
+    "GBPUSD-NFP-FADE-4h",
+    "USDCHF-NFP-FOLLOW-4h",
+    "USDJPY-NFP-FOLLOW-4h",
+    "XAUUSD-NFP-FADE-4h"
+   ],
+   "status": "DISCOVERY_SURVIVOR_PENDING_GEN14"
+  },
   "FAMILY-H1-PRICE-PATTERN": {
    "creation_timestamp": "2026-08-20T08:47:54.080594+00:00",
    "description": "H1 intrabar price-pattern models: streak reversal, weekend gap fade, NR7 range compression, N-bar breakout, hour-of-day drift, and any volatility/session filter layered on them, held for 1-240 H1 bars, on EURUSD GBPUSD USDCAD USDCHF USDJPY XAUUSD. Refuted by FAIL-000029: gross effect is smaller than the round-trip cost on every instrument tested; cross-sectional breadth does not defeat a cost floor.",

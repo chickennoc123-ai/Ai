@@ -1,0 +1,61 @@
+{
+  "audit": "Candidate specs with freeze gates; locked at GEN 14 authorization",
+  "candidates": {
+    "CAND-C2-NFP-GBPUSD": {
+      "candidate_id": "CAND-C2-NFP-GBPUSD",
+      "created_at": "2026-08-20T15:21:35.309197+00:00",
+      "frozen_at": "2026-08-20T15:21:35.309486+00:00",
+      "mechanism": "long USD via short GBPUSD on positive NFP surprise",
+      "parameters": {
+        "currency": "USD",
+        "event": "Non-Farm Employment Change",
+        "mode": "FADE",
+        "post_hours": 4
+      },
+      "spec_hash": "9783eac9cfeb7bc2b0636743ceeff53cfb14e6b81f15cd854b82b834eea9f384",
+      "test_framework": "c2_surprise"
+    },
+    "CAND-C2-NFP-USDCHF": {
+      "candidate_id": "CAND-C2-NFP-USDCHF",
+      "created_at": "2026-08-20T15:21:35.309773+00:00",
+      "frozen_at": "2026-08-20T15:21:35.310017+00:00",
+      "mechanism": "long USD via long USDCHF on positive NFP surprise",
+      "parameters": {
+        "currency": "USD",
+        "event": "Non-Farm Employment Change",
+        "mode": "FOLLOW",
+        "post_hours": 4
+      },
+      "spec_hash": "508849726d132688d7528c71747b56fa0f6606799bd2c89759c39e97d906ded9",
+      "test_framework": "c2_surprise"
+    },
+    "CAND-C2-NFP-USDJPY": {
+      "candidate_id": "CAND-C2-NFP-USDJPY",
+      "created_at": "2026-08-20T15:21:35.310259+00:00",
+      "frozen_at": "2026-08-20T15:21:35.310512+00:00",
+      "mechanism": "long USD via long USDJPY on positive NFP surprise",
+      "parameters": {
+        "currency": "USD",
+        "event": "Non-Farm Employment Change",
+        "mode": "FOLLOW",
+        "post_hours": 4
+      },
+      "spec_hash": "b3a0f258ce1fe632ea3d1bc3e3420f95a8bdafe9bd80e68ae822ec1a1a0b075f",
+      "test_framework": "c2_surprise"
+    },
+    "CAND-C2-NFP-XAUUSD": {
+      "candidate_id": "CAND-C2-NFP-XAUUSD",
+      "created_at": "2026-08-20T15:21:35.310834+00:00",
+      "frozen_at": "2026-08-20T15:21:35.311123+00:00",
+      "mechanism": "long USD via short XAUUSD (gold) on positive NFP surprise",
+      "parameters": {
+        "currency": "USD",
+        "event": "Non-Farm Employment Change",
+        "mode": "FADE",
+        "post_hours": 4
+      },
+      "spec_hash": "45eca9c61dae04395bbe4fcf589c52e8e0ea450d2318fac99abc661576602816",
+      "test_framework": "c2_surprise"
+    }
+  }
+}

@@ -123,12 +123,30 @@ def index_bars(bars: List[Bar]) -> Dict[datetime, int]:
     return {b.ts: i for i, b in enumerate(bars)}
 
 
-def bar_at_or_after(bars: List[Bar], ts: datetime, lo: int = 0) -> Optional[int]:
-    """First bar index whose timestamp is >= ts. Linear scan from `lo`."""
-    for i in range(lo, len(bars)):
-        if bars[i].ts >= ts:
-            return i
-    return None
+import bisect
+
+
+def _ts_list(bars: List[Bar]) -> List[datetime]:
+    """Bar timestamps as a plain list, for repeated binary search."""
+    return [b.ts for b in bars]
+
+
+def bar_at_or_after(bars: List[Bar], ts: datetime, lo: int = 0,
+                    ts_list: Optional[List[datetime]] = None) -> Optional[int]:
+    """
+    First bar index whose timestamp is >= ts. Binary search -- O(log n)
+    instead of the O(n) linear scan this replaced, which made a
+    several-hundred-event x 36-parameter sweep over an 80k-bar series
+    computationally infeasible (hung past 2 minutes on a single cycle).
+
+    Pass a precomputed `ts_list` (see _ts_list) when calling this in a loop
+    over many events against the same `bars` -- rebuilding the timestamp list
+    on every call would silently reintroduce the same O(n) cost per event.
+    """
+    if ts_list is None:
+        ts_list = _ts_list(bars)
+    idx = bisect.bisect_left(ts_list, ts, lo)
+    return idx if idx < len(bars) else None
 
 
 def _trade(bars: List[Bar], i: int, j: int, direction: int, cost: float,
@@ -146,10 +164,11 @@ def _trade(bars: List[Bar], i: int, j: int, direction: int, cost: float,
 def c1_pre_event(bars: List[Bar], events: List[MacroEvent], pre_h: int,
                  direction: int, cost: float) -> List[EventTrade]:
     """Enter `pre_h` hours before the release, exit at the release bar."""
+    ts_list = _ts_list(bars)
     out = []
     for e in events:
-        j = bar_at_or_after(bars, e.ts)
-        i = bar_at_or_after(bars, e.ts - timedelta(hours=pre_h))
+        j = bar_at_or_after(bars, e.ts, ts_list=ts_list)
+        i = bar_at_or_after(bars, e.ts - timedelta(hours=pre_h), ts_list=ts_list)
         t = _trade(bars, i, j, direction, cost, e.event_id)
         if t:
             out.append(t)
@@ -162,6 +181,7 @@ def c2_surprise(bars: List[Bar], events: List[MacroEvent], post_h: int,
     Trade the sign of (actual - forecast). Requires both fields; events
     lacking them are skipped, never imputed.
     """
+    ts_list = _ts_list(bars)
     out = []
     for e in events:
         s = e.surprise
@@ -170,8 +190,8 @@ def c2_surprise(bars: List[Bar], events: List[MacroEvent], post_h: int,
         d = 1 if s > 0 else -1
         if mode == "FADE":
             d = -d
-        i = bar_at_or_after(bars, e.ts)
-        j = bar_at_or_after(bars, e.ts + timedelta(hours=post_h), i or 0)
+        i = bar_at_or_after(bars, e.ts, ts_list=ts_list)
+        j = bar_at_or_after(bars, e.ts + timedelta(hours=post_h), i or 0, ts_list=ts_list)
         t = _trade(bars, i, j, d, cost, e.event_id)
         if t:
             out.append(t)
@@ -184,14 +204,15 @@ def c3_volatility(bars: List[Bar], events: List[MacroEvent], post_h: int,
     The release bar's own move defines the direction; CONTINUATION follows it,
     REVERSION fades it. This is the family that needs no actual/forecast.
     """
+    ts_list = _ts_list(bars)
     out = []
     for e in events:
-        i = bar_at_or_after(bars, e.ts)
+        i = bar_at_or_after(bars, e.ts, ts_list=ts_list)
         if i is None or i == 0:
             continue
         move = 1 if bars[i].close > bars[i - 1].close else -1
         d = move if mode == "CONTINUATION" else -move
-        j = bar_at_or_after(bars, e.ts + timedelta(hours=post_h), i)
+        j = bar_at_or_after(bars, e.ts + timedelta(hours=post_h), i, ts_list=ts_list)
         t = _trade(bars, i, j, d, cost, e.event_id)
         if t:
             out.append(t)
@@ -205,6 +226,7 @@ def c4_sequence(bars: List[Bar], events: List[MacroEvent], post_h: int,
     the prior instance's post-release move had the same sign (streak) or the
     opposite sign (alternation).
     """
+    ts_list = _ts_list(bars)
     out = []
     by_name: Dict[str, List[MacroEvent]] = {}
     for e in events:
@@ -212,13 +234,13 @@ def c4_sequence(bars: List[Bar], events: List[MacroEvent], post_h: int,
     for name, seq in by_name.items():
         prev_move = None
         for e in seq:
-            i = bar_at_or_after(bars, e.ts)
+            i = bar_at_or_after(bars, e.ts, ts_list=ts_list)
             if i is None or i == 0:
                 continue
             move = 1 if bars[i].close > bars[i - 1].close else -1
             if prev_move is not None:
                 d = prev_move if mode == "STREAK" else -prev_move
-                j = bar_at_or_after(bars, e.ts + timedelta(hours=post_h), i)
+                j = bar_at_or_after(bars, e.ts + timedelta(hours=post_h), i, ts_list=ts_list)
                 t = _trade(bars, i, j, d, cost, e.event_id)
                 if t:
                     out.append(t)

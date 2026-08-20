@@ -1,8 +1,8 @@
 {
-  "cumulative_hypotheses_generated": 68,
-  "cumulative_parameter_evaluations": 750,
-  "cumulative_survivors": 1,
-  "cycle_count": 6,
+  "cumulative_hypotheses_generated": 72,
+  "cumulative_parameter_evaluations": 1222,
+  "cumulative_survivors": 5,
+  "cycle_count": 7,
   "cycles": [
     {
       "cycle_id": "CYCLE-01",
@@ -97,6 +97,20 @@
       "parameter_evaluations": 155,
       "started_at": "2026-08-20T11:21:09.183295+00:00",
       "survivors": 0
+    },
+    {
+      "cycle_id": "CYCLE-06-EVENT-DRIVEN-REAL-CALENDAR",
+      "families_touched": [
+        "C1_PRE_EVENT_POSITIONING",
+        "C2_SURPRISE_REACTION",
+        "C3_VOLATILITY_EXPANSION",
+        "C4_EVENT_SEQUENCE"
+      ],
+      "hypotheses_generated": 4,
+      "notes": "Event-driven discovery on the REAL acquired calendar (2010-2023), not the NFP-derived approximation used in Cycle 5. 360 sweep (360, after a 10/27 power pre-check eliminated underpowered combos at zero cost) + 64 robustness + 48 adversarial evaluations. C1/C3/C4: 0 survivors (calendar timing and post-release volatility alone still carry no information, consistent with FAIL-000034). C2 (surprise reaction), running for the first time now that real actual/forecast data exists: 4 DISCOVERY_SURVIVORs, all on NFP, all SURVIVED_ADVERSARIAL (cost shock 3x, 1-bar delay, parameter shift, subperiod, bootstrap). All four reduce to ONE mechanism once quote-currency direction is corrected: long USD on a stronger-than-forecast NFP print. Cross-instrument sign check: 5/6 instruments consistent (EURUSD the exception, weak and insignificant). NOT called an edge -- specs frozen (GEN 13), GEN 14 holdout authorization NOT requested.",
+      "parameter_evaluations": 472,
+      "started_at": "2026-08-20T15:20:55.268908+00:00",
+      "survivors": 4
     }
   ],
   "families_ever_touched": [
@@ -109,6 +123,7 @@
     "BREAKOUT_STRUCTURE",
     "C1_NFP_CALENDAR_PROXY",
     "C1_PRE_EVENT_POSITIONING",
+    "C2_SURPRISE_REACTION",
     "C3_VOLATILITY_EXPANSION",
     "C4_EVENT_SEQUENCE",
     "COST_AMORTIZATION",

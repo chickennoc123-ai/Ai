@@ -1,0 +1,958 @@
+{
+  "cycle_id": "CYCLE-06-EVENT-DRIVEN-REAL-CALENDAR",
+  "stage": "GEN 12 adversarial",
+  "seed": 20260820,
+  "extra_parameter_evaluations": 48,
+  "survived": [
+    {
+      "symbol": "GBPUSD",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00095173,
+              "t": 3.785,
+              "n": 126
+            },
+            "2.0x": {
+              "mean_net": 0.00089173,
+              "t": 3.546,
+              "n": 126
+            },
+            "3.0x": {
+              "mean_net": 0.00077173,
+              "t": 3.069,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.0011534,
+              "t": 3.58,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -0.00022306,
+              "t": -2.024,
+              "n": 126
+            },
+            "h12": {
+              "mean_net": 0.00097105,
+              "t": 2.513,
+              "n": 126
+            },
+            "h24": {
+              "mean_net": 0.00073389,
+              "t": 1.806,
+              "n": 126
+            },
+            "h48": {
+              "mean_net": 0.0005897,
+              "t": 1.422,
+              "n": 126
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 26,
+              "mean_net": 0.00082064,
+              "t": 1.539
+            },
+            {
+              "block": 1,
+              "n": 32,
+              "mean_net": 0.00219203,
+              "t": 5.54
+            },
+            {
+              "block": 2,
+              "n": 33,
+              "mean_net": 0.0008754,
+              "t": 1.394
+            },
+            {
+              "block": 3,
+              "n": 35,
+              "mean_net": 0.0002031,
+              "t": 0.537
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 0.999,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    },
+    {
+      "symbol": "USDCHF",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00177665,
+              "t": 4.974,
+              "n": 126
+            },
+            "2.0x": {
+              "mean_net": 0.00168165,
+              "t": 4.708,
+              "n": 126
+            },
+            "3.0x": {
+              "mean_net": 0.00149165,
+              "t": 4.176,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.00199323,
+              "t": 4.58,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -0.00017608,
+              "t": -1.797,
+              "n": 126
+            },
+            "h12": {
+              "mean_net": 0.00181336,
+              "t": 3.818,
+              "n": 126
+            },
+            "h24": {
+              "mean_net": 0.00180177,
+              "t": 3.479,
+              "n": 126
+            },
+            "h48": {
+              "mean_net": 0.00180871,
+              "t": 3.443,
+              "n": 126
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 26,
+              "mean_net": 0.00274585,
+              "t": 2.821
+            },
+            {
+              "block": 1,
+              "n": 32,
+              "mean_net": 0.00302385,
+              "t": 5.126
+            },
+            {
+              "block": 2,
+              "n": 33,
+              "mean_net": 0.00150752,
+              "t": 1.83
+            },
+            {
+              "block": 3,
+              "n": 35,
+              "mean_net": 0.00051212,
+              "t": 1.249
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    },
+    {
+      "symbol": "USDJPY",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.0025392,
+              "t": 8.16,
+              "n": 126
+            },
+            "2.0x": {
+              "mean_net": 0.0024892,
+              "t": 7.999,
+              "n": 126
+            },
+            "3.0x": {
+              "mean_net": 0.0023892,
+              "t": 7.678,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.00264973,
+              "t": 6.848,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -7.339e-05,
+              "t": -0.971,
+              "n": 126
+            },
+            "h12": {
+              "mean_net": 0.00234138,
+              "t": 5.23,
+              "n": 126
+            },
+            "h24": {
+              "mean_net": 0.00227452,
+              "t": 4.318,
+              "n": 126
+            },
+            "h48": {
+              "mean_net": 0.00224643,
+              "t": 4.206,
+              "n": 126
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 26,
+              "mean_net": 0.00416497,
+              "t": 5.486
+            },
+            {
+              "block": 1,
+              "n": 32,
+              "mean_net": 0.00379335,
+              "t": 6.29
+            },
+            {
+              "block": 2,
+              "n": 33,
+              "mean_net": 0.00183033,
+              "t": 2.796
+            },
+            {
+              "block": 3,
+              "n": 35,
+              "mean_net": 0.00103319,
+              "t": 3.218
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    },
+    {
+      "symbol": "XAUUSD",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00396232,
+              "t": 7.497,
+              "n": 127
+            },
+            "2.0x": {
+              "mean_net": 0.00386232,
+              "t": 7.308,
+              "n": 127
+            },
+            "3.0x": {
+              "mean_net": 0.00366232,
+              "t": 6.929,
+              "n": 127
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.00419445,
+              "t": 6.016,
+              "n": 127
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -6.821e-05,
+              "t": -0.649,
+              "n": 127
+            },
+            "h12": {
+              "mean_net": 0.00501772,
+              "t": 5.782,
+              "n": 127
+            },
+            "h24": {
+              "mean_net": 0.00459412,
+              "t": 5.23,
+              "n": 127
+            },
+            "h48": {
+              "mean_net": 0.00454135,
+              "t": 5.144,
+              "n": 127
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 31,
+              "mean_net": 0.00440994,
+              "t": 4.766
+            },
+            {
+              "block": 1,
+              "n": 31,
+              "mean_net": 0.00551237,
+              "t": 4.751
+            },
+            {
+              "block": 2,
+              "n": 31,
+              "mean_net": 0.00410681,
+              "t": 3.058
+            },
+            {
+              "block": 3,
+              "n": 34,
+              "mean_net": 0.00238269,
+              "t": 3.315
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    }
+  ],
+  "detail": [
+    {
+      "symbol": "GBPUSD",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00095173,
+              "t": 3.785,
+              "n": 126
+            },
+            "2.0x": {
+              "mean_net": 0.00089173,
+              "t": 3.546,
+              "n": 126
+            },
+            "3.0x": {
+              "mean_net": 0.00077173,
+              "t": 3.069,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.0011534,
+              "t": 3.58,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -0.00022306,
+              "t": -2.024,
+              "n": 126
+            },
+            "h12": {
+              "mean_net": 0.00097105,
+              "t": 2.513,
+              "n": 126
+            },
+            "h24": {
+              "mean_net": 0.00073389,
+              "t": 1.806,
+              "n": 126
+            },
+            "h48": {
+              "mean_net": 0.0005897,
+              "t": 1.422,
+              "n": 126
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 26,
+              "mean_net": 0.00082064,
+              "t": 1.539
+            },
+            {
+              "block": 1,
+              "n": 32,
+              "mean_net": 0.00219203,
+              "t": 5.54
+            },
+            {
+              "block": 2,
+              "n": 33,
+              "mean_net": 0.0008754,
+              "t": 1.394
+            },
+            {
+              "block": 3,
+              "n": 35,
+              "mean_net": 0.0002031,
+              "t": 0.537
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 0.999,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    },
+    {
+      "symbol": "USDCHF",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00177665,
+              "t": 4.974,
+              "n": 126
+            },
+            "2.0x": {
+              "mean_net": 0.00168165,
+              "t": 4.708,
+              "n": 126
+            },
+            "3.0x": {
+              "mean_net": 0.00149165,
+              "t": 4.176,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.00199323,
+              "t": 4.58,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -0.00017608,
+              "t": -1.797,
+              "n": 126
+            },
+            "h12": {
+              "mean_net": 0.00181336,
+              "t": 3.818,
+              "n": 126
+            },
+            "h24": {
+              "mean_net": 0.00180177,
+              "t": 3.479,
+              "n": 126
+            },
+            "h48": {
+              "mean_net": 0.00180871,
+              "t": 3.443,
+              "n": 126
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 26,
+              "mean_net": 0.00274585,
+              "t": 2.821
+            },
+            {
+              "block": 1,
+              "n": 32,
+              "mean_net": 0.00302385,
+              "t": 5.126
+            },
+            {
+              "block": 2,
+              "n": 33,
+              "mean_net": 0.00150752,
+              "t": 1.83
+            },
+            {
+              "block": 3,
+              "n": 35,
+              "mean_net": 0.00051212,
+              "t": 1.249
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    },
+    {
+      "symbol": "USDJPY",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FOLLOW"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.0025392,
+              "t": 8.16,
+              "n": 126
+            },
+            "2.0x": {
+              "mean_net": 0.0024892,
+              "t": 7.999,
+              "n": 126
+            },
+            "3.0x": {
+              "mean_net": 0.0023892,
+              "t": 7.678,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.00264973,
+              "t": 6.848,
+              "n": 126
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -7.339e-05,
+              "t": -0.971,
+              "n": 126
+            },
+            "h12": {
+              "mean_net": 0.00234138,
+              "t": 5.23,
+              "n": 126
+            },
+            "h24": {
+              "mean_net": 0.00227452,
+              "t": 4.318,
+              "n": 126
+            },
+            "h48": {
+              "mean_net": 0.00224643,
+              "t": 4.206,
+              "n": 126
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 26,
+              "mean_net": 0.00416497,
+              "t": 5.486
+            },
+            {
+              "block": 1,
+              "n": 32,
+              "mean_net": 0.00379335,
+              "t": 6.29
+            },
+            {
+              "block": 2,
+              "n": 33,
+              "mean_net": 0.00183033,
+              "t": 2.796
+            },
+            {
+              "block": 3,
+              "n": 35,
+              "mean_net": 0.00103319,
+              "t": 3.218
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    },
+    {
+      "symbol": "XAUUSD",
+      "event_name": "Non-Farm Employment Change",
+      "family": "C2_SURPRISE_REACTION",
+      "params": {
+        "post_hours": 4,
+        "mode": "FADE"
+      },
+      "attacks": {
+        "cost_shock": {
+          "detail": {
+            "1.5x": {
+              "mean_net": 0.00396232,
+              "t": 7.497,
+              "n": 127
+            },
+            "2.0x": {
+              "mean_net": 0.00386232,
+              "t": 7.308,
+              "n": 127
+            },
+            "3.0x": {
+              "mean_net": 0.00366232,
+              "t": 6.929,
+              "n": 127
+            }
+          },
+          "pass": true
+        },
+        "execution_delay": {
+          "detail": {
+            "1_bar": {
+              "mean_net": 0.00419445,
+              "t": 6.016,
+              "n": 127
+            }
+          },
+          "pass": true
+        },
+        "parameter_shift": {
+          "detail": {
+            "h1": {
+              "mean_net": -6.821e-05,
+              "t": -0.649,
+              "n": 127
+            },
+            "h12": {
+              "mean_net": 0.00501772,
+              "t": 5.782,
+              "n": 127
+            },
+            "h24": {
+              "mean_net": 0.00459412,
+              "t": 5.23,
+              "n": 127
+            },
+            "h48": {
+              "mean_net": 0.00454135,
+              "t": 5.144,
+              "n": 127
+            }
+          },
+          "positive": 3,
+          "total": 4,
+          "pass": true
+        },
+        "subperiod": {
+          "detail": [
+            {
+              "block": 0,
+              "n": 31,
+              "mean_net": 0.00440994,
+              "t": 4.766
+            },
+            {
+              "block": 1,
+              "n": 31,
+              "mean_net": 0.00551237,
+              "t": 4.751
+            },
+            {
+              "block": 2,
+              "n": 31,
+              "mean_net": 0.00410681,
+              "t": 3.058
+            },
+            {
+              "block": 3,
+              "n": 34,
+              "mean_net": 0.00238269,
+              "t": 3.315
+            }
+          ],
+          "positive_blocks": 4,
+          "pass": true
+        },
+        "bootstrap": {
+          "resamples": 1000,
+          "positive_fraction": 1.0,
+          "required": 0.95,
+          "pass": true
+        }
+      },
+      "binding_attacks": [
+        "cost_shock",
+        "execution_delay",
+        "parameter_shift",
+        "subperiod",
+        "bootstrap"
+      ],
+      "extra_parameter_evaluations": 12,
+      "verdict": "SURVIVED_ADVERSARIAL"
+    }
+  ],
+  "cross_instrument_sign_check": {
+    "per_symbol": {
+      "EURUSD": {
+        "mean_net": -0.00025592,
+        "t": -1.23,
+        "n": 90,
+        "mode_implied_by_usd_direction": "FADE"
+      },
+      "GBPUSD": {
+        "mean_net": 0.00101173,
+        "t": 4.023,
+        "n": 126,
+        "mode_implied_by_usd_direction": "FADE"
+      },
+      "USDCAD": {
+        "mean_net": 0.00041057,
+        "t": 1.057,
+        "n": 126,
+        "mode_implied_by_usd_direction": "FOLLOW"
+      },
+      "USDCHF": {
+        "mean_net": 0.00187165,
+        "t": 5.24,
+        "n": 126,
+        "mode_implied_by_usd_direction": "FOLLOW"
+      },
+      "USDJPY": {
+        "mean_net": 0.0025892,
+        "t": 8.32,
+        "n": 126,
+        "mode_implied_by_usd_direction": "FOLLOW"
+      },
+      "XAUUSD": {
+        "mean_net": 0.00406232,
+        "t": 7.686,
+        "n": 127,
+        "mode_implied_by_usd_direction": "FADE"
+      }
+    },
+    "positive_symbols": 5,
+    "total_symbols": 6,
+    "advisory": true,
+    "reading": "5/6 instruments show the USD-strength-consistent sign, using ONE mechanism direction applied uniformly, not four independently-chosen FOLLOW/FADE labels"
+  }
+}
