@@ -1,8 +1,8 @@
 {
-  "cumulative_hypotheses_generated": 65,
-  "cumulative_parameter_evaluations": 595,
+  "cumulative_hypotheses_generated": 68,
+  "cumulative_parameter_evaluations": 750,
   "cumulative_survivors": 1,
-  "cycle_count": 5,
+  "cycle_count": 6,
   "cycles": [
     {
       "cycle_id": "CYCLE-01",
@@ -83,16 +83,34 @@
       "parameter_evaluations": 283,
       "started_at": "2026-08-20T08:54:04.105280+00:00",
       "survivors": 1
+    },
+    {
+      "cycle_id": "CYCLE-05-EVENT-DRIVEN",
+      "families_touched": [
+        "C1_PRE_EVENT_POSITIONING",
+        "C3_VOLATILITY_EXPANSION",
+        "C4_EVENT_SEQUENCE",
+        "B2_REVIEW_DIAGNOSTIC"
+      ],
+      "hypotheses_generated": 3,
+      "notes": "Event-driven cycle. External event calendars are unreachable from this environment (proxy denies forexfactory/tradingeconomics/FRED at CONNECT), so only the deterministic NFP schedule was derivable. C2 (surprise reaction) could not run at all -- it needs actual/forecast. EURUSD was skipped BEFORE evaluation as structurally underpowered (23 validation events < 30). 130 event evaluations + 25 B2 diagnostic probes. 0 survivors.",
+      "parameter_evaluations": 155,
+      "started_at": "2026-08-20T11:21:09.183295+00:00",
+      "survivors": 0
     }
   ],
   "families_ever_touched": [
     "A1_POSITIONAL_STREAK",
     "A2_POSITIONAL_BREAKOUT",
     "B1_DAY_OF_WEEK",
+    "B2_REVIEW_DIAGNOSTIC",
     "B2_TURN_OF_MONTH",
     "B3_QUARTER_TURN",
     "BREAKOUT_STRUCTURE",
     "C1_NFP_CALENDAR_PROXY",
+    "C1_PRE_EVENT_POSITIONING",
+    "C3_VOLATILITY_EXPANSION",
+    "C4_EVENT_SEQUENCE",
     "COST_AMORTIZATION",
     "E1_CROSS_ASSET_CONVERGENCE",
     "EURUSD",

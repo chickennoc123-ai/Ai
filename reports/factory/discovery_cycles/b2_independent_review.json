@@ -1,0 +1,176 @@
+{
+  "candidate": "B2_TURN_OF_MONTH XAUUSD long, window=[1,1], hold=2d",
+  "q1_gold_or_usd": {
+    "per_symbol": {
+      "EURUSD": {
+        "n": 112,
+        "mean_net": -1.98e-05,
+        "t": -0.036,
+        "gross_over_cost": 45.016
+      },
+      "GBPUSD": {
+        "n": 154,
+        "mean_net": -0.00150923,
+        "t": -2.747,
+        "gross_over_cost": 45.865
+      },
+      "USDCAD": {
+        "n": 154,
+        "mean_net": -0.00057096,
+        "t": -1.067,
+        "gross_over_cost": 34.727
+      },
+      "USDCHF": {
+        "n": 154,
+        "mean_net": 0.00013445,
+        "t": 0.249,
+        "gross_over_cost": 27.94
+      },
+      "USDJPY": {
+        "n": 154,
+        "mean_net": 0.00015455,
+        "t": 0.284,
+        "gross_over_cost": 49.802
+      },
+      "XAUUSD": {
+        "n": 160,
+        "mean_net": 0.00277192,
+        "t": 2.869,
+        "gross_over_cost": 47.825
+      }
+    },
+    "net_positive": [
+      "USDCHF",
+      "USDJPY",
+      "XAUUSD"
+    ],
+    "significant": [
+      "XAUUSD"
+    ],
+    "evaluations": 6,
+    "reading": "gold-specific: the effect does not generalise to the USD pairs"
+  },
+  "q2_year_stability": {
+    "per_year": {
+      "2009": {
+        "n": 1,
+        "mean_net": -0.00024835,
+        "total": -0.000248
+      },
+      "2010": {
+        "n": 12,
+        "mean_net": 0.00426125,
+        "total": 0.051135
+      },
+      "2011": {
+        "n": 12,
+        "mean_net": 0.0063142,
+        "total": 0.07577
+      },
+      "2012": {
+        "n": 12,
+        "mean_net": 0.00083422,
+        "total": 0.010011
+      },
+      "2013": {
+        "n": 12,
+        "mean_net": -0.00167126,
+        "total": -0.020055
+      },
+      "2014": {
+        "n": 12,
+        "mean_net": 0.00521795,
+        "total": 0.062615
+      },
+      "2015": {
+        "n": 12,
+        "mean_net": -0.00232134,
+        "total": -0.027856
+      },
+      "2016": {
+        "n": 12,
+        "mean_net": 0.00511919,
+        "total": 0.06143
+      },
+      "2017": {
+        "n": 12,
+        "mean_net": -0.00130748,
+        "total": -0.01569
+      },
+      "2018": {
+        "n": 12,
+        "mean_net": 0.00080706,
+        "total": 0.009685
+      },
+      "2019": {
+        "n": 12,
+        "mean_net": 0.00408431,
+        "total": 0.049012
+      },
+      "2020": {
+        "n": 12,
+        "mean_net": 0.00947551,
+        "total": 0.113706
+      },
+      "2021": {
+        "n": 12,
+        "mean_net": 0.00069295,
+        "total": 0.008315
+      },
+      "2022": {
+        "n": 12,
+        "mean_net": 0.00647237,
+        "total": 0.077668
+      },
+      "2023": {
+        "n": 3,
+        "mean_net": -0.00399712,
+        "total": -0.011991
+      }
+    },
+    "years": 15,
+    "positive_years": 10,
+    "evaluations": 15,
+    "best_year": "2020",
+    "best_year_share_of_total": 0.256,
+    "reading": "carried by a minority of years"
+  },
+  "q3_exogenous_prior": {
+    "usd_strong_prior_month": {
+      "n": 82,
+      "mean_net": 0.00329112,
+      "t": 2.288
+    },
+    "usd_weak_prior_month": {
+      "n": 70,
+      "mean_net": 0.00189118,
+      "t": 1.47
+    },
+    "risk_off_prior_month": {
+      "n": 71,
+      "mean_net": 0.00437488,
+      "t": 2.921
+    },
+    "risk_on_prior_month": {
+      "n": 81,
+      "mean_net": 0.00113133,
+      "t": 0.899
+    },
+    "evaluations": 4,
+    "note": "DIAGNOSTIC ONLY -- the conditioned variants are not adopted as the candidate; selecting the better split after seeing it would be fitting."
+  },
+  "q4_independent_data": {
+    "independent_gold_series_available": false,
+    "reason": "The only XAUUSD data in the project is one vendor series, already split into development (used above) and a reserved holdout. There is no second, independent gold series to test against, so option (b) cannot be completed without new data acquisition.",
+    "reserved_holdout_present_but_untouched": [
+      "XAUUSD_H1_HOLDOUT_20230403_20260820_UTC.csv"
+    ],
+    "what_would_satisfy_it": [
+      "a second vendor's XAUUSD H1/D1 series covering 2010-2023",
+      "gold futures (GC) settlement data, which is a different instrument with different month-end mechanics -- a genuine independent test",
+      "a longer XAUUSD history predating 2009 from any source"
+    ],
+    "evaluations": 0
+  },
+  "total_evaluations": 25
+}

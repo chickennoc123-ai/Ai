@@ -1,0 +1,4088 @@
+{
+  "cycle_id": "CYCLE-05-EVENT-DRIVEN",
+  "event_source": "derived:NFP-first-friday",
+  "event_data_status": "NOT_SUPPLIED -- only the deterministic NFP schedule is derivable; FOMC/CPI/GDP/rates require a calendar file",
+  "families_runnable": [
+    "C1_PRE_EVENT_POSITIONING",
+    "C3_VOLATILITY_EXPANSION",
+    "C4_EVENT_SEQUENCE"
+  ],
+  "families_blocked": {
+    "C2_SURPRISE_REACTION": "requires actual and forecast fields; not derivable"
+  },
+  "cost_model_id": "COST-REL-V1-FROZEN-20260820",
+  "cost_table": {
+    "EURUSD": 0.0001,
+    "GBPUSD": 0.00012,
+    "USDCAD": 0.00014,
+    "USDCHF": 0.00019,
+    "USDJPY": 0.0001,
+    "XAUUSD": 0.0002
+  },
+  "economic_filter": {
+    "min_trades": 30,
+    "train_min_t": 2.0,
+    "val_min_t": 1.5,
+    "min_gross_over_cost": 2.0,
+    "holding_floor": "not applicable to event families; realized hold is measured and reported"
+  },
+  "symbols_skipped_before_evaluation": [
+    {
+      "symbol": "EURUSD",
+      "reason": "STRUCTURALLY_UNDERPOWERED",
+      "validation_events": 23,
+      "required": 30,
+      "note": "declared before evaluation; costs no parameter evaluations"
+    }
+  ],
+  "parameter_evaluations": 130,
+  "survivor_count": 0,
+  "survivors": [],
+  "family_breakdown": {
+    "C1_PRE_EVENT_POSITIONING": {
+      "TRAIN_NEGATIVE": 18,
+      "VALIDATION_INSIGNIFICANT": 1,
+      "TRAIN_INSIGNIFICANT": 11
+    },
+    "C3_VOLATILITY_EXPANSION": {
+      "TRAIN_NEGATIVE": 35,
+      "TRAIN_INSIGNIFICANT": 15
+    },
+    "C4_EVENT_SEQUENCE": {
+      "TRAIN_NEGATIVE": 34,
+      "TRAIN_INSIGNIFICANT": 16
+    }
+  },
+  "results": [
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00469538,
+        "mean_net": -0.00201381,
+        "t_stat": -3.675,
+        "profit_factor": 0.403,
+        "win_rate": 0.3548,
+        "gross_over_cost": 39.128,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00499843,
+        "mean_net": -0.00142205,
+        "t_stat": -1.212,
+        "profit_factor": 0.557,
+        "win_rate": 0.4839,
+        "gross_over_cost": 41.654,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00201381 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00469538,
+        "mean_net": 0.00177381,
+        "t_stat": 3.237,
+        "profit_factor": 2.228,
+        "win_rate": 0.629,
+        "gross_over_cost": 39.128,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00499843,
+        "mean_net": 0.00118205,
+        "t_stat": 1.008,
+        "profit_factor": 1.619,
+        "win_rate": 0.4839,
+        "gross_over_cost": 41.654,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "VALIDATION_INSIGNIFICANT",
+      "verdict_reason": "validation t=1.008 < 1.5"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00634605,
+        "mean_net": -0.0011592,
+        "t_stat": -1.62,
+        "profit_factor": 0.692,
+        "win_rate": 0.4194,
+        "gross_over_cost": 52.884,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.007224,
+        "mean_net": -0.00234403,
+        "t_stat": -1.342,
+        "profit_factor": 0.512,
+        "win_rate": 0.3548,
+        "gross_over_cost": 60.2,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0011592 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00634605,
+        "mean_net": 0.0009192,
+        "t_stat": 1.284,
+        "profit_factor": 1.34,
+        "win_rate": 0.5806,
+        "gross_over_cost": 52.884,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.007224,
+        "mean_net": 0.00210403,
+        "t_stat": 1.205,
+        "profit_factor": 1.828,
+        "win_rate": 0.6452,
+        "gross_over_cost": 60.2,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.284 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00742643,
+        "mean_net": -0.00064631,
+        "t_stat": -0.775,
+        "profit_factor": 0.84,
+        "win_rate": 0.4919,
+        "gross_over_cost": 61.887,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00882206,
+        "mean_net": -0.00259734,
+        "t_stat": -1.336,
+        "profit_factor": 0.546,
+        "win_rate": 0.4194,
+        "gross_over_cost": 73.517,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00064631 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00742643,
+        "mean_net": 0.00040631,
+        "t_stat": 0.487,
+        "profit_factor": 1.116,
+        "win_rate": 0.4919,
+        "gross_over_cost": 61.887,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00882206,
+        "mean_net": 0.00235734,
+        "t_stat": 1.212,
+        "profit_factor": 1.731,
+        "win_rate": 0.5806,
+        "gross_over_cost": 73.517,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.487 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00079021,
+        "mean_net": -8.222e-05,
+        "t_stat": -0.72,
+        "profit_factor": 0.815,
+        "win_rate": 0.4146,
+        "gross_over_cost": 6.585,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00068524,
+        "mean_net": 0.00020223,
+        "t_stat": 1.188,
+        "profit_factor": 1.852,
+        "win_rate": 0.5,
+        "gross_over_cost": 5.71,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-8.222e-05 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00079021,
+        "mean_net": -0.00015778,
+        "t_stat": -1.382,
+        "profit_factor": 0.667,
+        "win_rate": 0.4715,
+        "gross_over_cost": 6.585,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00068524,
+        "mean_net": -0.00044223,
+        "t_stat": -2.597,
+        "profit_factor": 0.242,
+        "win_rate": 0.2667,
+        "gross_over_cost": 5.71,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00015778 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00235215,
+        "mean_net": 0.00032609,
+        "t_stat": 1.234,
+        "profit_factor": 1.322,
+        "win_rate": 0.5041,
+        "gross_over_cost": 19.601,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00320905,
+        "mean_net": 0.00101691,
+        "t_stat": 1.325,
+        "profit_factor": 1.94,
+        "win_rate": 0.6207,
+        "gross_over_cost": 26.742,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.234 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00235215,
+        "mean_net": -0.00056609,
+        "t_stat": -2.142,
+        "profit_factor": 0.613,
+        "win_rate": 0.4797,
+        "gross_over_cost": 19.601,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00320905,
+        "mean_net": -0.00125691,
+        "t_stat": -1.638,
+        "profit_factor": 0.441,
+        "win_rate": 0.3448,
+        "gross_over_cost": 26.742,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00056609 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00362702,
+        "mean_net": 0.00040232,
+        "t_stat": 0.999,
+        "profit_factor": 1.25,
+        "win_rate": 0.5447,
+        "gross_over_cost": 30.225,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00467445,
+        "mean_net": -0.00023909,
+        "t_stat": -0.195,
+        "profit_factor": 0.903,
+        "win_rate": 0.5172,
+        "gross_over_cost": 38.954,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.999 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00362702,
+        "mean_net": -0.00064232,
+        "t_stat": -1.595,
+        "profit_factor": 0.7,
+        "win_rate": 0.4472,
+        "gross_over_cost": 30.225,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00467445,
+        "mean_net": -9.1e-07,
+        "t_stat": -0.001,
+        "profit_factor": 1.0,
+        "win_rate": 0.4483,
+        "gross_over_cost": 38.954,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00064232 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00375762,
+        "mean_net": 0.00057885,
+        "t_stat": 1.376,
+        "profit_factor": 1.366,
+        "win_rate": 0.5528,
+        "gross_over_cost": 31.313,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00452326,
+        "mean_net": -0.00049879,
+        "t_stat": -0.419,
+        "profit_factor": 0.801,
+        "win_rate": 0.5517,
+        "gross_over_cost": 37.694,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.376 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00375762,
+        "mean_net": -0.00081885,
+        "t_stat": -1.946,
+        "profit_factor": 0.643,
+        "win_rate": 0.4228,
+        "gross_over_cost": 31.313,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00452326,
+        "mean_net": 0.00025879,
+        "t_stat": 0.217,
+        "profit_factor": 1.121,
+        "win_rate": 0.4138,
+        "gross_over_cost": 37.694,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00081885 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00375762,
+        "mean_net": 0.00057885,
+        "t_stat": 1.376,
+        "profit_factor": 1.366,
+        "win_rate": 0.5528,
+        "gross_over_cost": 31.313,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00452326,
+        "mean_net": -0.00049879,
+        "t_stat": -0.419,
+        "profit_factor": 0.801,
+        "win_rate": 0.5517,
+        "gross_over_cost": 37.694,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.376 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00375762,
+        "mean_net": -0.00081885,
+        "t_stat": -1.946,
+        "profit_factor": 0.643,
+        "win_rate": 0.4228,
+        "gross_over_cost": 31.313,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00452326,
+        "mean_net": 0.00025879,
+        "t_stat": 0.217,
+        "profit_factor": 1.121,
+        "win_rate": 0.4138,
+        "gross_over_cost": 37.694,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00081885 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00079177,
+        "mean_net": -0.00014014,
+        "t_stat": -1.218,
+        "profit_factor": 0.704,
+        "win_rate": 0.4016,
+        "gross_over_cost": 6.598,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00066535,
+        "mean_net": -7.464e-05,
+        "t_stat": -0.412,
+        "profit_factor": 0.8,
+        "win_rate": 0.4138,
+        "gross_over_cost": 5.545,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00014014 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00079177,
+        "mean_net": -9.986e-05,
+        "t_stat": -0.868,
+        "profit_factor": 0.776,
+        "win_rate": 0.4836,
+        "gross_over_cost": 6.598,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00066535,
+        "mean_net": -0.00016536,
+        "t_stat": -0.912,
+        "profit_factor": 0.615,
+        "win_rate": 0.3448,
+        "gross_over_cost": 5.545,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.986e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00232245,
+        "mean_net": -0.00020771,
+        "t_stat": -0.784,
+        "profit_factor": 0.836,
+        "win_rate": 0.4754,
+        "gross_over_cost": 19.354,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00327018,
+        "mean_net": 0.00079603,
+        "t_stat": 0.989,
+        "profit_factor": 1.645,
+        "win_rate": 0.5,
+        "gross_over_cost": 27.252,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00020771 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00232245,
+        "mean_net": -3.229e-05,
+        "t_stat": -0.122,
+        "profit_factor": 0.973,
+        "win_rate": 0.5082,
+        "gross_over_cost": 19.354,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00327018,
+        "mean_net": -0.00103603,
+        "t_stat": -1.287,
+        "profit_factor": 0.52,
+        "win_rate": 0.4643,
+        "gross_over_cost": 27.252,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.229e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00360956,
+        "mean_net": 0.00024453,
+        "t_stat": 0.604,
+        "profit_factor": 1.145,
+        "win_rate": 0.4918,
+        "gross_over_cost": 30.08,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471347,
+        "mean_net": 0.00158857,
+        "t_stat": 1.3,
+        "profit_factor": 2.031,
+        "win_rate": 0.6786,
+        "gross_over_cost": 39.279,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.604 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00360956,
+        "mean_net": -0.00048453,
+        "t_stat": -1.197,
+        "profit_factor": 0.763,
+        "win_rate": 0.5,
+        "gross_over_cost": 30.08,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471347,
+        "mean_net": -0.00182857,
+        "t_stat": -1.496,
+        "profit_factor": 0.445,
+        "win_rate": 0.2857,
+        "gross_over_cost": 39.279,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00048453 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00371941,
+        "mean_net": 0.00018122,
+        "t_stat": 0.429,
+        "profit_factor": 1.103,
+        "win_rate": 0.5082,
+        "gross_over_cost": 30.995,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00451299,
+        "mean_net": 0.00144544,
+        "t_stat": 1.219,
+        "profit_factor": 1.957,
+        "win_rate": 0.6786,
+        "gross_over_cost": 37.608,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.429 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00371941,
+        "mean_net": -0.00042122,
+        "t_stat": -0.997,
+        "profit_factor": 0.797,
+        "win_rate": 0.4672,
+        "gross_over_cost": 30.995,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00451299,
+        "mean_net": -0.00168544,
+        "t_stat": -1.422,
+        "profit_factor": 0.461,
+        "win_rate": 0.2857,
+        "gross_over_cost": 37.608,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00042122 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00371941,
+        "mean_net": 0.00018122,
+        "t_stat": 0.429,
+        "profit_factor": 1.103,
+        "win_rate": 0.5082,
+        "gross_over_cost": 30.995,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00451299,
+        "mean_net": 0.00144544,
+        "t_stat": 1.219,
+        "profit_factor": 1.957,
+        "win_rate": 0.6786,
+        "gross_over_cost": 37.608,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.429 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "GBPUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00371941,
+        "mean_net": -0.00042122,
+        "t_stat": -0.997,
+        "profit_factor": 0.797,
+        "win_rate": 0.4672,
+        "gross_over_cost": 30.995,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00451299,
+        "mean_net": -0.00168544,
+        "t_stat": -1.422,
+        "profit_factor": 0.461,
+        "win_rate": 0.2857,
+        "gross_over_cost": 37.608,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00042122 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00318382,
+        "mean_net": -2.027e-05,
+        "t_stat": -0.052,
+        "profit_factor": 0.987,
+        "win_rate": 0.4758,
+        "gross_over_cost": 22.742,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00424876,
+        "mean_net": -0.00062965,
+        "t_stat": -0.671,
+        "profit_factor": 0.743,
+        "win_rate": 0.4516,
+        "gross_over_cost": 30.348,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-2.027e-05 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00318382,
+        "mean_net": -0.00025973,
+        "t_stat": -0.667,
+        "profit_factor": 0.849,
+        "win_rate": 0.4677,
+        "gross_over_cost": 22.742,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00424876,
+        "mean_net": 0.00034965,
+        "t_stat": 0.373,
+        "profit_factor": 1.18,
+        "win_rate": 0.5161,
+        "gross_over_cost": 30.348,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025973 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00484847,
+        "mean_net": -0.00073468,
+        "t_stat": -1.233,
+        "profit_factor": 0.738,
+        "win_rate": 0.4274,
+        "gross_over_cost": 34.632,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00445858,
+        "mean_net": -0.00030304,
+        "t_stat": -0.29,
+        "profit_factor": 0.872,
+        "win_rate": 0.5806,
+        "gross_over_cost": 31.847,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00073468 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00484847,
+        "mean_net": 0.00045468,
+        "t_stat": 0.763,
+        "profit_factor": 1.207,
+        "win_rate": 0.5242,
+        "gross_over_cost": 34.632,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00445858,
+        "mean_net": 2.304e-05,
+        "t_stat": 0.022,
+        "profit_factor": 1.01,
+        "win_rate": 0.3548,
+        "gross_over_cost": 31.847,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.763 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00600665,
+        "mean_net": -0.00101239,
+        "t_stat": -1.366,
+        "profit_factor": 0.712,
+        "win_rate": 0.4355,
+        "gross_over_cost": 42.905,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.0049851,
+        "mean_net": -7.099e-05,
+        "t_stat": -0.064,
+        "profit_factor": 0.972,
+        "win_rate": 0.4839,
+        "gross_over_cost": 35.608,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00101239 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00600665,
+        "mean_net": 0.00073239,
+        "t_stat": 0.988,
+        "profit_factor": 1.278,
+        "win_rate": 0.5403,
+        "gross_over_cost": 42.905,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.0049851,
+        "mean_net": -0.00020901,
+        "t_stat": -0.188,
+        "profit_factor": 0.92,
+        "win_rate": 0.4839,
+        "gross_over_cost": 35.608,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.988 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00053673,
+        "mean_net": -0.00015641,
+        "t_stat": -2.297,
+        "profit_factor": 0.557,
+        "win_rate": 0.4146,
+        "gross_over_cost": 3.834,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00053744,
+        "mean_net": 8.23e-06,
+        "t_stat": 0.064,
+        "profit_factor": 1.03,
+        "win_rate": 0.4,
+        "gross_over_cost": 3.839,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00015641 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00053673,
+        "mean_net": -0.00012359,
+        "t_stat": -1.815,
+        "profit_factor": 0.635,
+        "win_rate": 0.3821,
+        "gross_over_cost": 3.834,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00053744,
+        "mean_net": -0.00028823,
+        "t_stat": -2.254,
+        "profit_factor": 0.323,
+        "win_rate": 0.3667,
+        "gross_over_cost": 3.839,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00012359 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00338858,
+        "mean_net": -0.00056627,
+        "t_stat": -1.427,
+        "profit_factor": 0.713,
+        "win_rate": 0.5041,
+        "gross_over_cost": 24.204,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00252585,
+        "mean_net": 0.00047633,
+        "t_stat": 0.784,
+        "profit_factor": 1.465,
+        "win_rate": 0.5,
+        "gross_over_cost": 18.042,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00056627 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00338858,
+        "mean_net": 0.00028627,
+        "t_stat": 0.721,
+        "profit_factor": 1.184,
+        "win_rate": 0.4797,
+        "gross_over_cost": 24.204,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00252585,
+        "mean_net": -0.00075633,
+        "t_stat": -1.245,
+        "profit_factor": 0.539,
+        "win_rate": 0.5,
+        "gross_over_cost": 18.042,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.721 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00425707,
+        "mean_net": -0.00045028,
+        "t_stat": -0.905,
+        "profit_factor": 0.809,
+        "win_rate": 0.4878,
+        "gross_over_cost": 30.408,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00391255,
+        "mean_net": 0.00087895,
+        "t_stat": 0.92,
+        "profit_factor": 1.58,
+        "win_rate": 0.5172,
+        "gross_over_cost": 27.947,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00045028 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00425707,
+        "mean_net": 0.00017028,
+        "t_stat": 0.342,
+        "profit_factor": 1.083,
+        "win_rate": 0.4797,
+        "gross_over_cost": 30.408,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00391255,
+        "mean_net": -0.00115895,
+        "t_stat": -1.213,
+        "profit_factor": 0.543,
+        "win_rate": 0.4828,
+        "gross_over_cost": 27.947,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.342 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00432548,
+        "mean_net": -0.00024541,
+        "t_stat": -0.483,
+        "profit_factor": 0.893,
+        "win_rate": 0.4959,
+        "gross_over_cost": 30.896,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00376655,
+        "mean_net": 0.00070081,
+        "t_stat": 0.775,
+        "profit_factor": 1.461,
+        "win_rate": 0.5862,
+        "gross_over_cost": 26.904,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00024541 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00432548,
+        "mean_net": -3.459e-05,
+        "t_stat": -0.068,
+        "profit_factor": 0.984,
+        "win_rate": 0.4878,
+        "gross_over_cost": 30.896,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00376655,
+        "mean_net": -0.00098081,
+        "t_stat": -1.085,
+        "profit_factor": 0.589,
+        "win_rate": 0.4138,
+        "gross_over_cost": 26.904,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.459e-05 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00432548,
+        "mean_net": -0.00024541,
+        "t_stat": -0.483,
+        "profit_factor": 0.893,
+        "win_rate": 0.4959,
+        "gross_over_cost": 30.896,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00376655,
+        "mean_net": 0.00070081,
+        "t_stat": 0.775,
+        "profit_factor": 1.461,
+        "win_rate": 0.5862,
+        "gross_over_cost": 26.904,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00024541 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00432548,
+        "mean_net": -3.459e-05,
+        "t_stat": -0.068,
+        "profit_factor": 0.984,
+        "win_rate": 0.4878,
+        "gross_over_cost": 30.896,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00376655,
+        "mean_net": -0.00098081,
+        "t_stat": -1.085,
+        "profit_factor": 0.589,
+        "win_rate": 0.4138,
+        "gross_over_cost": 26.904,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.459e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00053911,
+        "mean_net": -0.00012228,
+        "t_stat": -1.782,
+        "profit_factor": 0.642,
+        "win_rate": 0.3607,
+        "gross_over_cost": 3.851,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00054363,
+        "mean_net": -5.885e-05,
+        "t_stat": -0.439,
+        "profit_factor": 0.816,
+        "win_rate": 0.3448,
+        "gross_over_cost": 3.883,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00012228 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00053911,
+        "mean_net": -0.00015772,
+        "t_stat": -2.298,
+        "profit_factor": 0.552,
+        "win_rate": 0.4344,
+        "gross_over_cost": 3.851,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00054363,
+        "mean_net": -0.00022115,
+        "t_stat": -1.651,
+        "profit_factor": 0.427,
+        "win_rate": 0.4138,
+        "gross_over_cost": 3.883,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00015772 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00336571,
+        "mean_net": 7.565e-05,
+        "t_stat": 0.19,
+        "profit_factor": 1.046,
+        "win_rate": 0.4918,
+        "gross_over_cost": 24.041,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00255764,
+        "mean_net": -0.00066515,
+        "t_stat": -1.057,
+        "profit_factor": 0.594,
+        "win_rate": 0.3103,
+        "gross_over_cost": 18.269,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.19 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00336571,
+        "mean_net": -0.00035565,
+        "t_stat": -0.893,
+        "profit_factor": 0.809,
+        "win_rate": 0.4918,
+        "gross_over_cost": 24.041,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00255764,
+        "mean_net": 0.00038515,
+        "t_stat": 0.612,
+        "profit_factor": 1.363,
+        "win_rate": 0.6897,
+        "gross_over_cost": 18.269,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00035565 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00420775,
+        "mean_net": 0.00046077,
+        "t_stat": 0.936,
+        "profit_factor": 1.246,
+        "win_rate": 0.5,
+        "gross_over_cost": 30.055,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.0038352,
+        "mean_net": -0.00035249,
+        "t_stat": -0.358,
+        "profit_factor": 0.833,
+        "win_rate": 0.3929,
+        "gross_over_cost": 27.394,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.936 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00420775,
+        "mean_net": -0.00074077,
+        "t_stat": -1.505,
+        "profit_factor": 0.701,
+        "win_rate": 0.4672,
+        "gross_over_cost": 30.055,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.0038352,
+        "mean_net": 7.249e-05,
+        "t_stat": 0.074,
+        "profit_factor": 1.039,
+        "win_rate": 0.6071,
+        "gross_over_cost": 27.394,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00074077 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00428031,
+        "mean_net": 0.00050211,
+        "t_stat": 1.0,
+        "profit_factor": 1.266,
+        "win_rate": 0.5082,
+        "gross_over_cost": 30.574,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00369545,
+        "mean_net": -0.00034462,
+        "t_stat": -0.372,
+        "profit_factor": 0.83,
+        "win_rate": 0.4643,
+        "gross_over_cost": 26.396,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.0 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00428031,
+        "mean_net": -0.00078211,
+        "t_stat": -1.557,
+        "profit_factor": 0.691,
+        "win_rate": 0.4754,
+        "gross_over_cost": 30.574,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00369545,
+        "mean_net": 6.462e-05,
+        "t_stat": 0.07,
+        "profit_factor": 1.036,
+        "win_rate": 0.5357,
+        "gross_over_cost": 26.396,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00078211 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00428031,
+        "mean_net": 0.00050211,
+        "t_stat": 1.0,
+        "profit_factor": 1.266,
+        "win_rate": 0.5082,
+        "gross_over_cost": 30.574,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00369545,
+        "mean_net": -0.00034462,
+        "t_stat": -0.372,
+        "profit_factor": 0.83,
+        "win_rate": 0.4643,
+        "gross_over_cost": 26.396,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.0 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCAD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00428031,
+        "mean_net": -0.00078211,
+        "t_stat": -1.557,
+        "profit_factor": 0.691,
+        "win_rate": 0.4754,
+        "gross_over_cost": 30.574,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00369545,
+        "mean_net": 6.462e-05,
+        "t_stat": 0.07,
+        "profit_factor": 1.036,
+        "win_rate": 0.5357,
+        "gross_over_cost": 26.396,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00078211 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00500976,
+        "mean_net": 3.36e-06,
+        "t_stat": 0.006,
+        "profit_factor": 1.001,
+        "win_rate": 0.5161,
+        "gross_over_cost": 26.367,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00367872,
+        "mean_net": 0.00036223,
+        "t_stat": 0.413,
+        "profit_factor": 1.218,
+        "win_rate": 0.4516,
+        "gross_over_cost": 19.362,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.006 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00500976,
+        "mean_net": -0.00038336,
+        "t_stat": -0.642,
+        "profit_factor": 0.858,
+        "win_rate": 0.4597,
+        "gross_over_cost": 26.367,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00367872,
+        "mean_net": -0.00074223,
+        "t_stat": -0.847,
+        "profit_factor": 0.664,
+        "win_rate": 0.4839,
+        "gross_over_cost": 19.362,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00038336 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00731511,
+        "mean_net": -8.325e-05,
+        "t_stat": -0.095,
+        "profit_factor": 0.977,
+        "win_rate": 0.5242,
+        "gross_over_cost": 38.501,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00503872,
+        "mean_net": 0.00090513,
+        "t_stat": 0.751,
+        "profit_factor": 1.443,
+        "win_rate": 0.6129,
+        "gross_over_cost": 26.52,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-8.325e-05 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00731511,
+        "mean_net": -0.00029675,
+        "t_stat": -0.339,
+        "profit_factor": 0.922,
+        "win_rate": 0.4677,
+        "gross_over_cost": 38.501,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00503872,
+        "mean_net": -0.00128513,
+        "t_stat": -1.066,
+        "profit_factor": 0.596,
+        "win_rate": 0.3871,
+        "gross_over_cost": 26.52,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00029675 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00860277,
+        "mean_net": 2.486e-05,
+        "t_stat": 0.024,
+        "profit_factor": 1.006,
+        "win_rate": 0.5242,
+        "gross_over_cost": 45.278,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00622927,
+        "mean_net": -0.0001557,
+        "t_stat": -0.106,
+        "profit_factor": 0.951,
+        "win_rate": 0.5484,
+        "gross_over_cost": 32.786,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.024 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00860277,
+        "mean_net": -0.00040486,
+        "t_stat": -0.399,
+        "profit_factor": 0.91,
+        "win_rate": 0.4516,
+        "gross_over_cost": 45.278,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00622927,
+        "mean_net": -0.0002243,
+        "t_stat": -0.152,
+        "profit_factor": 0.931,
+        "win_rate": 0.3871,
+        "gross_over_cost": 32.786,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00040486 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00072965,
+        "mean_net": -7.398e-05,
+        "t_stat": -0.845,
+        "profit_factor": 0.816,
+        "win_rate": 0.439,
+        "gross_over_cost": 3.84,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00068575,
+        "mean_net": -0.00019417,
+        "t_stat": -1.182,
+        "profit_factor": 0.565,
+        "win_rate": 0.3333,
+        "gross_over_cost": 3.609,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-7.398e-05 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00072965,
+        "mean_net": -0.00030602,
+        "t_stat": -3.495,
+        "profit_factor": 0.43,
+        "win_rate": 0.3496,
+        "gross_over_cost": 3.84,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00068575,
+        "mean_net": -0.00018583,
+        "t_stat": -1.132,
+        "profit_factor": 0.597,
+        "win_rate": 0.3,
+        "gross_over_cost": 3.609,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00030602 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00302268,
+        "mean_net": 7.945e-05,
+        "t_stat": 0.21,
+        "profit_factor": 1.054,
+        "win_rate": 0.4878,
+        "gross_over_cost": 15.909,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00351354,
+        "mean_net": 0.00011795,
+        "t_stat": 0.147,
+        "profit_factor": 1.07,
+        "win_rate": 0.5333,
+        "gross_over_cost": 18.492,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.21 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00302268,
+        "mean_net": -0.00045945,
+        "t_stat": -1.216,
+        "profit_factor": 0.737,
+        "win_rate": 0.4634,
+        "gross_over_cost": 15.909,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00351354,
+        "mean_net": -0.00049795,
+        "t_stat": -0.62,
+        "profit_factor": 0.753,
+        "win_rate": 0.4333,
+        "gross_over_cost": 18.492,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00045945 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00418795,
+        "mean_net": -3.868e-05,
+        "t_stat": -0.08,
+        "profit_factor": 0.982,
+        "win_rate": 0.5122,
+        "gross_over_cost": 22.042,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00429938,
+        "mean_net": -0.0004383,
+        "t_stat": -0.39,
+        "profit_factor": 0.816,
+        "win_rate": 0.4138,
+        "gross_over_cost": 22.628,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.868e-05 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00418795,
+        "mean_net": -0.00034132,
+        "t_stat": -0.708,
+        "profit_factor": 0.85,
+        "win_rate": 0.4634,
+        "gross_over_cost": 22.042,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00429938,
+        "mean_net": 5.83e-05,
+        "t_stat": 0.052,
+        "profit_factor": 1.028,
+        "win_rate": 0.5862,
+        "gross_over_cost": 22.628,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00034132 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00438702,
+        "mean_net": -0.00018073,
+        "t_stat": -0.357,
+        "profit_factor": 0.921,
+        "win_rate": 0.4878,
+        "gross_over_cost": 23.09,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00414564,
+        "mean_net": -0.00051664,
+        "t_stat": -0.481,
+        "profit_factor": 0.781,
+        "win_rate": 0.3793,
+        "gross_over_cost": 21.819,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00018073 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00438702,
+        "mean_net": -0.00019927,
+        "t_stat": -0.393,
+        "profit_factor": 0.913,
+        "win_rate": 0.4715,
+        "gross_over_cost": 23.09,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00414564,
+        "mean_net": 0.00013664,
+        "t_stat": 0.127,
+        "profit_factor": 1.069,
+        "win_rate": 0.6207,
+        "gross_over_cost": 21.819,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00019927 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00438702,
+        "mean_net": -0.00018073,
+        "t_stat": -0.357,
+        "profit_factor": 0.921,
+        "win_rate": 0.4878,
+        "gross_over_cost": 23.09,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00414564,
+        "mean_net": -0.00051664,
+        "t_stat": -0.481,
+        "profit_factor": 0.781,
+        "win_rate": 0.3793,
+        "gross_over_cost": 21.819,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00018073 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00438702,
+        "mean_net": -0.00019927,
+        "t_stat": -0.393,
+        "profit_factor": 0.913,
+        "win_rate": 0.4715,
+        "gross_over_cost": 23.09,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00414564,
+        "mean_net": 0.00013664,
+        "t_stat": 0.127,
+        "profit_factor": 1.069,
+        "win_rate": 0.6207,
+        "gross_over_cost": 21.819,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00019927 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00073172,
+        "mean_net": -0.00028593,
+        "t_stat": -3.235,
+        "profit_factor": 0.456,
+        "win_rate": 0.3689,
+        "gross_over_cost": 3.851,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.0006645,
+        "mean_net": -9.046e-05,
+        "t_stat": -0.556,
+        "profit_factor": 0.766,
+        "win_rate": 0.3103,
+        "gross_over_cost": 3.497,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00028593 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00073172,
+        "mean_net": -9.407e-05,
+        "t_stat": -1.064,
+        "profit_factor": 0.774,
+        "win_rate": 0.418,
+        "gross_over_cost": 3.851,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.0006645,
+        "mean_net": -0.00028954,
+        "t_stat": -1.78,
+        "profit_factor": 0.422,
+        "win_rate": 0.3103,
+        "gross_over_cost": 3.497,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.407e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00298222,
+        "mean_net": -0.00072509,
+        "t_stat": -1.944,
+        "profit_factor": 0.61,
+        "win_rate": 0.4508,
+        "gross_over_cost": 15.696,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00360063,
+        "mean_net": -0.00023362,
+        "t_stat": -0.281,
+        "profit_factor": 0.879,
+        "win_rate": 0.4483,
+        "gross_over_cost": 18.951,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00072509 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00298222,
+        "mean_net": 0.00034509,
+        "t_stat": 0.925,
+        "profit_factor": 1.262,
+        "win_rate": 0.5,
+        "gross_over_cost": 15.696,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00360063,
+        "mean_net": -0.00014638,
+        "t_stat": -0.176,
+        "profit_factor": 0.922,
+        "win_rate": 0.5172,
+        "gross_over_cost": 18.951,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.925 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00415901,
+        "mean_net": -0.00087611,
+        "t_stat": -1.833,
+        "profit_factor": 0.654,
+        "win_rate": 0.418,
+        "gross_over_cost": 21.89,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00444372,
+        "mean_net": -6.913e-05,
+        "t_stat": -0.059,
+        "profit_factor": 0.969,
+        "win_rate": 0.5714,
+        "gross_over_cost": 23.388,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00087611 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00415901,
+        "mean_net": 0.00049611,
+        "t_stat": 1.038,
+        "profit_factor": 1.273,
+        "win_rate": 0.5574,
+        "gross_over_cost": 21.89,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00444372,
+        "mean_net": -0.00031087,
+        "t_stat": -0.266,
+        "profit_factor": 0.87,
+        "win_rate": 0.4286,
+        "gross_over_cost": 23.388,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.038 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00434668,
+        "mean_net": -0.00085678,
+        "t_stat": -1.709,
+        "profit_factor": 0.673,
+        "win_rate": 0.4016,
+        "gross_over_cost": 22.877,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00427366,
+        "mean_net": -7.195e-05,
+        "t_stat": -0.065,
+        "profit_factor": 0.967,
+        "win_rate": 0.5714,
+        "gross_over_cost": 22.493,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00085678 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00434668,
+        "mean_net": 0.00047678,
+        "t_stat": 0.951,
+        "profit_factor": 1.248,
+        "win_rate": 0.5574,
+        "gross_over_cost": 22.877,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00427366,
+        "mean_net": -0.00030805,
+        "t_stat": -0.276,
+        "profit_factor": 0.866,
+        "win_rate": 0.4286,
+        "gross_over_cost": 22.493,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.951 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00434668,
+        "mean_net": -0.00085678,
+        "t_stat": -1.709,
+        "profit_factor": 0.673,
+        "win_rate": 0.4016,
+        "gross_over_cost": 22.877,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00427366,
+        "mean_net": -7.195e-05,
+        "t_stat": -0.065,
+        "profit_factor": 0.967,
+        "win_rate": 0.5714,
+        "gross_over_cost": 22.493,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00085678 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDCHF",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00434668,
+        "mean_net": 0.00047678,
+        "t_stat": 0.951,
+        "profit_factor": 1.248,
+        "win_rate": 0.5574,
+        "gross_over_cost": 22.877,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00427366,
+        "mean_net": -0.00030805,
+        "t_stat": -0.276,
+        "profit_factor": 0.866,
+        "win_rate": 0.4286,
+        "gross_over_cost": 22.493,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.951 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00417351,
+        "mean_net": -2.557e-05,
+        "t_stat": -0.048,
+        "profit_factor": 0.988,
+        "win_rate": 0.5484,
+        "gross_over_cost": 41.735,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00418777,
+        "mean_net": -0.00043812,
+        "t_stat": -0.416,
+        "profit_factor": 0.81,
+        "win_rate": 0.5161,
+        "gross_over_cost": 41.878,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-2.557e-05 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00417351,
+        "mean_net": -0.00017443,
+        "t_stat": -0.33,
+        "profit_factor": 0.92,
+        "win_rate": 0.4274,
+        "gross_over_cost": 41.735,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00418777,
+        "mean_net": 0.00023812,
+        "t_stat": 0.226,
+        "profit_factor": 1.12,
+        "win_rate": 0.4839,
+        "gross_over_cost": 41.878,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00017443 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00584131,
+        "mean_net": 0.00049621,
+        "t_stat": 0.669,
+        "profit_factor": 1.186,
+        "win_rate": 0.5726,
+        "gross_over_cost": 58.413,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00645128,
+        "mean_net": 0.00063298,
+        "t_stat": 0.343,
+        "profit_factor": 1.218,
+        "win_rate": 0.5161,
+        "gross_over_cost": 64.513,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.669 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00584131,
+        "mean_net": -0.00069621,
+        "t_stat": -0.939,
+        "profit_factor": 0.788,
+        "win_rate": 0.4032,
+        "gross_over_cost": 58.413,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00645128,
+        "mean_net": -0.00083298,
+        "t_stat": -0.452,
+        "profit_factor": 0.771,
+        "win_rate": 0.4839,
+        "gross_over_cost": 64.513,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00069621 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": 1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00770507,
+        "mean_net": 0.00104166,
+        "t_stat": 1.114,
+        "profit_factor": 1.313,
+        "win_rate": 0.5806,
+        "gross_over_cost": 77.051,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00808735,
+        "mean_net": 0.00063476,
+        "t_stat": 0.302,
+        "profit_factor": 1.171,
+        "win_rate": 0.6129,
+        "gross_over_cost": 80.873,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.114 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": -1
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00770507,
+        "mean_net": -0.00124166,
+        "t_stat": -1.328,
+        "profit_factor": 0.723,
+        "win_rate": 0.3952,
+        "gross_over_cost": 77.051,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 31,
+        "gross_mean": 0.00808735,
+        "mean_net": -0.00083476,
+        "t_stat": -0.397,
+        "profit_factor": 0.813,
+        "win_rate": 0.3871,
+        "gross_over_cost": 80.873,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00124166 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00058792,
+        "mean_net": -4.396e-05,
+        "t_stat": -0.546,
+        "profit_factor": 0.863,
+        "win_rate": 0.439,
+        "gross_over_cost": 5.879,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00047663,
+        "mean_net": 7.131e-05,
+        "t_stat": 0.715,
+        "profit_factor": 1.366,
+        "win_rate": 0.5667,
+        "gross_over_cost": 4.766,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.396e-05 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00058792,
+        "mean_net": -0.00015604,
+        "t_stat": -1.938,
+        "profit_factor": 0.583,
+        "win_rate": 0.439,
+        "gross_over_cost": 5.879,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00047663,
+        "mean_net": -0.00027131,
+        "t_stat": -2.719,
+        "profit_factor": 0.296,
+        "win_rate": 0.3333,
+        "gross_over_cost": 4.766,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00015604 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00305885,
+        "mean_net": 6.728e-05,
+        "t_stat": 0.175,
+        "profit_factor": 1.045,
+        "win_rate": 0.4959,
+        "gross_over_cost": 30.588,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00322096,
+        "mean_net": -0.00020268,
+        "t_stat": -0.243,
+        "profit_factor": 0.881,
+        "win_rate": 0.4667,
+        "gross_over_cost": 32.21,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.175 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00305885,
+        "mean_net": -0.00026728,
+        "t_stat": -0.697,
+        "profit_factor": 0.84,
+        "win_rate": 0.4309,
+        "gross_over_cost": 30.588,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00322096,
+        "mean_net": 2.68e-06,
+        "t_stat": 0.003,
+        "profit_factor": 1.002,
+        "win_rate": 0.4333,
+        "gross_over_cost": 32.21,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00026728 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00383849,
+        "mean_net": -0.00033041,
+        "t_stat": -0.696,
+        "profit_factor": 0.841,
+        "win_rate": 0.5041,
+        "gross_over_cost": 38.385,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00460525,
+        "mean_net": -0.00112296,
+        "t_stat": -0.911,
+        "profit_factor": 0.609,
+        "win_rate": 0.4483,
+        "gross_over_cost": 46.053,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00033041 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00383849,
+        "mean_net": 0.00013041,
+        "t_stat": 0.275,
+        "profit_factor": 1.07,
+        "win_rate": 0.4634,
+        "gross_over_cost": 38.385,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00460525,
+        "mean_net": 0.00092296,
+        "t_stat": 0.749,
+        "profit_factor": 1.503,
+        "win_rate": 0.5517,
+        "gross_over_cost": 46.053,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.275 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00442569,
+        "mean_net": -0.00021334,
+        "t_stat": -0.396,
+        "profit_factor": 0.908,
+        "win_rate": 0.5041,
+        "gross_over_cost": 44.257,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00462232,
+        "mean_net": -0.00141939,
+        "t_stat": -1.08,
+        "profit_factor": 0.531,
+        "win_rate": 0.4483,
+        "gross_over_cost": 46.223,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00021334 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00442569,
+        "mean_net": 1.334e-05,
+        "t_stat": 0.025,
+        "profit_factor": 1.006,
+        "win_rate": 0.4715,
+        "gross_over_cost": 44.257,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00462232,
+        "mean_net": 0.00121939,
+        "t_stat": 0.928,
+        "profit_factor": 1.719,
+        "win_rate": 0.5517,
+        "gross_over_cost": 46.223,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.025 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00442569,
+        "mean_net": -0.00021334,
+        "t_stat": -0.396,
+        "profit_factor": 0.908,
+        "win_rate": 0.5041,
+        "gross_over_cost": 44.257,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00462232,
+        "mean_net": -0.00141939,
+        "t_stat": -1.08,
+        "profit_factor": 0.531,
+        "win_rate": 0.4483,
+        "gross_over_cost": 46.223,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00021334 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 123,
+        "gross_mean": 0.00442569,
+        "mean_net": 1.334e-05,
+        "t_stat": 0.025,
+        "profit_factor": 1.006,
+        "win_rate": 0.4715,
+        "gross_over_cost": 44.257,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00462232,
+        "mean_net": 0.00121939,
+        "t_stat": 0.928,
+        "profit_factor": 1.719,
+        "win_rate": 0.5517,
+        "gross_over_cost": 46.223,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.025 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00058846,
+        "mean_net": -0.00017404,
+        "t_stat": -2.15,
+        "profit_factor": 0.553,
+        "win_rate": 0.3934,
+        "gross_over_cost": 5.885,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00047947,
+        "mean_net": -0.00025967,
+        "t_stat": -2.516,
+        "profit_factor": 0.332,
+        "win_rate": 0.2414,
+        "gross_over_cost": 4.795,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00017404 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00058846,
+        "mean_net": -2.596e-05,
+        "t_stat": -0.321,
+        "profit_factor": 0.915,
+        "win_rate": 0.4836,
+        "gross_over_cost": 5.885,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00047947,
+        "mean_net": 5.967e-05,
+        "t_stat": 0.578,
+        "profit_factor": 1.307,
+        "win_rate": 0.6552,
+        "gross_over_cost": 4.795,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-2.596e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00299487,
+        "mean_net": -0.00010031,
+        "t_stat": -0.266,
+        "profit_factor": 0.935,
+        "win_rate": 0.4426,
+        "gross_over_cost": 29.949,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00331279,
+        "mean_net": 0.00022986,
+        "t_stat": 0.267,
+        "profit_factor": 1.149,
+        "win_rate": 0.4828,
+        "gross_over_cost": 33.128,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00010031 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00299487,
+        "mean_net": -9.969e-05,
+        "t_stat": -0.265,
+        "profit_factor": 0.936,
+        "win_rate": 0.4836,
+        "gross_over_cost": 29.949,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00331279,
+        "mean_net": -0.00042986,
+        "t_stat": -0.5,
+        "profit_factor": 0.771,
+        "win_rate": 0.4138,
+        "gross_over_cost": 33.128,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.969e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00381501,
+        "mean_net": 0.00011093,
+        "t_stat": 0.233,
+        "profit_factor": 1.06,
+        "win_rate": 0.4672,
+        "gross_over_cost": 38.15,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471,
+        "mean_net": 0.00105398,
+        "t_stat": 0.828,
+        "profit_factor": 1.579,
+        "win_rate": 0.5714,
+        "gross_over_cost": 47.1,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.233 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00381501,
+        "mean_net": -0.00031093,
+        "t_stat": -0.654,
+        "profit_factor": 0.849,
+        "win_rate": 0.5,
+        "gross_over_cost": 38.15,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471,
+        "mean_net": -0.00125398,
+        "t_stat": -0.985,
+        "profit_factor": 0.58,
+        "win_rate": 0.4286,
+        "gross_over_cost": 47.1,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00031093 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00439263,
+        "mean_net": 7.643e-05,
+        "t_stat": 0.142,
+        "profit_factor": 1.035,
+        "win_rate": 0.5,
+        "gross_over_cost": 43.926,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471259,
+        "mean_net": 0.0012066,
+        "t_stat": 0.886,
+        "profit_factor": 1.691,
+        "win_rate": 0.5714,
+        "gross_over_cost": 47.126,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.142 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00439263,
+        "mean_net": -0.00027643,
+        "t_stat": -0.514,
+        "profit_factor": 0.882,
+        "win_rate": 0.4754,
+        "gross_over_cost": 43.926,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471259,
+        "mean_net": -0.0014066,
+        "t_stat": -1.033,
+        "profit_factor": 0.541,
+        "win_rate": 0.4286,
+        "gross_over_cost": 47.126,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027643 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00439263,
+        "mean_net": 7.643e-05,
+        "t_stat": 0.142,
+        "profit_factor": 1.035,
+        "win_rate": 0.5,
+        "gross_over_cost": 43.926,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471259,
+        "mean_net": 0.0012066,
+        "t_stat": 0.886,
+        "profit_factor": 1.691,
+        "win_rate": 0.5714,
+        "gross_over_cost": 47.126,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.142 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "USDJPY",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 122,
+        "gross_mean": 0.00439263,
+        "mean_net": -0.00027643,
+        "t_stat": -0.514,
+        "profit_factor": 0.882,
+        "win_rate": 0.4754,
+        "gross_over_cost": 43.926,
+        "median_hold_hours": 61.0
+      },
+      "validation": {
+        "n": 28,
+        "gross_mean": 0.00471259,
+        "mean_net": -0.0014066,
+        "t_stat": -1.033,
+        "profit_factor": 0.541,
+        "win_rate": 0.4286,
+        "gross_over_cost": 47.126,
+        "median_hold_hours": 61.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027643 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": 1
+      },
+      "train": {
+        "n": 128,
+        "gross_mean": 0.00758046,
+        "mean_net": -0.00094937,
+        "t_stat": -1.009,
+        "profit_factor": 0.777,
+        "win_rate": 0.4922,
+        "gross_over_cost": 37.902,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 32,
+        "gross_mean": 0.00765559,
+        "mean_net": 0.00186158,
+        "t_stat": 1.165,
+        "profit_factor": 1.648,
+        "win_rate": 0.625,
+        "gross_over_cost": 38.278,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00094937 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 24,
+        "dir": -1
+      },
+      "train": {
+        "n": 128,
+        "gross_mean": 0.00758046,
+        "mean_net": 0.00054937,
+        "t_stat": 0.584,
+        "profit_factor": 1.156,
+        "win_rate": 0.4844,
+        "gross_over_cost": 37.902,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 32,
+        "gross_mean": 0.00765559,
+        "mean_net": -0.00226158,
+        "t_stat": -1.416,
+        "profit_factor": 0.546,
+        "win_rate": 0.375,
+        "gross_over_cost": 38.278,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.584 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": 1
+      },
+      "train": {
+        "n": 128,
+        "gross_mean": 0.01051959,
+        "mean_net": -0.00175446,
+        "t_stat": -1.374,
+        "profit_factor": 0.714,
+        "win_rate": 0.4766,
+        "gross_over_cost": 52.598,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 32,
+        "gross_mean": 0.01177934,
+        "mean_net": 0.00334292,
+        "t_stat": 1.399,
+        "profit_factor": 1.796,
+        "win_rate": 0.5938,
+        "gross_over_cost": 58.897,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00175446 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 48,
+        "dir": -1
+      },
+      "train": {
+        "n": 128,
+        "gross_mean": 0.01051959,
+        "mean_net": 0.00135446,
+        "t_stat": 1.061,
+        "profit_factor": 1.296,
+        "win_rate": 0.5156,
+        "gross_over_cost": 52.598,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 32,
+        "gross_mean": 0.01177934,
+        "mean_net": -0.00374292,
+        "t_stat": -1.567,
+        "profit_factor": 0.519,
+        "win_rate": 0.4062,
+        "gross_over_cost": 58.897,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.061 < 2.0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": 1
+      },
+      "train": {
+        "n": 128,
+        "gross_mean": 0.01298969,
+        "mean_net": -0.00171896,
+        "t_stat": -1.172,
+        "profit_factor": 0.766,
+        "win_rate": 0.4766,
+        "gross_over_cost": 64.948,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 32,
+        "gross_mean": 0.01369985,
+        "mean_net": 0.00383096,
+        "t_stat": 1.315,
+        "profit_factor": 1.781,
+        "win_rate": 0.625,
+        "gross_over_cost": 68.499,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00171896 <= 0"
+    },
+    {
+      "family": "C1_PRE_EVENT_POSITIONING",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "pre_hours": 72,
+        "dir": -1
+      },
+      "train": {
+        "n": 128,
+        "gross_mean": 0.01298969,
+        "mean_net": 0.00131896,
+        "t_stat": 0.899,
+        "profit_factor": 1.226,
+        "win_rate": 0.5078,
+        "gross_over_cost": 64.948,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 32,
+        "gross_mean": 0.01369985,
+        "mean_net": -0.00423096,
+        "t_stat": -1.452,
+        "profit_factor": 0.53,
+        "win_rate": 0.3438,
+        "gross_over_cost": 68.499,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.899 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.0009068,
+        "mean_net": -0.00025487,
+        "t_stat": -2.304,
+        "profit_factor": 0.572,
+        "win_rate": 0.384,
+        "gross_over_cost": 4.534,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00073165,
+        "mean_net": -6.972e-05,
+        "t_stat": -0.455,
+        "profit_factor": 0.823,
+        "win_rate": 0.5,
+        "gross_over_cost": 3.658,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025487 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.0009068,
+        "mean_net": -0.00014513,
+        "t_stat": -1.312,
+        "profit_factor": 0.727,
+        "win_rate": 0.44,
+        "gross_over_cost": 4.534,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00073165,
+        "mean_net": -0.00033028,
+        "t_stat": -2.154,
+        "profit_factor": 0.403,
+        "win_rate": 0.3667,
+        "gross_over_cost": 3.658,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00014513 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00532194,
+        "mean_net": -0.00087645,
+        "t_stat": -1.374,
+        "profit_factor": 0.718,
+        "win_rate": 0.472,
+        "gross_over_cost": 26.61,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00510866,
+        "mean_net": -0.00020091,
+        "t_stat": -0.17,
+        "profit_factor": 0.925,
+        "win_rate": 0.4333,
+        "gross_over_cost": 25.543,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00087645 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00532194,
+        "mean_net": 0.00047645,
+        "t_stat": 0.747,
+        "profit_factor": 1.197,
+        "win_rate": 0.504,
+        "gross_over_cost": 26.61,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00510866,
+        "mean_net": -0.00019909,
+        "t_stat": -0.169,
+        "profit_factor": 0.925,
+        "win_rate": 0.5333,
+        "gross_over_cost": 25.543,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.747 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00805352,
+        "mean_net": -0.00079704,
+        "t_stat": -0.792,
+        "profit_factor": 0.82,
+        "win_rate": 0.472,
+        "gross_over_cost": 40.268,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00769841,
+        "mean_net": 0.00017391,
+        "t_stat": 0.094,
+        "profit_factor": 1.046,
+        "win_rate": 0.5667,
+        "gross_over_cost": 38.492,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00079704 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00805352,
+        "mean_net": 0.00039704,
+        "t_stat": 0.395,
+        "profit_factor": 1.104,
+        "win_rate": 0.512,
+        "gross_over_cost": 40.268,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00769841,
+        "mean_net": -0.00057391,
+        "t_stat": -0.311,
+        "profit_factor": 0.862,
+        "win_rate": 0.4333,
+        "gross_over_cost": 38.492,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.395 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00819106,
+        "mean_net": -0.00066758,
+        "t_stat": -0.665,
+        "profit_factor": 0.849,
+        "win_rate": 0.472,
+        "gross_over_cost": 40.955,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00975851,
+        "mean_net": 0.00214395,
+        "t_stat": 0.739,
+        "profit_factor": 1.564,
+        "win_rate": 0.5333,
+        "gross_over_cost": 48.793,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00066758 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00819106,
+        "mean_net": 0.00026758,
+        "t_stat": 0.267,
+        "profit_factor": 1.068,
+        "win_rate": 0.496,
+        "gross_over_cost": 40.955,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00975851,
+        "mean_net": -0.00254395,
+        "t_stat": -0.877,
+        "profit_factor": 0.587,
+        "win_rate": 0.4333,
+        "gross_over_cost": 48.793,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.267 < 2.0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "CONTINUATION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00819106,
+        "mean_net": -0.00066758,
+        "t_stat": -0.665,
+        "profit_factor": 0.849,
+        "win_rate": 0.472,
+        "gross_over_cost": 40.955,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00975851,
+        "mean_net": 0.00214395,
+        "t_stat": 0.739,
+        "profit_factor": 1.564,
+        "win_rate": 0.5333,
+        "gross_over_cost": 48.793,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00066758 <= 0"
+    },
+    {
+      "family": "C3_VOLATILITY_EXPANSION",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "REVERSION"
+      },
+      "train": {
+        "n": 125,
+        "gross_mean": 0.00819106,
+        "mean_net": 0.00026758,
+        "t_stat": 0.267,
+        "profit_factor": 1.068,
+        "win_rate": 0.496,
+        "gross_over_cost": 40.955,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 30,
+        "gross_mean": 0.00975851,
+        "mean_net": -0.00254395,
+        "t_stat": -0.877,
+        "profit_factor": 0.587,
+        "win_rate": 0.4333,
+        "gross_over_cost": 48.793,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.267 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00090313,
+        "mean_net": -0.00027807,
+        "t_stat": -2.508,
+        "profit_factor": 0.54,
+        "win_rate": 0.3952,
+        "gross_over_cost": 4.516,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00071949,
+        "mean_net": -0.00015866,
+        "t_stat": -1.017,
+        "profit_factor": 0.633,
+        "win_rate": 0.5172,
+        "gross_over_cost": 3.597,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027807 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 1,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00090313,
+        "mean_net": -0.00012193,
+        "t_stat": -1.1,
+        "profit_factor": 0.765,
+        "win_rate": 0.4274,
+        "gross_over_cost": 4.516,
+        "median_hold_hours": 1.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00071949,
+        "mean_net": -0.00024134,
+        "t_stat": -1.548,
+        "profit_factor": 0.52,
+        "win_rate": 0.3448,
+        "gross_over_cost": 3.597,
+        "median_hold_hours": 1.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00012193 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00524067,
+        "mean_net": -0.0006501,
+        "t_stat": -1.028,
+        "profit_factor": 0.781,
+        "win_rate": 0.4113,
+        "gross_over_cost": 26.203,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00528326,
+        "mean_net": -0.00219887,
+        "t_stat": -1.893,
+        "profit_factor": 0.416,
+        "win_rate": 0.3793,
+        "gross_over_cost": 26.416,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0006501 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 4,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00524067,
+        "mean_net": 0.0002501,
+        "t_stat": 0.395,
+        "profit_factor": 1.101,
+        "win_rate": 0.5645,
+        "gross_over_cost": 26.203,
+        "median_hold_hours": 4.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00528326,
+        "mean_net": 0.00179887,
+        "t_stat": 1.549,
+        "profit_factor": 2.047,
+        "win_rate": 0.6207,
+        "gross_over_cost": 26.416,
+        "median_hold_hours": 4.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.395 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00781177,
+        "mean_net": 8.682e-05,
+        "t_stat": 0.09,
+        "profit_factor": 1.023,
+        "win_rate": 0.5484,
+        "gross_over_cost": 39.059,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00752243,
+        "mean_net": -0.00112675,
+        "t_stat": -0.609,
+        "profit_factor": 0.741,
+        "win_rate": 0.3448,
+        "gross_over_cost": 37.612,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.09 < 2.0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 12,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00781177,
+        "mean_net": -0.00048682,
+        "t_stat": -0.503,
+        "profit_factor": 0.883,
+        "win_rate": 0.4355,
+        "gross_over_cost": 39.059,
+        "median_hold_hours": 12.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00752243,
+        "mean_net": 0.00072675,
+        "t_stat": 0.393,
+        "profit_factor": 1.216,
+        "win_rate": 0.6552,
+        "gross_over_cost": 37.612,
+        "median_hold_hours": 12.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00048682 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00794065,
+        "mean_net": -4.727e-05,
+        "t_stat": -0.049,
+        "profit_factor": 0.988,
+        "win_rate": 0.5323,
+        "gross_over_cost": 39.703,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00950323,
+        "mean_net": -0.0029159,
+        "t_stat": -0.995,
+        "profit_factor": 0.533,
+        "win_rate": 0.3103,
+        "gross_over_cost": 47.516,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.727e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 24,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00794065,
+        "mean_net": -0.00035273,
+        "t_stat": -0.367,
+        "profit_factor": 0.915,
+        "win_rate": 0.4355,
+        "gross_over_cost": 39.703,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00950323,
+        "mean_net": 0.0025159,
+        "t_stat": 0.858,
+        "profit_factor": 1.727,
+        "win_rate": 0.6552,
+        "gross_over_cost": 47.516,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00035273 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "STREAK"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00794065,
+        "mean_net": -4.727e-05,
+        "t_stat": -0.049,
+        "profit_factor": 0.988,
+        "win_rate": 0.5323,
+        "gross_over_cost": 39.703,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00950323,
+        "mean_net": -0.0029159,
+        "t_stat": -0.995,
+        "profit_factor": 0.533,
+        "win_rate": 0.3103,
+        "gross_over_cost": 47.516,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.727e-05 <= 0"
+    },
+    {
+      "family": "C4_EVENT_SEQUENCE",
+      "symbol": "XAUUSD",
+      "event_source": "derived:NFP-first-friday",
+      "params": {
+        "post_hours": 48,
+        "mode": "ALTERNATION"
+      },
+      "train": {
+        "n": 124,
+        "gross_mean": 0.00794065,
+        "mean_net": -0.00035273,
+        "t_stat": -0.367,
+        "profit_factor": 0.915,
+        "win_rate": 0.4355,
+        "gross_over_cost": 39.703,
+        "median_hold_hours": 62.0
+      },
+      "validation": {
+        "n": 29,
+        "gross_mean": 0.00950323,
+        "mean_net": 0.0025159,
+        "t_stat": 0.858,
+        "profit_factor": 1.727,
+        "win_rate": 0.6552,
+        "gross_over_cost": 47.516,
+        "median_hold_hours": 62.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00035273 <= 0"
+    }
+  ]
+}
