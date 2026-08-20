@@ -1,8 +1,8 @@
 {
-  "cumulative_hypotheses_generated": 72,
-  "cumulative_parameter_evaluations": 1222,
+  "cumulative_hypotheses_generated": 80,
+  "cumulative_parameter_evaluations": 1402,
   "cumulative_survivors": 5,
-  "cycle_count": 7,
+  "cycle_count": 8,
   "cycles": [
     {
       "cycle_id": "CYCLE-01",
@@ -111,6 +111,24 @@
       "parameter_evaluations": 472,
       "started_at": "2026-08-20T15:20:55.268908+00:00",
       "survivors": 4
+    },
+    {
+      "cycle_id": "CYCLE-07-NEW-ECONOMIC-SEARCH",
+      "families_touched": [
+        "H_OIL_CAD",
+        "H_SPX_JPY",
+        "H_SPX_CHF",
+        "H_SPX_XAU",
+        "H_US10Y_EUR",
+        "H_OIL_XAU",
+        "D1_WEEKDAY_FIXED",
+        "W1_BREAKOUT"
+      ],
+      "hypotheses_generated": 8,
+      "notes": "Phase 0: acquired WTICO/US10Y/SPX500 D1 (Oanda M1 via FutureSharks/financial-data, 2010-2020, real, audited -- WTI min $11.92 Apr-2020 and SPX 1015..3390 both match known market history). No DXY source acquired (network-blocked); not used as a signal. Phase 1: reused Cycle 6's already-ledgered C2 results, 0 new evaluations -- CPI y/y fully evaluated (0/50 survivors), FOMC (Federal Funds Rate) correctly killed by the Cycle 6 power pre-check before any evaluation (val n=15-22<30), FOMC Statement structurally excluded (no actual/forecast). Phase 2: 12 cross-asset evaluations (6 pre-registered lagged mechanisms x 2 holds), 0 survivors. Phase 3: 168 D1/W1 evaluations -- D1_WEEKDAY_FIXED (bug-corrected retest of Cycle 4's B1, which never got a fair test due to a Friday->Saturday spillover artifact) and W1_BREAKOUT (new timeframe/lookback, not a parameter variant of refuted A1/A2), 0 survivors. FAIL-000029 and FAIL-000031 not rescued: every trade holds >=1 genuine trading day, measured from real timestamps.",
+      "parameter_evaluations": 180,
+      "started_at": "2026-08-20T16:34:12.744477+00:00",
+      "survivors": 0
     }
   ],
   "families_ever_touched": [
@@ -127,11 +145,18 @@
     "C3_VOLATILITY_EXPANSION",
     "C4_EVENT_SEQUENCE",
     "COST_AMORTIZATION",
+    "D1_WEEKDAY_FIXED",
     "E1_CROSS_ASSET_CONVERGENCE",
     "EURUSD",
     "GAP_DISLOCATION",
     "GAP_MAGNITUDE_STRUCTURE",
     "GBPUSD",
+    "H_OIL_CAD",
+    "H_OIL_XAU",
+    "H_SPX_CHF",
+    "H_SPX_JPY",
+    "H_SPX_XAU",
+    "H_US10Y_EUR",
     "MULTITIMEFRAME_TREND_FILTER",
     "REGIME_RECOMBINATION",
     "SESSION_CONDITIONING",
@@ -142,6 +167,7 @@
     "USDJPY",
     "VOLATILITY_STATE_FILTER",
     "VOLATILITY_TRANSITION",
+    "W1_BREAKOUT",
     "XAUUSD"
   ]
 }

@@ -1,0 +1,408 @@
+{
+  "cycle_id": "CYCLE-07-CROSSASSET",
+  "stage": "Phase 2 cross-asset search",
+  "data_source": "FutureSharks/financial-data (Oanda M1, resampled to D1)",
+  "overlap_limitation": "Cross-asset data covers 2010-01-04..2020-05-14 only; FX dev windows extend to 2022-2023. Evaluated on the OVERLAP window, which is smaller than the full FX dev window.",
+  "dxy_note": "No direct DXY source acquired (network-blocked); not used as a signal.",
+  "parameter_evaluations": 12,
+  "survivor_count": 0,
+  "survivors": [],
+  "results": [
+    {
+      "hypothesis": "H_OIL_CAD",
+      "driver": "WTICO",
+      "symbol": "USDCAD",
+      "mechanism": "WTI up -> CAD strengthens -> short USDCAD",
+      "params": {
+        "hold_days": 1,
+        "base_dir": -1
+      },
+      "train": {
+        "n": 2015,
+        "mean_net": 3.033e-05,
+        "t_stat": 0.273,
+        "profit_factor": 1.016,
+        "win_rate": 0.4923,
+        "gross_over_cost": 27.714
+      },
+      "validation": {
+        "n": 504,
+        "mean_net": 0.00028607,
+        "t_stat": 1.538,
+        "profit_factor": 1.206,
+        "win_rate": 0.5139,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.273 < 2.0",
+      "overlap_window": {
+        "start": "2010-08-06",
+        "end": "2020-05-14",
+        "n_days": 2524
+      }
+    },
+    {
+      "hypothesis": "H_OIL_CAD",
+      "driver": "WTICO",
+      "symbol": "USDCAD",
+      "mechanism": "WTI up -> CAD strengthens -> short USDCAD",
+      "params": {
+        "hold_days": 2,
+        "base_dir": -1
+      },
+      "train": {
+        "n": 2015,
+        "mean_net": 8.575e-05,
+        "t_stat": 0.548,
+        "profit_factor": 1.033,
+        "win_rate": 0.5032,
+        "gross_over_cost": 39.198
+      },
+      "validation": {
+        "n": 503,
+        "mean_net": 0.00021383,
+        "t_stat": 0.783,
+        "profit_factor": 1.102,
+        "win_rate": 0.4811,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.548 < 2.0",
+      "overlap_window": {
+        "start": "2010-08-06",
+        "end": "2020-05-14",
+        "n_days": 2524
+      }
+    },
+    {
+      "hypothesis": "H_SPX_JPY",
+      "driver": "SPX500",
+      "symbol": "USDJPY",
+      "mechanism": "SPX up -> risk-on, JPY sold -> long USDJPY",
+      "params": {
+        "hold_days": 1,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 2013,
+        "mean_net": -5.688e-05,
+        "t_stat": -0.438,
+        "profit_factor": 0.974,
+        "win_rate": 0.4933,
+        "gross_over_cost": 43.364
+      },
+      "validation": {
+        "n": 501,
+        "mean_net": -0.00038474,
+        "t_stat": -1.793,
+        "profit_factor": 0.785,
+        "win_rate": 0.4711,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-5.688e-05 <= 0",
+      "overlap_window": {
+        "start": "2010-08-05",
+        "end": "2020-05-14",
+        "n_days": 2533
+      }
+    },
+    {
+      "hypothesis": "H_SPX_JPY",
+      "driver": "SPX500",
+      "symbol": "USDJPY",
+      "mechanism": "SPX up -> risk-on, JPY sold -> long USDJPY",
+      "params": {
+        "hold_days": 2,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 2013,
+        "mean_net": 0.00012651,
+        "t_stat": 0.685,
+        "profit_factor": 1.042,
+        "win_rate": 0.4988,
+        "gross_over_cost": 62.022
+      },
+      "validation": {
+        "n": 500,
+        "mean_net": -0.00034557,
+        "t_stat": -1.213,
+        "profit_factor": 0.854,
+        "win_rate": 0.484,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.685 < 2.0",
+      "overlap_window": {
+        "start": "2010-08-05",
+        "end": "2020-05-14",
+        "n_days": 2533
+      }
+    },
+    {
+      "hypothesis": "H_SPX_CHF",
+      "driver": "SPX500",
+      "symbol": "USDCHF",
+      "mechanism": "SPX up -> risk-on, CHF sold -> long USDCHF",
+      "params": {
+        "hold_days": 1,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 2012,
+        "mean_net": -0.00020597,
+        "t_stat": -1.31,
+        "profit_factor": 0.912,
+        "win_rate": 0.4821,
+        "gross_over_cost": 24.59
+      },
+      "validation": {
+        "n": 501,
+        "mean_net": -0.00053921,
+        "t_stat": -2.977,
+        "profit_factor": 0.698,
+        "win_rate": 0.4691,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00020597 <= 0",
+      "overlap_window": {
+        "start": "2010-08-06",
+        "end": "2020-05-14",
+        "n_days": 2532
+      }
+    },
+    {
+      "hypothesis": "H_SPX_CHF",
+      "driver": "SPX500",
+      "symbol": "USDCHF",
+      "mechanism": "SPX up -> risk-on, CHF sold -> long USDCHF",
+      "params": {
+        "hold_days": 2,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 2012,
+        "mean_net": -9.665e-05,
+        "t_stat": -0.424,
+        "profit_factor": 0.971,
+        "win_rate": 0.4806,
+        "gross_over_cost": 35.176
+      },
+      "validation": {
+        "n": 500,
+        "mean_net": -0.00052916,
+        "t_stat": -2.02,
+        "profit_factor": 0.782,
+        "win_rate": 0.474,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.665e-05 <= 0",
+      "overlap_window": {
+        "start": "2010-08-06",
+        "end": "2020-05-14",
+        "n_days": 2532
+      }
+    },
+    {
+      "hypothesis": "H_SPX_XAU",
+      "driver": "SPX500",
+      "symbol": "XAUUSD",
+      "mechanism": "SPX up -> risk-on, gold sold -> short XAUUSD",
+      "params": {
+        "hold_days": 1,
+        "base_dir": -1
+      },
+      "train": {
+        "n": 2132,
+        "mean_net": -0.0003005,
+        "t_stat": -1.404,
+        "profit_factor": 0.919,
+        "win_rate": 0.4761,
+        "gross_over_cost": 36.472
+      },
+      "validation": {
+        "n": 532,
+        "mean_net": -2.954e-05,
+        "t_stat": -0.081,
+        "profit_factor": 0.99,
+        "win_rate": 0.4887,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0003005 <= 0",
+      "overlap_window": {
+        "start": "2010-01-04",
+        "end": "2020-05-14",
+        "n_days": 2686
+      }
+    },
+    {
+      "hypothesis": "H_SPX_XAU",
+      "driver": "SPX500",
+      "symbol": "XAUUSD",
+      "mechanism": "SPX up -> risk-on, gold sold -> short XAUUSD",
+      "params": {
+        "hold_days": 2,
+        "base_dir": -1
+      },
+      "train": {
+        "n": 2132,
+        "mean_net": -0.00029855,
+        "t_stat": -0.985,
+        "profit_factor": 0.944,
+        "win_rate": 0.4925,
+        "gross_over_cost": 52.426
+      },
+      "validation": {
+        "n": 531,
+        "mean_net": -0.00041747,
+        "t_stat": -0.771,
+        "profit_factor": 0.905,
+        "win_rate": 0.5028,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00029855 <= 0",
+      "overlap_window": {
+        "start": "2010-01-04",
+        "end": "2020-05-14",
+        "n_days": 2686
+      }
+    },
+    {
+      "hypothesis": "H_US10Y_EUR",
+      "driver": "US10Y",
+      "symbol": "EURUSD",
+      "mechanism": "US10Y price up (yield down) -> USD carry less attractive -> long EURUSD",
+      "params": {
+        "hold_days": 1,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 1545,
+        "mean_net": 4.855e-05,
+        "t_stat": 0.37,
+        "profit_factor": 1.026,
+        "win_rate": 0.5003,
+        "gross_over_cost": 39.001
+      },
+      "validation": {
+        "n": 386,
+        "mean_net": 0.00039508,
+        "t_stat": 2.028,
+        "profit_factor": 1.335,
+        "win_rate": 0.5311,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.37 < 2.0",
+      "overlap_window": {
+        "start": "2012-11-16",
+        "end": "2020-05-14",
+        "n_days": 1934
+      }
+    },
+    {
+      "hypothesis": "H_US10Y_EUR",
+      "driver": "US10Y",
+      "symbol": "EURUSD",
+      "mechanism": "US10Y price up (yield down) -> USD carry less attractive -> long EURUSD",
+      "params": {
+        "hold_days": 2,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 1545,
+        "mean_net": 0.00011152,
+        "t_stat": 0.603,
+        "profit_factor": 1.042,
+        "win_rate": 0.5055,
+        "gross_over_cost": 55.672
+      },
+      "validation": {
+        "n": 385,
+        "mean_net": 0.00046169,
+        "t_stat": 1.569,
+        "profit_factor": 1.251,
+        "win_rate": 0.4779,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.603 < 2.0",
+      "overlap_window": {
+        "start": "2012-11-16",
+        "end": "2020-05-14",
+        "n_days": 1934
+      }
+    },
+    {
+      "hypothesis": "H_OIL_XAU",
+      "driver": "WTICO",
+      "symbol": "XAUUSD",
+      "mechanism": "oil up -> inflation co-movement -> long XAUUSD (exploratory, weak prior)",
+      "params": {
+        "hold_days": 1,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 2136,
+        "mean_net": -0.00030931,
+        "t_stat": -1.445,
+        "profit_factor": 0.917,
+        "win_rate": 0.4944,
+        "gross_over_cost": 36.521
+      },
+      "validation": {
+        "n": 535,
+        "mean_net": 5.086e-05,
+        "t_stat": 0.139,
+        "profit_factor": 1.018,
+        "win_rate": 0.4879,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00030931 <= 0",
+      "overlap_window": {
+        "start": "2010-01-04",
+        "end": "2020-05-14",
+        "n_days": 2677
+      }
+    },
+    {
+      "hypothesis": "H_OIL_XAU",
+      "driver": "WTICO",
+      "symbol": "XAUUSD",
+      "mechanism": "oil up -> inflation co-movement -> long XAUUSD (exploratory, weak prior)",
+      "params": {
+        "hold_days": 2,
+        "base_dir": 1
+      },
+      "train": {
+        "n": 2136,
+        "mean_net": -0.00039491,
+        "t_stat": -1.303,
+        "profit_factor": 0.926,
+        "win_rate": 0.4808,
+        "gross_over_cost": 52.562
+      },
+      "validation": {
+        "n": 534,
+        "mean_net": -1.267e-05,
+        "t_stat": -0.023,
+        "profit_factor": 0.997,
+        "win_rate": 0.4925,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00039491 <= 0",
+      "overlap_window": {
+        "start": "2010-01-04",
+        "end": "2020-05-14",
+        "n_days": 2677
+      }
+    }
+  ]
+}

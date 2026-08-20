@@ -1,0 +1,5230 @@
+{
+  "cycle_id": "CYCLE-07-D1-W1",
+  "stage": "Phase 3 D1/W1 positional",
+  "bug_fix_note": "D1_WEEKDAY_FIXED filters DayBars to >=12 H1 bars before indexing, removing the Friday->Saturday spillover stub that killed every Cycle 4 B1_DAY_OF_WEEK result via SUB_DAILY_REFUTED_FAMILY before the economic question was ever tested.",
+  "not_a_rescue_of_fail_29_or_31": "Every trade here holds >=1 genuine trading day, measured directly from real bar timestamps. Neither family is a parameter variant of the refuted A1_POSITIONAL_STREAK/A2_POSITIONAL_BREAKOUT mechanism (FAIL-000031): D1_WEEKDAY conditions on calendar weekday, not price-streak state; W1_BREAKOUT operates on weekly bars with 12/26-week lookbacks, not A2's 20-day D1 lookback.",
+  "parameter_evaluations": 168,
+  "survivor_count": 0,
+  "survivors": [],
+  "family_breakdown": {
+    "D1_WEEKDAY_FIXED": {
+      "TRAIN_NEGATIVE": 84,
+      "TRAIN_INSIGNIFICANT": 36
+    },
+    "W1_BREAKOUT": {
+      "TRAIN_INSIGNIFICANT": 23,
+      "TRAIN_NEGATIVE": 23,
+      "TRAIN_UNDERPOWERED": 2
+    }
+  },
+  "results": [
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 386,
+        "gross_mean": 0.00335672,
+        "mean_net": -0.00038095,
+        "t_stat": -1.621,
+        "profit_factor": 0.797,
+        "win_rate": 0.4378,
+        "gross_over_cost": 33.567,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 96,
+        "gross_mean": 0.00271645,
+        "mean_net": -8.776e-05,
+        "t_stat": -0.249,
+        "profit_factor": 0.937,
+        "win_rate": 0.4792,
+        "gross_over_cost": 27.164,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00038095 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 386,
+        "gross_mean": 0.00472548,
+        "mean_net": -0.00055485,
+        "t_stat": -1.665,
+        "profit_factor": 0.79,
+        "win_rate": 0.4456,
+        "gross_over_cost": 47.255,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 96,
+        "gross_mean": 0.00429564,
+        "mean_net": 9.853e-05,
+        "t_stat": 0.181,
+        "profit_factor": 1.047,
+        "win_rate": 0.4896,
+        "gross_over_cost": 42.956,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00055485 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 386,
+        "gross_mean": 0.00335672,
+        "mean_net": 0.00018095,
+        "t_stat": 0.77,
+        "profit_factor": 1.114,
+        "win_rate": 0.5415,
+        "gross_over_cost": 33.567,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 96,
+        "gross_mean": 0.00271645,
+        "mean_net": -0.00011224,
+        "t_stat": -0.319,
+        "profit_factor": 0.921,
+        "win_rate": 0.4896,
+        "gross_over_cost": 27.164,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.77 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 386,
+        "gross_mean": 0.00472548,
+        "mean_net": 0.00035485,
+        "t_stat": 1.065,
+        "profit_factor": 1.163,
+        "win_rate": 0.5415,
+        "gross_over_cost": 47.255,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 96,
+        "gross_mean": 0.00429564,
+        "mean_net": -0.00029853,
+        "t_stat": -0.55,
+        "profit_factor": 0.87,
+        "win_rate": 0.4896,
+        "gross_over_cost": 42.956,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.065 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 384,
+        "gross_mean": 0.00323425,
+        "mean_net": -0.00027297,
+        "t_stat": -1.223,
+        "profit_factor": 0.845,
+        "win_rate": 0.4583,
+        "gross_over_cost": 32.343,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00257465,
+        "mean_net": 9.977e-05,
+        "t_stat": 0.287,
+        "profit_factor": 1.081,
+        "win_rate": 0.5361,
+        "gross_over_cost": 25.747,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027297 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 384,
+        "gross_mean": 0.00575259,
+        "mean_net": -0.00027533,
+        "t_stat": -0.714,
+        "profit_factor": 0.909,
+        "win_rate": 0.5,
+        "gross_over_cost": 57.526,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00449809,
+        "mean_net": 2.193e-05,
+        "t_stat": 0.036,
+        "profit_factor": 1.01,
+        "win_rate": 0.5258,
+        "gross_over_cost": 44.981,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027533 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 384,
+        "gross_mean": 0.00323425,
+        "mean_net": 7.297e-05,
+        "t_stat": 0.327,
+        "profit_factor": 1.046,
+        "win_rate": 0.513,
+        "gross_over_cost": 32.343,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00257465,
+        "mean_net": -0.00029977,
+        "t_stat": -0.863,
+        "profit_factor": 0.792,
+        "win_rate": 0.433,
+        "gross_over_cost": 25.747,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.327 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 384,
+        "gross_mean": 0.00575259,
+        "mean_net": 7.533e-05,
+        "t_stat": 0.195,
+        "profit_factor": 1.027,
+        "win_rate": 0.4818,
+        "gross_over_cost": 57.526,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00449809,
+        "mean_net": -0.00022193,
+        "t_stat": -0.36,
+        "profit_factor": 0.906,
+        "win_rate": 0.4227,
+        "gross_over_cost": 44.981,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.195 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 383,
+        "gross_mean": 0.00453287,
+        "mean_net": -0.00011341,
+        "t_stat": -0.356,
+        "profit_factor": 0.951,
+        "win_rate": 0.4883,
+        "gross_over_cost": 45.329,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00323466,
+        "mean_net": -0.00017784,
+        "t_stat": -0.391,
+        "profit_factor": 0.896,
+        "win_rate": 0.4536,
+        "gross_over_cost": 32.347,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00011341 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 383,
+        "gross_mean": 0.00623538,
+        "mean_net": -0.00034523,
+        "t_stat": -0.817,
+        "profit_factor": 0.895,
+        "win_rate": 0.4778,
+        "gross_over_cost": 62.354,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00441387,
+        "mean_net": -0.00035651,
+        "t_stat": -0.587,
+        "profit_factor": 0.851,
+        "win_rate": 0.4536,
+        "gross_over_cost": 44.139,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00034523 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 383,
+        "gross_mean": 0.00453287,
+        "mean_net": -8.659e-05,
+        "t_stat": -0.272,
+        "profit_factor": 0.963,
+        "win_rate": 0.4935,
+        "gross_over_cost": 45.329,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00323466,
+        "mean_net": -2.216e-05,
+        "t_stat": -0.049,
+        "profit_factor": 0.986,
+        "win_rate": 0.5464,
+        "gross_over_cost": 32.347,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-8.659e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 383,
+        "gross_mean": 0.00623538,
+        "mean_net": 0.00014523,
+        "t_stat": 0.344,
+        "profit_factor": 1.048,
+        "win_rate": 0.5117,
+        "gross_over_cost": 62.354,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00441387,
+        "mean_net": 0.00015651,
+        "t_stat": 0.258,
+        "profit_factor": 1.074,
+        "win_rate": 0.5361,
+        "gross_over_cost": 44.139,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.344 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 385,
+        "gross_mean": 0.0038435,
+        "mean_net": -0.00032721,
+        "t_stat": -1.269,
+        "profit_factor": 0.843,
+        "win_rate": 0.4831,
+        "gross_over_cost": 38.435,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00331315,
+        "mean_net": -0.00027867,
+        "t_stat": -0.616,
+        "profit_factor": 0.845,
+        "win_rate": 0.5052,
+        "gross_over_cost": 33.131,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00032721 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 385,
+        "gross_mean": 0.00468315,
+        "mean_net": -0.0001038,
+        "t_stat": -0.315,
+        "profit_factor": 0.957,
+        "win_rate": 0.4597,
+        "gross_over_cost": 46.832,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 96,
+        "gross_mean": 0.00401023,
+        "mean_net": 3.988e-05,
+        "t_stat": 0.074,
+        "profit_factor": 1.02,
+        "win_rate": 0.5417,
+        "gross_over_cost": 40.102,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0001038 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 385,
+        "gross_mean": 0.0038435,
+        "mean_net": 0.00012721,
+        "t_stat": 0.493,
+        "profit_factor": 1.068,
+        "win_rate": 0.5039,
+        "gross_over_cost": 38.435,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 97,
+        "gross_mean": 0.00331315,
+        "mean_net": 7.867e-05,
+        "t_stat": 0.174,
+        "profit_factor": 1.049,
+        "win_rate": 0.4639,
+        "gross_over_cost": 33.131,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.493 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 385,
+        "gross_mean": 0.00468315,
+        "mean_net": -9.62e-05,
+        "t_stat": -0.292,
+        "profit_factor": 0.96,
+        "win_rate": 0.5273,
+        "gross_over_cost": 46.832,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 96,
+        "gross_mean": 0.00401023,
+        "mean_net": -0.00023988,
+        "t_stat": -0.444,
+        "profit_factor": 0.887,
+        "win_rate": 0.4375,
+        "gross_over_cost": 40.102,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.62e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 385,
+        "gross_mean": 0.00296873,
+        "mean_net": 0.00017614,
+        "t_stat": 0.848,
+        "profit_factor": 1.126,
+        "win_rate": 0.5195,
+        "gross_over_cost": 29.687,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 94,
+        "gross_mean": 0.00277974,
+        "mean_net": 1.699e-05,
+        "t_stat": 0.045,
+        "profit_factor": 1.012,
+        "win_rate": 0.5106,
+        "gross_over_cost": 27.797,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.848 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 384,
+        "gross_mean": 0.00460996,
+        "mean_net": -8.229e-05,
+        "t_stat": -0.268,
+        "profit_factor": 0.965,
+        "win_rate": 0.4948,
+        "gross_over_cost": 46.1,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 94,
+        "gross_mean": 0.0043246,
+        "mean_net": -3.979e-05,
+        "t_stat": -0.072,
+        "profit_factor": 0.982,
+        "win_rate": 0.5319,
+        "gross_over_cost": 43.246,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-8.229e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 385,
+        "gross_mean": 0.00296873,
+        "mean_net": -0.00037614,
+        "t_stat": -1.811,
+        "profit_factor": 0.776,
+        "win_rate": 0.4442,
+        "gross_over_cost": 29.687,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 94,
+        "gross_mean": 0.00277974,
+        "mean_net": -0.00021699,
+        "t_stat": -0.58,
+        "profit_factor": 0.855,
+        "win_rate": 0.4787,
+        "gross_over_cost": 27.797,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00037614 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "EURUSD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 384,
+        "gross_mean": 0.00460996,
+        "mean_net": -0.00011771,
+        "t_stat": -0.384,
+        "profit_factor": 0.95,
+        "win_rate": 0.4974,
+        "gross_over_cost": 46.1,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 94,
+        "gross_mean": 0.0043246,
+        "mean_net": -0.00016021,
+        "t_stat": -0.288,
+        "profit_factor": 0.929,
+        "win_rate": 0.4681,
+        "gross_over_cost": 43.246,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00011771 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 44,
+        "gross_mean": 0.00867228,
+        "mean_net": 0.00071106,
+        "t_stat": 0.368,
+        "profit_factor": 1.179,
+        "win_rate": 0.4545,
+        "gross_over_cost": 86.723,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.00849287,
+        "mean_net": -0.00140704,
+        "t_stat": -0.381,
+        "profit_factor": 0.716,
+        "win_rate": 0.4545,
+        "gross_over_cost": 84.929,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.368 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 37,
+        "gross_mean": 0.01406724,
+        "mean_net": -0.00020286,
+        "t_stat": -0.068,
+        "profit_factor": 0.972,
+        "win_rate": 0.5405,
+        "gross_over_cost": 140.672,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 9,
+        "gross_mean": 0.01057996,
+        "mean_net": 0.00104082,
+        "t_stat": 0.212,
+        "profit_factor": 1.218,
+        "win_rate": 0.5556,
+        "gross_over_cost": 105.8,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00020286 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 44,
+        "gross_mean": 0.00867228,
+        "mean_net": -0.00091106,
+        "t_stat": -0.472,
+        "profit_factor": 0.81,
+        "win_rate": 0.4545,
+        "gross_over_cost": 86.723,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.00849287,
+        "mean_net": 0.00120704,
+        "t_stat": 0.327,
+        "profit_factor": 1.332,
+        "win_rate": 0.5455,
+        "gross_over_cost": 84.929,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00091106 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 37,
+        "gross_mean": 0.01406724,
+        "mean_net": 2.86e-06,
+        "t_stat": 0.001,
+        "profit_factor": 1.0,
+        "win_rate": 0.4595,
+        "gross_over_cost": 140.672,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 9,
+        "gross_mean": 0.01057996,
+        "mean_net": -0.00124082,
+        "t_stat": -0.252,
+        "profit_factor": 0.79,
+        "win_rate": 0.4444,
+        "gross_over_cost": 105.8,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.001 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 33,
+        "gross_mean": 0.00890482,
+        "mean_net": 0.00087564,
+        "t_stat": 0.367,
+        "profit_factor": 1.218,
+        "win_rate": 0.4242,
+        "gross_over_cost": 89.048,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 6,
+        "gross_mean": 0.00957694,
+        "mean_net": -0.00443941,
+        "t_stat": -0.803,
+        "profit_factor": 0.368,
+        "win_rate": 0.3333,
+        "gross_over_cost": 95.769,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.367 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 26,
+        "gross_mean": 0.01532261,
+        "mean_net": -2.473e-05,
+        "t_stat": -0.006,
+        "profit_factor": 0.997,
+        "win_rate": 0.6154,
+        "gross_over_cost": 153.226,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 5,
+        "gross_mean": 0.01100744,
+        "mean_net": -0.00244668,
+        "t_stat": -0.399,
+        "profit_factor": 0.637,
+        "win_rate": 0.4,
+        "gross_over_cost": 110.074,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=26 < 30"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 33,
+        "gross_mean": 0.00890482,
+        "mean_net": -0.00107564,
+        "t_stat": -0.451,
+        "profit_factor": 0.784,
+        "win_rate": 0.5152,
+        "gross_over_cost": 89.048,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 6,
+        "gross_mean": 0.00957694,
+        "mean_net": 0.0042394,
+        "t_stat": 0.767,
+        "profit_factor": 2.599,
+        "win_rate": 0.6667,
+        "gross_over_cost": 95.769,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00107564 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "EURUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 26,
+        "gross_mean": 0.01532261,
+        "mean_net": -0.00017527,
+        "t_stat": -0.045,
+        "profit_factor": 0.977,
+        "win_rate": 0.3846,
+        "gross_over_cost": 153.226,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 5,
+        "gross_mean": 0.01100744,
+        "mean_net": 0.00224668,
+        "t_stat": 0.366,
+        "profit_factor": 1.514,
+        "win_rate": 0.6,
+        "gross_over_cost": 110.074,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=26 < 30"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00422326,
+        "mean_net": -0.00025974,
+        "t_stat": -1.064,
+        "profit_factor": 0.884,
+        "win_rate": 0.4822,
+        "gross_over_cost": 35.194,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00373371,
+        "mean_net": -0.00026512,
+        "t_stat": -0.597,
+        "profit_factor": 0.868,
+        "win_rate": 0.4737,
+        "gross_over_cost": 31.114,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025974 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00576147,
+        "mean_net": -8.375e-05,
+        "t_stat": -0.254,
+        "profit_factor": 0.971,
+        "win_rate": 0.4991,
+        "gross_over_cost": 48.012,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00559451,
+        "mean_net": 0.00043121,
+        "t_stat": 0.664,
+        "profit_factor": 1.168,
+        "win_rate": 0.5789,
+        "gross_over_cost": 46.621,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-8.375e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00422326,
+        "mean_net": 1.974e-05,
+        "t_stat": 0.081,
+        "profit_factor": 1.009,
+        "win_rate": 0.5028,
+        "gross_over_cost": 35.194,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00373371,
+        "mean_net": 2.512e-05,
+        "t_stat": 0.057,
+        "profit_factor": 1.014,
+        "win_rate": 0.5113,
+        "gross_over_cost": 31.114,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.081 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00576147,
+        "mean_net": -0.00015625,
+        "t_stat": -0.473,
+        "profit_factor": 0.947,
+        "win_rate": 0.4784,
+        "gross_over_cost": 48.012,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00559451,
+        "mean_net": -0.00067121,
+        "t_stat": -1.033,
+        "profit_factor": 0.786,
+        "win_rate": 0.406,
+        "gross_over_cost": 46.621,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00015625 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00398713,
+        "mean_net": 5.122e-05,
+        "t_stat": 0.221,
+        "profit_factor": 1.026,
+        "win_rate": 0.5141,
+        "gross_over_cost": 33.226,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00422601,
+        "mean_net": 0.00055297,
+        "t_stat": 1.174,
+        "profit_factor": 1.301,
+        "win_rate": 0.5149,
+        "gross_over_cost": 35.217,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.221 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00612262,
+        "mean_net": 0.00016413,
+        "t_stat": 0.471,
+        "profit_factor": 1.055,
+        "win_rate": 0.5122,
+        "gross_over_cost": 51.022,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00672872,
+        "mean_net": 0.00042411,
+        "t_stat": 0.54,
+        "profit_factor": 1.135,
+        "win_rate": 0.5224,
+        "gross_over_cost": 56.073,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.471 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00398713,
+        "mean_net": -0.00029122,
+        "t_stat": -1.258,
+        "profit_factor": 0.864,
+        "win_rate": 0.454,
+        "gross_over_cost": 33.226,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00422601,
+        "mean_net": -0.00079297,
+        "t_stat": -1.684,
+        "profit_factor": 0.684,
+        "win_rate": 0.4627,
+        "gross_over_cost": 35.217,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00029122 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00612262,
+        "mean_net": -0.00040413,
+        "t_stat": -1.16,
+        "profit_factor": 0.876,
+        "win_rate": 0.4784,
+        "gross_over_cost": 51.022,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00672872,
+        "mean_net": -0.00066411,
+        "t_stat": -0.845,
+        "profit_factor": 0.821,
+        "win_rate": 0.4627,
+        "gross_over_cost": 56.073,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00040413 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00402429,
+        "mean_net": -1.41e-06,
+        "t_stat": -0.006,
+        "profit_factor": 0.999,
+        "win_rate": 0.4784,
+        "gross_over_cost": 33.536,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.0051639,
+        "mean_net": -0.00024886,
+        "t_stat": -0.398,
+        "profit_factor": 0.908,
+        "win_rate": 0.4925,
+        "gross_over_cost": 43.032,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-1.41e-06 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00603714,
+        "mean_net": -0.0004176,
+        "t_stat": -1.124,
+        "profit_factor": 0.871,
+        "win_rate": 0.5028,
+        "gross_over_cost": 50.309,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00644705,
+        "mean_net": -0.00119398,
+        "t_stat": -1.455,
+        "profit_factor": 0.688,
+        "win_rate": 0.4627,
+        "gross_over_cost": 53.725,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0004176 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00402429,
+        "mean_net": -0.00023859,
+        "t_stat": -1.003,
+        "profit_factor": 0.888,
+        "win_rate": 0.4972,
+        "gross_over_cost": 33.536,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.0051639,
+        "mean_net": 8.86e-06,
+        "t_stat": 0.014,
+        "profit_factor": 1.003,
+        "win_rate": 0.4925,
+        "gross_over_cost": 43.032,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00023859 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00603714,
+        "mean_net": 0.0001776,
+        "t_stat": 0.478,
+        "profit_factor": 1.061,
+        "win_rate": 0.4859,
+        "gross_over_cost": 50.309,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00644705,
+        "mean_net": 0.00095398,
+        "t_stat": 1.162,
+        "profit_factor": 1.348,
+        "win_rate": 0.5149,
+        "gross_over_cost": 53.725,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.478 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00431917,
+        "mean_net": -0.00053145,
+        "t_stat": -1.879,
+        "profit_factor": 0.781,
+        "win_rate": 0.4682,
+        "gross_over_cost": 35.993,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00472918,
+        "mean_net": -0.00106512,
+        "t_stat": -1.899,
+        "profit_factor": 0.633,
+        "win_rate": 0.4254,
+        "gross_over_cost": 39.41,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00053145 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00538442,
+        "mean_net": -0.00061875,
+        "t_stat": -1.694,
+        "profit_factor": 0.794,
+        "win_rate": 0.4551,
+        "gross_over_cost": 44.87,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00667905,
+        "mean_net": -0.00090741,
+        "t_stat": -1.077,
+        "profit_factor": 0.761,
+        "win_rate": 0.4511,
+        "gross_over_cost": 55.659,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00061875 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00431917,
+        "mean_net": 0.00029145,
+        "t_stat": 1.03,
+        "profit_factor": 1.145,
+        "win_rate": 0.5131,
+        "gross_over_cost": 35.993,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00472918,
+        "mean_net": 0.00082512,
+        "t_stat": 1.471,
+        "profit_factor": 1.424,
+        "win_rate": 0.5522,
+        "gross_over_cost": 39.41,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.03 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00538442,
+        "mean_net": 0.00037875,
+        "t_stat": 1.037,
+        "profit_factor": 1.152,
+        "win_rate": 0.5337,
+        "gross_over_cost": 44.87,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00667905,
+        "mean_net": 0.00066741,
+        "t_stat": 0.792,
+        "profit_factor": 1.222,
+        "win_rate": 0.5414,
+        "gross_over_cost": 55.659,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.037 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.003466,
+        "mean_net": -0.00022236,
+        "t_stat": -1.091,
+        "profit_factor": 0.879,
+        "win_rate": 0.4991,
+        "gross_over_cost": 28.883,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00419248,
+        "mean_net": 1.346e-05,
+        "t_stat": 0.027,
+        "profit_factor": 1.006,
+        "win_rate": 0.4924,
+        "gross_over_cost": 34.937,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00022236 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00559165,
+        "mean_net": -0.00036252,
+        "t_stat": -1.148,
+        "profit_factor": 0.878,
+        "win_rate": 0.4813,
+        "gross_over_cost": 46.597,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00584731,
+        "mean_net": -0.00016881,
+        "t_stat": -0.251,
+        "profit_factor": 0.944,
+        "win_rate": 0.4697,
+        "gross_over_cost": 48.728,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00036252 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.003466,
+        "mean_net": -1.764e-05,
+        "t_stat": -0.087,
+        "profit_factor": 0.99,
+        "win_rate": 0.4748,
+        "gross_over_cost": 28.883,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00419248,
+        "mean_net": -0.00025346,
+        "t_stat": -0.516,
+        "profit_factor": 0.886,
+        "win_rate": 0.4773,
+        "gross_over_cost": 34.937,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-1.764e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "GBPUSD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00559165,
+        "mean_net": 0.00012252,
+        "t_stat": 0.388,
+        "profit_factor": 1.045,
+        "win_rate": 0.5056,
+        "gross_over_cost": 46.597,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00584731,
+        "mean_net": -7.119e-05,
+        "t_stat": -0.106,
+        "profit_factor": 0.976,
+        "win_rate": 0.5303,
+        "gross_over_cost": 48.728,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.388 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 63,
+        "gross_mean": 0.01121166,
+        "mean_net": -0.00045133,
+        "t_stat": -0.25,
+        "profit_factor": 0.923,
+        "win_rate": 0.3968,
+        "gross_over_cost": 93.43,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.01294691,
+        "mean_net": 0.00283859,
+        "t_stat": 0.62,
+        "profit_factor": 1.563,
+        "win_rate": 0.6364,
+        "gross_over_cost": 107.891,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00045133 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 57,
+        "gross_mean": 0.01598239,
+        "mean_net": -0.00423318,
+        "t_stat": -1.577,
+        "profit_factor": 0.582,
+        "win_rate": 0.3684,
+        "gross_over_cost": 133.187,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.01728167,
+        "mean_net": -0.00343939,
+        "t_stat": -0.547,
+        "profit_factor": 0.668,
+        "win_rate": 0.4545,
+        "gross_over_cost": 144.014,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00423318 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 63,
+        "gross_mean": 0.01121166,
+        "mean_net": 0.00021133,
+        "t_stat": 0.117,
+        "profit_factor": 1.039,
+        "win_rate": 0.6032,
+        "gross_over_cost": 93.43,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.01294691,
+        "mean_net": -0.00307859,
+        "t_stat": -0.673,
+        "profit_factor": 0.617,
+        "win_rate": 0.3636,
+        "gross_over_cost": 107.891,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.117 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 57,
+        "gross_mean": 0.01598239,
+        "mean_net": 0.00399318,
+        "t_stat": 1.487,
+        "profit_factor": 1.668,
+        "win_rate": 0.5965,
+        "gross_over_cost": 133.187,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.01728167,
+        "mean_net": 0.00319939,
+        "t_stat": 0.509,
+        "profit_factor": 1.455,
+        "win_rate": 0.5455,
+        "gross_over_cost": 144.014,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.487 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 43,
+        "gross_mean": 0.01138825,
+        "mean_net": -0.00230318,
+        "t_stat": -0.948,
+        "profit_factor": 0.664,
+        "win_rate": 0.3721,
+        "gross_over_cost": 94.902,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 9,
+        "gross_mean": 0.0128403,
+        "mean_net": 0.00051235,
+        "t_stat": 0.097,
+        "profit_factor": 1.083,
+        "win_rate": 0.5556,
+        "gross_over_cost": 107.002,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00230318 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 36,
+        "gross_mean": 0.01671061,
+        "mean_net": -0.00241515,
+        "t_stat": -0.667,
+        "profit_factor": 0.748,
+        "win_rate": 0.3889,
+        "gross_over_cost": 139.255,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 9,
+        "gross_mean": 0.01889363,
+        "mean_net": -0.00640545,
+        "t_stat": -0.874,
+        "profit_factor": 0.494,
+        "win_rate": 0.3333,
+        "gross_over_cost": 157.447,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00241515 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 43,
+        "gross_mean": 0.01138825,
+        "mean_net": 0.00206318,
+        "t_stat": 0.85,
+        "profit_factor": 1.444,
+        "win_rate": 0.6279,
+        "gross_over_cost": 94.902,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 9,
+        "gross_mean": 0.0128403,
+        "mean_net": -0.00075235,
+        "t_stat": -0.142,
+        "profit_factor": 0.889,
+        "win_rate": 0.4444,
+        "gross_over_cost": 107.002,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.85 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "GBPUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 36,
+        "gross_mean": 0.01671061,
+        "mean_net": 0.00217515,
+        "t_stat": 0.601,
+        "profit_factor": 1.3,
+        "win_rate": 0.6111,
+        "gross_over_cost": 139.255,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 9,
+        "gross_mean": 0.01889363,
+        "mean_net": 0.00616545,
+        "t_stat": 0.841,
+        "profit_factor": 1.972,
+        "win_rate": 0.6667,
+        "gross_over_cost": 157.447,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.601 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00365705,
+        "mean_net": -1.16e-06,
+        "t_stat": -0.005,
+        "profit_factor": 0.999,
+        "win_rate": 0.4934,
+        "gross_over_cost": 26.122,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00351966,
+        "mean_net": 0.00037434,
+        "t_stat": 0.965,
+        "profit_factor": 1.238,
+        "win_rate": 0.5113,
+        "gross_over_cost": 25.14,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-1.16e-06 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00538174,
+        "mean_net": -7.747e-05,
+        "t_stat": -0.252,
+        "profit_factor": 0.972,
+        "win_rate": 0.4841,
+        "gross_over_cost": 38.441,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00452757,
+        "mean_net": -0.00040571,
+        "t_stat": -0.825,
+        "profit_factor": 0.836,
+        "win_rate": 0.4511,
+        "gross_over_cost": 32.34,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-7.747e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00365705,
+        "mean_net": -0.00027884,
+        "t_stat": -1.323,
+        "profit_factor": 0.858,
+        "win_rate": 0.4841,
+        "gross_over_cost": 26.122,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00351966,
+        "mean_net": -0.00065434,
+        "t_stat": -1.687,
+        "profit_factor": 0.687,
+        "win_rate": 0.4662,
+        "gross_over_cost": 25.14,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027884 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00538174,
+        "mean_net": -0.00020253,
+        "t_stat": -0.66,
+        "profit_factor": 0.927,
+        "win_rate": 0.5066,
+        "gross_over_cost": 38.441,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00452757,
+        "mean_net": 0.00012571,
+        "t_stat": 0.256,
+        "profit_factor": 1.057,
+        "win_rate": 0.5414,
+        "gross_over_cost": 32.34,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00020253 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00402162,
+        "mean_net": -0.00020228,
+        "t_stat": -0.86,
+        "profit_factor": 0.904,
+        "win_rate": 0.4878,
+        "gross_over_cost": 28.726,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00299509,
+        "mean_net": -0.00088034,
+        "t_stat": -2.661,
+        "profit_factor": 0.549,
+        "win_rate": 0.403,
+        "gross_over_cost": 21.394,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00020228 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00552224,
+        "mean_net": -0.00026811,
+        "t_stat": -0.818,
+        "profit_factor": 0.908,
+        "win_rate": 0.4597,
+        "gross_over_cost": 39.445,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00496277,
+        "mean_net": -0.00053172,
+        "t_stat": -0.99,
+        "profit_factor": 0.807,
+        "win_rate": 0.4627,
+        "gross_over_cost": 35.448,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00026811 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00402162,
+        "mean_net": -7.772e-05,
+        "t_stat": -0.331,
+        "profit_factor": 0.962,
+        "win_rate": 0.4803,
+        "gross_over_cost": 28.726,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00299509,
+        "mean_net": 0.00060034,
+        "t_stat": 1.814,
+        "profit_factor": 1.505,
+        "win_rate": 0.5522,
+        "gross_over_cost": 21.394,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-7.772e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00552224,
+        "mean_net": -1.189e-05,
+        "t_stat": -0.036,
+        "profit_factor": 0.996,
+        "win_rate": 0.5159,
+        "gross_over_cost": 39.445,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00496277,
+        "mean_net": 0.00025172,
+        "t_stat": 0.469,
+        "profit_factor": 1.107,
+        "win_rate": 0.5149,
+        "gross_over_cost": 35.448,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-1.189e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00355809,
+        "mean_net": -0.00021691,
+        "t_stat": -1.037,
+        "profit_factor": 0.885,
+        "win_rate": 0.4672,
+        "gross_over_cost": 25.415,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00399731,
+        "mean_net": 0.00020862,
+        "t_stat": 0.484,
+        "profit_factor": 1.11,
+        "win_rate": 0.4701,
+        "gross_over_cost": 28.552,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00021691 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00513838,
+        "mean_net": 0.00015822,
+        "t_stat": 0.544,
+        "profit_factor": 1.064,
+        "win_rate": 0.4859,
+        "gross_over_cost": 36.703,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00549927,
+        "mean_net": 0.00047727,
+        "t_stat": 0.787,
+        "profit_factor": 1.191,
+        "win_rate": 0.5448,
+        "gross_over_cost": 39.281,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.544 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00355809,
+        "mean_net": -6.309e-05,
+        "t_stat": -0.301,
+        "profit_factor": 0.965,
+        "win_rate": 0.5028,
+        "gross_over_cost": 25.415,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00399731,
+        "mean_net": -0.00048862,
+        "t_stat": -1.134,
+        "profit_factor": 0.782,
+        "win_rate": 0.4925,
+        "gross_over_cost": 28.552,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-6.309e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00513838,
+        "mean_net": -0.00043822,
+        "t_stat": -1.507,
+        "profit_factor": 0.843,
+        "win_rate": 0.4916,
+        "gross_over_cost": 36.703,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00549927,
+        "mean_net": -0.00075727,
+        "t_stat": -1.249,
+        "profit_factor": 0.759,
+        "win_rate": 0.4328,
+        "gross_over_cost": 39.281,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00043822 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00366464,
+        "mean_net": 0.00022433,
+        "t_stat": 1.099,
+        "profit_factor": 1.131,
+        "win_rate": 0.5337,
+        "gross_over_cost": 26.176,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00402693,
+        "mean_net": 0.00012865,
+        "t_stat": 0.291,
+        "profit_factor": 1.066,
+        "win_rate": 0.5522,
+        "gross_over_cost": 28.764,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.099 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00475811,
+        "mean_net": 0.00030318,
+        "t_stat": 1.125,
+        "profit_factor": 1.136,
+        "win_rate": 0.5112,
+        "gross_over_cost": 33.986,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.0052257,
+        "mean_net": -7.022e-05,
+        "t_stat": -0.121,
+        "profit_factor": 0.974,
+        "win_rate": 0.4812,
+        "gross_over_cost": 37.326,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.125 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00366464,
+        "mean_net": -0.00050433,
+        "t_stat": -2.471,
+        "profit_factor": 0.759,
+        "win_rate": 0.4307,
+        "gross_over_cost": 26.176,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00402693,
+        "mean_net": -0.00040865,
+        "t_stat": -0.925,
+        "profit_factor": 0.817,
+        "win_rate": 0.4328,
+        "gross_over_cost": 28.764,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00050433 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00475811,
+        "mean_net": -0.00058318,
+        "t_stat": -2.163,
+        "profit_factor": 0.782,
+        "win_rate": 0.47,
+        "gross_over_cost": 33.986,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.0052257,
+        "mean_net": -0.00020978,
+        "t_stat": -0.36,
+        "profit_factor": 0.923,
+        "win_rate": 0.5113,
+        "gross_over_cost": 37.326,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00058318 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.00300191,
+        "mean_net": -6.891e-05,
+        "t_stat": -0.388,
+        "profit_factor": 0.955,
+        "win_rate": 0.4729,
+        "gross_over_cost": 21.442,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00343142,
+        "mean_net": -0.00028866,
+        "t_stat": -0.725,
+        "profit_factor": 0.845,
+        "win_rate": 0.4848,
+        "gross_over_cost": 24.51,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-6.891e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00478109,
+        "mean_net": 6.584e-05,
+        "t_stat": 0.239,
+        "profit_factor": 1.028,
+        "win_rate": 0.4981,
+        "gross_over_cost": 34.151,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00479962,
+        "mean_net": 0.00029206,
+        "t_stat": 0.529,
+        "profit_factor": 1.13,
+        "win_rate": 0.5076,
+        "gross_over_cost": 34.283,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.239 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.00300191,
+        "mean_net": -0.00021109,
+        "t_stat": -1.187,
+        "profit_factor": 0.869,
+        "win_rate": 0.4879,
+        "gross_over_cost": 21.442,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00343142,
+        "mean_net": 8.66e-06,
+        "t_stat": 0.022,
+        "profit_factor": 1.005,
+        "win_rate": 0.5076,
+        "gross_over_cost": 24.51,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00021109 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCAD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00478109,
+        "mean_net": -0.00034584,
+        "t_stat": -1.253,
+        "profit_factor": 0.865,
+        "win_rate": 0.485,
+        "gross_over_cost": 34.151,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00479962,
+        "mean_net": -0.00057206,
+        "t_stat": -1.037,
+        "profit_factor": 0.787,
+        "win_rate": 0.4697,
+        "gross_over_cost": 34.283,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00034584 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 61,
+        "gross_mean": 0.01000503,
+        "mean_net": 0.00065371,
+        "t_stat": 0.391,
+        "profit_factor": 1.14,
+        "win_rate": 0.541,
+        "gross_over_cost": 71.464,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.0109808,
+        "mean_net": -0.00110105,
+        "t_stat": -0.22,
+        "profit_factor": 0.818,
+        "win_rate": 0.375,
+        "gross_over_cost": 78.434,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.391 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 50,
+        "gross_mean": 0.01109125,
+        "mean_net": 0.00255372,
+        "t_stat": 1.341,
+        "profit_factor": 1.6,
+        "win_rate": 0.58,
+        "gross_over_cost": 79.223,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 6,
+        "gross_mean": 0.01825301,
+        "mean_net": 0.00065731,
+        "t_stat": 0.066,
+        "profit_factor": 1.075,
+        "win_rate": 0.3333,
+        "gross_over_cost": 130.379,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.341 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 61,
+        "gross_mean": 0.01000503,
+        "mean_net": -0.00093371,
+        "t_stat": -0.559,
+        "profit_factor": 0.829,
+        "win_rate": 0.459,
+        "gross_over_cost": 71.464,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.0109808,
+        "mean_net": 0.00082104,
+        "t_stat": 0.164,
+        "profit_factor": 1.162,
+        "win_rate": 0.625,
+        "gross_over_cost": 78.434,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00093371 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 50,
+        "gross_mean": 0.01109125,
+        "mean_net": -0.00283372,
+        "t_stat": -1.488,
+        "profit_factor": 0.594,
+        "win_rate": 0.42,
+        "gross_over_cost": 79.223,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 6,
+        "gross_mean": 0.01825301,
+        "mean_net": -0.00093731,
+        "t_stat": -0.093,
+        "profit_factor": 0.902,
+        "win_rate": 0.6667,
+        "gross_over_cost": 130.379,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00283372 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 40,
+        "gross_mean": 0.01066036,
+        "mean_net": 0.00220216,
+        "t_stat": 0.986,
+        "profit_factor": 1.523,
+        "win_rate": 0.625,
+        "gross_over_cost": 76.145,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 5,
+        "gross_mean": 0.01350554,
+        "mean_net": -0.00291979,
+        "t_stat": -0.385,
+        "profit_factor": 0.645,
+        "win_rate": 0.4,
+        "gross_over_cost": 96.468,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.986 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 33,
+        "gross_mean": 0.01053129,
+        "mean_net": 0.00306098,
+        "t_stat": 1.391,
+        "profit_factor": 1.825,
+        "win_rate": 0.6667,
+        "gross_over_cost": 75.224,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 4,
+        "gross_mean": 0.02225345,
+        "mean_net": -0.00013773,
+        "t_stat": -0.009,
+        "profit_factor": 0.988,
+        "win_rate": 0.5,
+        "gross_over_cost": 158.953,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.391 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 40,
+        "gross_mean": 0.01066036,
+        "mean_net": -0.00248216,
+        "t_stat": -1.111,
+        "profit_factor": 0.623,
+        "win_rate": 0.375,
+        "gross_over_cost": 76.145,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 5,
+        "gross_mean": 0.01350554,
+        "mean_net": 0.00263979,
+        "t_stat": 0.348,
+        "profit_factor": 1.487,
+        "win_rate": 0.6,
+        "gross_over_cost": 96.468,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00248216 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCAD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 33,
+        "gross_mean": 0.01053129,
+        "mean_net": -0.00334098,
+        "t_stat": -1.518,
+        "profit_factor": 0.52,
+        "win_rate": 0.3333,
+        "gross_over_cost": 75.224,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 4,
+        "gross_mean": 0.02225345,
+        "mean_net": -0.00014227,
+        "t_stat": -0.009,
+        "profit_factor": 0.987,
+        "win_rate": 0.5,
+        "gross_over_cost": 158.953,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00334098 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00431501,
+        "mean_net": 4.841e-05,
+        "t_stat": 0.159,
+        "profit_factor": 1.023,
+        "win_rate": 0.5235,
+        "gross_over_cost": 22.711,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00355084,
+        "mean_net": -6.477e-05,
+        "t_stat": -0.168,
+        "profit_factor": 0.964,
+        "win_rate": 0.5038,
+        "gross_over_cost": 18.689,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.159 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00602042,
+        "mean_net": 0.00011541,
+        "t_stat": 0.309,
+        "profit_factor": 1.039,
+        "win_rate": 0.5497,
+        "gross_over_cost": 31.686,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00559645,
+        "mean_net": -0.0005542,
+        "t_stat": -0.896,
+        "profit_factor": 0.82,
+        "win_rate": 0.4662,
+        "gross_over_cost": 29.455,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.309 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00431501,
+        "mean_net": -0.00042841,
+        "t_stat": -1.411,
+        "profit_factor": 0.82,
+        "win_rate": 0.4465,
+        "gross_over_cost": 22.711,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00355084,
+        "mean_net": -0.00031523,
+        "t_stat": -0.817,
+        "profit_factor": 0.837,
+        "win_rate": 0.4737,
+        "gross_over_cost": 18.689,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00042841 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00602042,
+        "mean_net": -0.00049541,
+        "t_stat": -1.325,
+        "profit_factor": 0.849,
+        "win_rate": 0.4296,
+        "gross_over_cost": 31.686,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00559645,
+        "mean_net": 0.0001742,
+        "t_stat": 0.282,
+        "profit_factor": 1.064,
+        "win_rate": 0.5113,
+        "gross_over_cost": 29.455,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00049541 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00406359,
+        "mean_net": -0.00012348,
+        "t_stat": -0.525,
+        "profit_factor": 0.941,
+        "win_rate": 0.5159,
+        "gross_over_cost": 21.387,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00356811,
+        "mean_net": -0.00065182,
+        "t_stat": -1.603,
+        "profit_factor": 0.692,
+        "win_rate": 0.4701,
+        "gross_over_cost": 18.78,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00012348 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00658929,
+        "mean_net": -0.00058048,
+        "t_stat": -1.256,
+        "profit_factor": 0.838,
+        "win_rate": 0.5009,
+        "gross_over_cost": 34.68,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.0057888,
+        "mean_net": -0.00060914,
+        "t_stat": -0.87,
+        "profit_factor": 0.81,
+        "win_rate": 0.4776,
+        "gross_over_cost": 30.467,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00058048 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00406359,
+        "mean_net": -0.00025652,
+        "t_stat": -1.091,
+        "profit_factor": 0.882,
+        "win_rate": 0.4522,
+        "gross_over_cost": 21.387,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00356811,
+        "mean_net": 0.00027182,
+        "t_stat": 0.668,
+        "profit_factor": 1.165,
+        "win_rate": 0.4925,
+        "gross_over_cost": 18.78,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025652 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00658929,
+        "mean_net": 0.00020048,
+        "t_stat": 0.434,
+        "profit_factor": 1.063,
+        "win_rate": 0.4803,
+        "gross_over_cost": 34.68,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.0057888,
+        "mean_net": 0.00022914,
+        "t_stat": 0.327,
+        "profit_factor": 1.082,
+        "win_rate": 0.4776,
+        "gross_over_cost": 30.467,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.434 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00484495,
+        "mean_net": -0.00065363,
+        "t_stat": -1.718,
+        "profit_factor": 0.763,
+        "win_rate": 0.4578,
+        "gross_over_cost": 25.5,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00445913,
+        "mean_net": -0.00014732,
+        "t_stat": -0.267,
+        "profit_factor": 0.936,
+        "win_rate": 0.4701,
+        "gross_over_cost": 23.469,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00065363 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00657101,
+        "mean_net": -0.00069168,
+        "t_stat": -1.426,
+        "profit_factor": 0.81,
+        "win_rate": 0.4653,
+        "gross_over_cost": 34.584,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00577711,
+        "mean_net": -0.00015563,
+        "t_stat": -0.216,
+        "profit_factor": 0.948,
+        "win_rate": 0.4627,
+        "gross_over_cost": 30.406,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00069168 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00484495,
+        "mean_net": 0.00027363,
+        "t_stat": 0.719,
+        "profit_factor": 1.12,
+        "win_rate": 0.5103,
+        "gross_over_cost": 25.5,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00445913,
+        "mean_net": -0.00023268,
+        "t_stat": -0.421,
+        "profit_factor": 0.901,
+        "win_rate": 0.4851,
+        "gross_over_cost": 23.469,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.719 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00657101,
+        "mean_net": 0.00031168,
+        "t_stat": 0.643,
+        "profit_factor": 1.1,
+        "win_rate": 0.5122,
+        "gross_over_cost": 34.584,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00577711,
+        "mean_net": -0.00022437,
+        "t_stat": -0.312,
+        "profit_factor": 0.925,
+        "win_rate": 0.5075,
+        "gross_over_cost": 30.406,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.643 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00403847,
+        "mean_net": -0.00022974,
+        "t_stat": -0.981,
+        "profit_factor": 0.892,
+        "win_rate": 0.4869,
+        "gross_over_cost": 21.255,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00377048,
+        "mean_net": -0.00019831,
+        "t_stat": -0.426,
+        "profit_factor": 0.9,
+        "win_rate": 0.5299,
+        "gross_over_cost": 19.845,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00022974 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00496487,
+        "mean_net": -0.00028848,
+        "t_stat": -0.964,
+        "profit_factor": 0.89,
+        "win_rate": 0.4869,
+        "gross_over_cost": 26.131,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00538546,
+        "mean_net": 1.389e-05,
+        "t_stat": 0.021,
+        "profit_factor": 1.005,
+        "win_rate": 0.5038,
+        "gross_over_cost": 28.345,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00028848 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00403847,
+        "mean_net": -0.00015026,
+        "t_stat": -0.642,
+        "profit_factor": 0.928,
+        "win_rate": 0.4775,
+        "gross_over_cost": 21.255,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00377048,
+        "mean_net": -0.00018169,
+        "t_stat": -0.39,
+        "profit_factor": 0.909,
+        "win_rate": 0.4328,
+        "gross_over_cost": 19.845,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00015026 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00496487,
+        "mean_net": -9.152e-05,
+        "t_stat": -0.306,
+        "profit_factor": 0.964,
+        "win_rate": 0.4869,
+        "gross_over_cost": 26.131,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00538546,
+        "mean_net": -0.00039389,
+        "t_stat": -0.606,
+        "profit_factor": 0.864,
+        "win_rate": 0.4662,
+        "gross_over_cost": 28.345,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.152e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.00342625,
+        "mean_net": -0.00023172,
+        "t_stat": -1.113,
+        "profit_factor": 0.874,
+        "win_rate": 0.471,
+        "gross_over_cost": 18.033,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00349001,
+        "mean_net": 5.961e-05,
+        "t_stat": 0.153,
+        "profit_factor": 1.035,
+        "win_rate": 0.5227,
+        "gross_over_cost": 18.368,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00023172 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00571555,
+        "mean_net": -3.402e-05,
+        "t_stat": -0.09,
+        "profit_factor": 0.988,
+        "win_rate": 0.5169,
+        "gross_over_cost": 30.082,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00458739,
+        "mean_net": 0.00021016,
+        "t_stat": 0.422,
+        "profit_factor": 1.096,
+        "win_rate": 0.4773,
+        "gross_over_cost": 24.144,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.402e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.00342625,
+        "mean_net": -0.00014828,
+        "t_stat": -0.712,
+        "profit_factor": 0.917,
+        "win_rate": 0.486,
+        "gross_over_cost": 18.033,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00349001,
+        "mean_net": -0.00043961,
+        "t_stat": -1.126,
+        "profit_factor": 0.777,
+        "win_rate": 0.447,
+        "gross_over_cost": 18.368,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00014828 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDCHF",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00571555,
+        "mean_net": -0.00034598,
+        "t_stat": -0.918,
+        "profit_factor": 0.886,
+        "win_rate": 0.4588,
+        "gross_over_cost": 30.082,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00458739,
+        "mean_net": -0.00059016,
+        "t_stat": -1.185,
+        "profit_factor": 0.772,
+        "win_rate": 0.4773,
+        "gross_over_cost": 24.144,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00034598 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 65,
+        "gross_mean": 0.00982705,
+        "mean_net": -0.00314314,
+        "t_stat": -1.907,
+        "profit_factor": 0.515,
+        "win_rate": 0.5385,
+        "gross_over_cost": 51.721,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.0102951,
+        "mean_net": 0.00107156,
+        "t_stat": 0.24,
+        "profit_factor": 1.232,
+        "win_rate": 0.5,
+        "gross_over_cost": 54.185,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00314314 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 51,
+        "gross_mean": 0.01778382,
+        "mean_net": -0.00259429,
+        "t_stat": -0.784,
+        "profit_factor": 0.745,
+        "win_rate": 0.549,
+        "gross_over_cost": 93.599,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.01852625,
+        "mean_net": -0.00699296,
+        "t_stat": -0.824,
+        "profit_factor": 0.454,
+        "win_rate": 0.25,
+        "gross_over_cost": 97.507,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00259429 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 65,
+        "gross_mean": 0.00982705,
+        "mean_net": 0.00276314,
+        "t_stat": 1.677,
+        "profit_factor": 1.781,
+        "win_rate": 0.4462,
+        "gross_over_cost": 51.721,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.0102951,
+        "mean_net": -0.00145156,
+        "t_stat": -0.325,
+        "profit_factor": 0.753,
+        "win_rate": 0.5,
+        "gross_over_cost": 54.185,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.677 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 51,
+        "gross_mean": 0.01778382,
+        "mean_net": 0.00221429,
+        "t_stat": 0.669,
+        "profit_factor": 1.284,
+        "win_rate": 0.4314,
+        "gross_over_cost": 93.599,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.01852625,
+        "mean_net": 0.00661297,
+        "t_stat": 0.78,
+        "profit_factor": 2.119,
+        "win_rate": 0.75,
+        "gross_over_cost": 97.507,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.669 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 38,
+        "gross_mean": 0.00905603,
+        "mean_net": -0.0018555,
+        "t_stat": -0.973,
+        "profit_factor": 0.659,
+        "win_rate": 0.5526,
+        "gross_over_cost": 47.663,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 3,
+        "gross_mean": 0.01437729,
+        "mean_net": 0.01418729,
+        "t_stat": 10.036,
+        "profit_factor": 999.0,
+        "win_rate": 1.0,
+        "gross_over_cost": 75.67,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0018555 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 31,
+        "gross_mean": 0.0179771,
+        "mean_net": -0.00398773,
+        "t_stat": -0.907,
+        "profit_factor": 0.637,
+        "win_rate": 0.5484,
+        "gross_over_cost": 94.616,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 3,
+        "gross_mean": 0.03085277,
+        "mean_net": 0.00021932,
+        "t_stat": 0.009,
+        "profit_factor": 1.014,
+        "win_rate": 0.6667,
+        "gross_over_cost": 162.383,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00398773 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 38,
+        "gross_mean": 0.00905603,
+        "mean_net": 0.0014755,
+        "t_stat": 0.774,
+        "profit_factor": 1.388,
+        "win_rate": 0.4474,
+        "gross_over_cost": 47.663,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 3,
+        "gross_mean": 0.01437729,
+        "mean_net": -0.01456729,
+        "t_stat": -10.305,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 75.67,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.774 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDCHF",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 31,
+        "gross_mean": 0.0179771,
+        "mean_net": 0.00360773,
+        "t_stat": 0.821,
+        "profit_factor": 1.501,
+        "win_rate": 0.4194,
+        "gross_over_cost": 94.616,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 3,
+        "gross_mean": 0.03085277,
+        "mean_net": -0.00059932,
+        "t_stat": -0.025,
+        "profit_factor": 0.962,
+        "win_rate": 0.3333,
+        "gross_over_cost": 162.383,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.821 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.0039265,
+        "mean_net": 7.042e-05,
+        "t_stat": 0.305,
+        "profit_factor": 1.037,
+        "win_rate": 0.5047,
+        "gross_over_cost": 39.265,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00386398,
+        "mean_net": 0.0001585,
+        "t_stat": 0.311,
+        "profit_factor": 1.086,
+        "win_rate": 0.5338,
+        "gross_over_cost": 38.64,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.305 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00553295,
+        "mean_net": 0.00030002,
+        "t_stat": 0.937,
+        "profit_factor": 1.115,
+        "win_rate": 0.5253,
+        "gross_over_cost": 55.329,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00560697,
+        "mean_net": 0.00045186,
+        "t_stat": 0.665,
+        "profit_factor": 1.176,
+        "win_rate": 0.5865,
+        "gross_over_cost": 56.07,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.937 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.0039265,
+        "mean_net": -0.00027042,
+        "t_stat": -1.172,
+        "profit_factor": 0.871,
+        "win_rate": 0.4765,
+        "gross_over_cost": 39.265,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00386398,
+        "mean_net": -0.0003585,
+        "t_stat": -0.704,
+        "profit_factor": 0.831,
+        "win_rate": 0.4511,
+        "gross_over_cost": 38.64,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027042 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00553295,
+        "mean_net": -0.00050002,
+        "t_stat": -1.561,
+        "profit_factor": 0.834,
+        "win_rate": 0.4578,
+        "gross_over_cost": 55.329,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00560697,
+        "mean_net": -0.00065186,
+        "t_stat": -0.96,
+        "profit_factor": 0.792,
+        "win_rate": 0.3985,
+        "gross_over_cost": 56.07,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00050002 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00380665,
+        "mean_net": 0.00016058,
+        "t_stat": 0.728,
+        "profit_factor": 1.088,
+        "win_rate": 0.5159,
+        "gross_over_cost": 38.067,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00394635,
+        "mean_net": 0.00020526,
+        "t_stat": 0.452,
+        "profit_factor": 1.11,
+        "win_rate": 0.5,
+        "gross_over_cost": 39.463,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.728 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00576725,
+        "mean_net": 0.00024558,
+        "t_stat": 0.727,
+        "profit_factor": 1.089,
+        "win_rate": 0.5235,
+        "gross_over_cost": 57.673,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00639917,
+        "mean_net": -0.0002394,
+        "t_stat": -0.316,
+        "profit_factor": 0.928,
+        "win_rate": 0.5,
+        "gross_over_cost": 63.992,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.727 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00380665,
+        "mean_net": -0.00036058,
+        "t_stat": -1.634,
+        "profit_factor": 0.827,
+        "win_rate": 0.4672,
+        "gross_over_cost": 38.067,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00394635,
+        "mean_net": -0.00040526,
+        "t_stat": -0.893,
+        "profit_factor": 0.814,
+        "win_rate": 0.4851,
+        "gross_over_cost": 39.463,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00036058 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00576725,
+        "mean_net": -0.00044558,
+        "t_stat": -1.319,
+        "profit_factor": 0.857,
+        "win_rate": 0.4634,
+        "gross_over_cost": 57.673,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00639917,
+        "mean_net": 3.94e-05,
+        "t_stat": 0.052,
+        "profit_factor": 1.012,
+        "win_rate": 0.4776,
+        "gross_over_cost": 63.992,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00044558 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00424058,
+        "mean_net": -3.204e-05,
+        "t_stat": -0.124,
+        "profit_factor": 0.985,
+        "win_rate": 0.4859,
+        "gross_over_cost": 42.406,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.0044019,
+        "mean_net": -0.00054466,
+        "t_stat": -0.945,
+        "profit_factor": 0.78,
+        "win_rate": 0.4776,
+        "gross_over_cost": 44.019,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.204e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00618605,
+        "mean_net": 5.209e-05,
+        "t_stat": 0.138,
+        "profit_factor": 1.017,
+        "win_rate": 0.4972,
+        "gross_over_cost": 61.86,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00634993,
+        "mean_net": -0.00016957,
+        "t_stat": -0.205,
+        "profit_factor": 0.948,
+        "win_rate": 0.5075,
+        "gross_over_cost": 63.499,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.138 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00424058,
+        "mean_net": -0.00016796,
+        "t_stat": -0.649,
+        "profit_factor": 0.924,
+        "win_rate": 0.4953,
+        "gross_over_cost": 42.406,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.0044019,
+        "mean_net": 0.00034466,
+        "t_stat": 0.598,
+        "profit_factor": 1.17,
+        "win_rate": 0.5,
+        "gross_over_cost": 44.019,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00016796 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 533,
+        "gross_mean": 0.00618605,
+        "mean_net": -0.00025209,
+        "t_stat": -0.667,
+        "profit_factor": 0.922,
+        "win_rate": 0.4859,
+        "gross_over_cost": 61.86,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00634993,
+        "mean_net": -3.043e-05,
+        "t_stat": -0.037,
+        "profit_factor": 0.99,
+        "win_rate": 0.4925,
+        "gross_over_cost": 63.499,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025209 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00423678,
+        "mean_net": -1.838e-05,
+        "t_stat": -0.07,
+        "profit_factor": 0.991,
+        "win_rate": 0.47,
+        "gross_over_cost": 42.368,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00479147,
+        "mean_net": 0.00027509,
+        "t_stat": 0.47,
+        "profit_factor": 1.122,
+        "win_rate": 0.5672,
+        "gross_over_cost": 47.915,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-1.838e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00547381,
+        "mean_net": -0.00020831,
+        "t_stat": -0.612,
+        "profit_factor": 0.927,
+        "win_rate": 0.4794,
+        "gross_over_cost": 54.738,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00642217,
+        "mean_net": 0.00182438,
+        "t_stat": 2.481,
+        "profit_factor": 1.796,
+        "win_rate": 0.5564,
+        "gross_over_cost": 64.222,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00020831 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00423678,
+        "mean_net": -0.00018162,
+        "t_stat": -0.689,
+        "profit_factor": 0.918,
+        "win_rate": 0.5075,
+        "gross_over_cost": 42.368,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00479147,
+        "mean_net": -0.00047509,
+        "t_stat": -0.812,
+        "profit_factor": 0.82,
+        "win_rate": 0.4328,
+        "gross_over_cost": 47.915,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00018162 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00547381,
+        "mean_net": 8.31e-06,
+        "t_stat": 0.024,
+        "profit_factor": 1.003,
+        "win_rate": 0.5094,
+        "gross_over_cost": 54.738,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 133,
+        "gross_mean": 0.00642217,
+        "mean_net": -0.00202438,
+        "t_stat": -2.753,
+        "profit_factor": 0.521,
+        "win_rate": 0.4361,
+        "gross_over_cost": 64.222,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.024 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.00359832,
+        "mean_net": -0.00028456,
+        "t_stat": -1.254,
+        "profit_factor": 0.854,
+        "win_rate": 0.4579,
+        "gross_over_cost": 35.983,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00365373,
+        "mean_net": 0.00155202,
+        "t_stat": 3.861,
+        "profit_factor": 2.494,
+        "win_rate": 0.6136,
+        "gross_over_cost": 36.537,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00028456 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00527217,
+        "mean_net": -0.00014773,
+        "t_stat": -0.475,
+        "profit_factor": 0.945,
+        "win_rate": 0.4869,
+        "gross_over_cost": 52.722,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00524552,
+        "mean_net": 0.00184768,
+        "t_stat": 3.131,
+        "profit_factor": 2.096,
+        "win_rate": 0.6364,
+        "gross_over_cost": 52.455,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00014773 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 535,
+        "gross_mean": 0.00359832,
+        "mean_net": 8.456e-05,
+        "t_stat": 0.373,
+        "profit_factor": 1.048,
+        "win_rate": 0.5121,
+        "gross_over_cost": 35.983,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00365373,
+        "mean_net": -0.00175202,
+        "t_stat": -4.358,
+        "profit_factor": 0.355,
+        "win_rate": 0.3788,
+        "gross_over_cost": 36.537,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.373 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "USDJPY",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 534,
+        "gross_mean": 0.00527217,
+        "mean_net": -5.227e-05,
+        "t_stat": -0.168,
+        "profit_factor": 0.98,
+        "win_rate": 0.4925,
+        "gross_over_cost": 52.722,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 132,
+        "gross_mean": 0.00524552,
+        "mean_net": -0.00204768,
+        "t_stat": -3.47,
+        "profit_factor": 0.441,
+        "win_rate": 0.3409,
+        "gross_over_cost": 52.455,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-5.227e-05 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 58,
+        "gross_mean": 0.01211757,
+        "mean_net": 0.0007115,
+        "t_stat": 0.365,
+        "profit_factor": 1.125,
+        "win_rate": 0.5345,
+        "gross_over_cost": 121.176,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 17,
+        "gross_mean": 0.01132236,
+        "mean_net": 0.00270127,
+        "t_stat": 0.875,
+        "profit_factor": 1.628,
+        "win_rate": 0.5882,
+        "gross_over_cost": 113.224,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.365 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 48,
+        "gross_mean": 0.01814986,
+        "mean_net": -0.00118345,
+        "t_stat": -0.374,
+        "profit_factor": 0.878,
+        "win_rate": 0.5208,
+        "gross_over_cost": 181.499,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 14,
+        "gross_mean": 0.01781079,
+        "mean_net": 0.00395438,
+        "t_stat": 0.685,
+        "profit_factor": 1.572,
+        "win_rate": 0.6429,
+        "gross_over_cost": 178.108,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00118345 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 58,
+        "gross_mean": 0.01211757,
+        "mean_net": -0.0009115,
+        "t_stat": -0.467,
+        "profit_factor": 0.86,
+        "win_rate": 0.4483,
+        "gross_over_cost": 121.176,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 17,
+        "gross_mean": 0.01132236,
+        "mean_net": -0.00290127,
+        "t_stat": -0.939,
+        "profit_factor": 0.593,
+        "win_rate": 0.4118,
+        "gross_over_cost": 113.224,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0009115 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 48,
+        "gross_mean": 0.01814986,
+        "mean_net": 0.00098345,
+        "t_stat": 0.31,
+        "profit_factor": 1.115,
+        "win_rate": 0.4792,
+        "gross_over_cost": 181.499,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 14,
+        "gross_mean": 0.01781079,
+        "mean_net": -0.00415438,
+        "t_stat": -0.72,
+        "profit_factor": 0.622,
+        "win_rate": 0.3571,
+        "gross_over_cost": 178.108,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.31 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 36,
+        "gross_mean": 0.01339636,
+        "mean_net": 0.00167327,
+        "t_stat": 0.634,
+        "profit_factor": 1.286,
+        "win_rate": 0.5833,
+        "gross_over_cost": 133.964,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.01182297,
+        "mean_net": 0.00265164,
+        "t_stat": 0.659,
+        "profit_factor": 1.58,
+        "win_rate": 0.6364,
+        "gross_over_cost": 118.23,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.634 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 31,
+        "gross_mean": 0.01973567,
+        "mean_net": -0.00146252,
+        "t_stat": -0.342,
+        "profit_factor": 0.862,
+        "win_rate": 0.4516,
+        "gross_over_cost": 197.357,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 10,
+        "gross_mean": 0.02018454,
+        "mean_net": 0.00436593,
+        "t_stat": 0.574,
+        "profit_factor": 1.553,
+        "win_rate": 0.6,
+        "gross_over_cost": 201.845,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00146252 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 36,
+        "gross_mean": 0.01339636,
+        "mean_net": -0.00187327,
+        "t_stat": -0.71,
+        "profit_factor": 0.755,
+        "win_rate": 0.3889,
+        "gross_over_cost": 133.964,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 11,
+        "gross_mean": 0.01182297,
+        "mean_net": -0.00285164,
+        "t_stat": -0.708,
+        "profit_factor": 0.612,
+        "win_rate": 0.3636,
+        "gross_over_cost": 118.23,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00187327 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "USDJPY",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 31,
+        "gross_mean": 0.01973567,
+        "mean_net": 0.00126252,
+        "t_stat": 0.295,
+        "profit_factor": 1.137,
+        "win_rate": 0.5484,
+        "gross_over_cost": 197.357,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 10,
+        "gross_mean": 0.02018454,
+        "mean_net": -0.00456593,
+        "t_stat": -0.6,
+        "profit_factor": 0.631,
+        "win_rate": 0.4,
+        "gross_over_cost": 201.845,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.295 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 550,
+        "gross_mean": 0.00688559,
+        "mean_net": -0.00014415,
+        "t_stat": -0.36,
+        "profit_factor": 0.959,
+        "win_rate": 0.5018,
+        "gross_over_cost": 34.428,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 137,
+        "gross_mean": 0.00664927,
+        "mean_net": -0.00054849,
+        "t_stat": -0.664,
+        "profit_factor": 0.847,
+        "win_rate": 0.5109,
+        "gross_over_cost": 33.246,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00014415 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 0,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 550,
+        "gross_mean": 0.00949192,
+        "mean_net": -0.00026804,
+        "t_stat": -0.492,
+        "profit_factor": 0.945,
+        "win_rate": 0.5073,
+        "gross_over_cost": 47.46,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 137,
+        "gross_mean": 0.00892796,
+        "mean_net": -0.00020727,
+        "t_stat": -0.203,
+        "profit_factor": 0.955,
+        "win_rate": 0.5109,
+        "gross_over_cost": 44.64,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00026804 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 550,
+        "gross_mean": 0.00688559,
+        "mean_net": -0.00025585,
+        "t_stat": -0.638,
+        "profit_factor": 0.928,
+        "win_rate": 0.4727,
+        "gross_over_cost": 34.428,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 137,
+        "gross_mean": 0.00664927,
+        "mean_net": 0.00014849,
+        "t_stat": 0.18,
+        "profit_factor": 1.046,
+        "win_rate": 0.4818,
+        "gross_over_cost": 33.246,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025585 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 0,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 550,
+        "gross_mean": 0.00949192,
+        "mean_net": -0.00013196,
+        "t_stat": -0.242,
+        "profit_factor": 0.973,
+        "win_rate": 0.4764,
+        "gross_over_cost": 47.46,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 137,
+        "gross_mean": 0.00892796,
+        "mean_net": -0.00019273,
+        "t_stat": -0.189,
+        "profit_factor": 0.958,
+        "win_rate": 0.4672,
+        "gross_over_cost": 44.64,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00013196 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 552,
+        "gross_mean": 0.00656285,
+        "mean_net": -0.00034654,
+        "t_stat": -0.891,
+        "profit_factor": 0.9,
+        "win_rate": 0.5054,
+        "gross_over_cost": 32.814,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.0064706,
+        "mean_net": 0.00013168,
+        "t_stat": 0.179,
+        "profit_factor": 1.042,
+        "win_rate": 0.5396,
+        "gross_over_cost": 32.353,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00034654 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 1,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 552,
+        "gross_mean": 0.010558,
+        "mean_net": -0.00043956,
+        "t_stat": -0.72,
+        "profit_factor": 0.92,
+        "win_rate": 0.5054,
+        "gross_over_cost": 52.79,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.01029915,
+        "mean_net": 0.00049265,
+        "t_stat": 0.437,
+        "profit_factor": 1.101,
+        "win_rate": 0.5324,
+        "gross_over_cost": 51.496,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00043956 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 552,
+        "gross_mean": 0.00656285,
+        "mean_net": -5.346e-05,
+        "t_stat": -0.138,
+        "profit_factor": 0.984,
+        "win_rate": 0.4692,
+        "gross_over_cost": 32.814,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.0064706,
+        "mean_net": -0.00053168,
+        "t_stat": -0.722,
+        "profit_factor": 0.849,
+        "win_rate": 0.446,
+        "gross_over_cost": 32.353,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-5.346e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 1,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 552,
+        "gross_mean": 0.010558,
+        "mean_net": 3.956e-05,
+        "t_stat": 0.065,
+        "profit_factor": 1.008,
+        "win_rate": 0.4746,
+        "gross_over_cost": 52.79,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.01029915,
+        "mean_net": -0.00089265,
+        "t_stat": -0.792,
+        "profit_factor": 0.841,
+        "win_rate": 0.4532,
+        "gross_over_cost": 51.496,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.065 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 552,
+        "gross_mean": 0.00739604,
+        "mean_net": -0.00031319,
+        "t_stat": -0.697,
+        "profit_factor": 0.919,
+        "win_rate": 0.4819,
+        "gross_over_cost": 36.98,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.00735772,
+        "mean_net": 0.00016097,
+        "t_stat": 0.193,
+        "profit_factor": 1.045,
+        "win_rate": 0.5036,
+        "gross_over_cost": 36.789,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00031319 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 2,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 551,
+        "gross_mean": 0.010252,
+        "mean_net": 0.00022062,
+        "t_stat": 0.362,
+        "profit_factor": 1.044,
+        "win_rate": 0.5245,
+        "gross_over_cost": 51.26,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.0105693,
+        "mean_net": 0.00061129,
+        "t_stat": 0.52,
+        "profit_factor": 1.123,
+        "win_rate": 0.5468,
+        "gross_over_cost": 52.847,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.362 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 552,
+        "gross_mean": 0.00739604,
+        "mean_net": -8.681e-05,
+        "t_stat": -0.193,
+        "profit_factor": 0.977,
+        "win_rate": 0.4964,
+        "gross_over_cost": 36.98,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.00735772,
+        "mean_net": -0.00056097,
+        "t_stat": -0.673,
+        "profit_factor": 0.858,
+        "win_rate": 0.482,
+        "gross_over_cost": 36.789,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-8.681e-05 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 2,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 551,
+        "gross_mean": 0.010252,
+        "mean_net": -0.00062062,
+        "t_stat": -1.019,
+        "profit_factor": 0.886,
+        "win_rate": 0.4592,
+        "gross_over_cost": 51.26,
+        "median_hold_hours": 48.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.0105693,
+        "mean_net": -0.00101129,
+        "t_stat": -0.86,
+        "profit_factor": 0.826,
+        "win_rate": 0.446,
+        "gross_over_cost": 52.847,
+        "median_hold_hours": 48.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00062062 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 554,
+        "gross_mean": 0.00720503,
+        "mean_net": 0.00026215,
+        "t_stat": 0.601,
+        "profit_factor": 1.076,
+        "win_rate": 0.5433,
+        "gross_over_cost": 36.025,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.00744574,
+        "mean_net": 0.00025031,
+        "t_stat": 0.287,
+        "profit_factor": 1.07,
+        "win_rate": 0.5468,
+        "gross_over_cost": 37.229,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.601 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 3,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 554,
+        "gross_mean": 0.00995484,
+        "mean_net": 0.00085739,
+        "t_stat": 1.373,
+        "profit_factor": 1.189,
+        "win_rate": 0.5451,
+        "gross_over_cost": 49.774,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 138,
+        "gross_mean": 0.01107597,
+        "mean_net": -0.00052054,
+        "t_stat": -0.417,
+        "profit_factor": 0.91,
+        "win_rate": 0.4783,
+        "gross_over_cost": 55.38,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.373 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 554,
+        "gross_mean": 0.00720503,
+        "mean_net": -0.00066215,
+        "t_stat": -1.517,
+        "profit_factor": 0.832,
+        "win_rate": 0.4422,
+        "gross_over_cost": 36.025,
+        "median_hold_hours": 24.0
+      },
+      "validation": {
+        "n": 139,
+        "gross_mean": 0.00744574,
+        "mean_net": -0.00065031,
+        "t_stat": -0.746,
+        "profit_factor": 0.84,
+        "win_rate": 0.446,
+        "gross_over_cost": 37.229,
+        "median_hold_hours": 24.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00066215 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 3,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 554,
+        "gross_mean": 0.00995484,
+        "mean_net": -0.00125739,
+        "t_stat": -2.013,
+        "profit_factor": 0.776,
+        "win_rate": 0.4386,
+        "gross_over_cost": 49.774,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 138,
+        "gross_mean": 0.01107597,
+        "mean_net": 0.00012054,
+        "t_stat": 0.097,
+        "profit_factor": 1.022,
+        "win_rate": 0.5145,
+        "gross_over_cost": 55.38,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00125739 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 545,
+        "gross_mean": 0.00638215,
+        "mean_net": 0.0004064,
+        "t_stat": 0.966,
+        "profit_factor": 1.136,
+        "win_rate": 0.5211,
+        "gross_over_cost": 31.911,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00688881,
+        "mean_net": -0.00103051,
+        "t_stat": -1.212,
+        "profit_factor": 0.74,
+        "win_rate": 0.5,
+        "gross_over_cost": 34.444,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.966 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 4,
+        "dir": 1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 545,
+        "gross_mean": 0.00959071,
+        "mean_net": 0.00045372,
+        "t_stat": 0.789,
+        "profit_factor": 1.099,
+        "win_rate": 0.4917,
+        "gross_over_cost": 47.954,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.01016933,
+        "mean_net": -0.00139802,
+        "t_stat": -1.124,
+        "profit_factor": 0.759,
+        "win_rate": 0.4627,
+        "gross_over_cost": 50.847,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.789 < 2.0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 1
+      },
+      "train": {
+        "n": 545,
+        "gross_mean": 0.00638215,
+        "mean_net": -0.0008064,
+        "t_stat": -1.916,
+        "profit_factor": 0.776,
+        "win_rate": 0.455,
+        "gross_over_cost": 31.911,
+        "median_hold_hours": 72.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.00688881,
+        "mean_net": 0.00063051,
+        "t_stat": 0.742,
+        "profit_factor": 1.201,
+        "win_rate": 0.4925,
+        "gross_over_cost": 34.444,
+        "median_hold_hours": 72.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0008064 <= 0"
+    },
+    {
+      "family": "D1_WEEKDAY_FIXED",
+      "symbol": "XAUUSD",
+      "params": {
+        "weekday": 4,
+        "dir": -1,
+        "hold_days": 2
+      },
+      "train": {
+        "n": 545,
+        "gross_mean": 0.00959071,
+        "mean_net": -0.00085372,
+        "t_stat": -1.484,
+        "profit_factor": 0.837,
+        "win_rate": 0.4862,
+        "gross_over_cost": 47.954,
+        "median_hold_hours": 96.0
+      },
+      "validation": {
+        "n": 134,
+        "gross_mean": 0.01016933,
+        "mean_net": 0.00099802,
+        "t_stat": 0.802,
+        "profit_factor": 1.218,
+        "win_rate": 0.5,
+        "gross_over_cost": 50.847,
+        "median_hold_hours": 96.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00085372 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 71,
+        "gross_mean": 0.01629786,
+        "mean_net": 0.00234978,
+        "t_stat": 0.922,
+        "profit_factor": 1.337,
+        "win_rate": 0.5493,
+        "gross_over_cost": 81.489,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 13,
+        "gross_mean": 0.01553808,
+        "mean_net": -0.00053609,
+        "t_stat": -0.099,
+        "profit_factor": 0.933,
+        "win_rate": 0.4615,
+        "gross_over_cost": 77.69,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.922 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 62,
+        "gross_mean": 0.02218988,
+        "mean_net": 0.00043392,
+        "t_stat": 0.118,
+        "profit_factor": 1.04,
+        "win_rate": 0.5161,
+        "gross_over_cost": 110.949,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 12,
+        "gross_mean": 0.01779796,
+        "mean_net": -0.00221345,
+        "t_stat": -0.335,
+        "profit_factor": 0.779,
+        "win_rate": 0.5,
+        "gross_over_cost": 88.99,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.118 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 71,
+        "gross_mean": 0.01629786,
+        "mean_net": -0.00274978,
+        "t_stat": -1.079,
+        "profit_factor": 0.712,
+        "win_rate": 0.4507,
+        "gross_over_cost": 81.489,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 13,
+        "gross_mean": 0.01553808,
+        "mean_net": 0.00013609,
+        "t_stat": 0.025,
+        "profit_factor": 1.018,
+        "win_rate": 0.5385,
+        "gross_over_cost": 77.69,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00274978 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 12,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 62,
+        "gross_mean": 0.02218988,
+        "mean_net": -0.00083392,
+        "t_stat": -0.226,
+        "profit_factor": 0.928,
+        "win_rate": 0.4677,
+        "gross_over_cost": 110.949,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 12,
+        "gross_mean": 0.01779796,
+        "mean_net": 0.00181345,
+        "t_stat": 0.274,
+        "profit_factor": 1.227,
+        "win_rate": 0.5,
+        "gross_over_cost": 88.99,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00083392 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 38,
+        "gross_mean": 0.0182765,
+        "mean_net": 0.00617386,
+        "t_stat": 1.654,
+        "profit_factor": 2.025,
+        "win_rate": 0.6316,
+        "gross_over_cost": 91.383,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.01643108,
+        "mean_net": 0.00519783,
+        "t_stat": 0.721,
+        "profit_factor": 1.93,
+        "win_rate": 0.625,
+        "gross_over_cost": 82.155,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.654 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "CONTINUATION",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 34,
+        "gross_mean": 0.02199977,
+        "mean_net": 0.00379138,
+        "t_stat": 0.747,
+        "profit_factor": 1.417,
+        "win_rate": 0.5588,
+        "gross_over_cost": 109.999,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 7,
+        "gross_mean": 0.01637491,
+        "mean_net": 0.00899796,
+        "t_stat": 1.221,
+        "profit_factor": 3.468,
+        "win_rate": 0.7143,
+        "gross_over_cost": 81.875,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.747 < 2.0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 1
+      },
+      "train": {
+        "n": 38,
+        "gross_mean": 0.0182765,
+        "mean_net": -0.00657386,
+        "t_stat": -1.761,
+        "profit_factor": 0.472,
+        "win_rate": 0.3684,
+        "gross_over_cost": 91.383,
+        "median_hold_hours": 168.0
+      },
+      "validation": {
+        "n": 8,
+        "gross_mean": 0.01643108,
+        "mean_net": -0.00559783,
+        "t_stat": -0.776,
+        "profit_factor": 0.493,
+        "win_rate": 0.375,
+        "gross_over_cost": 82.155,
+        "median_hold_hours": 168.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00657386 <= 0"
+    },
+    {
+      "family": "W1_BREAKOUT",
+      "symbol": "XAUUSD",
+      "params": {
+        "lookback_weeks": 26,
+        "mode": "REVERSAL",
+        "hold_weeks": 2
+      },
+      "train": {
+        "n": 34,
+        "gross_mean": 0.02199977,
+        "mean_net": -0.00419138,
+        "t_stat": -0.826,
+        "profit_factor": 0.68,
+        "win_rate": 0.4412,
+        "gross_over_cost": 109.999,
+        "median_hold_hours": 336.0
+      },
+      "validation": {
+        "n": 7,
+        "gross_mean": 0.01637491,
+        "mean_net": -0.00939796,
+        "t_stat": -1.275,
+        "profit_factor": 0.273,
+        "win_rate": 0.2857,
+        "gross_over_cost": 81.875,
+        "median_hold_hours": 336.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00419138 <= 0"
+    }
+  ]
+}
