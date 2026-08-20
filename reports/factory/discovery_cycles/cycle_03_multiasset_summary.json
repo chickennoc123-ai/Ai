@@ -1,0 +1,49 @@
+{
+  "cycle_id": "CYCLE-3-MULTIASSET",
+  "timestamp": "2026-08-20T01:33:53.565208",
+  "symbols": [
+    "EURUSD",
+    "GBPUSD",
+    "USDCAD",
+    "USDCHF",
+    "USDJPY",
+    "XAUUSD"
+  ],
+  "summary": {
+    "total_observations": 203,
+    "total_hypotheses": 43,
+    "symbols_processed": 6
+  },
+  "per_symbol": {
+    "EURUSD": {
+      "observations": 36,
+      "hypotheses": 8,
+      "dev_bars": 57600
+    },
+    "GBPUSD": {
+      "observations": 33,
+      "hypotheses": 7,
+      "dev_bars": 79998
+    },
+    "USDCAD": {
+      "observations": 36,
+      "hypotheses": 7,
+      "dev_bars": 79998
+    },
+    "USDCHF": {
+      "observations": 33,
+      "hypotheses": 7,
+      "dev_bars": 79998
+    },
+    "USDJPY": {
+      "observations": 29,
+      "hypotheses": 7,
+      "dev_bars": 79998
+    },
+    "XAUUSD": {
+      "observations": 36,
+      "hypotheses": 7,
+      "dev_bars": 79998
+    }
+  }
+}

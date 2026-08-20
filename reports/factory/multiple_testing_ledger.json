@@ -1,8 +1,8 @@
 {
-  "cumulative_hypotheses_generated": 15,
+  "cumulative_hypotheses_generated": 58,
   "cumulative_parameter_evaluations": 251,
   "cumulative_survivors": 0,
-  "cycle_count": 2,
+  "cycle_count": 3,
   "cycles": [
     {
       "cycle_id": "CYCLE-01",
@@ -34,19 +34,41 @@
       "parameter_evaluations": 243,
       "started_at": "2026-08-19T22:52:47.601874+00:00",
       "survivors": 0
+    },
+    {
+      "cycle_id": "CYCLE-3-MULTIASSET",
+      "families_touched": [
+        "EURUSD",
+        "GBPUSD",
+        "USDCAD",
+        "USDCHF",
+        "USDJPY",
+        "XAUUSD"
+      ],
+      "hypotheses_generated": 43,
+      "notes": "",
+      "parameter_evaluations": 0,
+      "started_at": "2026-08-20T01:33:53.564562+00:00",
+      "survivors": 0
     }
   ],
   "families_ever_touched": [
     "BREAKOUT_STRUCTURE",
     "COST_AMORTIZATION",
+    "EURUSD",
     "GAP_DISLOCATION",
     "GAP_MAGNITUDE_STRUCTURE",
+    "GBPUSD",
     "MULTITIMEFRAME_TREND_FILTER",
     "REGIME_RECOMBINATION",
     "SESSION_CONDITIONING",
     "STREAK_REVERSAL",
     "STREAK_REVERSAL_MULTIBAR",
+    "USDCAD",
+    "USDCHF",
+    "USDJPY",
     "VOLATILITY_STATE_FILTER",
-    "VOLATILITY_TRANSITION"
+    "VOLATILITY_TRANSITION",
+    "XAUUSD"
   ]
 }

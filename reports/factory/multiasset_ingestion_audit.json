@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "GBPUSD",
+    "period": "2010-08-05 22:00:00 to 2026-08-20 04:00:00",
+    "bars": 99998,
+    "expected_hours": 140598,
+    "coverage": 0.7112334457104653,
+    "passed": true
+  },
+  {
+    "symbol": "USDCAD",
+    "period": "2010-08-06 06:00:00 to 2026-08-20 04:00:00",
+    "bars": 99998,
+    "expected_hours": 140590,
+    "coverage": 0.7112739170638025,
+    "passed": true
+  },
+  {
+    "symbol": "USDCHF",
+    "period": "2010-08-06 09:00:00 to 2026-08-20 04:00:00",
+    "bars": 99998,
+    "expected_hours": 140587,
+    "coverage": 0.7112890950087846,
+    "passed": true
+  },
+  {
+    "symbol": "USDJPY",
+    "period": "2010-08-05 19:00:00 to 2026-08-20 04:00:00",
+    "bars": 99998,
+    "expected_hours": 140601,
+    "coverage": 0.7112182701403261,
+    "passed": true
+  },
+  {
+    "symbol": "XAUUSD",
+    "period": "2009-12-03 05:00:00 to 2026-08-20 04:00:00",
+    "bars": 99998,
+    "expected_hours": 146495,
+    "coverage": 0.6826035018260009,
+    "passed": true
+  }
+]
