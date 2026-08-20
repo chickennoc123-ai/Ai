@@ -245,13 +245,24 @@ class TestHoldoutNeverTouched:
         src = (REPO_ROOT / "discovery" / "cycle2_horizon.py").read_text()
         assert "holdout" not in src.lower()
 
-    def test_holdout_remains_sealed_and_unconsumed(self):
+    def test_original_eurusd_holdout_remains_sealed_and_unconsumed(self):
+        """
+        Written when the vault held only the EURUSD Gen 6 holdout, so it
+        originally asserted every dataset was sealed and the vault held no
+        authorizations/consumptions at all. A real GEN 14 run has since
+        legitimately sealed, authorized and consumed four OTHER symbols'
+        holdouts (GBPUSD/USDCHF/USDJPY/XAUUSD -- see
+        ML-001-GEN14-C2-NFP-FINAL-VERDICT.md). The invariant this test
+        protects is that THIS specific dataset -- the one that existed and
+        was sealed at Cycle 2 -- was never touched by that or any other run.
+        """
         from core.factory.evidence_vault import EvidenceVault
         vault = EvidenceVault()
-        for ds_id, meta in vault.datasets.items():
-            assert meta.seal_status.value == "sealed"
-        assert vault.authorizations == {}
-        assert vault.consumptions == []
+        eurusd_id = "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130"
+        assert eurusd_id in vault.datasets
+        assert vault.datasets[eurusd_id].seal_status.value == "sealed"
+        assert not any(k.startswith(f"{eurusd_id}:") for k in vault.authorizations)
+        assert not any(c.dataset_id == eurusd_id for c in vault.consumptions)
 
 
 # ---------------------------------------------------------------------------

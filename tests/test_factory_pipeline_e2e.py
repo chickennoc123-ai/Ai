@@ -257,12 +257,27 @@ class TestEAGeneration:
 # ------------------------------------------------- real holdout stays sealed
 
 class TestRealHoldoutUntouched:
-    def test_no_authorization_was_ever_issued_in_production(self):
+    def test_authorizations_are_only_for_legitimately_run_gen14_candidates(self):
+        """
+        Written when no GEN 14 run had ever happened, so it originally asserted
+        the registry was empty. A real, explicitly-authorized GEN 14 run
+        (the 4 C2-NFP candidates, all terminal FAIL -- see
+        ML-001-GEN14-C2-NFP-FINAL-VERDICT.md) has since occurred. The
+        invariant this test protects is narrower than "empty": every
+        authorization on record must belong to a candidate that is frozen
+        AND carries a terminal result -- never a live, still-mutable one.
+        """
         p = REPO_ROOT / "reports/factory/holdout_authorization_registry.json"
-        if p.exists():
-            data = json.loads(p.read_text())
-            assert data.get("authorizations", {}) == {}, \
-                "production holdout authorizations exist; holdout is no longer virgin"
+        if not p.exists():
+            return
+        data = json.loads(p.read_text())
+        reg = CandidateSpecRegistry(REPO_ROOT / "reports/factory/candidate_spec_registry.json")
+        for cid, auth in data.get("authorizations", {}).items():
+            spec = reg.get_candidate(cid)
+            assert spec is not None and spec.is_frozen(), (
+                f"{cid} has a holdout authorization but is not frozen")
+            assert auth["result"] in ("PASS", "FAIL"), (
+                f"{cid} has an authorization without a terminal result")
 
     def test_pipeline_result_reports_holdout_sealed(self):
         p = REPO_ROOT / "reports/factory/pipeline_result.json"
