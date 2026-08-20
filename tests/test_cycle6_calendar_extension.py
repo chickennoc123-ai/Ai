@@ -127,6 +127,14 @@ class TestGovernanceUntouched:
         assert lg["cumulative_parameter_evaluations"] >= 750
         assert lg["cumulative_survivors"] >= 1
 
-    def test_holdout_still_unconsumed(self):
+    def test_original_eurusd_holdout_still_unconsumed(self):
         ev = json.loads((REPO_ROOT / "reports/factory/evidence_vault.json").read_text())
-        assert ev["authorizations"] == {} and ev["consumptions"] == []
+        # A real GEN 14 run (see ML-001-GEN14-C2-NFP-FINAL-VERDICT.md) later
+        # legitimately sealed, authorized and consumed four OTHER symbols'
+        # holdouts; the vault is no longer empty. The invariant this test
+        # actually protects is that THIS SPECIFIC dataset -- the original
+        # EURUSD holdout, sealed since Gen 6 -- was never touched.
+        eurusd_id = "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130"
+        assert ev["datasets"][eurusd_id]["seal_status"] == "sealed"
+        assert not any(k.startswith(f"{eurusd_id}:") for k in ev["authorizations"])
+        assert not any(c["dataset_id"] == eurusd_id for c in ev["consumptions"])

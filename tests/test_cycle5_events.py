@@ -311,9 +311,17 @@ class TestB2Review:
         assert rev["total_evaluations"] == sum(
             rev[k].get("evaluations", 0) for k in rev if isinstance(rev[k], dict))
 
-    def test_holdout_untouched_by_the_review(self):
+    def test_original_eurusd_holdout_untouched_by_the_review(self):
         ev = json.loads((REPO_ROOT / "reports/factory/evidence_vault.json").read_text())
-        assert ev["authorizations"] == {} and ev["consumptions"] == []
+        # A real GEN 14 run (see ML-001-GEN14-C2-NFP-FINAL-VERDICT.md) later
+        # legitimately sealed, authorized and consumed four OTHER symbols'
+        # holdouts; the vault is no longer empty. The invariant this test
+        # actually protects is that THIS SPECIFIC dataset -- the original
+        # EURUSD holdout, sealed since Gen 6 -- was never touched.
+        eurusd_id = "DS-HOLDOUT-EURUSD-H1-HISTDATA-20240101-20260130"
+        assert ev["datasets"][eurusd_id]["seal_status"] == "sealed"
+        assert not any(k.startswith(f"{eurusd_id}:") for k in ev["authorizations"])
+        assert not any(c["dataset_id"] == eurusd_id for c in ev["consumptions"])
 
 
 class TestCycle5Ledger:
