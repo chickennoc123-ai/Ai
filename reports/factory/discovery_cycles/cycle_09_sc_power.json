@@ -1,0 +1,957 @@
+{
+  "cycle_id": "CYCLE-09-SC-POWER-EXPANSION",
+  "preregistration": "CYCLE9-PREREGISTRATION.md",
+  "event_pool_size": 393,
+  "event_types": [
+    "ADP Non-Farm Employment Change",
+    "CPI y/y",
+    "Non-Farm Employment Change"
+  ],
+  "parameter_evaluations": 30,
+  "outcome": "STILL_UNDERPOWERED",
+  "survivor_count": 0,
+  "survivors": [],
+  "still_underpowered_count": 6,
+  "still_underpowered": [
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.00033712,
+        "t_stat": 3.939,
+        "profit_factor": 2.436,
+        "win_rate": 0.6443,
+        "gross_over_cost": 9.065
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00012486,
+        "t_stat": 1.074,
+        "profit_factor": 1.899,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.00027339,
+        "t_stat": 2.388,
+        "profit_factor": 1.71,
+        "win_rate": 0.5772,
+        "gross_over_cost": 11.431
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 9.557e-05,
+        "t_stat": 0.438,
+        "profit_factor": 1.281,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.00018335,
+        "t_stat": 2.917,
+        "profit_factor": 1.957,
+        "win_rate": 0.557,
+        "gross_over_cost": 5.722
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -1.305e-05,
+        "t_stat": -0.097,
+        "profit_factor": 0.939,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 131,
+        "mean_net": 0.0005993,
+        "t_stat": 3.566,
+        "profit_factor": 2.541,
+        "win_rate": 0.6565,
+        "gross_over_cost": 7.886
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 4.187e-05,
+        "t_stat": 0.107,
+        "profit_factor": 1.063,
+        "win_rate": 0.4545,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=22 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": 0.00217076,
+        "t_stat": 7.31,
+        "profit_factor": 7.568,
+        "win_rate": 0.7107,
+        "gross_over_cost": 29.317
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00051092,
+        "t_stat": 1.79,
+        "profit_factor": 2.737,
+        "win_rate": 0.6087,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": 0.00179402,
+        "t_stat": 5.111,
+        "profit_factor": 3.793,
+        "win_rate": 0.6446,
+        "gross_over_cost": 17.203
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00029097,
+        "t_stat": 0.572,
+        "profit_factor": 1.368,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    }
+  ],
+  "train_failed_count": 24,
+  "validation_failed_count": 0,
+  "results": [
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.00033712,
+        "t_stat": 3.939,
+        "profit_factor": 2.436,
+        "win_rate": 0.6443,
+        "gross_over_cost": 9.065
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00012486,
+        "t_stat": 1.074,
+        "profit_factor": 1.899,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.00027339,
+        "t_stat": 2.388,
+        "profit_factor": 1.71,
+        "win_rate": 0.5772,
+        "gross_over_cost": 11.431
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 9.557e-05,
+        "t_stat": 0.438,
+        "profit_factor": 1.281,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.00010395,
+        "t_stat": 0.659,
+        "profit_factor": 1.152,
+        "win_rate": 0.5034,
+        "gross_over_cost": 15.696
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 6.824e-05,
+        "t_stat": 0.315,
+        "profit_factor": 1.206,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.659 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 9.485e-05,
+        "t_stat": 0.494,
+        "profit_factor": 1.113,
+        "win_rate": 0.4698,
+        "gross_over_cost": 18.721
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.0002992,
+        "t_stat": 0.897,
+        "profit_factor": 1.608,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.494 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 4.546e-05,
+        "t_stat": 0.17,
+        "profit_factor": 1.036,
+        "win_rate": 0.5168,
+        "gross_over_cost": 26.678
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00091604,
+        "t_stat": 1.937,
+        "profit_factor": 3.338,
+        "win_rate": 0.6087,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.17 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.0001766,
+        "t_stat": 0.588,
+        "profit_factor": 1.132,
+        "win_rate": 0.5503,
+        "gross_over_cost": 29.443
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.0010544,
+        "t_stat": 2.015,
+        "profit_factor": 3.352,
+        "win_rate": 0.6957,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.588 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 0.00018335,
+        "t_stat": 2.917,
+        "profit_factor": 1.957,
+        "win_rate": 0.557,
+        "gross_over_cost": 5.722
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -1.305e-05,
+        "t_stat": -0.097,
+        "profit_factor": 0.939,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": 2.25e-05,
+        "t_stat": 0.227,
+        "profit_factor": 1.053,
+        "win_rate": 0.4966,
+        "gross_over_cost": 8.245
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 3.134e-05,
+        "t_stat": 0.136,
+        "profit_factor": 1.081,
+        "win_rate": 0.4783,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.227 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": -7.656e-05,
+        "t_stat": -0.608,
+        "profit_factor": 0.872,
+        "win_rate": 0.3826,
+        "gross_over_cost": 10.317
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.0002656,
+        "t_stat": -1.13,
+        "profit_factor": 0.565,
+        "win_rate": 0.3478,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-7.656e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": -6.989e-05,
+        "t_stat": -0.452,
+        "profit_factor": 0.903,
+        "win_rate": 0.4631,
+        "gross_over_cost": 12.365
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -1.584e-05,
+        "t_stat": -0.045,
+        "profit_factor": 0.977,
+        "win_rate": 0.3913,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-6.989e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": -0.00018421,
+        "t_stat": -0.876,
+        "profit_factor": 0.827,
+        "win_rate": 0.4564,
+        "gross_over_cost": 17.191
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00012766,
+        "t_stat": -0.254,
+        "profit_factor": 0.877,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00018421 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 149,
+        "mean_net": -0.00026759,
+        "t_stat": -1.025,
+        "profit_factor": 0.794,
+        "win_rate": 0.4966,
+        "gross_over_cost": 20.367
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00028133,
+        "t_stat": -0.544,
+        "profit_factor": 0.751,
+        "win_rate": 0.4348,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00026759 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 126,
+        "mean_net": 0.00019532,
+        "t_stat": 1.013,
+        "profit_factor": 1.294,
+        "win_rate": 0.5238,
+        "gross_over_cost": 8.625
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00013839,
+        "t_stat": 0.404,
+        "profit_factor": 1.261,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.013 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 126,
+        "mean_net": -3.316e-05,
+        "t_stat": -0.12,
+        "profit_factor": 0.969,
+        "win_rate": 0.4841,
+        "gross_over_cost": 11.522
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00011131,
+        "t_stat": -0.254,
+        "profit_factor": 0.859,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.316e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 126,
+        "mean_net": -0.00026417,
+        "t_stat": -0.79,
+        "profit_factor": 0.808,
+        "win_rate": 0.4524,
+        "gross_over_cost": 13.421
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00050908,
+        "t_stat": -1.176,
+        "profit_factor": 0.524,
+        "win_rate": 0.4348,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00026417 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 126,
+        "mean_net": -0.00040743,
+        "t_stat": -1.06,
+        "profit_factor": 0.767,
+        "win_rate": 0.4762,
+        "gross_over_cost": 16.432
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00100834,
+        "t_stat": -2.15,
+        "profit_factor": 0.31,
+        "win_rate": 0.3043,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00040743 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 126,
+        "mean_net": -0.00058324,
+        "t_stat": -1.08,
+        "profit_factor": 0.777,
+        "win_rate": 0.4365,
+        "gross_over_cost": 24.29
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00019778,
+        "t_stat": 0.174,
+        "profit_factor": 1.115,
+        "win_rate": 0.4783,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00058324 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 126,
+        "mean_net": -6.731e-05,
+        "t_stat": -0.118,
+        "profit_factor": 0.973,
+        "win_rate": 0.4603,
+        "gross_over_cost": 25.18
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00022733,
+        "t_stat": -0.201,
+        "profit_factor": 0.895,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-6.731e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 131,
+        "mean_net": 0.0005993,
+        "t_stat": 3.566,
+        "profit_factor": 2.541,
+        "win_rate": 0.6565,
+        "gross_over_cost": 7.886
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 4.187e-05,
+        "t_stat": 0.107,
+        "profit_factor": 1.063,
+        "win_rate": 0.4545,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=22 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 131,
+        "mean_net": 0.00017422,
+        "t_stat": 0.745,
+        "profit_factor": 1.202,
+        "win_rate": 0.5344,
+        "gross_over_cost": 10.483
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 1.577e-05,
+        "t_stat": 0.036,
+        "profit_factor": 1.021,
+        "win_rate": 0.5455,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.745 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 131,
+        "mean_net": 0.00032333,
+        "t_stat": 1.007,
+        "profit_factor": 1.284,
+        "win_rate": 0.542,
+        "gross_over_cost": 14.012
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 0.00058051,
+        "t_stat": 1.152,
+        "profit_factor": 1.809,
+        "win_rate": 0.6818,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.007 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 131,
+        "mean_net": 0.00015747,
+        "t_stat": 0.454,
+        "profit_factor": 1.116,
+        "win_rate": 0.4962,
+        "gross_over_cost": 15.349
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 0.00041525,
+        "t_stat": 0.604,
+        "profit_factor": 1.441,
+        "win_rate": 0.5455,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.454 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 131,
+        "mean_net": -0.0002019,
+        "t_stat": -0.413,
+        "profit_factor": 0.91,
+        "win_rate": 0.4504,
+        "gross_over_cost": 22.427
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 0.00159534,
+        "t_stat": 1.298,
+        "profit_factor": 2.491,
+        "win_rate": 0.5909,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0002019 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 131,
+        "mean_net": 4.295e-05,
+        "t_stat": 0.077,
+        "profit_factor": 1.018,
+        "win_rate": 0.4351,
+        "gross_over_cost": 25.067
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 0.00159043,
+        "t_stat": 1.272,
+        "profit_factor": 2.172,
+        "win_rate": 0.7273,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.077 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": -3.256e-05,
+        "t_stat": -0.403,
+        "profit_factor": 0.904,
+        "win_rate": 0.4959,
+        "gross_over_cost": 7.457
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00021178,
+        "t_stat": 1.326,
+        "profit_factor": 2.369,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.256e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": 3.309e-05,
+        "t_stat": 0.342,
+        "profit_factor": 1.087,
+        "win_rate": 0.5124,
+        "gross_over_cost": 8.938
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 6.849e-05,
+        "t_stat": 0.414,
+        "profit_factor": 1.269,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.342 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": 0.00217076,
+        "t_stat": 7.31,
+        "profit_factor": 7.568,
+        "win_rate": 0.7107,
+        "gross_over_cost": 29.317
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00051092,
+        "t_stat": 1.79,
+        "profit_factor": 2.737,
+        "win_rate": 0.6087,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": -0.00012156,
+        "t_stat": -1.078,
+        "profit_factor": 0.761,
+        "win_rate": 0.4298,
+        "gross_over_cost": 5.711
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00011589,
+        "t_stat": -0.548,
+        "profit_factor": 0.719,
+        "win_rate": 0.4783,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00012156 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": -6.492e-05,
+        "t_stat": -0.503,
+        "profit_factor": 0.882,
+        "win_rate": 0.4711,
+        "gross_over_cost": 6.432
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": -0.00018676,
+        "t_stat": -0.735,
+        "profit_factor": 0.63,
+        "win_rate": 0.5217,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-6.492e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 393,
+      "train": {
+        "n": 121,
+        "mean_net": 0.00179402,
+        "t_stat": 5.111,
+        "profit_factor": 3.793,
+        "win_rate": 0.6446,
+        "gross_over_cost": 17.203
+      },
+      "validation": {
+        "n": 23,
+        "mean_net": 0.00029097,
+        "t_stat": 0.572,
+        "profit_factor": 1.368,
+        "win_rate": 0.5652,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=23 < 30"
+    }
+  ]
+}

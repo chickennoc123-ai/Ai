@@ -828,7 +828,26 @@
       "reusability": "MECHANISM_SPECIFIC",
       "scope": "SC_SURPRISE_CONFIRMATION mechanism specifically, 268-event USD NFP+CPI pool, 2010-2020.",
       "timestamp": "2026-08-20T18:17:11.820839+00:00"
+    },
+    {
+      "confidence": "DIRECTLY_MEASURED",
+      "entity_id": "CYCLE-09-SC-STILL-UNDERPOWERED",
+      "evidence_reference": "reports/factory/discovery_cycles/cycle_09_sc_power.json",
+      "failure_category": "INSUFFICIENT_HISTORY",
+      "failure_id": "FAIL-000043",
+      "failure_reason": "SC_SURPRISE_CONFIRMATION re-tested once against a pre-registered, expanded event pool (393 events: NFP+CPI y/y+ADP Non-Farm Employment Change, 2010-2020.05; Federal Funds Rate excluded pre-run, verified 0 usable surprises in-window). Train-side signal remained strong and consistent with Cycle 8 (t up to +7.31, USDJPY/SPX500 240m; +5.11 USDCHF/SPX500; three more combinations at t>=2.4). Validation n improved from Cycle 8's 14-16 to 22-23 but did NOT clear the n>=30 floor on any of the 6 combinations that had shown train significance in Cycle 8. This SUPERSEDES FAIL-000042 -- same underlying finding, now measured with a larger pool, same conclusion: inconclusive, NOT refuted, NOT confirmed.",
+      "failure_stage": "MULTIPLE_TESTING",
+      "future_research_implication": "If GC futures or another source extending past 2020 for Oil/SPX500/US10Y M1 is ever acquired (the same gap noted in Cycles 7-8's cross-asset coverage), SC_SURPRISE_CONFIRMATION should be the first candidate re-tested against it, since it is the only mechanism in this project's history to show train-side signal this consistent without being refuted.",
+      "mechanism": "The validation-period (later years within 2010-2020.05) confirmation rate (~29%) is measurably lower than the train-period rate (~41%) across every affected combination -- consistent, not random. This could reflect a genuine regime difference (e.g. post-2015 near-zero-rate/QE years behaving differently from 2010-2014), or simply that the later years contain fewer qualifying events by chance. The data cannot distinguish these from within this window.",
+      "prevention_rule": "Do not re-test SC_SURPRISE_CONFIRMATION again on this same 2010-2020.05 window with any further event-type additions from this calendar -- the window itself, not the event-type list, is now the binding constraint (estimated ~510-540 events needed vs 393 available, and no further USD NFP/CPI/FOMC-family type with actual/forecast remains unused in this window). Any further attempt requires either (a) genuinely new data extending past 2020-05 for the M1 cross-asset series, or (b) accepting a materially wider event-type scope beyond the NFP/CPI/FOMC family, which changes what is being tested and should be treated as a new pre-registration, not a 'expansion' of this one.",
+      "related_family": "SC_SURPRISE_CONFIRMATION",
+      "related_features": [],
+      "related_market": "EURUSD,GBPUSD,USDJPY,USDCHF,XAUUSD",
+      "related_search_space": "",
+      "reusability": "MECHANISM_SPECIFIC",
+      "scope": "SC_SURPRISE_CONFIRMATION, NFP+CPI+ADP event pool, 2010-2020.05, same 6 (symbol,driver) pairings as Cycle 8.",
+      "timestamp": "2026-08-20T19:45:28.121421+00:00"
     }
   ],
-  "next_id": 43
+  "next_id": 44
 }

@@ -1,8 +1,8 @@
 {
   "cumulative_hypotheses_generated": 86,
-  "cumulative_parameter_evaluations": 1522,
+  "cumulative_parameter_evaluations": 1552,
   "cumulative_survivors": 5,
-  "cycle_count": 9,
+  "cycle_count": 10,
   "cycles": [
     {
       "cycle_id": "CYCLE-01",
@@ -142,6 +142,17 @@
       "notes": "Event x cross-asset intraday, NFP+CPI anchored (268 events, 2010-2020, overlap of event calendar and M1 cross-asset coverage). Self-critique: 5m/15m/30m require genuine M1 FX data, available only for EURUSD/GBPUSD/XAUUSD (Oanda via FutureSharks/financial-data); USDJPY/USDCHF have no M1 source (histdata.com blocked; philipperemy/FX-1-Minute-Data confirmed to be an API client with no committed data, not usable) and were tested only at 1H/2H/4H -- 24 sub-hourly combinations explicitly marked BLOCKED_NO_INTRADAY_DATA, not fabricated from H1 bars. 120 evaluations across 4 pre-registered mechanisms (DC/SC/DR/RI) x 6 (symbol,driver) pairings, 60s execution delay applied uniformly. 0/120 survivors.",
       "parameter_evaluations": 120,
       "started_at": "2026-08-20T18:13:19.545932+00:00",
+      "survivors": 0
+    },
+    {
+      "cycle_id": "CYCLE-09-SC-POWER-EXPANSION",
+      "families_touched": [
+        "SC_SURPRISE_CONFIRMATION"
+      ],
+      "hypotheses_generated": 0,
+      "notes": "Pre-registered power expansion (CYCLE9-PREREGISTRATION.md, frozen before evaluation) re-testing ONLY SC_SURPRISE_CONFIRMATION from Cycle 8, unmodified mechanism/gates/costs/delay. Event pool grown from 268 (NFP+CPI) to 393 (NFP+CPI+ADP; Federal Funds Rate considered and excluded pre-run -- verified 0 nonzero-surprise instances in the 2010-2020.05 window). Outcome per the pre-registered decision rule: STILL_UNDERPOWERED. Train n grew substantially (81-93 -> 121-149) but validation n only reached 22-23 against the required 30 -- the val-period confirmation rate (~29%) is lower than train-period (~41%), a genuine finding not a bug. Estimated ~510-540 total events needed (~30-36% more than the 393 available) to clear the gate; the 2010-2020.05 window is already fully used for these 3 event types and cannot be extended without a new data acquisition. Per pre-registration: STOP, no third expansion attempted this cycle.",
+      "parameter_evaluations": 30,
+      "started_at": "2026-08-20T19:45:28.118662+00:00",
       "survivors": 0
     }
   ],
