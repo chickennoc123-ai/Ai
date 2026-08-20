@@ -1,8 +1,8 @@
 {
-  "cumulative_hypotheses_generated": 80,
-  "cumulative_parameter_evaluations": 1402,
+  "cumulative_hypotheses_generated": 86,
+  "cumulative_parameter_evaluations": 1522,
   "cumulative_survivors": 5,
-  "cycle_count": 8,
+  "cycle_count": 9,
   "cycles": [
     {
       "cycle_id": "CYCLE-01",
@@ -129,6 +129,20 @@
       "parameter_evaluations": 180,
       "started_at": "2026-08-20T16:34:12.744477+00:00",
       "survivors": 0
+    },
+    {
+      "cycle_id": "CYCLE-08-EVENT-CROSSASSET-INTRADAY",
+      "families_touched": [
+        "DC_CROSS_ASSET_DIVERGENCE",
+        "SC_SURPRISE_CONFIRMATION",
+        "DR_DELAYED_REACTION",
+        "RI_REVERSAL_AFTER_IMPULSE"
+      ],
+      "hypotheses_generated": 6,
+      "notes": "Event x cross-asset intraday, NFP+CPI anchored (268 events, 2010-2020, overlap of event calendar and M1 cross-asset coverage). Self-critique: 5m/15m/30m require genuine M1 FX data, available only for EURUSD/GBPUSD/XAUUSD (Oanda via FutureSharks/financial-data); USDJPY/USDCHF have no M1 source (histdata.com blocked; philipperemy/FX-1-Minute-Data confirmed to be an API client with no committed data, not usable) and were tested only at 1H/2H/4H -- 24 sub-hourly combinations explicitly marked BLOCKED_NO_INTRADAY_DATA, not fabricated from H1 bars. 120 evaluations across 4 pre-registered mechanisms (DC/SC/DR/RI) x 6 (symbol,driver) pairings, 60s execution delay applied uniformly. 0/120 survivors.",
+      "parameter_evaluations": 120,
+      "started_at": "2026-08-20T18:13:19.545932+00:00",
+      "survivors": 0
     }
   ],
   "families_ever_touched": [
@@ -146,6 +160,8 @@
     "C4_EVENT_SEQUENCE",
     "COST_AMORTIZATION",
     "D1_WEEKDAY_FIXED",
+    "DC_CROSS_ASSET_DIVERGENCE",
+    "DR_DELAYED_REACTION",
     "E1_CROSS_ASSET_CONVERGENCE",
     "EURUSD",
     "GAP_DISLOCATION",
@@ -159,6 +175,8 @@
     "H_US10Y_EUR",
     "MULTITIMEFRAME_TREND_FILTER",
     "REGIME_RECOMBINATION",
+    "RI_REVERSAL_AFTER_IMPULSE",
+    "SC_SURPRISE_CONFIRMATION",
     "SESSION_CONDITIONING",
     "STREAK_REVERSAL",
     "STREAK_REVERSAL_MULTIBAR",

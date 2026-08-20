@@ -1,0 +1,3324 @@
+{
+  "cycle_id": "CYCLE-08-EVENT-CROSSASSET-INTRADAY",
+  "self_critique": "5m/15m/30m windows require genuine sub-hourly FX prices. Only EURUSD/GBPUSD/XAUUSD have real M1 data (Oanda, via FutureSharks/financial-data, same audited source as Cycle 7). USDJPY/USDCHF have no M1 source found (histdata.com blocked; philipperemy/FX-1-Minute-Data is an API client with no committed data, confirmed not assumed) and are tested ONLY at 1H/2H/4H; 5m/15m/30m for these two are BLOCKED_NO_INTRADAY_DATA, not approximated from H1 bars.",
+  "execution_delay_sec": 60,
+  "event_pool_size": 268,
+  "parameter_evaluations": 120,
+  "blocked_combinations": 24,
+  "survivor_count": 0,
+  "survivors": [],
+  "results": [
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 101,
+        "mean_net": -3.833e-05,
+        "t_stat": -0.249,
+        "profit_factor": 0.941,
+        "win_rate": 0.4257,
+        "gross_over_cost": 13.614
+      },
+      "validation": {
+        "n": 24,
+        "mean_net": -0.00036791,
+        "t_stat": -2.588,
+        "profit_factor": 0.277,
+        "win_rate": 0.25,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.833e-05 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 101,
+        "mean_net": -0.00011437,
+        "t_stat": -0.502,
+        "profit_factor": 0.873,
+        "win_rate": 0.4356,
+        "gross_over_cost": 17.898
+      },
+      "validation": {
+        "n": 24,
+        "mean_net": -0.00066638,
+        "t_stat": -4.011,
+        "profit_factor": 0.072,
+        "win_rate": 0.1667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00011437 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 101,
+        "mean_net": 0.00017879,
+        "t_stat": 0.72,
+        "profit_factor": 1.211,
+        "win_rate": 0.505,
+        "gross_over_cost": 19.696
+      },
+      "validation": {
+        "n": 24,
+        "mean_net": -0.00074415,
+        "t_stat": -2.372,
+        "profit_factor": 0.289,
+        "win_rate": 0.25,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.72 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 101,
+        "mean_net": -2.83e-05,
+        "t_stat": -0.083,
+        "profit_factor": 0.978,
+        "win_rate": 0.5149,
+        "gross_over_cost": 26.592
+      },
+      "validation": {
+        "n": 24,
+        "mean_net": -6.763e-05,
+        "t_stat": -0.13,
+        "profit_factor": 0.923,
+        "win_rate": 0.4583,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-2.83e-05 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 101,
+        "mean_net": 1.165e-05,
+        "t_stat": 0.03,
+        "profit_factor": 1.008,
+        "win_rate": 0.505,
+        "gross_over_cost": 31.545
+      },
+      "validation": {
+        "n": 24,
+        "mean_net": -7.49e-05,
+        "t_stat": -0.124,
+        "profit_factor": 0.931,
+        "win_rate": 0.4167,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.03 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.00046871,
+        "t_stat": 3.755,
+        "profit_factor": 2.82,
+        "win_rate": 0.6667,
+        "gross_over_cost": 10.837
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 0.00015083,
+        "t_stat": 0.932,
+        "profit_factor": 1.939,
+        "win_rate": 0.5625,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=16 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.00041486,
+        "t_stat": 2.48,
+        "profit_factor": 1.999,
+        "win_rate": 0.5914,
+        "gross_over_cost": 13.457
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 1.794e-05,
+        "t_stat": 0.064,
+        "profit_factor": 1.045,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=16 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.00017416,
+        "t_stat": 0.759,
+        "profit_factor": 1.225,
+        "win_rate": 0.5484,
+        "gross_over_cost": 18.21
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": -0.00014054,
+        "t_stat": -0.614,
+        "profit_factor": 0.665,
+        "win_rate": 0.4375,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.759 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.00020287,
+        "t_stat": 0.756,
+        "profit_factor": 1.233,
+        "win_rate": 0.5161,
+        "gross_over_cost": 20.463
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 8.374e-05,
+        "t_stat": 0.209,
+        "profit_factor": 1.14,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.756 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.0001165,
+        "t_stat": 0.333,
+        "profit_factor": 1.089,
+        "win_rate": 0.5161,
+        "gross_over_cost": 28.254
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 0.00104595,
+        "t_stat": 1.64,
+        "profit_factor": 3.405,
+        "win_rate": 0.5625,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.333 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.0001966,
+        "t_stat": 0.487,
+        "profit_factor": 1.133,
+        "win_rate": 0.5591,
+        "gross_over_cost": 32.437
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 0.00134795,
+        "t_stat": 1.936,
+        "profit_factor": 4.181,
+        "win_rate": 0.75,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.487 < 2.0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00015401,
+        "t_stat": -1.487,
+        "profit_factor": 0.76,
+        "win_rate": 0.407,
+        "gross_over_cost": 12.307
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.0001368,
+        "t_stat": -1.032,
+        "profit_factor": 0.649,
+        "win_rate": 0.3684,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00015401 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00033578,
+        "t_stat": -2.284,
+        "profit_factor": 0.643,
+        "win_rate": 0.407,
+        "gross_over_cost": 16.472
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.0004101,
+        "t_stat": -2.883,
+        "profit_factor": 0.286,
+        "win_rate": 0.3158,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00033578 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00016418,
+        "t_stat": -0.956,
+        "profit_factor": 0.837,
+        "win_rate": 0.4523,
+        "gross_over_cost": 19.534
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00055347,
+        "t_stat": -2.363,
+        "profit_factor": 0.371,
+        "win_rate": 0.3158,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00016418 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00021325,
+        "t_stat": -0.889,
+        "profit_factor": 0.849,
+        "win_rate": 0.4774,
+        "gross_over_cost": 27.193
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 2.619e-05,
+        "t_stat": 0.071,
+        "profit_factor": 1.033,
+        "win_rate": 0.4737,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00021325 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00023319,
+        "t_stat": -0.834,
+        "profit_factor": 0.86,
+        "win_rate": 0.4874,
+        "gross_over_cost": 31.929
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 1e-07,
+        "t_stat": 0.0,
+        "profit_factor": 1.0,
+        "win_rate": 0.5263,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00023319 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -4.599e-05,
+        "t_stat": -0.444,
+        "profit_factor": 0.92,
+        "win_rate": 0.5176,
+        "gross_over_cost": 12.043
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -6.32e-05,
+        "t_stat": -0.477,
+        "profit_factor": 0.814,
+        "win_rate": 0.5526,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.599e-05 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 0.00013578,
+        "t_stat": 0.924,
+        "profit_factor": 1.196,
+        "win_rate": 0.5327,
+        "gross_over_cost": 16.218
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.0002101,
+        "t_stat": 1.477,
+        "profit_factor": 1.905,
+        "win_rate": 0.6316,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.924 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -3.582e-05,
+        "t_stat": -0.208,
+        "profit_factor": 0.962,
+        "win_rate": 0.5025,
+        "gross_over_cost": 19.441
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00035347,
+        "t_stat": 1.509,
+        "profit_factor": 1.897,
+        "win_rate": 0.6579,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.582e-05 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 1.325e-05,
+        "t_stat": 0.055,
+        "profit_factor": 1.01,
+        "win_rate": 0.5126,
+        "gross_over_cost": 27.116
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00022619,
+        "t_stat": -0.612,
+        "profit_factor": 0.75,
+        "win_rate": 0.5263,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.055 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 3.319e-05,
+        "t_stat": 0.119,
+        "profit_factor": 1.022,
+        "win_rate": 0.5126,
+        "gross_over_cost": 31.879
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.0002001,
+        "t_stat": -0.446,
+        "profit_factor": 0.819,
+        "win_rate": 0.4474,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.119 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 105,
+        "mean_net": -0.00017012,
+        "t_stat": -1.557,
+        "profit_factor": 0.665,
+        "win_rate": 0.4095,
+        "gross_over_cost": 8.034
+      },
+      "validation": {
+        "n": 20,
+        "mean_net": -0.0001784,
+        "t_stat": -0.85,
+        "profit_factor": 0.586,
+        "win_rate": 0.3,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00017012 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 105,
+        "mean_net": -0.00033184,
+        "t_stat": -2.245,
+        "profit_factor": 0.562,
+        "win_rate": 0.3905,
+        "gross_over_cost": 10.859
+      },
+      "validation": {
+        "n": 20,
+        "mean_net": -0.00025627,
+        "t_stat": -1.287,
+        "profit_factor": 0.421,
+        "win_rate": 0.45,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00033184 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 105,
+        "mean_net": -0.00026263,
+        "t_stat": -1.592,
+        "profit_factor": 0.664,
+        "win_rate": 0.381,
+        "gross_over_cost": 11.831
+      },
+      "validation": {
+        "n": 20,
+        "mean_net": 0.00015063,
+        "t_stat": 0.459,
+        "profit_factor": 1.337,
+        "win_rate": 0.55,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00026263 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 105,
+        "mean_net": -0.00045637,
+        "t_stat": -1.689,
+        "profit_factor": 0.638,
+        "win_rate": 0.419,
+        "gross_over_cost": 18.197
+      },
+      "validation": {
+        "n": 20,
+        "mean_net": 0.00036232,
+        "t_stat": 0.62,
+        "profit_factor": 1.45,
+        "win_rate": 0.65,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00045637 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 105,
+        "mean_net": -0.00081469,
+        "t_stat": -2.408,
+        "profit_factor": 0.515,
+        "win_rate": 0.4095,
+        "gross_over_cost": 22.182
+      },
+      "validation": {
+        "n": 20,
+        "mean_net": -0.00030585,
+        "t_stat": -0.311,
+        "profit_factor": 0.817,
+        "win_rate": 0.6,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00081469 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.00024133,
+        "t_stat": 2.648,
+        "profit_factor": 2.14,
+        "win_rate": 0.5914,
+        "gross_over_cost": 6.54
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 4.677e-05,
+        "t_stat": 0.265,
+        "profit_factor": 1.221,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=16 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 0.00011597,
+        "t_stat": 0.816,
+        "profit_factor": 1.266,
+        "win_rate": 0.5376,
+        "gross_over_cost": 9.242
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 0.00017272,
+        "t_stat": 0.559,
+        "profit_factor": 1.467,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.816 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 5.9e-05,
+        "t_stat": 0.327,
+        "profit_factor": 1.096,
+        "win_rate": 0.4409,
+        "gross_over_cost": 11.69
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": -8.957e-05,
+        "t_stat": -0.328,
+        "profit_factor": 0.818,
+        "win_rate": 0.4375,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.327 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": 3.258e-05,
+        "t_stat": 0.147,
+        "profit_factor": 1.042,
+        "win_rate": 0.4839,
+        "gross_over_cost": 14.051
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 0.00029021,
+        "t_stat": 0.772,
+        "profit_factor": 1.603,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.147 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": -0.00020224,
+        "t_stat": -0.657,
+        "profit_factor": 0.843,
+        "win_rate": 0.4624,
+        "gross_over_cost": 20.716
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 0.0002505,
+        "t_stat": 0.48,
+        "profit_factor": 1.327,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00020224 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 93,
+        "mean_net": -0.00038661,
+        "t_stat": -1.022,
+        "profit_factor": 0.748,
+        "win_rate": 0.4946,
+        "gross_over_cost": 23.371
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 4.288e-05,
+        "t_stat": 0.065,
+        "profit_factor": 1.044,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00038661 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00025147,
+        "t_stat": -3.069,
+        "profit_factor": 0.562,
+        "win_rate": 0.3769,
+        "gross_over_cost": 8.479
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 2.998e-05,
+        "t_stat": 0.214,
+        "profit_factor": 1.097,
+        "win_rate": 0.4474,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025147 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00034061,
+        "t_stat": -3.199,
+        "profit_factor": 0.554,
+        "win_rate": 0.407,
+        "gross_over_cost": 10.898
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00011608,
+        "t_stat": -0.704,
+        "profit_factor": 0.732,
+        "win_rate": 0.4737,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00034061 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00027152,
+        "t_stat": -2.163,
+        "profit_factor": 0.673,
+        "win_rate": 0.4121,
+        "gross_over_cost": 12.568
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -2.763e-05,
+        "t_stat": -0.121,
+        "profit_factor": 0.951,
+        "win_rate": 0.4474,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00027152 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00032478,
+        "t_stat": -1.662,
+        "profit_factor": 0.737,
+        "win_rate": 0.4724,
+        "gross_over_cost": 18.845
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00043452,
+        "t_stat": 1.085,
+        "profit_factor": 1.564,
+        "win_rate": 0.5526,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00032478 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": -0.00047196,
+        "t_stat": -1.99,
+        "profit_factor": 0.687,
+        "win_rate": 0.4673,
+        "gross_over_cost": 22.166
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00020631,
+        "t_stat": 0.305,
+        "profit_factor": 1.143,
+        "win_rate": 0.5789,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00047196 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 1.147e-05,
+        "t_stat": 0.14,
+        "profit_factor": 1.027,
+        "win_rate": 0.5075,
+        "gross_over_cost": 8.226
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00026998,
+        "t_stat": -1.925,
+        "profit_factor": 0.409,
+        "win_rate": 0.4737,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.14 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 0.00010061,
+        "t_stat": 0.945,
+        "profit_factor": 1.191,
+        "win_rate": 0.5327,
+        "gross_over_cost": 10.602
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00012392,
+        "t_stat": -0.751,
+        "profit_factor": 0.716,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.945 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 3.152e-05,
+        "t_stat": 0.251,
+        "profit_factor": 1.047,
+        "win_rate": 0.5176,
+        "gross_over_cost": 12.382
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00021237,
+        "t_stat": -0.93,
+        "profit_factor": 0.673,
+        "win_rate": 0.4737,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.251 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 8.478e-05,
+        "t_stat": 0.434,
+        "profit_factor": 1.083,
+        "win_rate": 0.4975,
+        "gross_over_cost": 18.795
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00067452,
+        "t_stat": -1.684,
+        "profit_factor": 0.496,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.434 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 199,
+        "mean_net": 0.00023196,
+        "t_stat": 0.978,
+        "profit_factor": 1.202,
+        "win_rate": 0.5126,
+        "gross_over_cost": 22.057
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00044631,
+        "t_stat": -0.659,
+        "profit_factor": 0.751,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.978 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 104,
+        "mean_net": -0.00038022,
+        "t_stat": -1.564,
+        "profit_factor": 0.651,
+        "win_rate": 0.4423,
+        "gross_over_cost": 9.994
+      },
+      "validation": {
+        "n": 17,
+        "mean_net": -0.00063905,
+        "t_stat": -1.93,
+        "profit_factor": 0.298,
+        "win_rate": 0.3529,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00038022 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 103,
+        "mean_net": -0.00025271,
+        "t_stat": -0.769,
+        "profit_factor": 0.805,
+        "win_rate": 0.4563,
+        "gross_over_cost": 12.712
+      },
+      "validation": {
+        "n": 17,
+        "mean_net": -0.00099376,
+        "t_stat": -1.695,
+        "profit_factor": 0.299,
+        "win_rate": 0.2941,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00025271 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 103,
+        "mean_net": -0.0004096,
+        "t_stat": -1.016,
+        "profit_factor": 0.747,
+        "win_rate": 0.534,
+        "gross_over_cost": 15.165
+      },
+      "validation": {
+        "n": 17,
+        "mean_net": -0.00109864,
+        "t_stat": -2.209,
+        "profit_factor": 0.234,
+        "win_rate": 0.3529,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0004096 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 102,
+        "mean_net": -9.23e-05,
+        "t_stat": -0.175,
+        "profit_factor": 0.954,
+        "win_rate": 0.5392,
+        "gross_over_cost": 20.675
+      },
+      "validation": {
+        "n": 17,
+        "mean_net": -0.00060105,
+        "t_stat": -0.685,
+        "profit_factor": 0.584,
+        "win_rate": 0.6471,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.23e-05 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 102,
+        "mean_net": 0.0004675,
+        "t_stat": 0.766,
+        "profit_factor": 1.235,
+        "win_rate": 0.6275,
+        "gross_over_cost": 23.255
+      },
+      "validation": {
+        "n": 17,
+        "mean_net": -0.00064674,
+        "t_stat": -0.562,
+        "profit_factor": 0.65,
+        "win_rate": 0.4118,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.766 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 84,
+        "mean_net": 0.00027652,
+        "t_stat": 1.113,
+        "profit_factor": 1.382,
+        "win_rate": 0.5595,
+        "gross_over_cost": 9.628
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": 0.00033928,
+        "t_stat": 0.733,
+        "profit_factor": 1.721,
+        "win_rate": 0.5333,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.113 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 84,
+        "mean_net": 2.309e-05,
+        "t_stat": 0.063,
+        "profit_factor": 1.02,
+        "win_rate": 0.4762,
+        "gross_over_cost": 12.577
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": 0.00016317,
+        "t_stat": 0.263,
+        "profit_factor": 1.207,
+        "win_rate": 0.6,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.063 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 84,
+        "mean_net": -0.00034322,
+        "t_stat": -0.734,
+        "profit_factor": 0.782,
+        "win_rate": 0.4405,
+        "gross_over_cost": 15.045
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": -0.00058378,
+        "t_stat": -0.983,
+        "profit_factor": 0.494,
+        "win_rate": 0.4667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00034322 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 84,
+        "mean_net": -0.0005136,
+        "t_stat": -0.972,
+        "profit_factor": 0.745,
+        "win_rate": 0.4881,
+        "gross_over_cost": 18.551
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": -0.00097828,
+        "t_stat": -1.552,
+        "profit_factor": 0.34,
+        "win_rate": 0.2,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0005136 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 84,
+        "mean_net": -0.00056941,
+        "t_stat": -0.781,
+        "profit_factor": 0.8,
+        "win_rate": 0.4643,
+        "gross_over_cost": 26.577
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": 0.00049289,
+        "t_stat": 0.292,
+        "profit_factor": 1.252,
+        "win_rate": 0.4667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00056941 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 84,
+        "mean_net": 0.00019632,
+        "t_stat": 0.273,
+        "profit_factor": 1.078,
+        "win_rate": 0.5476,
+        "gross_over_cost": 27.01
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": -9.29e-05,
+        "t_stat": -0.06,
+        "profit_factor": 0.958,
+        "win_rate": 0.5333,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.273 < 2.0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 192,
+        "mean_net": -0.00028359,
+        "t_stat": -1.604,
+        "profit_factor": 0.718,
+        "win_rate": 0.4635,
+        "gross_over_cost": 9.642
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.0004229,
+        "t_stat": -1.793,
+        "profit_factor": 0.48,
+        "win_rate": 0.3947,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00028359 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 191,
+        "mean_net": -0.00037173,
+        "t_stat": -1.404,
+        "profit_factor": 0.74,
+        "win_rate": 0.4712,
+        "gross_over_cost": 13.415
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00080233,
+        "t_stat": -2.497,
+        "profit_factor": 0.334,
+        "win_rate": 0.3421,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00037173 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 191,
+        "mean_net": -0.00048011,
+        "t_stat": -1.585,
+        "profit_factor": 0.727,
+        "win_rate": 0.5236,
+        "gross_over_cost": 16.167
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00125609,
+        "t_stat": -2.942,
+        "profit_factor": 0.283,
+        "win_rate": 0.3684,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00048011 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 190,
+        "mean_net": -0.00021192,
+        "t_stat": -0.493,
+        "profit_factor": 0.907,
+        "win_rate": 0.5684,
+        "gross_over_cost": 22.738
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00017067,
+        "t_stat": -0.245,
+        "profit_factor": 0.895,
+        "win_rate": 0.5263,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00021192 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 190,
+        "mean_net": 0.00024859,
+        "t_stat": 0.531,
+        "profit_factor": 1.109,
+        "win_rate": 0.5842,
+        "gross_over_cost": 24.994
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00078114,
+        "t_stat": -1.124,
+        "profit_factor": 0.589,
+        "win_rate": 0.3947,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.531 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 192,
+        "mean_net": -0.00011641,
+        "t_stat": -0.658,
+        "profit_factor": 0.874,
+        "win_rate": 0.4479,
+        "gross_over_cost": 9.68
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 2.29e-05,
+        "t_stat": 0.097,
+        "profit_factor": 1.04,
+        "win_rate": 0.5263,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00011641 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 191,
+        "mean_net": -2.827e-05,
+        "t_stat": -0.107,
+        "profit_factor": 0.978,
+        "win_rate": 0.445,
+        "gross_over_cost": 13.445
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00040233,
+        "t_stat": 1.252,
+        "profit_factor": 1.737,
+        "win_rate": 0.6053,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-2.827e-05 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 191,
+        "mean_net": 8.011e-05,
+        "t_stat": 0.264,
+        "profit_factor": 1.054,
+        "win_rate": 0.4346,
+        "gross_over_cost": 16.323
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00085609,
+        "t_stat": 2.005,
+        "profit_factor": 2.313,
+        "win_rate": 0.5789,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.264 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 190,
+        "mean_net": -0.00018808,
+        "t_stat": -0.437,
+        "profit_factor": 0.918,
+        "win_rate": 0.4105,
+        "gross_over_cost": 23.056
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00022933,
+        "t_stat": -0.329,
+        "profit_factor": 0.863,
+        "win_rate": 0.3947,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00018808 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 190,
+        "mean_net": -0.00064859,
+        "t_stat": -1.385,
+        "profit_factor": 0.765,
+        "win_rate": 0.3842,
+        "gross_over_cost": 25.363
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00038114,
+        "t_stat": 0.548,
+        "profit_factor": 1.293,
+        "win_rate": 0.5263,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00064859 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 100,
+        "mean_net": -0.00040479,
+        "t_stat": -1.647,
+        "profit_factor": 0.618,
+        "win_rate": 0.4,
+        "gross_over_cost": 9.565
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": -0.00048513,
+        "t_stat": -1.444,
+        "profit_factor": 0.464,
+        "win_rate": 0.3636,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00040479 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 100,
+        "mean_net": -0.00028006,
+        "t_stat": -0.722,
+        "profit_factor": 0.804,
+        "win_rate": 0.44,
+        "gross_over_cost": 13.924
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 0.0001134,
+        "t_stat": 0.328,
+        "profit_factor": 1.19,
+        "win_rate": 0.6818,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00028006 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 100,
+        "mean_net": -0.00032852,
+        "t_stat": -0.786,
+        "profit_factor": 0.809,
+        "win_rate": 0.48,
+        "gross_over_cost": 16.535
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": -1.412e-05,
+        "t_stat": -0.021,
+        "profit_factor": 0.989,
+        "win_rate": 0.4545,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00032852 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 100,
+        "mean_net": -0.00094771,
+        "t_stat": -1.497,
+        "profit_factor": 0.669,
+        "win_rate": 0.44,
+        "gross_over_cost": 24.865
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 3e-08,
+        "t_stat": 0.0,
+        "profit_factor": 1.0,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00094771 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 100,
+        "mean_net": -0.0008918,
+        "t_stat": -1.341,
+        "profit_factor": 0.705,
+        "win_rate": 0.44,
+        "gross_over_cost": 26.764
+      },
+      "validation": {
+        "n": 22,
+        "mean_net": 8.57e-05,
+        "t_stat": 0.087,
+        "profit_factor": 1.054,
+        "win_rate": 0.5909,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0008918 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 80,
+        "mean_net": 0.0007812,
+        "t_stat": 3.469,
+        "profit_factor": 2.924,
+        "win_rate": 0.675,
+        "gross_over_cost": 8.967
+      },
+      "validation": {
+        "n": 14,
+        "mean_net": 0.00018426,
+        "t_stat": 0.342,
+        "profit_factor": 1.287,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=14 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 80,
+        "mean_net": 0.00023689,
+        "t_stat": 0.792,
+        "profit_factor": 1.276,
+        "win_rate": 0.5,
+        "gross_over_cost": 10.783
+      },
+      "validation": {
+        "n": 14,
+        "mean_net": 0.00013547,
+        "t_stat": 0.225,
+        "profit_factor": 1.182,
+        "win_rate": 0.6429,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.792 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 80,
+        "mean_net": 0.00037575,
+        "t_stat": 0.802,
+        "profit_factor": 1.295,
+        "win_rate": 0.5125,
+        "gross_over_cost": 15.63
+      },
+      "validation": {
+        "n": 14,
+        "mean_net": 0.00034452,
+        "t_stat": 0.569,
+        "profit_factor": 1.46,
+        "win_rate": 0.7143,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.802 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 80,
+        "mean_net": 0.00028275,
+        "t_stat": 0.568,
+        "profit_factor": 1.192,
+        "win_rate": 0.5,
+        "gross_over_cost": 17.122
+      },
+      "validation": {
+        "n": 14,
+        "mean_net": 0.000358,
+        "t_stat": 0.423,
+        "profit_factor": 1.39,
+        "win_rate": 0.5714,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.568 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 80,
+        "mean_net": -0.00028038,
+        "t_stat": -0.395,
+        "profit_factor": 0.892,
+        "win_rate": 0.425,
+        "gross_over_cost": 25.649
+      },
+      "validation": {
+        "n": 14,
+        "mean_net": 0.00132258,
+        "t_stat": 0.78,
+        "profit_factor": 1.983,
+        "win_rate": 0.5714,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00028038 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 80,
+        "mean_net": 6.15e-06,
+        "t_stat": 0.008,
+        "profit_factor": 1.002,
+        "win_rate": 0.425,
+        "gross_over_cost": 27.235
+      },
+      "validation": {
+        "n": 14,
+        "mean_net": 0.0015564,
+        "t_stat": 1.255,
+        "profit_factor": 2.708,
+        "win_rate": 0.7857,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.008 < 2.0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": -0.00051667,
+        "t_stat": -3.07,
+        "profit_factor": 0.54,
+        "win_rate": 0.3775,
+        "gross_over_cost": 9.651
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": -0.0002072,
+        "t_stat": -0.855,
+        "profit_factor": 0.711,
+        "win_rate": 0.4615,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00051667 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": -0.00046895,
+        "t_stat": -1.88,
+        "profit_factor": 0.677,
+        "win_rate": 0.4118,
+        "gross_over_cost": 13.183
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": 0.00038634,
+        "t_stat": 1.222,
+        "profit_factor": 1.699,
+        "win_rate": 0.6154,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00046895 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": -0.00052367,
+        "t_stat": -1.796,
+        "profit_factor": 0.701,
+        "win_rate": 0.4265,
+        "gross_over_cost": 15.875
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": 0.00021872,
+        "t_stat": 0.493,
+        "profit_factor": 1.23,
+        "win_rate": 0.5385,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00052367 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": -0.00079502,
+        "t_stat": -1.895,
+        "profit_factor": 0.696,
+        "win_rate": 0.4314,
+        "gross_over_cost": 23.193
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": -3.182e-05,
+        "t_stat": -0.041,
+        "profit_factor": 0.982,
+        "win_rate": 0.4359,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00079502 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": -0.0009118,
+        "t_stat": -1.989,
+        "profit_factor": 0.685,
+        "win_rate": 0.4069,
+        "gross_over_cost": 25.421
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": 9.393e-05,
+        "t_stat": 0.127,
+        "profit_factor": 1.061,
+        "win_rate": 0.5385,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0009118 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 5,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "validation": {
+        "n": 0,
+        "mean_net": 0.0,
+        "t_stat": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_UNDERPOWERED",
+      "verdict_reason": "train n=0 < 30"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 15,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": 0.00011667,
+        "t_stat": 0.693,
+        "profit_factor": 1.151,
+        "win_rate": 0.5245,
+        "gross_over_cost": 9.329
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": -0.0001928,
+        "t_stat": -0.796,
+        "profit_factor": 0.726,
+        "win_rate": 0.4615,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.693 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 30,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": 6.895e-05,
+        "t_stat": 0.276,
+        "profit_factor": 1.059,
+        "win_rate": 0.5,
+        "gross_over_cost": 13.012
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": -0.00078634,
+        "t_stat": -2.487,
+        "profit_factor": 0.344,
+        "win_rate": 0.3333,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.276 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": 0.00012367,
+        "t_stat": 0.424,
+        "profit_factor": 1.088,
+        "win_rate": 0.5245,
+        "gross_over_cost": 15.718
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": -0.00061872,
+        "t_stat": -1.394,
+        "profit_factor": 0.559,
+        "win_rate": 0.3846,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.424 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": 0.00039502,
+        "t_stat": 0.942,
+        "profit_factor": 1.198,
+        "win_rate": 0.5441,
+        "gross_over_cost": 22.942
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": -0.00036818,
+        "t_stat": -0.476,
+        "profit_factor": 0.803,
+        "win_rate": 0.4872,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.942 < 2.0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "XAUUSD",
+      "driver": "WTICO",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 204,
+        "mean_net": 0.0005118,
+        "t_stat": 1.116,
+        "profit_factor": 1.237,
+        "win_rate": 0.5539,
+        "gross_over_cost": 25.152
+      },
+      "validation": {
+        "n": 39,
+        "mean_net": -0.00049393,
+        "t_stat": -0.667,
+        "profit_factor": 0.736,
+        "win_rate": 0.3846,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.116 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -4.57e-05,
+        "t_stat": -0.571,
+        "profit_factor": 0.876,
+        "win_rate": 0.4525,
+        "gross_over_cost": 7.914
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00016945,
+        "t_stat": 1.552,
+        "profit_factor": 2.148,
+        "win_rate": 0.5789,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.57e-05 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 1.794e-05,
+        "t_stat": 0.18,
+        "profit_factor": 1.042,
+        "win_rate": 0.5028,
+        "gross_over_cost": 9.785
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 4.651e-05,
+        "t_stat": 0.384,
+        "profit_factor": 1.192,
+        "win_rate": 0.4737,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.18 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 0.00021331,
+        "t_stat": 0.744,
+        "profit_factor": 1.165,
+        "win_rate": 0.4749,
+        "gross_over_cost": 29.017
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00018411,
+        "t_stat": 0.535,
+        "profit_factor": 1.274,
+        "win_rate": 0.4474,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.744 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 81,
+        "mean_net": -3.1e-05,
+        "t_stat": -0.337,
+        "profit_factor": 0.902,
+        "win_rate": 0.4938,
+        "gross_over_cost": 7.006
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": 5.946e-05,
+        "t_stat": 0.315,
+        "profit_factor": 1.294,
+        "win_rate": 0.4667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-3.1e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 81,
+        "mean_net": 7.2e-07,
+        "t_stat": 0.006,
+        "profit_factor": 1.002,
+        "win_rate": 0.5062,
+        "gross_over_cost": 8.669
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": -4.172e-05,
+        "t_stat": -0.302,
+        "profit_factor": 0.819,
+        "win_rate": 0.4667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.006 < 2.0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 81,
+        "mean_net": 0.0024013,
+        "t_stat": 6.243,
+        "profit_factor": 8.646,
+        "win_rate": 0.7037,
+        "gross_over_cost": 31.294
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": 0.00053319,
+        "t_stat": 1.386,
+        "profit_factor": 2.806,
+        "win_rate": 0.6,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=15 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -4.57e-05,
+        "t_stat": -0.571,
+        "profit_factor": 0.876,
+        "win_rate": 0.4525,
+        "gross_over_cost": 7.914
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00016945,
+        "t_stat": 1.552,
+        "profit_factor": 2.148,
+        "win_rate": 0.5789,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.57e-05 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 1.794e-05,
+        "t_stat": 0.18,
+        "profit_factor": 1.042,
+        "win_rate": 0.5028,
+        "gross_over_cost": 9.785
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 4.651e-05,
+        "t_stat": 0.384,
+        "profit_factor": 1.192,
+        "win_rate": 0.4737,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.18 < 2.0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 0.00021331,
+        "t_stat": 0.744,
+        "profit_factor": 1.165,
+        "win_rate": 0.4749,
+        "gross_over_cost": 29.017
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": 0.00018411,
+        "t_stat": 0.535,
+        "profit_factor": 1.274,
+        "win_rate": 0.4474,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.744 < 2.0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -0.0001543,
+        "t_stat": -1.927,
+        "profit_factor": 0.638,
+        "win_rate": 0.4302,
+        "gross_over_cost": 7.975
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00036945,
+        "t_stat": -3.383,
+        "profit_factor": 0.162,
+        "win_rate": 0.3158,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.0001543 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -0.00021794,
+        "t_stat": -2.185,
+        "profit_factor": 0.608,
+        "win_rate": 0.419,
+        "gross_over_cost": 9.95
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00024651,
+        "t_stat": -2.033,
+        "profit_factor": 0.373,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00021794 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -0.00041331,
+        "t_stat": -1.441,
+        "profit_factor": 0.743,
+        "win_rate": 0.486,
+        "gross_over_cost": 28.975
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00038411,
+        "t_stat": -1.117,
+        "profit_factor": 0.596,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00041331 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDJPY",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDJPY has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -4.119e-05,
+        "t_stat": -0.471,
+        "profit_factor": 0.909,
+        "win_rate": 0.4413,
+        "gross_over_cost": 5.567
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00031624,
+        "t_stat": -2.291,
+        "profit_factor": 0.359,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.119e-05 <= 0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 9.894e-05,
+        "t_stat": 0.839,
+        "profit_factor": 1.193,
+        "win_rate": 0.4916,
+        "gross_over_cost": 6.915
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00031165,
+        "t_stat": -1.346,
+        "profit_factor": 0.529,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.839 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 0.00055157,
+        "t_stat": 1.8,
+        "profit_factor": 1.439,
+        "win_rate": 0.514,
+        "gross_over_cost": 17.142
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00013709,
+        "t_stat": -0.393,
+        "profit_factor": 0.839,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.8 < 2.0"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DC_CROSS_ASSET_DIVERGENCE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 81,
+        "mean_net": -9.171e-05,
+        "t_stat": -0.672,
+        "profit_factor": 0.814,
+        "win_rate": 0.4198,
+        "gross_over_cost": 5.698
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": -0.00036683,
+        "t_stat": -1.495,
+        "profit_factor": 0.306,
+        "win_rate": 0.4667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-9.171e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 81,
+        "mean_net": -7.165e-05,
+        "t_stat": -0.469,
+        "profit_factor": 0.866,
+        "win_rate": 0.4691,
+        "gross_over_cost": 6.245
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": -0.00030216,
+        "t_stat": -0.897,
+        "profit_factor": 0.454,
+        "win_rate": 0.4667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-7.165e-05 <= 0"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 81,
+        "mean_net": 0.00214849,
+        "t_stat": 4.608,
+        "profit_factor": 4.293,
+        "win_rate": 0.6296,
+        "gross_over_cost": 19.176
+      },
+      "validation": {
+        "n": 15,
+        "mean_net": 0.00030776,
+        "t_stat": 0.427,
+        "profit_factor": 1.346,
+        "win_rate": 0.5333,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=15 < 30"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -4.119e-05,
+        "t_stat": -0.471,
+        "profit_factor": 0.909,
+        "win_rate": 0.4413,
+        "gross_over_cost": 5.567
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00031624,
+        "t_stat": -2.291,
+        "profit_factor": 0.359,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-4.119e-05 <= 0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 9.894e-05,
+        "t_stat": 0.839,
+        "profit_factor": 1.193,
+        "win_rate": 0.4916,
+        "gross_over_cost": 6.915
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00031165,
+        "t_stat": -1.346,
+        "profit_factor": 0.529,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=0.839 < 2.0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": 0.00055157,
+        "t_stat": 1.8,
+        "profit_factor": 1.439,
+        "win_rate": 0.514,
+        "gross_over_cost": 17.142
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00013709,
+        "t_stat": -0.393,
+        "profit_factor": 0.839,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "verdict_reason": "train t=1.8 < 2.0"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "DR_DELAYED_REACTION",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 60,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -0.00033881,
+        "t_stat": -3.877,
+        "profit_factor": 0.442,
+        "win_rate": 0.3911,
+        "gross_over_cost": 5.611
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -6.376e-05,
+        "t_stat": -0.462,
+        "profit_factor": 0.825,
+        "win_rate": 0.4474,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00033881 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 120,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -0.00047894,
+        "t_stat": -4.059,
+        "profit_factor": 0.419,
+        "win_rate": 0.3687,
+        "gross_over_cost": 7.16
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -6.835e-05,
+        "t_stat": -0.295,
+        "profit_factor": 0.876,
+        "win_rate": 0.3947,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00047894 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 240,
+      "entry_delay_sec": 60,
+      "events_available": 268,
+      "train": {
+        "n": 179,
+        "mean_net": -0.00093157,
+        "t_stat": -3.04,
+        "profit_factor": 0.537,
+        "win_rate": 0.4525,
+        "gross_over_cost": 17.264
+      },
+      "validation": {
+        "n": 38,
+        "mean_net": -0.00024291,
+        "t_stat": -0.696,
+        "profit_factor": 0.734,
+        "win_rate": 0.4211,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00093157 <= 0"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 5,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 15,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    },
+    {
+      "mechanism": "RI_REVERSAL_AFTER_IMPULSE",
+      "symbol": "USDCHF",
+      "driver": "SPX500",
+      "window_min": 30,
+      "verdict": "BLOCKED_NO_INTRADAY_DATA",
+      "verdict_reason": "USDCHF has no M1 source; only [60, 120, 240] testable"
+    }
+  ]
+}

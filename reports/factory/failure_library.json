@@ -790,7 +790,45 @@
       "reusability": "FAMILY_TRANSFERABLE",
       "scope": "D1 weekday effect and W1 N-week breakout, 6 instruments, dev windows.",
       "timestamp": "2026-08-20T16:34:12.750343+00:00"
+    },
+    {
+      "confidence": "DIRECTLY_MEASURED",
+      "entity_id": "CYCLE-08-EVENT-CROSSASSET-INTRADAY",
+      "evidence_reference": "reports/factory/discovery_cycles/cycle_08_intraday.json",
+      "failure_category": "NEGATIVE_EXPECTANCY",
+      "failure_id": "FAIL-000041",
+      "failure_reason": "Four economically distinct, pre-registered event-anchored cross-asset mechanisms (divergence-convergence, surprise-confirmation, delayed reaction, reversal-after-impulse), tested on NFP+CPI releases with a realistic 60s execution delay across windows from 5 minutes to 4 hours: 0/120 survivors. Every mechanism showed the same pattern as Cycle 7's daily-lag test: no result cleared even the train gate at any window, any pairing.",
+      "failure_stage": "STATISTICS",
+      "future_research_implication": "Both the daily-lag (Cycle 7) and event-anchored-intraday (Cycle 8) framings of 'cross-asset predicts FX' have now failed cleanly and symmetrically. The next research direction should treat this as reasonably strong evidence that simple directional cross-asset following is not present in this instrument set at these horizons, rather than trying a third timing variant of the same underlying idea.",
+      "mechanism": "Anchoring the cross-asset signal to the event's own release minute (rather than a stale calendar-day lag, Cycle 7's failure mode) did not surface a signal either. This narrows the explanation for Cycle 7's failure: it is not merely that daily lag is too slow -- cross-asset information does not appear to predict FX/gold direction at ANY of the six tested horizons from 5 minutes to 4 hours after a shared macro release. The two markets may react to the same news independently and roughly simultaneously, rather than one leading the other in a exploitable, cost-covering way.",
+      "prevention_rule": "Do not re-test cross-asset lead-lag mechanisms (daily OR event-anchored intraday) on Oil/SPX500/US10Y vs EURUSD/GBPUSD/USDJPY/USDCHF/XAUUSD without a fundamentally different signal construction -- not lag, not event-anchoring, but something else entirely (e.g. relative-value divergence over multi-day windows, or volatility/liquidity regime conditioning rather than directional following).",
+      "related_family": "DC_CROSS_ASSET_DIVERGENCE,SC_SURPRISE_CONFIRMATION,DR_DELAYED_REACTION,RI_REVERSAL_AFTER_IMPULSE",
+      "related_features": [],
+      "related_market": "EURUSD,GBPUSD,USDJPY,USDCHF,XAUUSD",
+      "related_search_space": "",
+      "reusability": "ARCHITECTURE_TRANSFERABLE",
+      "scope": "Event-anchored (NFP/CPI) cross-asset mechanisms, 5min-4h windows, 6 pairings, 2010-2020.",
+      "timestamp": "2026-08-20T18:13:19.547929+00:00"
+    },
+    {
+      "confidence": "DIRECTLY_MEASURED",
+      "entity_id": "CYCLE-08-SC-SURPRISE-CONFIRMATION-UNDERPOWERED",
+      "evidence_reference": "reports/factory/discovery_cycles/cycle_08_intraday.json",
+      "failure_category": "INSUFFICIENT_HISTORY",
+      "failure_id": "FAIL-000042",
+      "failure_reason": "SC_SURPRISE_CONFIRMATION is NOT refuted -- it is UNDERPOWERED, and the two must not be conflated. 6 of its 20 tested combinations showed strong train significance (t up to +6.24, USDJPY/SPX500 240m; +4.61 USDCHF/SPX500 240m; +3.75 EURUSD/US10Y 5m; all train t>2.4, all net positive) but every one failed on VALIDATION_UNDERPOWERED (val n=14-16, need 30). The confirmation filter (requires BOTH a real surprise AND driver agreement) roughly halves an already-modest 268-event pool before the 80/20 split, leaving the validation slice structurally too small to clear n>=30 for this specific mechanism, regardless of whether a real effect exists.",
+      "failure_stage": "MULTIPLE_TESTING",
+      "future_research_implication": "SC_SURPRISE_CONFIRMATION is this cycle's single most promising unresolved thread and the clear next highest-value experiment -- not a new mechanism, but the same one, properly powered.",
+      "mechanism": "This is a power problem, not an economic refutation. Unlike DC/DR/RI (which showed negative or flat train statistics across nearly every combination -- a genuine absence of signal), SC's train-side pattern is directionally coherent and often strong. The honest verdict is INCONCLUSIVE, and it must not be reported, recorded, or treated as a negative result.",
+      "prevention_rule": "Before re-testing SC_SURPRISE_CONFIRMATION, PRE-REGISTER an expanded event pool sufficient to reach n>=30 in validation (more USD event types with actual/forecast, subject to FAIL-000038's caution about assuming NFP-like coherence generalizes; or extend the calendar's usable year range). Do NOT simply re-run on the same 268 events hoping for a different split, and do NOT cherry-pick the 6 promising rows for a follow-up -- the whole mechanism needs a bigger pre-registered pool, evaluated once.",
+      "related_family": "SC_SURPRISE_CONFIRMATION",
+      "related_features": [],
+      "related_market": "EURUSD,GBPUSD,USDJPY,USDCHF,XAUUSD",
+      "related_search_space": "",
+      "reusability": "MECHANISM_SPECIFIC",
+      "scope": "SC_SURPRISE_CONFIRMATION mechanism specifically, 268-event USD NFP+CPI pool, 2010-2020.",
+      "timestamp": "2026-08-20T18:17:11.820839+00:00"
     }
   ],
-  "next_id": 41
+  "next_id": 43
 }
