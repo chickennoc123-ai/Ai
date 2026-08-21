@@ -173,21 +173,32 @@ class SemanticNoveltyEngine:
 
     @staticmethod
     def _mechanisms_match(keywords1: Set[str], keywords2: Set[str], class1: str, class2: str) -> bool:
-        """Check if two mechanisms match at semantic level."""
-        # Same mechanism class = match (even with terminology differences)
-        if class1 == class2 and class1 != "unknown":
-            return True
+        """
+        Check if two mechanisms match at semantic level.
 
-        # Different classes but both classified = unlikely to match
+        Same class alone is NOT sufficient: 'event_driven' contains generic
+        structural keywords (event, nfp, cpi, macro) shared by every
+        macro-timed strategy in this project regardless of mechanism. Two
+        mechanisms in the same class only match if they ALSO share enough
+        specific keyword overlap to be the same underlying idea, not just
+        the same broad category.
+
+        Thresholds (jaccard >= 0.2 AND >= 2 shared keywords) were set by
+        checking real cases: a genuinely new cross-asset mechanism sharing
+        only 'nfp' with FAMILY-C2-SURPRISE-REACTION-NFP-USD scores jaccard
+        ~0.07 (correctly NOT a match); a real terminology variant of
+        FAMILY-H1-PRICE-PATTERN ('streak reversal ... gap fade') scores
+        jaccard ~0.27 with 3 shared keywords (correctly a match).
+        """
         if class1 != "unknown" and class2 != "unknown" and class1 != class2:
+            return False  # different classes, unrelated
+
+        overlap = keywords1 & keywords2
+        if len(overlap) < 2:
             return False
-
-        # If either is unknown, check keyword overlap as fallback
-        if class1 == "unknown" or class2 == "unknown":
-            overlap = keywords1 & keywords2
-            return len(overlap) > 1  # At least 2 keyword matches required
-
-        return False
+        union = keywords1 | keywords2
+        jaccard = len(overlap) / len(union) if union else 0.0
+        return jaccard >= 0.2
 
 
 # Backward compatibility with existing novelty checks

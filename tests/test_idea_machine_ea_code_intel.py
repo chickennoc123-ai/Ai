@@ -642,15 +642,46 @@ class TestPhase4SemanticNovelty:
         assert len(keywords) > 0
 
     def test_semantic_matching_same_mechanism_different_terminology(self):
-        """Detect same mechanism with different terminology (synonym detection)."""
+        """Detect same mechanism with different terminology (synonym detection).
+
+        Requires REAL keyword overlap, not just same broad class -- same class
+        alone is too coarse (e.g. 'event_driven' catches every macro-timed
+        strategy via generic words like 'event'/'nfp'/'macro', producing false
+        positives against unrelated REFUTED families that merely share a data
+        source). These two phrasings share 'reversal' and 'extreme', enough
+        real overlap to be the same underlying idea.
+        """
         from idea_machine.semantic_novelty import SemanticNoveltyEngine
         engine = SemanticNoveltyEngine()
 
-        keywords1 = engine._extract_keywords("mean reversion on overbought condition")
+        keywords1 = engine._extract_keywords("reversal after an extreme overbought streak")
         keywords2 = engine._extract_keywords("streak reversal after extreme divergence")
 
         match = engine._mechanisms_match(keywords1, keywords2, "mean_reversion", "mean_reversion")
-        assert match, "Should match: both are mean_reversion mechanisms with overlapping keywords"
+        assert match, "Should match: real keyword overlap (streak, reversal, extreme), not just same class"
+
+    def test_semantic_matching_same_class_alone_is_not_enough(self):
+        """Same mechanism class with only generic/structural keyword overlap must NOT match.
+
+        Regression test for a real false positive found in Cycle 13's live run:
+        a genuinely new cross-asset hypothesis (USDCAD/WTICO divergence) shared
+        only the word 'nfp' with REFUTED family FAMILY-C2-SURPRISE-REACTION-NFP-USD
+        (jaccard ~0.07) but both classified as 'event_driven', so same-class-alone
+        matching incorrectly flagged it as REFUTED and would have blocked all
+        future event-timed research permanently.
+        """
+        from idea_machine.semantic_novelty import SemanticNoveltyEngine
+        engine = SemanticNoveltyEngine()
+
+        keywords1 = engine._extract_keywords(
+            "cross-asset driver divergence strategy keyed to USD NFP/CPI macro calendar event"
+        )
+        keywords2 = engine._extract_keywords(
+            "NFP actual greater than forecast, condition on release surprise"
+        )
+
+        match = engine._mechanisms_match(keywords1, keywords2, "event_driven", "event_driven")
+        assert not match, "Same class + only 1 generic shared keyword ('nfp') must not count as a match"
 
     def test_semantic_matching_different_mechanisms_no_match(self):
         """Reject unrelated mechanisms even with similar words."""
