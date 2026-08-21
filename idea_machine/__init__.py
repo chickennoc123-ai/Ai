@@ -1,49 +1,18 @@
-"""IDEA MACHINE — a research-idea generator that feeds the Strategy Factory.
-
-    INTERNET / PAPERS / DATA
-             |
-        WORLD SCANNER  -> KNOWLEDGE BASE -> IDEA GENERATOR -> COMBINATION
-             |            NOVELTY -> FEASIBILITY -> ECONOMICS -> RANKING
-             |            EXPERIMENT DESIGNER -> IDEA QUEUE
-             v
-      STRATEGY FACTORY   (unchanged, and the only authority on validity)
-             |
-        PASS / FAIL / BLOCKED -> FEEDBACK -> KNOWLEDGE BASE -> (repeat)
-
-This package is strictly **upstream** of the Strategy Factory. It proposes;
-the Factory disposes. It cannot read the sealed holdout, authorize GEN14,
-produce an EA, edit the cost model, reset a ledger, rewrite failure history, or
-call anything an edge — those attempts raise
-:class:`~idea_machine.core.errors.GovernanceViolation`, which nothing in this
-package catches.
-
-Start at :class:`idea_machine.pipeline.IdeaMachine`.
 """
+Idea Machine: Autonomous strategy idea generation and evaluation loop.
 
-from __future__ import annotations
+Connects to the Strategy Factory discovery pipeline to research ideas sourced from:
+  - Academic literature (quantitative finance, market microstructure)
+  - Trading forums (QuantConnect, Elite Trader, TradingView)
+  - Research publications (event-driven, macro, technical analysis)
+  - Market observations (new regime patterns, calendar anomalies)
 
-__all__ = ["IdeaMachine", "IdeaSpec", "ExperimentSpec", "GovernanceViolation"]
+Governance:
+  - Never modifies holdout or ledger
+  - Respects all Factory gates (no p-hacking, no GEN14-bypass)
+  - Marks ideas BLOCKED_DATA when data is insufficient
+  - Records all rejections with honest reasons
+  - Only productizes when Factory authorizes
 
-__version__ = "1.0.0"
-
-
-def __getattr__(name: str):
-    # Lazy re-exports keep ``import idea_machine`` cheap and avoid a circular
-    # import between the pipeline and the modules it assembles.
-    if name == "IdeaMachine":
-        from idea_machine.pipeline import IdeaMachine
-
-        return IdeaMachine
-    if name == "IdeaSpec":
-        from idea_machine.core.idea_spec import IdeaSpec
-
-        return IdeaSpec
-    if name == "ExperimentSpec":
-        from idea_machine.experiment.spec import ExperimentSpec
-
-        return ExperimentSpec
-    if name == "GovernanceViolation":
-        from idea_machine.core.errors import GovernanceViolation
-
-        return GovernanceViolation
-    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+No self-declared edges. Hypothesis packaging, not edge-mining.
+"""

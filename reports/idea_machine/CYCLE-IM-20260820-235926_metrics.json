@@ -1,0 +1,31 @@
+{
+  "cycle_id": "CYCLE-IM-20260820-235926",
+  "started_at": "2026-08-20T23:59:26.570180",
+  "ideas_generated": 5,
+  "ideas_from_internet": 0,
+  "ideas_from_seeding": 5,
+  "ideas_viable_data": 1,
+  "ideas_blocked_data": 4,
+  "blocked_reasons": {
+    "Missing data: need_nzd_employment_calendar, need_asx200_m1": 1,
+    "Missing data: need_tick_bid_ask": 1,
+    "Missing data: need_boe_calendar": 1,
+    "Missing data: need_dxy, need_japan10y": 1
+  },
+  "ideas_ranked": 1,
+  "top_tier_ideas": 1,
+  "hypotheses_created": 1,
+  "hypotheses_with_params": 1,
+  "hypotheses_evaluated": 0,
+  "evaluations_passed_train": 0,
+  "evaluations_passed_validation": 0,
+  "discovery_survivors": 0,
+  "gen12_survivors": 0,
+  "gen14_authorized": 0,
+  "ea_products_created": 0,
+  "bottlenecks": [
+    "Data availability: 80.0% of ideas blocked (need exotic data)",
+    "Missing data sources: ['Missing data: need_nzd_employment_calendar, need_asx200_m1', 'Missing data: need_tick_bid_ask', 'Missing data: need_boe_calendar', 'Missing data: need_dxy, need_japan10y']"
+  ],
+  "errors": []
+}

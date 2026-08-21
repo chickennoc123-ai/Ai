@@ -1,0 +1,62 @@
+
+IDEA MACHINE END-TO-END CYCLE REPORT
+CYCLE-E2E-20260821-000231
+======================================================================
+
+OVERVIEW
+--------
+Started: 2026-08-21T00:02:31.047395
+Completed: 2026-08-21T00:02:31.047699
+
+METRICS BY STAGE
+----------------
+
+Stage 1: Idea Generation
+  Ideas generated: 5
+  From seeding: 5
+
+Stage 2: Data Filtering
+  Viable: 5
+  Blocked: 0
+
+Stage 3: Ranking
+  Ideas ranked: 0
+  High viability (score >= 60): 0
+
+Stage 4: Hypothesis Conversion
+  Hypotheses created: 0
+  Parameter sweep combinations: 0
+
+Stage 5-7: Factory Evaluation
+  Hypotheses evaluated: 0
+  Passed internal validation: 0
+  Passed GEN12 adversarial: 0
+  Passed GEN14 holdout: 0
+  Productized: 0
+
+PIPELINE CONVERSION RATES
+-------------------------
+  Viable ideas → High viability: 0/5 (0.0%)
+  Hypotheses → Validation pass: 0/0 (0.0%)
+  Validation → GEN12 pass: 0/0 (0.0%)
+  GEN12 → GEN14 pass: 0/0 (0.0%)
+
+BOTTLENECKS
+-----------
+  • Exception: 'IdeaMachineV2' object has no attribute 'rank_ideas'
+
+RECOMMENDATIONS FOR NEXT CYCLE
+-------------------------------
+  (none)
+
+GOVERNANCE NOTES
+----------------
+✓ Holdout was NOT accessed or modified
+✓ Multiple-testing ledger NOT reset
+✓ All Factory gates respected (no bypassing)
+✓ No self-declared edges; hypotheses only
+✓ BLOCKED_DATA ideas marked explicitly
+✓ All rejections logged with reasons
+✓ Only Factory-authorized ideas productized
+
+End of report.

@@ -1,0 +1,23 @@
+{
+  "cycle_id": "CYCLE-E2E-20260821-000231",
+  "started_at": "2026-08-21T00:02:31.047395",
+  "completed_at": "2026-08-21T00:02:31.047699",
+  "ideas_generated": 5,
+  "ideas_from_seeding": 5,
+  "ideas_viable": 5,
+  "ideas_blocked": 0,
+  "blocked_by_reason": {},
+  "ideas_ranked": 0,
+  "high_viability": 0,
+  "hypotheses_created": 0,
+  "total_parameter_combos": 0,
+  "hypotheses_evaluated": 0,
+  "passed_internal_validation": 0,
+  "passed_gen12_adversarial": 0,
+  "passed_gen14_holdout": 0,
+  "productized": 0,
+  "bottlenecks": [
+    "Exception: 'IdeaMachineV2' object has no attribute 'rank_ideas'"
+  ],
+  "recommendations": []
+}

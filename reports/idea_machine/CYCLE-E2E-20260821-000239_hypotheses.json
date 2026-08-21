@@ -1,0 +1,167 @@
+[
+  {
+    "hyp_id": "HYP-IM-0001",
+    "family": "MACRO_SURPRISE_EXTENDED-GBPUSD",
+    "symbol": "GBPUSD",
+    "operator": "OP-CROSS-ASSET-CONFIRM",
+    "mechanism": "GBP confirmation via US10Y move post-NFP (SC works on GBPUSD/US10Y 5m already)",
+    "testable_prediction": "GBP confirmation via US10Y move post-NFP (SC works on GBPUSD/US10Y 5m already) implies positive net expectancy on validation data",
+    "parameters_to_sweep": {
+      "entry_delay_sec": [
+        0,
+        30,
+        60,
+        120
+      ],
+      "exit_window_min": [
+        5,
+        15,
+        30,
+        60,
+        240
+      ],
+      "impulse_window_min": [
+        5,
+        10,
+        15
+      ],
+      "min_move_pips": [
+        5,
+        10,
+        20
+      ]
+    },
+    "min_trades": 30,
+    "estimated_gross_effect": null,
+    "source_idea_id": "IDEA-V2-001-MACR",
+    "created_at": "2026-08-21T00:02:39.748795"
+  },
+  {
+    "hyp_id": "HYP-IM-0002",
+    "family": "CALENDAR_REGIONAL-XAUUSD",
+    "symbol": "XAUUSD",
+    "operator": "OP-CALENDAR-ANOMALY",
+    "mechanism": "Month-end rebalancing: gold + risk-off positioning at month transitions",
+    "testable_prediction": "Month-end rebalancing: gold + risk-off positioning at month transitions implies positive net expectancy on validation data",
+    "parameters_to_sweep": {
+      "entry_delay_sec": [
+        0,
+        30,
+        60,
+        120
+      ],
+      "exit_window_min": [
+        5,
+        15,
+        30,
+        60,
+        240
+      ],
+      "pre_window_h": [
+        4,
+        8,
+        24
+      ],
+      "post_window_h": [
+        4,
+        8,
+        24
+      ]
+    },
+    "min_trades": 30,
+    "estimated_gross_effect": null,
+    "source_idea_id": "IDEA-V2-002-CALE",
+    "created_at": "2026-08-21T00:02:39.748805"
+  },
+  {
+    "hyp_id": "HYP-IM-0003",
+    "family": "REGIME_CONDITIONAL-EURUSD",
+    "symbol": "EURUSD",
+    "operator": "OP-REGIME-FILTER",
+    "mechanism": "European session entry bias: EURUSD opens show different t-stat on US data days vs quiet days",
+    "testable_prediction": "European session entry bias: EURUSD opens show different t-stat on US data days vs quiet days implies positive net expectancy on validation data",
+    "parameters_to_sweep": {
+      "entry_delay_sec": [
+        0,
+        30,
+        60,
+        120
+      ],
+      "exit_window_min": [
+        5,
+        15,
+        30,
+        60,
+        240
+      ],
+      "lookback_bars": [
+        20,
+        50,
+        100
+      ],
+      "threshold_std": [
+        1.0,
+        1.5,
+        2.0
+      ]
+    },
+    "min_trades": 30,
+    "estimated_gross_effect": null,
+    "source_idea_id": "IDEA-V2-003-REGI",
+    "created_at": "2026-08-21T00:02:39.748810"
+  },
+  {
+    "hyp_id": "HYP-IM-0004",
+    "family": "MICROSTRUCTURE_INTRADAY-EURUSD",
+    "symbol": "EURUSD",
+    "operator": "OP-SPREAD-FADE",
+    "mechanism": "Post-event entry delay realization: wait 5min post-news, then entry if impulse confirms direction (cost amortization)",
+    "testable_prediction": "Post-event entry delay realization: wait 5min post-news, then entry if impulse confirms direction (cost amortization) implies positive net expectancy on validation data",
+    "parameters_to_sweep": {
+      "entry_delay_sec": [
+        0,
+        30,
+        60,
+        120
+      ],
+      "exit_window_min": [
+        5,
+        15,
+        30,
+        60,
+        240
+      ]
+    },
+    "min_trades": 30,
+    "estimated_gross_effect": null,
+    "source_idea_id": "IDEA-V2-004-MICR",
+    "created_at": "2026-08-21T00:02:39.748814"
+  },
+  {
+    "hyp_id": "HYP-IM-0005",
+    "family": "UNKNOWN_FAMILY-XAUUSD",
+    "symbol": "XAUUSD",
+    "operator": "OP-UNKNOWN",
+    "mechanism": "Month-end long horizon extension: test 96h, 120h, 240h windows (not just 48h)",
+    "testable_prediction": "Month-end long horizon extension: test 96h, 120h, 240h windows (not just 48h) implies positive net expectancy on validation data",
+    "parameters_to_sweep": {
+      "entry_delay_sec": [
+        0,
+        30,
+        60,
+        120
+      ],
+      "exit_window_min": [
+        5,
+        15,
+        30,
+        60,
+        240
+      ]
+    },
+    "min_trades": 30,
+    "estimated_gross_effect": null,
+    "source_idea_id": "IDEA-V2-005-TECH",
+    "created_at": "2026-08-21T00:02:39.748818"
+  }
+]

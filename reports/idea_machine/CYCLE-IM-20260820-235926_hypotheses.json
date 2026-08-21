@@ -1,0 +1,39 @@
+[
+  {
+    "hyp_id": "HYP-IM-0001",
+    "family": "CALENDAR_REGIONAL-EURUSD",
+    "symbol": "EURUSD",
+    "operator": "OP-CALENDAR-ANOMALY",
+    "mechanism": "Tuesday-after-NFP mean reversion in Euro (historically softest revert after US data)",
+    "testable_prediction": "Tuesday-after-NFP mean reversion in Euro (historically softest revert after US data) implies positive net expectancy on validation data",
+    "parameters_to_sweep": {
+      "entry_delay_sec": [
+        0,
+        30,
+        60,
+        120
+      ],
+      "exit_window_min": [
+        5,
+        15,
+        30,
+        60,
+        240
+      ],
+      "pre_window_h": [
+        4,
+        8,
+        24
+      ],
+      "post_window_h": [
+        4,
+        8,
+        24
+      ]
+    },
+    "min_trades": 30,
+    "estimated_gross_effect": null,
+    "source_idea_id": "IDEA-002-CALE",
+    "created_at": "2026-08-20T23:59:26.570321"
+  }
+]

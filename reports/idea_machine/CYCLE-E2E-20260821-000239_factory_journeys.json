@@ -1,0 +1,97 @@
+[
+  {
+    "hypothesis_id": "HYP-IM-0006",
+    "original_idea_id": "IDEA-V2-001-MACR",
+    "symbol": "GBPUSD",
+    "family": "MACRO_SURPRISE_EXTENDED-GBPUSD",
+    "entered_factory_at": "2026-08-21T00:02:39.749210",
+    "gate_results": [
+      {
+        "hypothesis_id": "HYP-IM-0006",
+        "gate_name": "INTERNAL_VALIDATION",
+        "passed": false,
+        "reason": "Simulated: Failed validation (underpowered or sign-flipped)",
+        "survivor_id": null
+      }
+    ],
+    "final_status": "REJECTED",
+    "final_reason": "Failed internal validation gate",
+    "generated_ea_product": null
+  },
+  {
+    "hypothesis_id": "HYP-IM-0007",
+    "original_idea_id": "IDEA-V2-002-CALE",
+    "symbol": "XAUUSD",
+    "family": "CALENDAR_REGIONAL-XAUUSD",
+    "entered_factory_at": "2026-08-21T00:02:39.759274",
+    "gate_results": [
+      {
+        "hypothesis_id": "HYP-IM-0007",
+        "gate_name": "INTERNAL_VALIDATION",
+        "passed": false,
+        "reason": "Simulated: Failed validation (underpowered or sign-flipped)",
+        "survivor_id": null
+      }
+    ],
+    "final_status": "REJECTED",
+    "final_reason": "Failed internal validation gate",
+    "generated_ea_product": null
+  },
+  {
+    "hypothesis_id": "HYP-IM-0008",
+    "original_idea_id": "IDEA-V2-003-REGI",
+    "symbol": "EURUSD",
+    "family": "REGIME_CONDITIONAL-EURUSD",
+    "entered_factory_at": "2026-08-21T00:02:39.759296",
+    "gate_results": [
+      {
+        "hypothesis_id": "HYP-IM-0008",
+        "gate_name": "INTERNAL_VALIDATION",
+        "passed": false,
+        "reason": "Simulated: Failed validation (underpowered or sign-flipped)",
+        "survivor_id": null
+      }
+    ],
+    "final_status": "REJECTED",
+    "final_reason": "Failed internal validation gate",
+    "generated_ea_product": null
+  },
+  {
+    "hypothesis_id": "HYP-IM-0009",
+    "original_idea_id": "IDEA-V2-004-MICR",
+    "symbol": "EURUSD",
+    "family": "MICROSTRUCTURE_INTRADAY-EURUSD",
+    "entered_factory_at": "2026-08-21T00:02:39.759304",
+    "gate_results": [
+      {
+        "hypothesis_id": "HYP-IM-0009",
+        "gate_name": "INTERNAL_VALIDATION",
+        "passed": false,
+        "reason": "Simulated: Failed validation (underpowered or sign-flipped)",
+        "survivor_id": null
+      }
+    ],
+    "final_status": "REJECTED",
+    "final_reason": "Failed internal validation gate",
+    "generated_ea_product": null
+  },
+  {
+    "hypothesis_id": "HYP-IM-0010",
+    "original_idea_id": "IDEA-V2-005-TECH",
+    "symbol": "XAUUSD",
+    "family": "UNKNOWN_FAMILY-XAUUSD",
+    "entered_factory_at": "2026-08-21T00:02:39.759310",
+    "gate_results": [
+      {
+        "hypothesis_id": "HYP-IM-0010",
+        "gate_name": "INTERNAL_VALIDATION",
+        "passed": false,
+        "reason": "Simulated: Failed validation (underpowered or sign-flipped)",
+        "survivor_id": null
+      }
+    ],
+    "final_status": "REJECTED",
+    "final_reason": "Failed internal validation gate",
+    "generated_ea_product": null
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "cycle_id": "CYCLE-E2E-20260821-000239",
+  "started_at": "2026-08-21T00:02:39.748555",
+  "completed_at": "2026-08-21T00:02:39.759984",
+  "ideas_generated": 5,
+  "ideas_from_seeding": 5,
+  "ideas_viable": 5,
+  "ideas_blocked": 0,
+  "blocked_by_reason": {},
+  "ideas_ranked": 5,
+  "high_viability": 3,
+  "hypotheses_created": 5,
+  "total_parameter_combos": 580,
+  "hypotheses_evaluated": 5,
+  "passed_internal_validation": 0,
+  "passed_gen12_adversarial": 0,
+  "passed_gen14_holdout": 0,
+  "productized": 0,
+  "bottlenecks": [
+    "Factory validation: Only 0.0% pass (historical: 5.8%)"
+  ],
+  "recommendations": [
+    "Use 5 viable ideas as base. Expand parameter sweeps.",
+    "Prioritize top-tier ideas (3) for intensive parameter tuning",
+    "No GEN14 passes in simulation. Increase idea diversity or add external validation."
+  ]
+}

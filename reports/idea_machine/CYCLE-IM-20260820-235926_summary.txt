@@ -1,0 +1,42 @@
+
+Idea Machine Cycle CYCLE-IM-20260820-235926
+============================
+Started: 2026-08-20T23:59:26.570180
+
+Stage 1: Idea Generation
+  Total ideas: 5
+  From seeding: 5
+  From internet: 0
+
+Stage 2: Data Filtering
+  Viable: 1
+  Blocked: 4
+  Blocking reasons: {'Missing data: need_nzd_employment_calendar, need_asx200_m1': 1, 'Missing data: need_tick_bid_ask': 1, 'Missing data: need_boe_calendar': 1, 'Missing data: need_dxy, need_japan10y': 1}
+
+Stage 3: Ranking
+  Ideas ranked: 1
+  Top tier (score >= 50): 1
+
+Stage 4: Hypothesis Conversion
+  Hypotheses created: 1
+  With parameter sweeps: 1
+
+Stage 5: Factory Discovery
+  Evaluated: 0
+  Passed train gate: 0
+  Passed validation gate: 0
+
+Stage 6: Survivors
+  Discovery survivors: 0
+  GEN12 survivors: 0
+  GEN14 authorized: 0
+
+Stage 7: Productization
+  EA products created: 0
+
+Bottlenecks:
+  - Data availability: 80.0% of ideas blocked (need exotic data)
+  - Missing data sources: ['Missing data: need_nzd_employment_calendar, need_asx200_m1', 'Missing data: need_tick_bid_ask', 'Missing data: need_boe_calendar', 'Missing data: need_dxy, need_japan10y']
+
+Errors:
+
