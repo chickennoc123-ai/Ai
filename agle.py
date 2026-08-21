@@ -14,7 +14,8 @@
     python3 agle.py verify     # verify_integrity() on every production ledger
     python3 agle.py products   # list every registered EA product
     python3 agle.py queue      # opportunity queue summary
-    python3 agle.py health     # heartbeat file contents
+    python3 agle.py health     # real, observational live health check
+    python3 agle.py health --json  # same, as machine-readable JSON
 
 This wraps, and does not reimplement, production.master_switch.MasterSwitch,
 production.supervisor.ProductionSupervisor, production.ea_registry.
@@ -47,6 +48,7 @@ from idea_machine.opportunity_queue import OpportunityQueue  # noqa: E402
 from production.ea_registry import EAProductRegistry  # noqa: E402
 from production.evaluation_ledger import EvaluationLedger  # noqa: E402
 from production.master_switch import MasterSwitch  # noqa: E402
+from production.health import check_health, render_health_text  # noqa: E402
 from production.supervisor import DEFAULT_HEARTBEAT_PATH, ProductionSupervisor  # noqa: E402
 
 
@@ -167,11 +169,15 @@ def cmd_queue(args) -> int:
 
 
 def cmd_health(args) -> int:
-    if not DEFAULT_HEARTBEAT_PATH.exists():
-        print("no heartbeat recorded yet (AGLE has never completed a cycle in this environment)")
-        return 1
-    _print(json.loads(DEFAULT_HEARTBEAT_PATH.read_text()))
-    return 0
+    """Real, observational-only live health check -- see production/health.py.
+    Never starts AGLE, never starts a Supervisor, never changes the Master
+    Switch, never modifies production state. Safe to run at any time."""
+    report = check_health()
+    if getattr(args, "json", False):
+        _print(report.to_dict())
+    else:
+        print(render_health_text(report))
+    return 0 if report.overall == "HEALTHY" else 1
 
 
 def main(argv=None) -> int:
@@ -226,7 +232,8 @@ def main(argv=None) -> int:
     p_queue = sub.add_parser("queue", help="opportunity queue summary")
     p_queue.set_defaults(func=cmd_queue)
 
-    p_health = sub.add_parser("health", help="heartbeat file contents")
+    p_health = sub.add_parser("health", help="real, observational live health check")
+    p_health.add_argument("--json", action="store_true", help="machine-readable JSON output")
     p_health.set_defaults(func=cmd_health)
 
     args = parser.parse_args(argv)

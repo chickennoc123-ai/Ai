@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "master_switch",
-  "record_count": 3,
+  "record_count": 7,
   "records": [
     {
       "enabled": true,
@@ -26,7 +26,39 @@
       "reason": "Production Mode Section 20: turning on the factory for the first real 24/7 production run per the AGLE Production Mode spec",
       "source": "cli",
       "record_id": "SWITCH-e564f39c32a41fef"
+    },
+    {
+      "enabled": false,
+      "state": "OFF",
+      "changed_at": "2026-08-21T13:39:15.690878+00:00",
+      "reason": "health command demonstration: mid-run OFF",
+      "source": "cli",
+      "record_id": "SWITCH-3bf38338dede71b8"
+    },
+    {
+      "enabled": true,
+      "state": "ON",
+      "changed_at": "2026-08-21T13:40:00.654483+00:00",
+      "reason": "health command demonstration: restoring prior ON state",
+      "source": "cli",
+      "record_id": "SWITCH-c2e1edb5cbff7d7c"
+    },
+    {
+      "enabled": false,
+      "state": "OFF",
+      "changed_at": "2026-08-21T13:43:17.373239+00:00",
+      "reason": "health demo: verify OFF is never misreported as healthy",
+      "source": "cli",
+      "record_id": "SWITCH-a1da5b4ad5ce27b4"
+    },
+    {
+      "enabled": true,
+      "state": "ON",
+      "changed_at": "2026-08-21T13:43:37.461227+00:00",
+      "reason": "health demo: restoring prior ON state after demonstration",
+      "source": "cli",
+      "record_id": "SWITCH-bd0cfb7d34f5dda9"
     }
   ],
-  "checksum": "804e58bd0672f9acff63cf9efdd72bb26b14243508d3c3218a8b88dada5a8420"
+  "checksum": "1495a259173c360190682ea970469c73c16247413509821cf51f9bc8be555c1a"
 }
