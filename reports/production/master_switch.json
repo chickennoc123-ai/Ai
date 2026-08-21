@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "master_switch",
-  "record_count": 7,
+  "record_count": 9,
   "records": [
     {
       "enabled": true,
@@ -58,7 +58,23 @@
       "reason": "health demo: restoring prior ON state after demonstration",
       "source": "cli",
       "record_id": "SWITCH-bd0cfb7d34f5dda9"
+    },
+    {
+      "enabled": false,
+      "state": "OFF",
+      "changed_at": "2026-08-21T14:46:11.821538+00:00",
+      "reason": "24/7 spec Phase 14 demonstration: real switch enforcement",
+      "source": "cli",
+      "record_id": "SWITCH-8f8dc9bb5ff6233f"
+    },
+    {
+      "enabled": true,
+      "state": "ON",
+      "changed_at": "2026-08-21T14:47:04.537062+00:00",
+      "reason": "24/7 spec Phase 14 demonstration: restoring ON, verifying resume",
+      "source": "cli",
+      "record_id": "SWITCH-d9abcb6048668bff"
     }
   ],
-  "checksum": "1495a259173c360190682ea970469c73c16247413509821cf51f9bc8be555c1a"
+  "checksum": "2765f745fae22d7fc39e453be88e0c4c54736776337d5b5d73de4f82fe93b0e6"
 }

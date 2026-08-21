@@ -97,7 +97,9 @@ def test_case_2_switch_off(tmp_path):
                           operation_log_path=p["oplog"], evaluation_ledger_path=p["ledger"],
                           ea_registry_path=p["registry"])
     assert report.master_switch_state == "OFF"
-    assert report.overall == "ATTENTION REQUIRED"
+    # Section 9 of the 24/7 operations spec: an intentional OFF is a safe,
+    # correct state, never a failure -- SAFE / IDLE, not ATTENTION REQUIRED.
+    assert report.overall == "SAFE / IDLE"
 
 
 # ------------------------------------------------- 3: supervisor stopped, ON
@@ -149,7 +151,9 @@ def test_case_4_missing_switch_file_fail_safe_off(tmp_path):
                           operation_log_path=p["oplog"], evaluation_ledger_path=p["ledger"],
                           ea_registry_path=p["registry"])
     assert report.master_switch_state == "OFF"
-    assert report.overall == "ATTENTION REQUIRED"
+    # Section 9 of the 24/7 operations spec: an intentional OFF is a safe,
+    # correct state, never a failure -- SAFE / IDLE, not ATTENTION REQUIRED.
+    assert report.overall == "SAFE / IDLE"
 
 
 def test_case_5_corrupt_switch_file_fail_safe_off(tmp_path):
@@ -161,7 +165,9 @@ def test_case_5_corrupt_switch_file_fail_safe_off(tmp_path):
                           operation_log_path=p["oplog"], evaluation_ledger_path=p["ledger"],
                           ea_registry_path=p["registry"])
     assert report.master_switch_state == "OFF"
-    assert report.overall == "ATTENTION REQUIRED"
+    # Section 9 of the 24/7 operations spec: an intentional OFF is a safe,
+    # correct state, never a failure -- SAFE / IDLE, not ATTENTION REQUIRED.
+    assert report.overall == "SAFE / IDLE"
 
 
 # --------------------------------------------------------- 6: no cycles yet

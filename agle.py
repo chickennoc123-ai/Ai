@@ -16,10 +16,23 @@
     python3 agle.py queue      # opportunity queue summary
     python3 agle.py health     # real, observational live health check
     python3 agle.py health --json  # same, as machine-readable JSON
+    python3 agle.py service install    # register the watchdog to start at boot (Windows)
+    python3 agle.py service start      # start the watchdog now (keeps a Supervisor alive)
+    python3 agle.py service stop       # ask the watchdog to stop gracefully
+    python3 agle.py service restart    # stop then start
+    python3 agle.py service status     # is the watchdog alive right now
+    python3 agle.py service uninstall  # remove the boot registration
 
 This wraps, and does not reimplement, production.master_switch.MasterSwitch,
-production.supervisor.ProductionSupervisor, production.ea_registry.
-EAProductRegistry, and idea_machine.opportunity_queue.OpportunityQueue.
+production.supervisor.ProductionSupervisor, production.watchdog.
+ServiceWatchdog, production.ea_registry.EAProductRegistry, and
+idea_machine.opportunity_queue.OpportunityQueue.
+
+Three distinct layers, never merged: the WATCHDOG/SERVICE keeps a
+Supervisor process alive (process availability); the MASTER SWITCH is the
+authoritative production permission; the SUPERVISOR runs the actual
+production loop. `agle.py service *` commands only ever touch the first --
+they never read, write, or imply anything about the Master Switch.
 
 This CLI is a convenience, not a requirement: the master switch's
 authoritative state is the plain file at runtime/master_switch.json
@@ -37,6 +50,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -49,7 +63,9 @@ from production.ea_registry import EAProductRegistry  # noqa: E402
 from production.evaluation_ledger import EvaluationLedger  # noqa: E402
 from production.master_switch import MasterSwitch  # noqa: E402
 from production.health import check_health, render_health_text  # noqa: E402
+from production.singleton_lock import DUPLICATE_PROCESS_EXIT_CODE, DuplicateProcessError  # noqa: E402
 from production.supervisor import DEFAULT_HEARTBEAT_PATH, ProductionSupervisor  # noqa: E402
+from production.watchdog import DEFAULT_WATCHDOG_LOCK_PATH, ServiceWatchdog  # noqa: E402
 
 
 def _print(obj) -> None:
@@ -123,7 +139,11 @@ def cmd_cycle(args) -> int:
     if not sup.switch.is_on():
         print("MASTER SWITCH is OFF -- refusing to run a cycle. Run `agle.py start` first.")
         return 1
-    report = sup.run_one_cycle(total_slots=args.total_slots)
+    try:
+        report = sup.run_one_cycle(total_slots=args.total_slots)
+    except DuplicateProcessError as exc:
+        print(f"REFUSED: another AGLE production process is already running (pid {exc.holder_pid}) -- {exc}")
+        return DUPLICATE_PROCESS_EXIT_CODE
     _print(report.to_dict())
     return 0
 
@@ -133,10 +153,160 @@ def cmd_run(args) -> int:
     if not sup.switch.is_on():
         print("MASTER SWITCH is OFF -- refusing to run. Run `agle.py start` first.")
         return 1
-    summary = sup.run_forever(max_cycles=args.max_cycles, sleep_seconds=args.sleep_seconds,
-                              total_slots=args.total_slots)
+    try:
+        summary = sup.run_forever(max_cycles=args.max_cycles, sleep_seconds=args.sleep_seconds,
+                                  total_slots=args.total_slots)
+    except DuplicateProcessError as exc:
+        print(f"REFUSED: another AGLE production process is already running (pid {exc.holder_pid}) -- {exc}")
+        return DUPLICATE_PROCESS_EXIT_CODE
     _print(summary)
     return 0
+
+
+def cmd_watchdog(args) -> int:
+    """Foreground, blocking: the process a Windows Task Scheduler action
+    (or `agle.py service start`, spawned in the background) actually runs.
+    Keeps exactly one Supervisor child alive while the Master Switch
+    permits it -- see production/watchdog.py for the full contract."""
+    watchdog = ServiceWatchdog()
+    summary = watchdog.run(max_iterations=args.max_iterations)
+    _print(summary)
+    return 0
+
+
+def _print_service_box(lines) -> None:
+    print("AGLE SERVICE")
+    print("------------")
+    for line in lines:
+        print(line)
+
+
+def cmd_service_install(args) -> int:
+    import platform
+
+    if platform.system() != "Windows":
+        _print_service_box([
+            "Install: NOT SUPPORTED on this platform",
+            f"(detected: {platform.system()})",
+            "This installs a Windows Task Scheduler entry ('run whether user",
+            "is logged on or not', trigger: at system startup) that launches",
+            "`python agle.py watchdog`. On Linux/macOS, use your own process",
+            "supervisor (systemd, launchd, etc.) to run the same command, or",
+            "run `python agle.py service start` interactively.",
+        ])
+        return 1
+
+    import subprocess as _subprocess
+    task_name = "AGLE_Watchdog"
+    python_exe = sys.executable
+    script = str(REPO_ROOT / "agle.py")
+    action = f'"{python_exe}" "{script}" watchdog'
+    cmd = [
+        "schtasks", "/create", "/tn", task_name, "/sc", "onstart",
+        "/rl", "HIGHEST", "/tr", action, "/f",
+    ]
+    result = _subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode == 0:
+        _print_service_box([f"Installed scheduled task '{task_name}' (runs `agle.py watchdog` at startup)."])
+        return 0
+    _print_service_box([f"schtasks /create FAILED: {result.stderr.strip() or result.stdout.strip()}"])
+    return 1
+
+
+def cmd_service_uninstall(args) -> int:
+    import platform
+
+    if platform.system() != "Windows":
+        _print_service_box(["Uninstall: NOT SUPPORTED on this platform (nothing was installed here)."])
+        return 1
+
+    import subprocess as _subprocess
+    task_name = "AGLE_Watchdog"
+    result = _subprocess.run(["schtasks", "/delete", "/tn", task_name, "/f"], capture_output=True, text=True)
+    if result.returncode == 0:
+        _print_service_box([f"Removed scheduled task '{task_name}'."])
+        return 0
+    _print_service_box([f"schtasks /delete FAILED (may already be absent): {result.stderr.strip() or result.stdout.strip()}"])
+    return 1
+
+
+def cmd_service_start(args) -> int:
+    import subprocess as _subprocess
+    import time as _time
+
+    watchdog = ServiceWatchdog()
+    status = watchdog.status()
+    if status["running"]:
+        _print_service_box([f"Already running (pid {status['pid']})."])
+        return 0
+
+    popen_kwargs: dict = {"cwd": str(REPO_ROOT)}
+    if sys.platform == "win32":
+        popen_kwargs["creationflags"] = _subprocess.CREATE_NEW_PROCESS_GROUP | getattr(_subprocess, "DETACHED_PROCESS", 0)
+    else:
+        popen_kwargs["start_new_session"] = True
+    _subprocess.Popen([sys.executable, str(REPO_ROOT / "agle.py"), "watchdog"], **popen_kwargs)
+
+    for _ in range(50):  # wait up to ~5s for the lock to actually be claimed
+        _time.sleep(0.1)
+        status = watchdog.status()
+        if status["running"]:
+            _print_service_box([f"Started (pid {status['pid']})."])
+            return 0
+    _print_service_box(["Spawned, but could not confirm it acquired the watchdog lock within 5s -- check `agle.py service status`."])
+    return 1
+
+
+def cmd_service_stop(args) -> int:
+    import signal as _signal
+    import time as _time
+
+    watchdog = ServiceWatchdog()
+    status = watchdog.status()
+    if not status["running"]:
+        _print_service_box(["Already stopped."])
+        return 0
+
+    pid = status["pid"]
+    try:
+        if sys.platform == "win32":
+            sig = getattr(_signal, "CTRL_BREAK_EVENT", _signal.SIGTERM)
+        else:
+            sig = _signal.SIGTERM
+        os.kill(pid, sig)
+    except OSError as exc:
+        _print_service_box([f"Could not signal pid {pid}: {exc}"])
+        return 1
+
+    for _ in range(int(args.timeout_seconds * 10)):
+        _time.sleep(0.1)
+        status = watchdog.status()
+        if not status["running"]:
+            _print_service_box(["Stopped."])
+            return 0
+    _print_service_box([
+        f"Signaled pid {pid} but it has not exited after {args.timeout_seconds}s -- it may be waiting for an "
+        "active evaluation to finish (this is expected behavior, not a bug -- see Phase 7). Try again later, "
+        "or increase --timeout-seconds.",
+    ])
+    return 1
+
+
+def cmd_service_restart(args) -> int:
+    stop_rc = cmd_service_stop(args)
+    if stop_rc != 0:
+        return stop_rc
+    return cmd_service_start(args)
+
+
+def cmd_service_status(args) -> int:
+    watchdog = ServiceWatchdog()
+    status = watchdog.status()
+    if status["running"]:
+        _print_service_box([f"State: RUNNING", f"PID:   {status['pid']}"])
+    else:
+        _print_service_box(["State: STOPPED", "PID:   N/A"])
+    return 0 if status["running"] else 1
 
 
 def cmd_verify(args) -> int:
@@ -235,6 +405,34 @@ def main(argv=None) -> int:
     p_health = sub.add_parser("health", help="real, observational live health check")
     p_health.add_argument("--json", action="store_true", help="machine-readable JSON output")
     p_health.set_defaults(func=cmd_health)
+
+    p_watchdog = sub.add_parser("watchdog", help="foreground: keep exactly one Supervisor alive (spec Phase 6)")
+    p_watchdog.add_argument("--max-iterations", dest="max_iterations", type=int, default=None,
+                            help="for testing/soak runs only -- omit for a real, unbounded watchdog")
+    p_watchdog.set_defaults(func=cmd_watchdog)
+
+    p_service = sub.add_parser("service", help="Windows-service-style control of the watchdog process")
+    service_sub = p_service.add_subparsers(dest="service_command", required=True)
+
+    p_svc_install = service_sub.add_parser("install", help="register the watchdog to start at Windows boot")
+    p_svc_install.set_defaults(func=cmd_service_install)
+
+    p_svc_uninstall = service_sub.add_parser("uninstall", help="remove the boot registration")
+    p_svc_uninstall.set_defaults(func=cmd_service_uninstall)
+
+    p_svc_start = service_sub.add_parser("start", help="start the watchdog now (background)")
+    p_svc_start.set_defaults(func=cmd_service_start)
+
+    p_svc_stop = service_sub.add_parser("stop", help="ask the watchdog to stop gracefully")
+    p_svc_stop.add_argument("--timeout-seconds", dest="timeout_seconds", type=float, default=15.0)
+    p_svc_stop.set_defaults(func=cmd_service_stop)
+
+    p_svc_restart = service_sub.add_parser("restart", help="stop then start")
+    p_svc_restart.add_argument("--timeout-seconds", dest="timeout_seconds", type=float, default=15.0)
+    p_svc_restart.set_defaults(func=cmd_service_restart)
+
+    p_svc_status = service_sub.add_parser("status", help="is the watchdog alive right now")
+    p_svc_status.set_defaults(func=cmd_service_status)
 
     args = parser.parse_args(argv)
     return args.func(args)

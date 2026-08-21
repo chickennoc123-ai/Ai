@@ -42,7 +42,9 @@ from idea_machine.governance import guard
 from production.ea_registry import DEFAULT_REGISTRY_PATH, EAProductRegistry
 from production.evaluation_ledger import DEFAULT_LEDGER_PATH, EvaluationLedger
 from production.master_switch import MasterSwitch
+from production.process_utils import is_pid_alive, looks_like_agle_process
 from production.supervisor import DEFAULT_HEARTBEAT_PATH, DEFAULT_OPERATION_LOG_PATH
+from production.watchdog import DEFAULT_WATCHDOG_LOCK_PATH
 
 UNKNOWN = "UNKNOWN"
 NA = "N/A"
@@ -61,35 +63,6 @@ _STATE_MAP = {
 }
 
 
-def _is_pid_alive(pid: Optional[int]) -> bool:
-    if not pid:
-        return False
-    try:
-        os.kill(int(pid), 0)
-    except ProcessLookupError:
-        return False
-    except PermissionError:
-        return True  # process exists, just isn't ours to signal
-    except OSError:
-        return False
-    return True
-
-
-def _looks_like_agle_process(pid: int) -> Optional[bool]:
-    """Best-effort /proc check (Linux only) to avoid a false RUNNING after
-    PID reuse. Returns None -- "unconfirmed", not "no" -- when the check
-    cannot be performed at all (non-Linux, no /proc, permission denied)."""
-    cmdline_path = Path(f"/proc/{pid}/cmdline")
-    if not cmdline_path.exists():
-        return None
-    try:
-        raw = cmdline_path.read_bytes()
-    except OSError:
-        return None
-    text = raw.replace(b"\x00", b" ").decode("utf-8", errors="replace")
-    return "agle.py" in text
-
-
 def _read_json(path: Path) -> Dict[str, Any]:
     if not path.exists():
         return {}
@@ -97,6 +70,17 @@ def _read_json(path: Path) -> Dict[str, Any]:
         return json.loads(path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return {}
+
+
+def _read_lock_holder(path: Path):
+    """Read a production.singleton_lock.SingleInstanceLock's PID file
+    directly -- read-only, never touches the lock itself, never calls
+    acquire()/release()."""
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return int(data["pid"]), data.get("acquired_at")
+    except (OSError, json.JSONDecodeError, KeyError, ValueError, TypeError):
+        return None
 
 
 def _parse_iso(ts: Any) -> Optional[datetime]:
@@ -129,6 +113,8 @@ def _cycle_result(cycle: Dict[str, Any]) -> str:
 class HealthReport:
     master_switch_state: str
     master_switch_source: str
+    service_state: str  # RUNNING | STOPPED | NOT INSTALLED
+    service_pid: Optional[int]
     supervisor_state: str  # RUNNING | STOPPED
     supervisor_pid: Optional[int]
     current_state: str  # RUNNING | IDLE | STOPPED | BLOCKED | UNKNOWN
@@ -144,12 +130,13 @@ class HealthReport:
     last_ea_product_created_at: str
     last_ea_product_path: str
     ea_product_notification: str
-    overall: str  # HEALTHY | ATTENTION REQUIRED
+    overall: str  # HEALTHY | SAFE / IDLE | ATTENTION REQUIRED
     notes: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "master_switch": self.master_switch_state, "master_switch_source": self.master_switch_source,
+            "service": self.service_state, "service_pid": self.service_pid,
             "supervisor": self.supervisor_state, "pid": self.supervisor_pid,
             "current_state": self.current_state, "last_cycle_at": self.last_cycle_at,
             "last_cycle_result": self.last_cycle_result, "last_factory_run_at": self.last_factory_run_at,
@@ -202,6 +189,7 @@ def check_health(
     operation_log_path: Path = DEFAULT_OPERATION_LOG_PATH,
     evaluation_ledger_path: Path = DEFAULT_LEDGER_PATH,
     ea_registry_path: Path = DEFAULT_REGISTRY_PATH,
+    watchdog_lock_path: Path = DEFAULT_WATCHDOG_LOCK_PATH,
     now: Optional[datetime] = None,
 ) -> HealthReport:
     """The single entry point. Read-only: touches no persisted state,
@@ -212,11 +200,42 @@ def check_health(
 
     switch_state = switch.current()
 
+    # ---- service (watchdog) liveness -- separate concept from the
+    # supervisor: a watchdog can be alive and correctly idling with no
+    # supervisor child running (switch OFF), and a supervisor can be alive
+    # with no watchdog at all (a human's manual `agle.py run`).
+    #
+    # Deliberately uses ONLY is_pid_alive() here, matching
+    # production.singleton_lock.SingleInstanceLock.acquire()'s own
+    # authoritative definition of "is this lock still held" exactly --
+    # this must never disagree with what `agle.py service start` would
+    # itself decide (report STOPPED here while the lock would still
+    # refuse a new acquire as "already held" would be a misleading,
+    # self-contradictory health report). Identity confirmation is
+    # informational only (a note), never a reason to say STOPPED. -------
+    service_pid: Optional[int] = None
+    if not watchdog_lock_path.exists():
+        service_state = "NOT INSTALLED"
+    else:
+        svc_holder = _read_lock_holder(watchdog_lock_path)
+        if svc_holder is None:
+            service_state = "STOPPED"
+            notes.append("watchdog lock file exists but is unreadable/corrupt -- treated as not running")
+        else:
+            svc_pid, _ = svc_holder
+            svc_alive = is_pid_alive(svc_pid)
+            service_state = "RUNNING" if svc_alive else "STOPPED"
+            service_pid = svc_pid if svc_alive else None
+            if svc_pid and not svc_alive:
+                notes.append(f"watchdog lock records pid={svc_pid} but that process is not alive (stale lock)")
+            elif svc_pid and svc_alive and looks_like_agle_process(svc_pid) is None:
+                notes.append("service liveness confirmed by PID only (process-identity check unavailable on this platform)")
+
     # ---- supervisor liveness (independent of the switch) -----------------
     heartbeat = _read_json(heartbeat_path)
     hb_pid = heartbeat.get("pid")
-    pid_alive = _is_pid_alive(hb_pid)
-    confirmed = _looks_like_agle_process(hb_pid) if pid_alive and hb_pid else None
+    pid_alive = is_pid_alive(hb_pid)
+    confirmed = looks_like_agle_process(hb_pid) if pid_alive and hb_pid else None
     if confirmed is None and pid_alive:
         notes.append("supervisor liveness confirmed by PID only (process-identity check unavailable on this platform)")
     supervisor_running = bool(pid_alive and confirmed is not False)
@@ -307,22 +326,40 @@ def check_health(
     ea_product_notification = "NOT IMPLEMENTED"
 
     # ---- overall ----------------------------------------------------------
-    # HEALTHY requires: switch ON, supervisor alive, current state either
-    # actively RUNNING a cycle OR IDLE waiting for the next one (IDLE is the
-    # NORMAL state between cycles -- a supervisor spends most of its life
-    # there, so treating only literal "RUNNING" as healthy would falsely
-    # flag ATTENTION REQUIRED almost all the time), and governance PASS.
-    # BLOCKED (DEGRADED/bounded-retry) and STOPPED are never healthy.
-    healthy = (
-        supervisor_state == "RUNNING"
-        and current_state in ("RUNNING", "IDLE")
-        and governance_state == "PASS"
-        and switch_state.enabled
-    )
-    overall = "HEALTHY" if healthy else "ATTENTION REQUIRED"
+    # Three-way, not two-way: an intentional Master Switch OFF is NOT a
+    # failure state and must never read as "ATTENTION REQUIRED" merely for
+    # being OFF -- that would train an operator to associate a deliberate
+    # pause with an alarm. Governance always overrides everything else: a
+    # governance FAIL/BLOCKED is never HEALTHY and never SAFE / IDLE.
+    #   HEALTHY       -- switch ON, supervisor alive (RUNNING or IDLE
+    #                    between cycles), governance PASS: production is
+    #                    actually happening or ready to on the next tick.
+    #   SAFE / IDLE   -- switch OFF (intentional pause) and nothing else is
+    #                    wrong (not BLOCKED/DEGRADED, governance PASS).
+    #   ATTENTION REQUIRED -- anything else: governance trouble, switch ON
+    #                    but nothing servicing it, or BLOCKED/DEGRADED
+    #                    regardless of switch state (a crash loop while OFF
+    #                    is still worth a human's attention).
+    if governance_state != "PASS":
+        overall = "ATTENTION REQUIRED"
+    elif current_state == "BLOCKED":
+        overall = "ATTENTION REQUIRED"
+    elif not switch_state.enabled:
+        overall = "SAFE / IDLE"
+    elif supervisor_state == "RUNNING" and current_state in ("RUNNING", "IDLE"):
+        overall = "HEALTHY"
+    else:
+        overall = "ATTENTION REQUIRED"
+
+    if switch_state.enabled and service_state != "RUNNING":
+        notes.append(
+            f"master switch is ON but no watchdog service is running (service={service_state}) -- "
+            "production is not being kept alive automatically; a human or manual `agle.py run` is required"
+        )
 
     return HealthReport(
         master_switch_state=switch_state.state, master_switch_source=switch_state.source,
+        service_state=service_state, service_pid=service_pid,
         supervisor_state=supervisor_state, supervisor_pid=supervisor_pid, current_state=current_state,
         last_cycle_at=last_cycle_at, last_cycle_result=last_cycle_result, last_factory_run_at=last_factory_run_at,
         cycles_today=cycles_today, errors_today=errors_today, errors_today_is_floor=errors_today_is_floor,
@@ -346,6 +383,7 @@ def render_health_text(report: HealthReport) -> str:
         "AGLE HEALTH",
         "─" * 40,
         f"MASTER SWITCH     {report.master_switch_state}",
+        f"SERVICE           {report.service_state}",
         f"SUPERVISOR        {report.supervisor_state}",
         f"PID               {pid_display}",
         f"CURRENT STATE     {report.current_state}",

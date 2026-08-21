@@ -55,6 +55,7 @@ from production.ea_registry import EAProductRegistry
 from production.evaluation_ledger import EvaluationLedger
 from production.master_switch import MasterSwitch
 from production.productization import maybe_productize
+from production.singleton_lock import DuplicateProcessError, SingleInstanceLock
 
 DEFAULT_HEARTBEAT_PATH = Path("reports/production/heartbeat.json")
 DEFAULT_OPERATION_LOG_PATH = Path("reports/production/operation_log.json")
@@ -100,6 +101,7 @@ class ProductionSupervisor:
         heartbeat_path: Path = DEFAULT_HEARTBEAT_PATH,
         operation_log_path: Path = DEFAULT_OPERATION_LOG_PATH,
         max_consecutive_failures: int = DEFAULT_MAX_CONSECUTIVE_FAILURES,
+        lock: Optional[SingleInstanceLock] = None,
     ) -> None:
         self.machine = machine or AutonomousIdeaMachine()
         self.switch = switch or MasterSwitch()
@@ -108,6 +110,12 @@ class ProductionSupervisor:
         self.heartbeat_path = heartbeat_path
         self.operation_log_path = operation_log_path
         self.max_consecutive_failures = max_consecutive_failures
+        # The single-instance mutex: acquired once per run_forever()/
+        # run_one_cycle() call (never nested -- see the two call sites
+        # below), so a manual `agle.py run`, a manual `agle.py cycle`, and
+        # a watchdog-spawned child can never execute a production loop
+        # concurrently, regardless of which one gets there first.
+        self.lock = lock or SingleInstanceLock()
         self.cycles_completed = 0
         self.consecutive_failures = 0
         self.last_error: Optional[str] = None
@@ -165,6 +173,34 @@ class ProductionSupervisor:
     # ------------------------------------------------------------- one cycle
 
     def run_one_cycle(self, *, total_slots: int = 10) -> CycleReport:
+        """Public, overridable entry point for a single cycle -- what
+        `agle.py cycle` calls standalone, and what run_forever() calls on
+        every iteration (via ordinary polymorphism, so a subclass override
+        of this method behaves identically either way).
+
+        Lock-aware rather than lock-owning: if this instance's lock is
+        already held (run_forever() holds it for its entire loop -- see
+        below), this just runs the cycle body directly, on the assumption
+        the outer caller already established exclusivity. Otherwise (a
+        standalone call) it acquires the lock itself for the duration of
+        this one cycle and raises DuplicateProcessError, running nothing,
+        if another real production loop already holds it.
+        """
+        if self.lock._held:
+            return self._run_one_cycle_locked(total_slots=total_slots)
+        result = self.lock.acquire()
+        if not result.acquired:
+            raise DuplicateProcessError(result.reason, holder_pid=result.holder_pid)
+        try:
+            return self._run_one_cycle_locked(total_slots=total_slots)
+        finally:
+            self.lock.release()
+
+    def _run_one_cycle_locked(self, *, total_slots: int = 10) -> CycleReport:
+        """The actual cycle body. Assumes the caller already holds
+        self.lock -- called directly (never through run_one_cycle(), which
+        would re-acquire a non-reentrant lock) by run_forever(), which
+        holds the lock for its entire loop lifetime."""
         # A pure wall-clock timestamp collides when a cycle completes in
         # under a second (the norm for a fast/soak run, and possible even
         # in real production) -- a monotonic sequence number guarantees
@@ -238,39 +274,94 @@ class ProductionSupervisor:
     def run_forever(self, *, max_cycles: Optional[int] = None,
                     sleep_seconds: float = DEFAULT_SLEEP_SECONDS, total_slots: int = 10) -> Dict[str, Any]:
         """The 24/7 loop. Stops on: master switch OFF, max_cycles reached,
-        or max_consecutive_failures reached (bounded retry, never unbounded).
-        A GovernanceViolation always propagates immediately, uncaught.
+        max_consecutive_failures reached (bounded retry, never unbounded),
+        or a graceful shutdown signal (SIGTERM/SIGINT -- see below). A
+        GovernanceViolation always propagates immediately, uncaught.
+
+        Holds the single-instance lock for the ENTIRE loop lifetime (one
+        acquire, one release, in a finally) -- raises DuplicateProcessError
+        immediately, before starting any cycle, if another real production
+        loop already holds it. This is deliberately the ONE place a
+        long-running loop is ever entered from, so a manual `agle.py run`
+        and a watchdog-spawned child can never both be mid-loop at once.
+
+        Graceful shutdown: installs a SIGTERM/SIGINT handler for the
+        duration of this call (restored afterward) that sets a stop flag
+        rather than letting Python's default handling kill the process
+        immediately. The flag is only checked BETWEEN cycles, never inside
+        one -- a signal arriving mid-cycle lets that cycle finish exactly
+        as it would have, then the loop exits instead of starting another.
+        This is what lets a Windows service (or `Ctrl-C`) ask this process
+        to stop without ever killing an active evaluation and without
+        touching the Master Switch -- "please stop" and "you are not
+        authorized to run" are different concepts, kept structurally
+        separate here exactly as they are everywhere else in this module.
         """
-        while self.switch.is_on():
-            if max_cycles is not None and self.cycles_completed >= max_cycles:
-                break
-            try:
-                self.run_one_cycle(total_slots=total_slots)
-            except GovernanceViolation:
-                self.state = "STOPPED"
-                self.heartbeat()
-                raise
-            except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as exc:
-                self.consecutive_failures += 1
-                self.last_error = f"{type(exc).__name__}: {exc}"
-                self.state = "DEGRADED"
-                self.heartbeat()
-                if self.consecutive_failures >= self.max_consecutive_failures:
+        lock_result = self.lock.acquire()
+        if not lock_result.acquired:
+            raise DuplicateProcessError(lock_result.reason, holder_pid=lock_result.holder_pid)
+
+        stop_requested = {"flag": False}
+
+        def _handle_stop_signal(signum, frame):  # noqa: ARG001 -- signal handler signature
+            stop_requested["flag"] = True
+
+        import signal
+        prev_handlers = {}
+        for sig_name in ("SIGTERM", "SIGINT", "SIGBREAK"):
+            sig = getattr(signal, sig_name, None)
+            if sig is not None:
+                try:
+                    prev_handlers[sig] = signal.signal(sig, _handle_stop_signal)
+                except (ValueError, OSError):
+                    pass  # not the main thread / not supported here -- best effort only
+
+        try:
+            while self.switch.is_on() and not stop_requested["flag"]:
+                if max_cycles is not None and self.cycles_completed >= max_cycles:
+                    break
+                try:
+                    self.run_one_cycle(total_slots=total_slots)
+                except GovernanceViolation:
                     self.state = "STOPPED"
                     self.heartbeat()
+                    raise
+                except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as exc:
+                    self.consecutive_failures += 1
+                    self.last_error = f"{type(exc).__name__}: {exc}"
+                    self.state = "DEGRADED"
+                    self.heartbeat()
+                    if self.consecutive_failures >= self.max_consecutive_failures:
+                        self.state = "STOPPED"
+                        self.heartbeat()
+                        break
+                if not self.switch.is_on() or stop_requested["flag"]:
                     break
-            if not self.switch.is_on():
-                break
-            if max_cycles is not None and self.cycles_completed >= max_cycles:
-                break
-            time.sleep(sleep_seconds)
+                if max_cycles is not None and self.cycles_completed >= max_cycles:
+                    break
+                # Sleep in short slices so a shutdown signal received during
+                # the idle gap between cycles is honored promptly, not only
+                # at the top of the next iteration.
+                slept = 0.0
+                slice_s = min(1.0, sleep_seconds) if sleep_seconds > 0 else 0.0
+                while slept < sleep_seconds and not stop_requested["flag"]:
+                    time.sleep(slice_s if sleep_seconds - slept >= slice_s else sleep_seconds - slept)
+                    slept += slice_s if slice_s > 0 else sleep_seconds
 
-        self.state = "STOPPED"
-        self.heartbeat()
-        return {
-            "cycles_completed": self.cycles_completed, "consecutive_failures": self.consecutive_failures,
-            "last_error": self.last_error, "master_switch": self.switch.current().state,
-        }
+            self.state = "STOPPED"
+            self.heartbeat()
+            return {
+                "cycles_completed": self.cycles_completed, "consecutive_failures": self.consecutive_failures,
+                "last_error": self.last_error, "master_switch": self.switch.current().state,
+                "graceful_shutdown": stop_requested["flag"],
+            }
+        finally:
+            for sig, handler in prev_handlers.items():
+                try:
+                    signal.signal(sig, handler)
+                except (ValueError, OSError):
+                    pass
+            self.lock.release()
 
     def status(self) -> Dict[str, Any]:
         return {

@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "kind": "service_event",
+  "record_count": 12,
+  "records": [
+    {
+      "kind": "SERVICE_STARTED",
+      "detail": "",
+      "pid": null,
+      "timestamp": "2026-08-21T14:45:23.777855+00:00",
+      "event_id": "SVCEVT-276d94ee3465adf0"
+    },
+    {
+      "kind": "MASTER_SWITCH_ON",
+      "detail": "",
+      "pid": null,
+      "timestamp": "2026-08-21T14:45:23.778908+00:00",
+      "event_id": "SVCEVT-270b5bc2b0f19a39"
+    },
+    {
+      "kind": "SUPERVISOR_STARTED",
+      "detail": "",
+      "pid": 11795,
+      "timestamp": "2026-08-21T14:45:23.779877+00:00",
+      "event_id": "SVCEVT-2703490cfa74e162"
+    },
+    {
+      "kind": "SUPERVISOR_CRASHED",
+      "detail": "child exited with code -9",
+      "pid": 11795,
+      "timestamp": "2026-08-21T14:45:47.784353+00:00",
+      "event_id": "SVCEVT-f553168694a51e1e"
+    },
+    {
+      "kind": "SUPERVISOR_RESTARTED",
+      "detail": "master switch still ON, restarting on next iteration",
+      "pid": null,
+      "timestamp": "2026-08-21T14:45:47.786084+00:00",
+      "event_id": "SVCEVT-7b02f2ea71251a4b"
+    },
+    {
+      "kind": "SUPERVISOR_STARTED",
+      "detail": "",
+      "pid": 12518,
+      "timestamp": "2026-08-21T14:45:47.787299+00:00",
+      "event_id": "SVCEVT-14b9f3e11f4654c5"
+    },
+    {
+      "kind": "SUPERVISOR_STOPPED",
+      "detail": "child exited cleanly (code 0)",
+      "pid": 12518,
+      "timestamp": "2026-08-21T14:46:49.803099+00:00",
+      "event_id": "SVCEVT-15bbf2005f389cfd"
+    },
+    {
+      "kind": "MASTER_SWITCH_OFF",
+      "detail": "",
+      "pid": null,
+      "timestamp": "2026-08-21T14:46:49.804827+00:00",
+      "event_id": "SVCEVT-8b8139a867282aa3"
+    },
+    {
+      "kind": "MASTER_SWITCH_ON",
+      "detail": "",
+      "pid": null,
+      "timestamp": "2026-08-21T14:47:09.810415+00:00",
+      "event_id": "SVCEVT-c7a608b47aaee32f"
+    },
+    {
+      "kind": "SUPERVISOR_STARTED",
+      "detail": "",
+      "pid": 13996,
+      "timestamp": "2026-08-21T14:47:09.812178+00:00",
+      "event_id": "SVCEVT-97b51ddb79936d0c"
+    },
+    {
+      "kind": "SUPERVISOR_STOPPED",
+      "detail": "graceful shutdown: child asked to stop, watchdog exiting",
+      "pid": 13996,
+      "timestamp": "2026-08-21T14:50:45.908637+00:00",
+      "event_id": "SVCEVT-08650bfa4cda8937"
+    },
+    {
+      "kind": "SERVICE_STOPPED",
+      "detail": "",
+      "pid": null,
+      "timestamp": "2026-08-21T14:50:45.910040+00:00",
+      "event_id": "SVCEVT-8e68750a961f5eea"
+    }
+  ],
+  "checksum": "7758a698fb9d6fce69cf93ca594a5a1079903694ade10c5fe124a8df162bf6f5"
+}

@@ -1,8 +1,8 @@
 {
   "enabled": true,
   "state": "ON",
-  "changed_at": "2026-08-21T13:43:37.461227+00:00",
-  "reason": "health demo: restoring prior ON state after demonstration",
+  "changed_at": "2026-08-21T14:47:04.537062+00:00",
+  "reason": "24/7 spec Phase 14 demonstration: restoring ON, verifying resume",
   "source": "cli",
-  "record_id": "SWITCH-bd0cfb7d34f5dda9"
+  "record_id": "SWITCH-d9abcb6048668bff"
 }
