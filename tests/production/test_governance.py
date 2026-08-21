@@ -111,7 +111,7 @@ def test_supervisor_run_forever_never_catches_governance_violation(tmp_path):
     from production.master_switch import MasterSwitch
     from production.supervisor import ProductionSupervisor
 
-    switch = MasterSwitch(path=tmp_path / "switch.json")
+    switch = MasterSwitch(state_path=tmp_path / "switch.json", audit_path=tmp_path / "switch_audit.json")
     switch.turn_on(reason="test", source="test")
 
     class ExplodingSupervisor(ProductionSupervisor):
@@ -140,7 +140,7 @@ def test_supervisor_bounded_retry_never_infinite(tmp_path):
     from production.master_switch import MasterSwitch
     from production.supervisor import ProductionSupervisor
 
-    switch = MasterSwitch(path=tmp_path / "switch.json")
+    switch = MasterSwitch(state_path=tmp_path / "switch.json", audit_path=tmp_path / "switch_audit.json")
     switch.turn_on(reason="test", source="test")
 
     call_count = {"n": 0}
@@ -176,7 +176,7 @@ def test_master_switch_off_never_touches_other_ledgers(tmp_path):
     sentinel.write_text('{"marker": true}', encoding="utf-8")
     before_mtime = sentinel.stat().st_mtime_ns
 
-    switch = MasterSwitch(path=tmp_path / "switch.json")
+    switch = MasterSwitch(state_path=tmp_path / "switch.json", audit_path=tmp_path / "switch_audit.json")
     switch.turn_on(reason="test", source="test")
     switch.turn_off(reason="test", source="test")
 

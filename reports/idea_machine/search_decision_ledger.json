@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "search_decision",
-  "record_count": 49,
+  "record_count": 56,
   "records": [
     {
       "cycle_id": "CYCLE-15-ADAPTIVE-SEARCH",
@@ -1404,7 +1404,207 @@
       "timestamp": "2026-08-21T12:16:45.286216+00:00",
       "scoring_version": "SDL-V1",
       "decision_id": "SDEC-68bd471c8eb32db3"
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "region_id": "REGION-GBPUSD-a43c2af63b",
+      "mode": "EXPLOIT",
+      "selected": false,
+      "component_scores": {
+        "exploration_value": 0.0,
+        "evidence_value": 0.0,
+        "data_availability": 0.0,
+        "economic_value": 0.0,
+        "novelty_value": 0.0,
+        "failure_penalty": 0.0,
+        "redundancy_penalty": 0.0,
+        "power_penalty": 0.0,
+        "total": 0.0
+      },
+      "reason_codes": [
+        "STATUS_UNDERPOWERED",
+        "DATA_SUPPORTED_OPPORTUNITY",
+        "EVIDENCE_CONSISTENCY_CHECKED",
+        "REJECTED_DIVERSITY_CAP"
+      ],
+      "source_evidence": [
+        "CAND-SC-GBPUSD-US10Y-5M: symbol=GBPUSD driver=US10Y mechanism='SC_SURPRISE_CONFIRMATION: GBPUSD vs US10Y driver, 5min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.' evidence_status=STILL_UNDERPOWERED",
+        "CYCLE-11-IDEA-MACHINE/HYP-IM-0001: symbol=GBPUSD driver=US10Y classification=STILL_UNDERPOWERED",
+        "family ('', 'GBPUSD') exceeds 20% cap"
+      ],
+      "timestamp": "2026-08-21T12:44:45.240434+00:00",
+      "scoring_version": "SDL-V1",
+      "decision_id": "SDEC-f5541bfe2350b606"
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "region_id": "REGION-GBPUSD-ab85b87022",
+      "mode": "EXPLORE",
+      "selected": true,
+      "component_scores": {
+        "exploration_value": 0.9,
+        "evidence_value": 0.1,
+        "data_availability": 1.0,
+        "economic_value": 0.6,
+        "novelty_value": 0.85,
+        "failure_penalty": 0.0,
+        "redundancy_penalty": 0.15,
+        "power_penalty": 0.0,
+        "total": 3.3
+      },
+      "reason_codes": [
+        "UNEXPLORED_REGION",
+        "UNEXPLORED_CROSS_ASSET_RELATIONSHIP",
+        "DATA_AVAILABLE"
+      ],
+      "source_evidence": [
+        "instrument x driver combination confirmed to have real market data, never used in any Factory cycle"
+      ],
+      "timestamp": "2026-08-21T12:44:45.244508+00:00",
+      "scoring_version": "SDL-V1",
+      "decision_id": "SDEC-85b3f2e224ac6fd3"
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "region_id": "REGION-USDCHF-2331abbf65",
+      "mode": "EXPLORE",
+      "selected": true,
+      "component_scores": {
+        "exploration_value": 0.9,
+        "evidence_value": 0.1,
+        "data_availability": 1.0,
+        "economic_value": 0.6,
+        "novelty_value": 0.85,
+        "failure_penalty": 0.0,
+        "redundancy_penalty": 0.0,
+        "power_penalty": 0.0,
+        "total": 3.45
+      },
+      "reason_codes": [
+        "UNEXPLORED_REGION",
+        "UNEXPLORED_CROSS_ASSET_RELATIONSHIP",
+        "DATA_AVAILABLE"
+      ],
+      "source_evidence": [
+        "instrument x driver combination confirmed to have real market data, never used in any Factory cycle"
+      ],
+      "timestamp": "2026-08-21T12:44:45.248363+00:00",
+      "scoring_version": "SDL-V1",
+      "decision_id": "SDEC-7e44a35fc4e7a7ea"
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "region_id": "REGION-USDJPY-fc80012220",
+      "mode": "EXPLOIT",
+      "selected": true,
+      "component_scores": {
+        "exploration_value": 0.05,
+        "evidence_value": 0.7,
+        "data_availability": 0.0,
+        "economic_value": 0.6,
+        "novelty_value": 0.15,
+        "failure_penalty": 0.0,
+        "redundancy_penalty": 0.0,
+        "power_penalty": 0.2,
+        "total": 1.3
+      },
+      "reason_codes": [
+        "STATUS_UNDERPOWERED",
+        "DATA_SUPPORTED_OPPORTUNITY",
+        "EVIDENCE_CONSISTENCY_CHECKED"
+      ],
+      "source_evidence": [
+        "CYCLE-12-EA-CODE-INTEL/HYP-EACI-0001: symbol=USDJPY driver=US10Y+SPX500 classification=STILL_UNDERPOWERED"
+      ],
+      "timestamp": "2026-08-21T12:44:45.252807+00:00",
+      "scoring_version": "SDL-V1",
+      "decision_id": "SDEC-219b0007929dad8b"
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "region_id": "REGION-XAUUSD-b95b3473b7",
+      "mode": "EXPLORE",
+      "selected": true,
+      "component_scores": {
+        "exploration_value": 0.9,
+        "evidence_value": 0.1,
+        "data_availability": 1.0,
+        "economic_value": 0.6,
+        "novelty_value": 0.85,
+        "failure_penalty": 0.0,
+        "redundancy_penalty": 0.0,
+        "power_penalty": 0.0,
+        "total": 3.45
+      },
+      "reason_codes": [
+        "UNEXPLORED_REGION",
+        "UNEXPLORED_CROSS_ASSET_RELATIONSHIP",
+        "DATA_AVAILABLE"
+      ],
+      "source_evidence": [
+        "instrument x driver combination confirmed to have real market data, never used in any Factory cycle"
+      ],
+      "timestamp": "2026-08-21T12:44:45.257374+00:00",
+      "scoring_version": "SDL-V1",
+      "decision_id": "SDEC-45285094afbae86b"
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "region_id": "REGION-EURUSD-489249d4b2",
+      "mode": "EXPLOIT",
+      "selected": true,
+      "component_scores": {
+        "exploration_value": 0.05,
+        "evidence_value": 0.7,
+        "data_availability": 1.0,
+        "economic_value": 0.6,
+        "novelty_value": 0.15,
+        "failure_penalty": 0.0,
+        "redundancy_penalty": 0.0,
+        "power_penalty": 0.2,
+        "total": 2.3
+      },
+      "reason_codes": [
+        "STATUS_UNDERPOWERED",
+        "DATA_SUPPORTED_OPPORTUNITY",
+        "EVIDENCE_CONSISTENCY_CHECKED"
+      ],
+      "source_evidence": [
+        "CAND-SC-EURUSD-US10Y-15M: symbol=EURUSD driver=US10Y mechanism='SC_SURPRISE_CONFIRMATION: EURUSD vs US10Y driver, 15min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.' evidence_status=STILL_UNDERPOWERED",
+        "CAND-SC-EURUSD-US10Y-5M: symbol=EURUSD driver=US10Y mechanism='SC_SURPRISE_CONFIRMATION: EURUSD vs US10Y driver, 5min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.' evidence_status=STILL_UNDERPOWERED"
+      ],
+      "timestamp": "2026-08-21T12:44:45.261369+00:00",
+      "scoring_version": "SDL-V1",
+      "decision_id": "SDEC-c7d7c20df0b4fbc8"
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "region_id": "REGION-GBPUSD-69aa549d8a",
+      "mode": "EXPLOIT",
+      "selected": true,
+      "component_scores": {
+        "exploration_value": 0.05,
+        "evidence_value": 0.7,
+        "data_availability": 1.0,
+        "economic_value": 0.6,
+        "novelty_value": 0.15,
+        "failure_penalty": 0.0,
+        "redundancy_penalty": 0.0,
+        "power_penalty": 0.2,
+        "total": 2.3
+      },
+      "reason_codes": [
+        "STATUS_UNDERPOWERED",
+        "DATA_SUPPORTED_OPPORTUNITY",
+        "EVIDENCE_CONSISTENCY_CHECKED"
+      ],
+      "source_evidence": [
+        "CAND-SC-GBPUSD-US10Y-5M: symbol=GBPUSD driver=US10Y mechanism='SC_SURPRISE_CONFIRMATION: GBPUSD vs US10Y driver, 5min window, cross-asset-confirmed surprise direction (NFP/CPI/ADP). NEVER cleared internal validation (Cycles 8-9). NOT authorized for GEN 14. NOT evaluated against holdout.' evidence_status=STILL_UNDERPOWERED"
+      ],
+      "timestamp": "2026-08-21T12:44:45.265660+00:00",
+      "scoring_version": "SDL-V1",
+      "decision_id": "SDEC-e93d715de04bd5cb"
     }
   ],
-  "checksum": "6393737c3539a51e921e352d8b99c02599f7ff4db067bfcb6175db186264ae5f"
+  "checksum": "c467c588bbe1ebbf9fc89b1bb02bd02886bf4151652363128691a63023067eec"
 }

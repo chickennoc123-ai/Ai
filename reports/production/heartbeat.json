@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-21T12:16:45.713296+00:00",
-  "pid": 5818,
-  "state": "STOPPED",
+  "timestamp": "2026-08-21T12:44:46.205675+00:00",
+  "pid": 8737,
+  "state": "IDLE",
   "master_switch": "ON",
-  "cycles_completed": 2,
+  "cycles_completed": 1,
   "consecutive_failures": 0,
   "last_error": null
 }

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """AGLE -- production-mode command line interface.
 
-    python3 agle.py status     # master switch + supervisor + registry snapshot
-    python3 agle.py start      # turn the master switch ON (persistent)
-    python3 agle.py stop       # turn the master switch OFF (persistent, safe)
+    python3 agle.py status         # master switch + supervisor + registry snapshot
+    python3 agle.py switch status  # human-readable master switch state
+    python3 agle.py switch on      # turn the master switch ON (persistent)
+    python3 agle.py switch off     # turn the master switch OFF (persistent, safe)
+    python3 agle.py start      # alias for `switch on`
+    python3 agle.py stop       # alias for `switch off`
     python3 agle.py restart    # stop, then start (both persisted, both audited)
     python3 agle.py cycle      # run exactly one production cycle and report it
     python3 agle.py run        # run the 24/7 loop (blocks until switch is OFF,
@@ -16,6 +19,13 @@
 This wraps, and does not reimplement, production.master_switch.MasterSwitch,
 production.supervisor.ProductionSupervisor, production.ea_registry.
 EAProductRegistry, and idea_machine.opportunity_queue.OpportunityQueue.
+
+This CLI is a convenience, not a requirement: the master switch's
+authoritative state is the plain file at runtime/master_switch.json
+({"enabled": true} or {"enabled": false}). An operator can edit that file
+directly with any text editor -- no Claude Code, no Python, no this CLI --
+and the supervisor will honor it on its next read. See
+production/master_switch.py for the fail-safe read contract.
 
 There is no --force, --skip-gates, or --ignore-governance flag anywhere in
 this file, and there never should be: the master switch controls only
@@ -61,18 +71,41 @@ def cmd_status(args) -> int:
     return 0
 
 
-def cmd_start(args) -> int:
-    switch = MasterSwitch()
-    state = switch.turn_on(reason=args.reason or "operator start via agle.py", source="cli")
-    _print(state.to_dict())
+def _print_switch_box(lines) -> None:
+    print("MASTER SWITCH")
+    print("-------------")
+    for line in lines:
+        print(line)
+
+
+def cmd_switch_status(args) -> int:
+    state = MasterSwitch().current()
+    _print_switch_box([f"State: {state.state}", "Source: persistent runtime state"])
     return 0
+
+
+def cmd_switch_on(args) -> int:
+    switch = MasterSwitch()
+    previous = switch.current()
+    new = switch.turn_on(reason=args.reason or "operator switch on via agle.py", source="cli")
+    _print_switch_box([f"Previous: {previous.state}", f"Current:  {new.state}"])
+    return 0
+
+
+def cmd_switch_off(args) -> int:
+    switch = MasterSwitch()
+    previous = switch.current()
+    new = switch.turn_off(reason=args.reason or "operator switch off via agle.py", source="cli")
+    _print_switch_box([f"Previous: {previous.state}", f"Current:  {new.state}"])
+    return 0
+
+
+def cmd_start(args) -> int:
+    return cmd_switch_on(args)
 
 
 def cmd_stop(args) -> int:
-    switch = MasterSwitch()
-    state = switch.turn_off(reason=args.reason or "operator stop via agle.py", source="cli")
-    _print(state.to_dict())
-    return 0
+    return cmd_switch_off(args)
 
 
 def cmd_restart(args) -> int:
@@ -149,11 +182,25 @@ def main(argv=None) -> int:
     p_status = sub.add_parser("status", help="master switch + supervisor + registry snapshot")
     p_status.set_defaults(func=cmd_status)
 
-    p_start = sub.add_parser("start", help="turn the master switch ON")
+    p_switch = sub.add_parser("switch", help="human-operable master switch control")
+    switch_sub = p_switch.add_subparsers(dest="switch_command", required=True)
+
+    p_switch_status = switch_sub.add_parser("status", help="show master switch state")
+    p_switch_status.set_defaults(func=cmd_switch_status)
+
+    p_switch_on = switch_sub.add_parser("on", help="turn the master switch ON")
+    p_switch_on.add_argument("--reason", default=None)
+    p_switch_on.set_defaults(func=cmd_switch_on)
+
+    p_switch_off = switch_sub.add_parser("off", help="turn the master switch OFF")
+    p_switch_off.add_argument("--reason", default=None)
+    p_switch_off.set_defaults(func=cmd_switch_off)
+
+    p_start = sub.add_parser("start", help="alias for `switch on`")
     p_start.add_argument("--reason", default=None)
     p_start.set_defaults(func=cmd_start)
 
-    p_stop = sub.add_parser("stop", help="turn the master switch OFF")
+    p_stop = sub.add_parser("stop", help="alias for `switch off`")
     p_stop.add_argument("--reason", default=None)
     p_stop.set_defaults(func=cmd_stop)
 

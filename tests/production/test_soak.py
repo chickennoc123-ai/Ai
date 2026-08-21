@@ -137,7 +137,7 @@ class _NoNetwork:
 def _new_supervisor(tmp_path, machine=None, switch=None) -> ProductionSupervisor:
     return ProductionSupervisor(
         machine=machine or _SoakTestOnlyFakeMachine(),
-        switch=switch or MasterSwitch(path=tmp_path / "switch.json"),
+        switch=switch or MasterSwitch(state_path=tmp_path / "switch.json", audit_path=tmp_path / "switch_audit.json"),
         evaluation_ledger=EvaluationLedger(path=tmp_path / "evaluation_ledger.json"),
         ea_registry=EAProductRegistry(path=tmp_path / "ea_registry.json"),
         heartbeat_path=tmp_path / "heartbeat.json",
@@ -146,7 +146,7 @@ def _new_supervisor(tmp_path, machine=None, switch=None) -> ProductionSupervisor
 
 
 def test_soak_many_cycles_no_duplicate_evaluation_no_fake_success(tmp_path):
-    switch = MasterSwitch(path=tmp_path / "switch.json")
+    switch = MasterSwitch(state_path=tmp_path / "switch.json", audit_path=tmp_path / "switch_audit.json")
     switch.turn_on(reason="soak test", source="test")
     sup = _new_supervisor(tmp_path, switch=switch)
 
@@ -197,7 +197,7 @@ def test_soak_restart_recovery_mid_run_no_duplication(tmp_path):
     a real process restart would produce) must continue cleanly, with no
     duplicate cycle_ids, no duplicate real (ledger) evaluations, and no
     lost cycle count."""
-    switch = MasterSwitch(path=tmp_path / "switch.json")
+    switch = MasterSwitch(state_path=tmp_path / "switch.json", audit_path=tmp_path / "switch_audit.json")
     switch.turn_on(reason="soak restart test", source="test")
 
     half = TOTAL_CYCLES // 2
@@ -231,7 +231,7 @@ def test_soak_master_switch_off_stops_loop_promptly(tmp_path):
     """A switch flipped OFF partway through must stop the loop before
     max_cycles is reached -- proving the loop actually re-checks the
     persistent switch every iteration, not just once at start."""
-    switch = MasterSwitch(path=tmp_path / "switch.json")
+    switch = MasterSwitch(state_path=tmp_path / "switch.json", audit_path=tmp_path / "switch_audit.json")
     switch.turn_on(reason="soak switch test", source="test")
 
     stop_after = 7

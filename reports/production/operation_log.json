@@ -41,6 +41,20 @@
       "ea_products_created": 0,
       "errors": [],
       "recovery_events": []
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-124445-000001",
+      "started_at": "2026-08-21T12:44:45.110974+00:00",
+      "ended_at": "2026-08-21T12:44:46.204358+00:00",
+      "ideas": 7,
+      "hypotheses": 6,
+      "factory_evaluations": 5,
+      "survivors": 0,
+      "still_underpowered": 0,
+      "refuted": 5,
+      "ea_products_created": 0,
+      "errors": [],
+      "recovery_events": []
     }
   ]
 }
