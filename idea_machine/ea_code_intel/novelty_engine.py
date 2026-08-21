@@ -194,3 +194,51 @@ class NoveltyEngine:
             overlap_tags=[], overlap_ratio=round(best_overlap, 3), explanation=expl,
             classification=classification,
         )
+
+    def check_with_semantic_layer(self, dna_tag_set: Set[str], dna_id: str,
+                                  mechanism_text: str = "",
+                                  other_dna_tag_sets: Optional[List[Set[str]]] = None) -> NoveltyVerdict:
+        """
+        Check novelty using both syntactic (tag-based) AND semantic (mechanism-level) analysis.
+
+        Performs hierarchical check:
+        1. Syntactic tag overlap (existing Jaccard logic)
+        2. If no syntactic match, check semantic similarity via mechanism classification
+        3. Return result with both layers reported
+
+        This allows catching mechanisms that are semantically similar but use different terminology.
+        """
+        # Step 1: Run existing syntactic check
+        syntactic_verdict = self.check(dna_tag_set, dna_id, other_dna_tag_sets)
+
+        # Step 2: If no strong syntactic match found, run semantic layer
+        if syntactic_verdict.classification not in ("REFUTED", "STILL_UNDERPOWERED", "TESTED_FAILED"):
+            try:
+                from idea_machine.semantic_novelty import SemanticNoveltyEngine
+                semantic_engine = SemanticNoveltyEngine()
+                semantic_engine.load()
+
+                semantic_match = semantic_engine.check_semantic_similarity(mechanism_text)
+
+                if semantic_match:
+                    # Upgrade verdict based on semantic match
+                    semantic_classification = semantic_match.family_status
+                    explanation_suffix = f" [SEMANTIC MATCH: {semantic_match.evidence}]"
+
+                    # Create a merged verdict with semantic evidence
+                    return NoveltyVerdict(
+                        dna_id=dna_id,
+                        verdict=semantic_classification,
+                        matched_family_id=semantic_match.family_id,
+                        matched_family_status=semantic_match.family_status,
+                        overlap_tags=[],
+                        overlap_ratio=semantic_match.similarity_score,
+                        explanation=syntactic_verdict.explanation + explanation_suffix,
+                        classification=semantic_classification,
+                    )
+            except ImportError:
+                # Semantic novelty module not available, continue with syntactic-only verdict
+                pass
+
+        # Return syntactic verdict (possibly with semantic data integrated)
+        return syntactic_verdict
