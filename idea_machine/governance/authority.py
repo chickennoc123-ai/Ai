@@ -115,4 +115,12 @@ FORBIDDEN_IMPORTS: Tuple[str, ...] = (
     "discovery.holdout_authorization",
     "discovery.replication",
     "ea_generator",
+    # idea_machine.factory_integration.FactorySimulator fabricates verdicts
+    # from an MD5 hash of the hypothesis id and, on a fabricated pass,
+    # fabricates an EA product string -- exactly what production mode's
+    # "Real Factory Only" requirement forbids. Banned here so the static
+    # audit fails loudly if any idea_machine code ever imports it again
+    # (found live: idea_machine/full_cycle_runner.py did, until fixed
+    # alongside this ban to use RealFactoryIntegrator instead).
+    "idea_machine.factory_integration",
 )

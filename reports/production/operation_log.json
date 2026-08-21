@@ -1,0 +1,46 @@
+{
+  "cycles": [
+    {
+      "cycle_id": "CYCLE-PROD-20260821-121351-000001",
+      "started_at": "2026-08-21T12:13:51.998393+00:00",
+      "ended_at": "2026-08-21T12:16:25.840380+00:00",
+      "ideas": 7,
+      "hypotheses": 6,
+      "factory_evaluations": 5,
+      "survivors": 0,
+      "still_underpowered": 0,
+      "refuted": 5,
+      "ea_products_created": 0,
+      "errors": [],
+      "recovery_events": []
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-121642-000001",
+      "started_at": "2026-08-21T12:16:42.125585+00:00",
+      "ended_at": "2026-08-21T12:16:43.096807+00:00",
+      "ideas": 7,
+      "hypotheses": 6,
+      "factory_evaluations": 5,
+      "survivors": 0,
+      "still_underpowered": 0,
+      "refuted": 5,
+      "ea_products_created": 0,
+      "errors": [],
+      "recovery_events": []
+    },
+    {
+      "cycle_id": "CYCLE-PROD-20260821-121645-000002",
+      "started_at": "2026-08-21T12:16:45.099130+00:00",
+      "ended_at": "2026-08-21T12:16:45.710902+00:00",
+      "ideas": 7,
+      "hypotheses": 6,
+      "factory_evaluations": 5,
+      "survivors": 0,
+      "still_underpowered": 0,
+      "refuted": 5,
+      "ea_products_created": 0,
+      "errors": [],
+      "recovery_events": []
+    }
+  ]
+}

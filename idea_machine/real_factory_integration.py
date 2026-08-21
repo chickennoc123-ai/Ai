@@ -157,7 +157,22 @@ class RealFactoryIntegrator:
         return [j for j in self.journeys if j.final_status == status]
 
     def save_journeys(self, output_path: Path = None):
-        """Save all hypothesis journeys to disk."""
+        """Save all hypothesis journeys to disk.
+
+        Atomic (temp file + os.replace), matching
+        idea_machine.core.store.AppendOnlyStore's write discipline -- a
+        crash mid-write leaves the previous file intact rather than
+        truncated. This method still fully OVERWRITES its target with only
+        this integrator instance's in-memory journeys; it is not a merge, so
+        callers running repeated cycles against the same output_path should
+        expect the file to reflect only the most recent run's journeys, not
+        an accumulation. Duplicate-evaluation protection across runs is the
+        job of production.evaluation_ledger.EvaluationLedger, consulted
+        BEFORE a hypothesis is ever submitted here.
+        """
+        import os
+        import tempfile
+
         if output_path is None:
             output_path = self.factory_dir / "hypothesis_journeys.json"
 
@@ -167,7 +182,16 @@ class RealFactoryIntegrator:
             "total_journeys": len(self.journeys),
             "journeys": [j.to_dict() for j in self.journeys]
         }
-        output_path.write_text(json.dumps(data, indent=2))
+        fd, tmp = tempfile.mkstemp(dir=str(output_path.parent), suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as fh:
+                json.dump(data, fh, indent=2)
+                fh.flush()
+                os.fsync(fh.fileno())
+            os.replace(tmp, output_path)
+        except BaseException:
+            Path(tmp).unlink(missing_ok=True)
+            raise
 
     def get_summary(self) -> Dict:
         """Summary of all hypothesis journeys."""

@@ -122,14 +122,35 @@ class OpportunityQueue:
         return entry
 
     def save(self):
-        """Write queue to disk (append: never overwrite existing entries)."""
+        """Write queue to disk (append: never overwrite existing entries).
+
+        Atomic: write to a temp file in the same directory, fsync, then
+        os.replace() over the target. A crash mid-write leaves the OLD file
+        intact (the temp file is simply orphaned, never partially visible
+        under the real name) -- the same discipline
+        idea_machine.core.store.AppendOnlyStore already uses, applied here
+        because this queue previously used a plain write_text(), which a
+        crash mid-write could truncate.
+        """
+        import os
+        import tempfile
+
         self.queue_file.parent.mkdir(parents=True, exist_ok=True)
         payload = {
             "generated_at": datetime.utcnow().isoformat(),
             "entry_count": len(self.entries),
             "entries": [asdict(e) for e in self.entries],
         }
-        self.queue_file.write_text(json.dumps(payload, indent=2))
+        fd, tmp = tempfile.mkstemp(dir=str(self.queue_file.parent), suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as fh:
+                json.dump(payload, fh, indent=2)
+                fh.flush()
+                os.fsync(fh.fileno())
+            os.replace(tmp, self.queue_file)
+        except BaseException:
+            Path(tmp).unlink(missing_ok=True)
+            raise
 
     def get_by_hypothesis_id(self, hyp_id: str) -> List[OpportunityQueueEntry]:
         """Get all queue entries for a given hypothesis (may have multiple if retested)."""

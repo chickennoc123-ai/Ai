@@ -6,9 +6,25 @@ Complete flow:
 2. Filter by data availability
 3. Rank by viability
 4. Convert to hypotheses
-5. Feed to Factory simulator
+5. Factory evaluation -- see note below
 6. Track metrics through all gates
 7. Report on bottlenecks and survivors
+
+STAGE 5 NOTE: this legacy runner's hypothesis format
+(DiscoveryHypothesis.parameters_to_sweep) predates the real Factory
+integration built in later phases and carries no concrete, evaluatable
+(mechanism, instrument, driver, window) triple with real market data
+attached -- there is no honest way to run it through the real gate()
+function without inventing data. It used to call
+idea_machine.factory_integration.FactorySimulator, which fabricated
+pass/fail verdicts from an MD5 hash of the hypothesis id and, on a
+fabricated pass, fabricated an EA product string. That import is now
+FORBIDDEN (idea_machine/governance/authority.py FORBIDDEN_IMPORTS) and this
+stage reports FACTORY_UNAVAILABLE instead of simulating -- never a fake
+verdict. For real Factory evaluation, use
+`python3 -m idea_machine.cli search-cycle`, which is wired to
+idea_machine.real_factory_integration.RealFactoryIntegrator and the real
+gate() function.
 """
 
 import json
@@ -19,7 +35,6 @@ from dataclasses import dataclass, asdict
 
 from idea_machine.searcher_v2 import IdeaMachineV2
 from idea_machine.hypothesis_mapper import HypothesisMapper
-from idea_machine.factory_integration import FactorySimulator
 
 
 @dataclass
@@ -105,7 +120,6 @@ class EndToEndCycleRunner:
         
         self.machine = IdeaMachineV2()
         self.mapper = HypothesisMapper()
-        self.factory = FactorySimulator(self.repo_root)
     
     def run(self) -> EndToEndMetrics:
         """Execute the complete cycle."""
@@ -210,42 +224,27 @@ class EndToEndCycleRunner:
             json.dump([h.to_dict() for h in hypotheses], f, indent=2, default=str)
     
     def _stage_5_factory_evaluation(self):
-        """Stage 5-7: Factory gates simulation."""
+        """Stage 5-7: Factory evaluation -- FACTORY_UNAVAILABLE, never simulated.
+
+        See this module's docstring: this legacy hypothesis format has no
+        concrete, evaluatable triple with real market data attached, and the
+        simulator that used to stand in for real evaluation here fabricated
+        verdicts. Reports FACTORY_UNAVAILABLE honestly instead.
+        """
         print("\nSTAGE 5-7: FACTORY EVALUATION")
         print("-" * 40)
-        
+
         hypotheses = self.mapper.map_batch(self.machine.ideas)
-        self.metrics.hypotheses_evaluated = len(hypotheses)
-        
-        if not hypotheses:
-            print("✗ No hypotheses to evaluate")
-            return
-        
-        for hyp in hypotheses:
-            journey = self.factory.simulate_idea_through_factory(hyp)
-            
-            if len(journey.gate_results) >= 1:
-                if journey.gate_results[0].passed:
-                    self.metrics.passed_internal_validation += 1
-            if len(journey.gate_results) >= 2:
-                if journey.gate_results[1].passed:
-                    self.metrics.passed_gen12_adversarial += 1
-            if len(journey.gate_results) >= 3:
-                if journey.gate_results[2].passed:
-                    self.metrics.passed_gen14_holdout += 1
-            if journey.generated_ea_product:
-                self.metrics.productized += 1
-        
-        print(f"✓ Evaluated {len(hypotheses)} hypotheses through Factory gates")
-        print(f"\n  Internal validation passed: {self.metrics.passed_internal_validation}/{len(hypotheses)}")
-        print(f"  GEN12 adversarial passed: {self.metrics.passed_gen12_adversarial}/{len(hypotheses)}")
-        print(f"  GEN14 holdout passed: {self.metrics.passed_gen14_holdout}/{len(hypotheses)}")
-        print(f"  Productized: {self.metrics.productized}/{len(hypotheses)}")
-        
-        # Save journeys
-        journeys_file = self.report_dir / f"{self.cycle_id}_factory_journeys.json"
-        with open(journeys_file, 'w') as f:
-            json.dump([j.to_dict() for j in self.factory.journeys], f, indent=2, default=str)
+        self.metrics.hypotheses_evaluated = 0  # none actually sent to any Factory
+        self.metrics.bottlenecks.append(
+            "FACTORY_UNAVAILABLE: this legacy runner's hypothesis format cannot be "
+            "evaluated by the real Factory without inventing data; the simulator that "
+            "used to stand in here is now a forbidden import. Use "
+            "`python3 -m idea_machine.cli search-cycle` for real Factory evaluation."
+        )
+        print(f"FACTORY_UNAVAILABLE: {len(hypotheses)} hypothesis(es) generated, "
+             f"0 sent to any Factory (real or otherwise) -- see module docstring.")
+        print("Use `python3 -m idea_machine.cli search-cycle` for real Factory evaluation.")
     
     def _analyze_bottlenecks(self):
         """Identify bottlenecks in the pipeline."""

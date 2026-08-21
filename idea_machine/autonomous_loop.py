@@ -250,7 +250,8 @@ class AutonomousIdeaMachine:
         this method name; the real work lives in run_adaptive_search_cycle."""
         return self.run_adaptive_search_cycle(cycle_id=cycle_id, total_slots=10)
 
-    def run_adaptive_search_cycle(self, cycle_id: str = None, total_slots: int = 10) -> Dict:
+    def run_adaptive_search_cycle(self, cycle_id: str = None, total_slots: int = 10,
+                                  evaluation_ledger=None) -> Dict:
         """
         Phase 9 (second pass): one real autonomous research cycle.
 
@@ -266,6 +267,18 @@ class AutonomousIdeaMachine:
         (idea_machine.search_economic_rationale.BASE_DIR_TABLE); a candidate
         with no established rationale is reported, not evaluated with an
         invented direction.
+
+        evaluation_ledger: optional duck-typed idempotency guard (see
+        production.evaluation_ledger.EvaluationLedger). If provided, every
+        candidate is checked via `already_evaluated(mechanism, instrument,
+        driver, window_min)` BEFORE it is sent to the real Factory; a hit
+        reuses the recorded verdict instead of re-running gate(), and every
+        NEW real evaluation is recorded via `record(...)` afterward. This is
+        how production mode guarantees the same triple is never evaluated
+        twice across separate cycle runs / crash-restarts. Left as None
+        (the default) preserves this method's exact prior behavior for
+        existing callers -- no idea_machine code imports the production
+        package; the ledger is passed in by whichever caller has it.
         """
         if cycle_id is None:
             cycle_id = f"CYCLE-AUTO-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}"
@@ -335,6 +348,29 @@ class AutonomousIdeaMachine:
                 continue
 
             window_min = 60
+
+            if evaluation_ledger is not None:
+                prior = evaluation_ledger.already_evaluated(mechanism, instrument, driver, window_min)
+                if prior is not None:
+                    # This exact (mechanism, instrument, driver, window) triple was
+                    # already run through the real Factory in a prior cycle/run --
+                    # reuse that real, already-recorded verdict. Never re-runs
+                    # gate() for it (idempotency guard against duplicate real
+                    # evaluation across restarts/crashes).
+                    reused = dict(prior)
+                    reused["hyp_id"] = hyp_id
+                    reused["proposal_id"] = proposal.proposal_id
+                    reused["reused_from_eval_id"] = prior.get("eval_id")
+                    final_status = prior.get("final_status")
+                    if final_status == "DISCOVERY_SURVIVOR":
+                        survivors.append(reused)
+                    elif final_status == "STILL_UNDERPOWERED":
+                        underpowered_list.append(reused)
+                    else:
+                        refuted_list.append(reused)
+                    results.append(reused)
+                    continue
+
             cost = roundtrip_cost(instrument)
             n_events = len(events)
             cut = int(n_events * 0.80)
@@ -397,6 +433,14 @@ class AutonomousIdeaMachine:
             else:
                 record["final_status"] = "REFUTED_THIS_RUN"
                 refuted_list.append(record)
+
+            if evaluation_ledger is not None:
+                saved = evaluation_ledger.record(
+                    mechanism=mechanism, instrument=instrument, driver=driver, window_min=window_min,
+                    hyp_id=hyp_id, cycle_id=cycle_id, verdict=verdict, final_status=record["final_status"],
+                    train=record["train"], validation=record["validation"],
+                )
+                record["eval_id"] = saved.get("eval_id")
 
             results.append(record)
 

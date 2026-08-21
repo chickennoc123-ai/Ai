@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-08-21T12:16:45.713296+00:00",
+  "pid": 5818,
+  "state": "STOPPED",
+  "master_switch": "ON",
+  "cycles_completed": 2,
+  "consecutive_failures": 0,
+  "last_error": null
+}

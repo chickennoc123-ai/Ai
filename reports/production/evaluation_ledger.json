@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "kind": "production_evaluation",
+  "record_count": 5,
+  "records": [
+    {
+      "eval_id": "EVAL-1ae92a5bb13e5e09",
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "instrument": "GBPUSD",
+      "driver": "UK100",
+      "window_min": 60,
+      "hyp_id": "HYP-CYCLE-PROD-20260821-121351-000001-EXPLORE-GBPUSD-UK100",
+      "cycle_id": "CYCLE-PROD-20260821-121351-000001",
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "final_status": "REFUTED_THIS_RUN",
+      "train": {
+        "n": 71,
+        "mean_net": 0.00019587,
+        "t_stat": 0.804,
+        "profit_factor": 1.298,
+        "win_rate": 0.5493,
+        "gross_over_cost": 13.574
+      },
+      "validation": {
+        "n": 21,
+        "mean_net": -0.0002228,
+        "t_stat": -0.784,
+        "profit_factor": 0.665,
+        "win_rate": 0.4762,
+        "gross_over_cost": 0.0
+      },
+      "evaluated_at": "2026-08-21T12:14:41.951557+00:00"
+    },
+    {
+      "eval_id": "EVAL-c64135e3a7ec5cd7",
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "instrument": "USDCHF",
+      "driver": "JP225",
+      "window_min": 60,
+      "hyp_id": "HYP-CYCLE-PROD-20260821-121351-000001-EXPLORE-USDCHF-JP225",
+      "cycle_id": "CYCLE-PROD-20260821-121351-000001",
+      "verdict": "TRAIN_NEGATIVE",
+      "final_status": "REFUTED_THIS_RUN",
+      "train": {
+        "n": 91,
+        "mean_net": -0.00021456,
+        "t_stat": -1.732,
+        "profit_factor": 0.608,
+        "win_rate": 0.4066,
+        "gross_over_cost": 5.633
+      },
+      "validation": {
+        "n": 17,
+        "mean_net": -0.00046764,
+        "t_stat": -1.752,
+        "profit_factor": 0.262,
+        "win_rate": 0.4706,
+        "gross_over_cost": 0.0
+      },
+      "evaluated_at": "2026-08-21T12:14:58.978410+00:00"
+    },
+    {
+      "eval_id": "EVAL-85c1260b2e1839f6",
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "instrument": "XAUUSD",
+      "driver": "UK100",
+      "window_min": 60,
+      "hyp_id": "HYP-CYCLE-PROD-20260821-121351-000001-EXPLORE-XAUUSD-UK100",
+      "cycle_id": "CYCLE-PROD-20260821-121351-000001",
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "final_status": "REFUTED_THIS_RUN",
+      "train": {
+        "n": 92,
+        "mean_net": 0.00013499,
+        "t_stat": 0.29,
+        "profit_factor": 1.088,
+        "win_rate": 0.5,
+        "gross_over_cost": 17.001
+      },
+      "validation": {
+        "n": 10,
+        "mean_net": -0.0006705,
+        "t_stat": -0.636,
+        "profit_factor": 0.58,
+        "win_rate": 0.2,
+        "gross_over_cost": 0.0
+      },
+      "evaluated_at": "2026-08-21T12:15:44.870552+00:00"
+    },
+    {
+      "eval_id": "EVAL-5474a64c04ea0f45",
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "instrument": "EURUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "hyp_id": "HYP-CYCLE-PROD-20260821-121351-000001-EXPLOIT-EURUSD-US10Y",
+      "cycle_id": "CYCLE-PROD-20260821-121351-000001",
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "final_status": "REFUTED_THIS_RUN",
+      "train": {
+        "n": 93,
+        "mean_net": 0.00020287,
+        "t_stat": 0.756,
+        "profit_factor": 1.233,
+        "win_rate": 0.5161,
+        "gross_over_cost": 20.463
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 8.374e-05,
+        "t_stat": 0.209,
+        "profit_factor": 1.14,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "evaluated_at": "2026-08-21T12:16:25.817653+00:00"
+    },
+    {
+      "eval_id": "EVAL-22d1ade27fde82a4",
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "instrument": "GBPUSD",
+      "driver": "US10Y",
+      "window_min": 60,
+      "hyp_id": "HYP-CYCLE-PROD-20260821-121351-000001-EXPLOIT-GBPUSD-US10Y",
+      "cycle_id": "CYCLE-PROD-20260821-121351-000001",
+      "verdict": "TRAIN_INSIGNIFICANT",
+      "final_status": "REFUTED_THIS_RUN",
+      "train": {
+        "n": 93,
+        "mean_net": 3.258e-05,
+        "t_stat": 0.147,
+        "profit_factor": 1.042,
+        "win_rate": 0.4839,
+        "gross_over_cost": 14.051
+      },
+      "validation": {
+        "n": 16,
+        "mean_net": 0.00029021,
+        "t_stat": 0.772,
+        "profit_factor": 1.603,
+        "win_rate": 0.5,
+        "gross_over_cost": 0.0
+      },
+      "evaluated_at": "2026-08-21T12:16:25.824834+00:00"
+    }
+  ],
+  "checksum": "485fdadee7a5609bdb0411e9c1503f1c2d702098706137135cabc6b4b0e33c57"
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "master_switch",
+  "record_count": 3,
+  "records": [
+    {
+      "enabled": true,
+      "state": "ON",
+      "changed_at": "2026-08-21T11:39:32.237747+00:00",
+      "reason": "smoke test of agle.py start",
+      "source": "cli",
+      "record_id": "SWITCH-e0b4f2fbb48fdb3d"
+    },
+    {
+      "enabled": false,
+      "state": "OFF",
+      "changed_at": "2026-08-21T11:39:32.518497+00:00",
+      "reason": "smoke test of agle.py stop",
+      "source": "cli",
+      "record_id": "SWITCH-caa67548d8556629"
+    },
+    {
+      "enabled": true,
+      "state": "ON",
+      "changed_at": "2026-08-21T12:13:45.336977+00:00",
+      "reason": "Production Mode Section 20: turning on the factory for the first real 24/7 production run per the AGLE Production Mode spec",
+      "source": "cli",
+      "record_id": "SWITCH-e564f39c32a41fef"
+    }
+  ],
+  "checksum": "804e58bd0672f9acff63cf9efdd72bb26b14243508d3c3218a8b88dada5a8420"
+}
