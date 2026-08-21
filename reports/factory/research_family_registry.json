@@ -8,7 +8,8 @@
    "family_signature": "86273fd41c602f30b1a27202e0113d8f90a09c4a53c561dbf57de200abe5bc57",
    "members": [
     "HYP-000001"
-   ]
+   ],
+   "status": "UNKNOWN"
   },
   "FAMILY-000002": {
    "creation_timestamp": "2026-08-19T01:04:19.132778+00:00",
@@ -18,7 +19,8 @@
    "family_signature": "57ad398b5f1382e385b5ef48825da9d591e70e42eb7bb04076e796494780acc6",
    "members": [
     "HYP-000002"
-   ]
+   ],
+   "status": "UNKNOWN"
   },
   "FAMILY-000003": {
    "creation_timestamp": "2026-08-19T01:04:19.133691+00:00",
@@ -28,7 +30,8 @@
    "family_signature": "2c89c281d7ea3e5dda999627c0d3837716e0d9764a64324001ba605339b6710b",
    "members": [
     "HYP-000003"
-   ]
+   ],
+   "status": "UNKNOWN"
   },
   "FAMILY-000004": {
    "creation_timestamp": "2026-08-19T01:04:19.138571+00:00",
@@ -38,7 +41,8 @@
    "family_signature": "fbe43b65049b0de8ae5aebbb38769814cc92fe1ccc1eeb3f598f1c9722b5bb19",
    "members": [
     "STRAT-000002"
-   ]
+   ],
+   "status": "UNKNOWN"
   },
   "FAMILY-C2-SURPRISE-REACTION-NFP-USD": {
    "creation_timestamp": "2026-08-20T15:21:21.338127+00:00",

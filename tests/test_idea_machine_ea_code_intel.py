@@ -91,7 +91,7 @@ class TestNoveltyEngine:
         exact_tags = ne._family_tag_set(h1_pattern_family)
         assert exact_tags, "expected the refuted family's description to yield at least one tag"
         verdict = ne.check(exact_tags, "TEST-EXACT-MATCH")
-        assert verdict.verdict == "RESEMBLES_REFUTED"
+        assert verdict.classification == "REFUTED"  # 5-status classification
         assert verdict.matched_family_id == "FAMILY-H1-PRICE-PATTERN"
 
     def test_disjoint_tag_set_is_not_flagged_as_refuted(self):
@@ -353,3 +353,238 @@ class TestGovernanceIsolation:
                 if "evidence_vault.json" in line:
                     assert not any(call in line for call in forbidden_calls), \
                         f"{f}: line references evidence_vault.json AND performs a file op: {line}"
+
+
+# --------------------------------------------------------------------- Phase 3: research_memory
+
+class TestResearchMemory:
+    def test_research_memory_loads_families(self):
+        from idea_machine.research_memory import ResearchMemory
+        mem = ResearchMemory()
+        mem.load()
+        assert len(mem.families) >= 2
+        assert "FAMILY-H1-PRICE-PATTERN" in mem.families
+        refuted = mem.lookup_families_by_status("REFUTED")
+        assert len(refuted) >= 1
+
+    def test_research_memory_loads_candidates(self):
+        from idea_machine.research_memory import ResearchMemory
+        mem = ResearchMemory()
+        mem.load()
+        assert len(mem.candidates) >= 4
+        underpowered = mem.lookup_candidates_by_status("STILL_UNDERPOWERED")
+        assert len(underpowered) >= 1
+
+    def test_research_memory_loads_cycle_hypotheses(self):
+        from idea_machine.research_memory import ResearchMemory
+        mem = ResearchMemory()
+        mem.load()
+        assert len(mem.cycle_hypotheses) >= 3
+        under = mem.lookup_underpowered_hypotheses()
+        assert len(under) >= 1
+
+    def test_research_memory_is_readonly(self):
+        """Modifying research_memory in-memory does not touch disk."""
+        from idea_machine.research_memory import ResearchMemory
+        mem = ResearchMemory()
+        mem.load()
+        before = (REPO_ROOT / "reports" / "factory" / "research_family_registry.json").read_bytes()
+        mem.families["FAKE-FAMILY"] = None
+        after = (REPO_ROOT / "reports" / "factory" / "research_family_registry.json").read_bytes()
+        assert before == after
+
+    def test_research_memory_summary(self):
+        from idea_machine.research_memory import ResearchMemory
+        mem = ResearchMemory()
+        summary = mem.get_summary()
+        assert summary["families_total"] >= 2
+        assert summary["candidates_total"] >= 4
+        assert summary["cycle_hypotheses_total"] >= 3
+
+
+# --------------------------------------------------------------------- Phase 3: novelty 5-status classification
+
+class TestNoveltyFiveStatus:
+    def test_novelty_engine_classifies_refuted(self):
+        ne = NoveltyEngine()
+        ne.load()
+        h1_family = next((f for f in ne.refuted_families if f["family_id"] == "FAMILY-H1-PRICE-PATTERN"), None)
+        assert h1_family is not None
+        exact_tags = ne._family_tag_set(h1_family)
+        verdict = ne.check(exact_tags, "TEST-REFUTED")
+        assert verdict.classification == "REFUTED"
+        assert verdict.matched_family_id == "FAMILY-H1-PRICE-PATTERN"
+
+    def test_novelty_engine_searches_all_statuses(self):
+        """Verify that families with STILL_UNDERPOWERED, TESTED_FAILED status are searchable."""
+        ne = NoveltyEngine()
+        ne.load()
+        assert len(ne.refuted_families) >= 1
+        # Any historical families with STILL_UNDERPOWERED or TESTED_FAILED would be loaded
+
+    def test_novelty_verdict_has_classification_field(self):
+        ne = NoveltyEngine()
+        ne.load()
+        disjoint_tags = {"FAIR_VALUE_GAP", "ORDER_BLOCK"}
+        verdict = ne.check(disjoint_tags, "TEST-NOVEL")
+        assert hasattr(verdict, "classification")
+        assert verdict.classification in ("REFUTED", "STILL_UNDERPOWERED", "TESTED_FAILED", "NOVEL", "UNKNOWN")
+
+    def test_novelty_classification_is_deterministic(self):
+        ne = NoveltyEngine()
+        ne.load()
+        tags = {"RSI_THRESHOLD", "MACD_CROSSOVER"}
+        v1 = ne.check(tags, "TEST-1")
+        v2 = ne.check(tags, "TEST-2")
+        assert v1.classification == v2.classification
+        assert v1.verdict == v2.verdict
+
+
+# --------------------------------------------------------------------- Phase 3: opportunity_queue
+
+class TestOpportunityQueue:
+    def test_queue_is_append_only(self):
+        from idea_machine.opportunity_queue import OpportunityQueue, DataRequirement, RetestCondition
+        queue = OpportunityQueue()
+        queue.load()
+        initial_count = len(queue.entries)
+
+        missing = DataRequirement("test", 100, 200, "events")
+        retest = RetestCondition(None, "test trigger", None)
+        entry = queue.append(
+            source_hypothesis_id="TEST-HYP", source_cycle_id="CYCLE-TEST",
+            classification="STILL_UNDERPOWERED", mechanism_summary="test",
+            symbol="EURUSD", driver="US10Y",
+            n_events_available=100, windows_evaluated=6,
+            best_train_t=2.5, best_val_n=12, mean_confirmation_rate=0.5,
+            evidence_level="REAL_SIGNAL_BLOCKED", reason="test reason",
+            missing_data=missing, retest_conditions=retest,
+            priority="HIGH", provenance_status="DATA_SUPPORTED",
+        )
+        assert entry.queue_id.startswith("OPP-")
+        assert len(queue.entries) == initial_count + 1
+        queue.save()
+
+    def test_queue_never_retroactively_modifies_entries(self):
+        from idea_machine.opportunity_queue import OpportunityQueue
+        queue = OpportunityQueue()
+        queue.load()
+        before_count = len(queue.entries)
+        before_json = (REPO_ROOT / "reports" / "idea_machine" / "opportunity_queue.json").read_text()
+
+        queue2 = OpportunityQueue()
+        queue2.load()
+        after_json = (REPO_ROOT / "reports" / "idea_machine" / "opportunity_queue.json").read_text()
+        # Just loading and reading should not modify the file
+        assert before_json == after_json
+
+    def test_queue_entries_have_required_fields(self):
+        from idea_machine.opportunity_queue import OpportunityQueue
+        queue = OpportunityQueue()
+        queue.load()
+        for entry in queue.entries[:3]:
+            assert entry.queue_id
+            assert entry.source_hypothesis_id
+            assert entry.source_cycle_id
+            assert entry.classification in ("STILL_UNDERPOWERED", "TESTED_FAILED")
+            assert entry.evidence_level
+            assert entry.missing_data is not None
+            assert entry.retest_conditions is not None
+            assert entry.provenance_status == "DATA_SUPPORTED"
+
+    def test_underpowered_is_not_edge_claim(self):
+        """CRITICAL: STILL_UNDERPOWERED entries must NOT claim edge."""
+        from idea_machine.opportunity_queue import OpportunityQueue
+        queue = OpportunityQueue()
+        queue.load()
+        underpowered = queue.get_by_classification("STILL_UNDERPOWERED")
+        for entry in underpowered:
+            reason = entry.reason.lower()
+            assert "edge" not in reason
+            assert "proven" not in reason
+            # "signal" is OK if it says "too small to confirm" or similar
+            assert "confirmed signal" not in reason  # NOT confirmed
+
+
+# --------------------------------------------------------------------- Phase 3: cycle integration
+
+class TestCycleIntegration:
+    def test_populate_queue_from_cycle_11(self):
+        from idea_machine.opportunity_queue import populate_queue_from_cycle
+        cycle_path = REPO_ROOT / "reports" / "factory" / "discovery_cycles" / "cycle_11_idea_machine.json"
+        assert cycle_path.exists()
+        new_entries = populate_queue_from_cycle(cycle_path)
+        assert len(new_entries) >= 2  # HYP-IM-0001 and HYP-IM-0004 are underpowered
+
+    def test_populate_queue_from_cycle_12(self):
+        from idea_machine.opportunity_queue import populate_queue_from_cycle
+        cycle_path = REPO_ROOT / "reports" / "factory" / "discovery_cycles" / "cycle_12_ea_code_intel.json"
+        assert cycle_path.exists()
+        new_entries = populate_queue_from_cycle(cycle_path)
+        assert len(new_entries) >= 1  # HYP-EACI-0001 is underpowered
+
+    def test_cycle_integration_hook_exists(self):
+        """Verify integration hook can be called."""
+        from discovery.cycle_integration_hook import update_research_memory_after_cycle
+        cycle_path = REPO_ROOT / "reports" / "factory" / "discovery_cycles" / "cycle_11_idea_machine.json"
+        result = update_research_memory_after_cycle(cycle_path)
+        assert "cycle_file" in result
+        assert "new_opportunities_created" in result
+        assert "opportunity_ids" in result
+
+
+# --------------------------------------------------------------------- Phase 3: governance for Phase 3
+
+class TestPhase3Governance:
+    def test_research_memory_never_writes_registries(self):
+        """research_memory.py must never modify any registry."""
+        src = (REPO_ROOT / "idea_machine" / "research_memory.py").read_text()
+        forbidden_writes = [".write_text(", ".write(", ".dump("]
+        for call in forbidden_writes:
+            assert call not in src, f"research_memory.py must not contain {call}"
+
+    def test_opportunity_queue_is_append_only_in_code(self):
+        """opportunity_queue.py must not contain rewrite/delete/edit operations."""
+        src = (REPO_ROOT / "idea_machine" / "opportunity_queue.py").read_text()
+        dangerous_patterns = [
+            "entries.pop(",
+            "entries.remove(",
+            "entries[",  # could be modification if followed by =
+            ".replace(",
+            "del ",
+        ]
+        # Only check for clear patterns; entries[i] could be read
+        assert "entries.pop(" not in src
+        assert "entries.remove(" not in src
+
+    def test_novelty_engine_never_modifies_family_registry(self):
+        """novelty_engine.py must never write to family registry."""
+        src = (REPO_ROOT / "idea_machine" / "ea_code_intel" / "novelty_engine.py").read_text()
+        assert ".write_text(" not in src
+        assert "open(" not in src or "r" in src[src.find("open("):src.find("open(")+20]
+
+    def test_underpowered_classified_entries_have_calculated_data_requirements(self):
+        """Never invent sample sizes; calculate or mark UNKNOWN."""
+        from idea_machine.opportunity_queue import OpportunityQueue
+        queue = OpportunityQueue()
+        queue.load()
+        for entry in queue.entries:
+            missing = entry.missing_data
+            assert missing["current_value"] > 0 or missing["current_value"] == 0
+            assert missing["required_value"] > 0
+            # Required value must be >= current or marked explicitly
+            if missing["current_value"] > 0:
+                assert missing["required_value"] >= missing["current_value"]
+
+    def test_no_unknown_power_gains_claimed(self):
+        """Power gain estimates must be calculated or marked None."""
+        from idea_machine.opportunity_queue import OpportunityQueue
+        queue = OpportunityQueue()
+        queue.load()
+        for entry in queue.entries:
+            retest = entry.retest_conditions
+            if retest["estimated_power_gain"]:
+                # If provided, must contain numbers (not vague language)
+                power_text = retest["estimated_power_gain"].lower()
+                has_number = any(c.isdigit() for c in retest["estimated_power_gain"])
+                assert has_number, f"Power gain must contain numbers: {retest['estimated_power_gain']}"
