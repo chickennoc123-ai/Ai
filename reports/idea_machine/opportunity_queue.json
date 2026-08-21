@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-21T01:48:41.952674",
-  "entry_count": 34,
+  "generated_at": "2026-08-21T02:13:06.420020",
+  "entry_count": 58,
   "entries": [
     {
       "queue_id": "OPP-000001",
@@ -1020,6 +1020,726 @@
       },
       "priority": "HIGH",
       "created_date": "2026-08-21T01:48:41.952651",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000035",
+      "source_hypothesis_id": "TEST-HYP",
+      "source_cycle_id": "CYCLE-TEST",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "test",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "n_events_available": 100,
+      "windows_evaluated": 6,
+      "best_train_t": 2.5,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "test reason",
+      "missing_data": {
+        "description": "test",
+        "current_value": 100,
+        "required_value": 200,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "test trigger",
+        "estimated_power_gain": null
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:06:40.733007",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000036",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:06:40.739758",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000037",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:06:40.739806",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000038",
+      "source_hypothesis_id": "HYP-EACI-0001",
+      "source_cycle_id": "CYCLE-12-EA-CODE-INTEL",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "USDJPY with driver US10Y+SPX500: CROSS_ASSET_DUAL_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "US10Y+SPX500",
+      "n_events_available": 128,
+      "windows_evaluated": 3,
+      "best_train_t": 4.858,
+      "best_val_n": 8,
+      "mean_confirmation_rate": 0.3203,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.86, val n=8. Mean confirmation rate: 32.0% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 365,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=365 raw events in dev data, retest at original window parameters. Train t=4.86 suggests real signal; validation n=8 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 8 to ~30 with 365 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:06:40.743045",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000039",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:06:40.746770",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000040",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:06:40.746811",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000041",
+      "source_hypothesis_id": "TEST-HYP",
+      "source_cycle_id": "CYCLE-TEST",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "test",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "n_events_available": 100,
+      "windows_evaluated": 6,
+      "best_train_t": 2.5,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "test reason",
+      "missing_data": {
+        "description": "test",
+        "current_value": 100,
+        "required_value": 200,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "test trigger",
+        "estimated_power_gain": null
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:09:12.816657",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000042",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:09:12.823331",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000043",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:09:12.823378",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000044",
+      "source_hypothesis_id": "HYP-EACI-0001",
+      "source_cycle_id": "CYCLE-12-EA-CODE-INTEL",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "USDJPY with driver US10Y+SPX500: CROSS_ASSET_DUAL_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "US10Y+SPX500",
+      "n_events_available": 128,
+      "windows_evaluated": 3,
+      "best_train_t": 4.858,
+      "best_val_n": 8,
+      "mean_confirmation_rate": 0.3203,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.86, val n=8. Mean confirmation rate: 32.0% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 365,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=365 raw events in dev data, retest at original window parameters. Train t=4.86 suggests real signal; validation n=8 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 8 to ~30 with 365 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:09:12.826803",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000045",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:09:12.830725",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000046",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:09:12.830763",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000047",
+      "source_hypothesis_id": "TEST-HYP",
+      "source_cycle_id": "CYCLE-TEST",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "test",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "n_events_available": 100,
+      "windows_evaluated": 6,
+      "best_train_t": 2.5,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "test reason",
+      "missing_data": {
+        "description": "test",
+        "current_value": 100,
+        "required_value": 200,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "test trigger",
+        "estimated_power_gain": null
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:12:31.990809",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000048",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:12:31.998532",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000049",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:12:31.998578",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000050",
+      "source_hypothesis_id": "HYP-EACI-0001",
+      "source_cycle_id": "CYCLE-12-EA-CODE-INTEL",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "USDJPY with driver US10Y+SPX500: CROSS_ASSET_DUAL_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "US10Y+SPX500",
+      "n_events_available": 128,
+      "windows_evaluated": 3,
+      "best_train_t": 4.858,
+      "best_val_n": 8,
+      "mean_confirmation_rate": 0.3203,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.86, val n=8. Mean confirmation rate: 32.0% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 365,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=365 raw events in dev data, retest at original window parameters. Train t=4.86 suggests real signal; validation n=8 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 8 to ~30 with 365 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:12:32.002458",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000051",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:12:32.007075",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000052",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:12:32.007114",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000053",
+      "source_hypothesis_id": "TEST-HYP",
+      "source_cycle_id": "CYCLE-TEST",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "test",
+      "symbol": "EURUSD",
+      "driver": "US10Y",
+      "n_events_available": 100,
+      "windows_evaluated": 6,
+      "best_train_t": 2.5,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "test reason",
+      "missing_data": {
+        "description": "test",
+        "current_value": 100,
+        "required_value": 200,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "test trigger",
+        "estimated_power_gain": null
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:13:06.403167",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000054",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:13:06.410795",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000055",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:13:06.410842",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000056",
+      "source_hypothesis_id": "HYP-EACI-0001",
+      "source_cycle_id": "CYCLE-12-EA-CODE-INTEL",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "USDJPY with driver US10Y+SPX500: CROSS_ASSET_DUAL_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "US10Y+SPX500",
+      "n_events_available": 128,
+      "windows_evaluated": 3,
+      "best_train_t": 4.858,
+      "best_val_n": 8,
+      "mean_confirmation_rate": 0.3203,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.86, val n=8. Mean confirmation rate: 32.0% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 365,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=365 raw events in dev data, retest at original window parameters. Train t=4.86 suggests real signal; validation n=8 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 8 to ~30 with 365 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:13:06.414835",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000057",
+      "source_hypothesis_id": "HYP-IM-0001",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "GBPUSD with driver US10Y: MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows_evaluated": 6,
+      "best_train_t": 2.436,
+      "best_val_n": 14,
+      "mean_confirmation_rate": 0.5312,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 1 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=2.44, val n=14. Mean confirmation rate: 53.1% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 131,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=131 raw events in dev data, retest at original window parameters. Train t=2.44 suggests real signal; validation n=14 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 14 to ~30 with 131 raw events"
+      },
+      "priority": "MEDIUM",
+      "created_date": "2026-08-21T02:13:06.419925",
+      "provenance_status": "DATA_SUPPORTED"
+    },
+    {
+      "queue_id": "OPP-000058",
+      "source_hypothesis_id": "HYP-IM-0004",
+      "source_cycle_id": "CYCLE-11-IDEA-MACHINE",
+      "classification": "STILL_UNDERPOWERED",
+      "mechanism_summary": "EURUSD with driver N/A: MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "windows_evaluated": 12,
+      "best_train_t": 4.827,
+      "best_val_n": 12,
+      "mean_confirmation_rate": 0.5234333333333332,
+      "evidence_level": "REAL_SIGNAL_BLOCKED",
+      "reason": "All 11 tested window(s) show validation n < 30 (too small to confirm signal). Best window: train t=4.83, val n=12. Mean confirmation rate: 52.3% of available events.",
+      "missing_data": {
+        "description": "raw events (NFP calendar data and OHLC prices available for processing)",
+        "current_value": 128,
+        "required_value": 135,
+        "unit": "events"
+      },
+      "retest_conditions": {
+        "earliest_date": null,
+        "trigger": "If NFP event pool can be extended to >=135 raw events in dev data, retest at original window parameters. Train t=4.83 suggests real signal; validation n=12 is currently uninformative.",
+        "estimated_power_gain": "Validation n could increase from 12 to ~30 with 135 raw events"
+      },
+      "priority": "HIGH",
+      "created_date": "2026-08-21T02:13:06.419989",
       "provenance_status": "DATA_SUPPORTED"
     }
   ]
