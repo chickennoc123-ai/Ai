@@ -41,6 +41,11 @@ PERMITTED: Tuple[str, ...] = (
     "RECORD_DECISION",
     "PROPOSE_BRANCH_CLOSURE",
     "DESIGN_DISCRIMINATING_EXPERIMENT",
+    # Phase 9 (second pass) -- Adaptive Search & Exploration Engine. Same
+    # declaration discipline: read/propose/record actions only.
+    "REQUEST_SEARCH_SPACE_EXPANSION",
+    "CHECK_IDEA_EXPLAINABILITY",
+    "REGISTER_SEARCH_REGION",
 )
 
 #: Actions that terminate the run if attempted. Each maps to *why*.

@@ -266,16 +266,33 @@ class TestAutonomousIdeaMachine:
         assert "verification" in result
         assert "factory_readiness" in result
 
-    def test_run_discovery_cycle_command(self):
-        """Execute 'cycle' command."""
+    def test_run_discovery_cycle_command(self, tmp_path):
+        """Execute 'cycle' command.
+
+        run_discovery_cycle now delegates to run_adaptive_search_cycle (Phase
+        9, second pass), which runs a REAL, small Factory cycle -- so this
+        test isolates the opportunity queue and search decision ledger to
+        tmp_path BEFORE load() wires them into the adaptive search
+        controller. Using the default (production) paths here would append
+        real entries into reports/idea_machine/*.json on every test run,
+        exactly the ledger-pollution bug already found and fixed once this
+        session for the opportunity_queue tests.
+        """
+        from idea_machine.opportunity_queue import OpportunityQueue
+        from idea_machine.search_decision_ledger import SearchDecisionLedger
+
         loop = AutonomousIdeaMachine(REPO_ROOT)
+        loop.opportunity_queue = OpportunityQueue(tmp_path / "opp.json")
+        loop.search_decision_ledger = SearchDecisionLedger(tmp_path / "sdl.json")
         loop.load()
 
         cmd = ResearchCommand("cycle", {"cycle_id": "TEST-CYCLE-001"})
         result = loop.execute_command(cmd)
 
         assert result["cycle_id"] == "TEST-CYCLE-001"
-        assert result["stage"] == "discovery_initialization"
+        assert "search_plan" in result
+        assert "factory_evaluations" in result
+        assert result["ideas_generated"] >= 0
 
     def test_unknown_command_returns_error(self):
         """Unknown command returns error message."""

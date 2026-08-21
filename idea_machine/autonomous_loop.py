@@ -27,9 +27,16 @@ import sys
 
 from idea_machine.research_memory import ResearchMemory
 from idea_machine.ea_code_intel.novelty_engine import NoveltyEngine
-from idea_machine.opportunity_queue import OpportunityQueue
+from idea_machine.opportunity_queue import OpportunityQueue, DataRequirement, RetestCondition
 from idea_machine.real_factory_integration import RealFactoryIntegrator, GateEvaluation
-from discovery.cycle8_intraday import Stats
+from idea_machine.adaptive_search import AdaptiveSearchController, DEFAULT_MIN_EXPLORATION_FRACTION
+from idea_machine.search_space_registry import SearchSpaceRegistry
+from idea_machine.search_decision_ledger import SearchDecisionLedger
+from discovery.cycle8_intraday import Stats, MECHANISMS, gate, stats as compute_stats
+from discovery.cost_model import roundtrip_cost
+from discovery.cycle13_idea_machine_live import (
+    resolve_fx_series, resolve_driver_series, extend_surprise_fx_dir,
+)
 
 
 @dataclass
@@ -69,6 +76,13 @@ class AutonomousIdeaMachine:
         self.opportunity_queue = OpportunityQueue()
         self.factory_integrator = RealFactoryIntegrator(repo_root)
 
+        # Phase 9 (second pass): Adaptive Search Controller. Built lazily in
+        # load() once research_memory is populated, since the registry seeds
+        # itself from real memory contents.
+        self.search_registry: Optional[SearchSpaceRegistry] = None
+        self.adaptive_search: Optional[AdaptiveSearchController] = None
+        self.search_decision_ledger = SearchDecisionLedger(self.report_dir / "search_decision_ledger.json")
+
         self._loaded = False
 
     def load(self):
@@ -76,6 +90,11 @@ class AutonomousIdeaMachine:
         self.research_memory.load()
         self.novelty_engine.load()
         self.opportunity_queue.load()
+        self.search_registry = SearchSpaceRegistry(self.research_memory)
+        self.adaptive_search = AdaptiveSearchController(
+            memory=self.research_memory, registry=self.search_registry,
+            opportunity_queue=self.opportunity_queue, decision_ledger=self.search_decision_ledger,
+        )
         self._loaded = True
 
     def execute_command(self, cmd: ResearchCommand) -> Dict:
@@ -226,34 +245,181 @@ class AutonomousIdeaMachine:
         return dry_run
 
     def run_discovery_cycle(self, cycle_id: str = None) -> Dict:
+        """Delegates to :meth:`run_adaptive_search_cycle` with a modest default
+        slot count. Kept for backward compatibility with existing callers of
+        this method name; the real work lives in run_adaptive_search_cycle."""
+        return self.run_adaptive_search_cycle(cycle_id=cycle_id, total_slots=10)
+
+    def run_adaptive_search_cycle(self, cycle_id: str = None, total_slots: int = 10) -> Dict:
         """
-        Run a complete discovery cycle.
+        Phase 9 (second pass): one real autonomous research cycle.
 
-        This would:
-        1. Load eligible hypotheses
-        2. Pre-register each with Factory
-        3. Evaluate through real gates
-        4. Track survivors
-        5. Productize if authorized
+        Research Memory -> Search-Space State -> Explore/Exploit Allocation
+        -> Idea Generation -> Novelty -> Data Availability -> Economics
+        -> Pre-registration -> REAL FACTORY -> Evidence -> Research Memory
+        -> Search-Space Update -> Next Cycle
 
-        CRITICAL: Uses real gate() function, never simulation.
+        Uses the REAL gate() function from discovery/cycle8_intraday.py on
+        real M1/H1 data and real USD NFP/CPI events -- never simulation.
+        Every accepted candidate's economic direction (base_dir) must be an
+        already-established, stated rationale
+        (idea_machine.search_economic_rationale.BASE_DIR_TABLE); a candidate
+        with no established rationale is reported, not evaluated with an
+        invented direction.
         """
         if cycle_id is None:
             cycle_id = f"CYCLE-AUTO-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}"
-
         if not self._loaded:
             self.load()
+
+        from idea_machine.search_economic_rationale import lookup as lookup_rationale
+        from idea_machine.research_space.decision_engine import cost_registered, data_available
+        from idea_machine.research_space.recombination_engine import trade_sc_and_dc
+        from discovery.cost_model import roundtrip_cost
+        from discovery.cycle8_intraday import usd_events, M1Series, FX_M1_ROOT
+        from discovery.observatory import load_dev_bars
+
+        # Extend SURPRISE_FX_DIR for USDCAD/AUDUSD (needed by trade_sc if a
+        # proposal targets either) explicitly, here, at the point of use --
+        # never as an import-time side effect (see cycle13_idea_machine_live's
+        # own docstring on extend_surprise_fx_dir for the bug this avoids).
+        extend_surprise_fx_dir()
+
+        search_result = self.adaptive_search.run_cycle(cycle_id=cycle_id, total_slots=total_slots)
+
+        bars = load_dev_bars(self.repo_root / "data/csv/EURUSD_H1.csv")
+        dev_end = bars[-1].ts
+        events = usd_events(dev_end)
+
+        _EXTRA_DRIVER_FOLDERS = {
+            "JP225": "JP225_USD", "UK100": "UK100_GBP", "AU200": "AU200_AUD",
+            "US2000": "US2000_USD", "NATGAS": "NATGAS_USD",
+        }
+
+        def resolve_any_driver(driver_name: str):
+            try:
+                return resolve_driver_series(driver_name)
+            except KeyError:
+                return M1Series(FX_M1_ROOT, _EXTRA_DRIVER_FOLDERS[driver_name])
+
+        results = []
+        no_rationale = []
+        survivors, underpowered_list, refuted_list, data_blocked = [], [], [], []
+
+        for proposal in search_result.selected:
+            instrument = proposal.dimensions.get("instrument", "")
+            driver = proposal.dimensions.get("macro_driver")
+            mechanism = proposal.dimensions.get("mechanism") or "SC_SURPRISE_CONFIRMATION"
+            hyp_id = f"HYP-{cycle_id}-{proposal.mode}-{instrument}-{driver or 'NONE'}"
+
+            if not instrument or not cost_registered(instrument):
+                data_blocked.append(hyp_id)
+                continue
+            if driver and not data_available(instrument, driver):
+                data_blocked.append(hyp_id)
+                continue
+
+            rationale = lookup_rationale(instrument, driver) if driver else (+1, "no cross-asset driver; single-instrument mechanism", "n/a")
+            if rationale is None:
+                no_rationale.append({"hyp_id": hyp_id, "instrument": instrument, "driver": driver})
+                continue
+            base_dir, econ_reason, established_in = rationale
+
+            mech_fn = trade_sc_and_dc if mechanism == "SC_AND_DC_COMBINED_CONFIRMATION" else \
+                      MECHANISMS.get(mechanism, MECHANISMS["SC_SURPRISE_CONFIRMATION"])
+
+            fx = resolve_fx_series(instrument)
+            driver_series_obj = resolve_any_driver(driver) if driver else None
+            if driver and driver_series_obj is None:
+                data_blocked.append(hyp_id)
+                continue
+
+            window_min = 60
+            cost = roundtrip_cost(instrument)
+            n_events = len(events)
+            cut = int(n_events * 0.80)
+            nets = []
+            for e in events:
+                r = mech_fn(e, fx, driver_series_obj, instrument, base_dir, window_min, cost)
+                if r is not None:
+                    nets.append((e.ts, r))
+            tr_nets, va_nets = [], []
+            cutoff_ts = events[cut].ts if cut < n_events else events[-1].ts
+            for ts, r in nets:
+                (tr_nets if ts < cutoff_ts else va_nets).append(r)
+            gm = (sum(abs(x) for x in tr_nets) / len(tr_nets)) if tr_nets else 0.0
+            tr_s = compute_stats(tr_nets, gm + cost, cost)
+            va_s = compute_stats(va_nets, 0.0, cost)
+
+            journey = self.factory_integrator.pre_register_hypothesis(
+                hyp_id=hyp_id, source_idea_id=proposal.proposal_id, symbol=instrument, driver=driver,
+            )
+            passed = self.factory_integrator.evaluate_with_real_gates(journey, tr_s, va_s)
+            verdict, reason = gate(tr_s, va_s)
+
+            record = {
+                "hyp_id": hyp_id, "proposal_id": proposal.proposal_id, "mode": proposal.mode,
+                "region_id": proposal.region_id, "mechanism": mechanism, "instrument": instrument,
+                "driver": driver, "window_min": window_min, "economic_rationale": econ_reason,
+                "rationale_established_in": established_in,
+                "explainability": proposal.explainability,
+                "train": tr_s.to_dict(), "validation": va_s.to_dict(),
+                "verdict": verdict, "verdict_reason": reason,
+            }
+
+            if passed:
+                record["final_status"] = "DISCOVERY_SURVIVOR"
+                survivors.append(record)
+            elif verdict == "VALIDATION_UNDERPOWERED" and tr_s.t_stat >= 1.5:
+                record["final_status"] = "STILL_UNDERPOWERED"
+                conf = round(len(nets) / n_events, 4) if n_events else 0.0
+                events_needed = int(round((30 / 0.2) / conf)) if conf > 0 else 999
+                entry = self.opportunity_queue.append(
+                    source_hypothesis_id=hyp_id, source_cycle_id=cycle_id, classification="STILL_UNDERPOWERED",
+                    mechanism_summary=f"[{proposal.mode}] {instrument} vs {driver}: {mechanism} ({econ_reason})",
+                    symbol=instrument, driver=driver, n_events_available=n_events, windows_evaluated=1,
+                    best_train_t=tr_s.t_stat, best_val_n=va_s.n, mean_confirmation_rate=conf,
+                    evidence_level="REAL_SIGNAL_BLOCKED" if tr_s.t_stat >= 2.0 else "INSUFFICIENT_POWER",
+                    reason=(f"train t={tr_s.t_stat}, val n={va_s.n} (<30, uninformative). Not treated as "
+                           f"confirmed edge -- validation sample too small to confirm signal."),
+                    missing_data=DataRequirement(
+                        description="USD NFP/CPI raw events with confirmed cross-asset reaction",
+                        current_value=n_events, required_value=max(events_needed, n_events), unit="events",
+                    ),
+                    retest_conditions=RetestCondition(
+                        earliest_date=None, trigger=f"If USD macro event pool extends to >={events_needed} events, retest.",
+                        estimated_power_gain=f"Validation n could reach ~30 with {events_needed} events (current confirmation rate {conf:.1%})",
+                    ),
+                    priority="HIGH" if tr_s.t_stat >= 3.0 else "MEDIUM", provenance_status="FACTORY_TESTED",
+                )
+                record["opportunity_queue_entry"] = entry.queue_id
+                underpowered_list.append(record)
+            else:
+                record["final_status"] = "REFUTED_THIS_RUN"
+                refuted_list.append(record)
+
+            results.append(record)
+
+        self.opportunity_queue.save()
 
         cycle_result = {
             "cycle_id": cycle_id,
             "started_at": datetime.utcnow().isoformat(),
-            "stage": "discovery_initialization",
-            "hypotheses_evaluated": 0,
-            "survivors": 0,
-            "rejected": 0,
-            "note": "Discovery cycle framework ready. Actual hypothesis evaluation requires data sources (Phase 5-6) and parameter sweep infrastructure."
+            "search_plan": search_result.plan.to_dict(),
+            "ideas_generated": len(search_result.selected) + len(search_result.rejected_unexplainable) + len(search_result.rejected_diversity),
+            "exploration_ideas": sum(1 for p in search_result.selected if p.mode == "EXPLORE"),
+            "exploitation_ideas": sum(1 for p in search_result.selected if p.mode == "EXPLOIT"),
+            "rejected_unexplainable": len(search_result.rejected_unexplainable),
+            "rejected_diversity": len(search_result.rejected_diversity),
+            "no_established_rationale": no_rationale,
+            "data_blocked": len(data_blocked),
+            "factory_evaluations": len(results),
+            "survivors": len(survivors),
+            "still_underpowered": len(underpowered_list),
+            "refuted_this_run": len(refuted_list),
+            "expansion_request": search_result.expansion_request,
+            "hypotheses": results,
         }
-
         return cycle_result
 
     def save_state(self, output_path: Path = None):

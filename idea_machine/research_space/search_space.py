@@ -301,6 +301,19 @@ class SearchSpace:
                 continue
             if not driver and hyp.driver:
                 continue  # a driver-specific hypothesis must not gate a driver-less triple, or vice versa
+            if mechanism:
+                # CycleHypothesisRecord carries NO mechanism field at all, so
+                # it can never confirm or deny agreement with a CALLER-
+                # specified mechanism. Applying it anyway would let one
+                # unrelated hypothesis (e.g. a plain single-asset REFUTED
+                # test with no mechanism info) silently block every future
+                # mechanism proposal that happens to share its symbol/driver,
+                # including a brand-new mechanism that was never actually
+                # tested -- exactly the failure mode found live while
+                # building the search-space registry's RECOMBINE seeding.
+                # Candidate records (which DO carry a mechanism field, above)
+                # remain the source of mechanism-specific evidence.
+                continue
             status = {
                 "REFUTED": epistemic.REFUTED, "STILL_UNDERPOWERED": epistemic.UNDERPOWERED,
                 "TESTED_FAILED": epistemic.TESTED, "SURVIVOR": epistemic.SURVIVED,

@@ -47,6 +47,7 @@ from idea_machine.research_space.exploration_debt import (                # noqa
 from idea_machine.research_space.search_space_ledger import SearchSpaceLedger  # noqa: E402
 from idea_machine.research_space.decision_record import DecisionLedger    # noqa: E402
 from idea_machine.research_space import space_mapper, explain as explain_module  # noqa: E402
+from idea_machine.autonomous_loop import AutonomousIdeaMachine             # noqa: E402
 
 
 def _load_catalog(path: Path) -> DataCatalog:
@@ -152,6 +153,92 @@ def cmd_explain(args) -> int:
     return 0
 
 
+# ---------------------------------------------------------------------------
+# Phase 9 (second pass): Adaptive Search & Exploration Engine commands.
+# ---------------------------------------------------------------------------
+
+def _autonomous_machine() -> AutonomousIdeaMachine:
+    machine = AutonomousIdeaMachine()
+    machine.load()
+    return machine
+
+
+def cmd_search_status(args) -> int:
+    machine = _autonomous_machine()
+    status = {
+        "search_space": machine.search_registry.status_counts(),
+        "is_exhausted": machine.search_registry.is_exhausted(),
+        "opportunity_queue_entries": len(machine.opportunity_queue.entries),
+        "min_exploration_fraction": machine.adaptive_search.min_exploration_fraction,
+    }
+    print(json.dumps(status, indent=2, default=str))
+    return 0
+
+
+def cmd_explore(args) -> int:
+    machine = _autonomous_machine()
+    proposals = machine.adaptive_search.exploration_engine.propose(limit=args.limit)
+    constrained = machine.adaptive_search.exploration_engine.check_space_constrained()
+    print(json.dumps({
+        "count": len(proposals), "space_constrained": constrained,
+        "proposals": [p.to_dict() for p in proposals],
+    }, indent=2, default=str))
+    return 0
+
+
+def cmd_exploit(args) -> int:
+    machine = _autonomous_machine()
+    proposals = machine.adaptive_search.exploitation_engine.propose(limit=args.limit)
+    print(json.dumps({"count": len(proposals), "proposals": [p.to_dict() for p in proposals]}, indent=2, default=str))
+    return 0
+
+
+def cmd_search_plan(args) -> int:
+    machine = _autonomous_machine()
+    plan = machine.adaptive_search.plan(total_slots=args.slots)
+    print(f"Exploration budget: {plan.exploration_budget_fraction:.0%}")
+    print(f"Exploitation budget: {plan.exploitation_budget_fraction:.0%}")
+    print(f"\nExploration ({plan.explore_slots} slot(s)):")
+    for r in plan.explore_regions:
+        print(f"  - {r}")
+    print(f"\nExploitation ({plan.exploit_slots} slot(s)):")
+    for r in plan.exploit_regions:
+        print(f"  - {r}")
+    if plan.space_constrained_note:
+        print(f"\n{plan.space_constrained_note}")
+    if args.json:
+        print(json.dumps(plan.to_dict(), indent=2, default=str))
+    return 0
+
+
+def cmd_search_cycle(args) -> int:
+    """Real autonomous research cycle: Research Memory -> Search-Space ->
+    Explore/Exploit -> real Factory -> Evidence -> Search-Space update.
+
+    Named ``search-cycle`` rather than ``cycle`` to avoid colliding with the
+    existing ``cycle`` command (System C's IdeaMachine.run_cycle, a separate,
+    pre-existing pipeline unrelated to adaptive search)."""
+    machine = _autonomous_machine()
+    result = machine.run_adaptive_search_cycle(cycle_id=args.cycle_id, total_slots=args.slots)
+    print(json.dumps(result, indent=2, default=str))
+    return 0
+
+
+def cmd_audit_search(args) -> int:
+    machine = _autonomous_machine()
+    findings = guard.audit_source_tree()
+    report = {
+        "static_audit_findings": [{"file": f.file, "line": f.line, "kind": f.kind, "detail": f.detail} for f in findings],
+        "search_decision_ledger_rows": machine.search_decision_ledger.store.count(),
+        "search_space_status_counts": machine.search_registry.status_counts(),
+        "min_exploration_fraction": machine.adaptive_search.min_exploration_fraction,
+        "governance_floor": 0.20,
+    }
+    machine.search_decision_ledger.verify_integrity()
+    print(json.dumps(report, indent=2, default=str))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="idea_machine",
@@ -191,6 +278,31 @@ def build_parser() -> argparse.ArgumentParser:
     ex = sub.add_parser("explain", help="Phase 9: explain one decision")
     ex.add_argument("decision_id", help="decision id from the research_space_ledger / decision_records")
     ex.set_defaults(fn=cmd_explain)
+
+    sub.add_parser("search-status", help="Phase 9 (2nd pass): search-space + budget status").set_defaults(fn=cmd_search_status)
+
+    exp = sub.add_parser("explore", help="Phase 9 (2nd pass): list EXPLORE proposals")
+    exp.add_argument("--limit", type=int, default=None)
+    exp.set_defaults(fn=cmd_explore)
+
+    xpl = sub.add_parser("exploit", help="Phase 9 (2nd pass): list EXPLOIT proposals")
+    xpl.add_argument("--limit", type=int, default=None)
+    xpl.set_defaults(fn=cmd_exploit)
+
+    spn = sub.add_parser("search-plan", help="Phase 9 (2nd pass): show the explore/exploit budget plan")
+    spn.add_argument("--slots", type=int, default=10)
+    spn.add_argument("--json", action="store_true")
+    spn.set_defaults(fn=cmd_search_plan)
+
+    scy = sub.add_parser("search-cycle", help="Phase 9 (2nd pass): run one real adaptive-search cycle "
+                                              "(named search-cycle, not cycle, to avoid colliding with "
+                                              "the existing System C 'cycle' command)")
+    scy.add_argument("--cycle-id", dest="cycle_id", default=None)
+    scy.add_argument("--slots", type=int, default=10)
+    scy.set_defaults(fn=cmd_search_cycle)
+
+    aud = sub.add_parser("audit-search", help="Phase 9 (2nd pass): governance + ledger integrity audit")
+    aud.set_defaults(fn=cmd_audit_search)
     return p
 
 

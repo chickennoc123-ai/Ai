@@ -84,12 +84,31 @@ def test_search_space_never_reads_holdout(search_space):
 
 
 def test_exploitation_engine_refuses_to_retest_a_refuted_triple(search_space):
+    """EURUSD's real REFUTED evidence (HYP-IM-0003) is a driver-less, mechanism-
+    UNSPECIFIED hypothesis. Querying with mechanism="" (no specific mechanism
+    claimed) correctly inherits that evidence and must be blocked -- this is
+    the honest, narrow scope of what that historical record can attest to."""
     engine = ExploitationEngine(search_space)
     with pytest.raises(GovernanceViolation):
         engine.deepen(
-            mechanism="ANY_MECHANISM", instrument="EURUSD", driver=None,
+            mechanism="", instrument="EURUSD", driver=None,
             already_tested_windows=[], candidate_windows=[999], rationale="attempt to retest REFUTED",
         )
+
+
+def test_exploitation_refutation_does_not_leak_to_an_unrelated_new_mechanism(search_space):
+    """Regression: CycleHypothesisRecord carries no mechanism field, so
+    EURUSD's driver-less REFUTED hypothesis (about some unspecified mechanism)
+    must NOT be treated as evidence against a completely different, explicitly
+    named, never-tested mechanism proposal on the same instrument -- found live
+    while seeding the search-space registry's RECOMBINE regions."""
+    engine = ExploitationEngine(search_space)
+    candidates = engine.deepen(
+        mechanism="SC_AND_DC_COMBINED_CONFIRMATION", instrument="EURUSD", driver=None,
+        already_tested_windows=[], candidate_windows=[60],
+        rationale="a brand-new recombined mechanism, never tested, must not inherit an unrelated REFUTED verdict",
+    )
+    assert candidates == []  # UNEXPLORED has no evidence to deepen yet, but it must not be REFUTED-blocked
 
 
 def test_exploitation_does_not_block_a_different_triple_on_the_same_instrument(search_space):

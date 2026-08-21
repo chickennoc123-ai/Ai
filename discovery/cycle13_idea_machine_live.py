@@ -78,12 +78,25 @@ from discovery.cycle8_intraday import (
 )
 
 # trade_sc() (imported unchanged inside MECHANISMS) reads the module-level
-# SURPRISE_FX_DIR dict in cycle8_intraday.py by closure. We EXTEND it with
-# the two new USD-pairs' economically-derived directions (documented in this
-# file's module docstring) -- never touching or overwriting the five
-# entries Cycle 8 already defined and audited.
-cycle8_intraday.SURPRISE_FX_DIR["USDCAD"] = +1
-cycle8_intraday.SURPRISE_FX_DIR["AUDUSD"] = -1
+# SURPRISE_FX_DIR dict in cycle8_intraday.py by closure. extend_surprise_fx_dir()
+# EXTENDS it with the two new USD-pairs' economically-derived directions
+# (documented in this file's module docstring) -- never touching or
+# overwriting the five entries Cycle 8 already defined and audited.
+#
+# Deliberately NOT applied as an import-time side effect: this module is now
+# also imported as a plain library (idea_machine.autonomous_loop imports
+# resolve_fx_series/resolve_driver_series from it) by code that has no
+# business mutating a shared module's global dict just by being imported --
+# a real bug found live, when an unrelated test elsewhere in the suite
+# started seeing SURPRISE_FX_DIR with 7 entries instead of Cycle 8's 5.
+# Call this explicitly wherever USDCAD/AUDUSD SC-mechanism evaluation is
+# actually about to run (main() below does so).
+_SURPRISE_FX_DIR_EXTENSIONS = {"USDCAD": +1, "AUDUSD": -1}
+
+
+def extend_surprise_fx_dir() -> None:
+    for symbol, direction in _SURPRISE_FX_DIR_EXTENSIONS.items():
+        cycle8_intraday.SURPRISE_FX_DIR[symbol] = direction
 
 from idea_machine.ea_code_intel.strategy_dna import extract_dna
 from idea_machine.ea_code_intel.novelty_engine import NoveltyEngine
@@ -267,6 +280,7 @@ def evaluate_pairing_live(symbol: str, driver_name: str, base_dir: int, mechanis
 
 
 def main() -> int:
+    extend_surprise_fx_dir()
     print("=" * 78)
     print("CYCLE 13: Idea Machine -> Real Strategy Factory, live end-to-end run")
     print("=" * 78)

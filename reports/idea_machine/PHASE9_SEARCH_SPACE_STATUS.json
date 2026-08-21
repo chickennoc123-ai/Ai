@@ -1,0 +1,13 @@
+{
+  "search_space": {
+    "UNDERPOWERED": 7,
+    "REFUTED": 1,
+    "UNEXPLORED": 36
+  },
+  "is_exhausted": [
+    false,
+    "coverage=18.2% (threshold 85%), 36 unexplored region(s) remaining"
+  ],
+  "opportunity_queue_entries": 85,
+  "min_exploration_fraction": 0.3
+}
