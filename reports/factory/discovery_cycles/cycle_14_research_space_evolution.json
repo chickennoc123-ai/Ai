@@ -1,0 +1,182 @@
+{
+  "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+  "generated_at": "2026-08-21T08:45:14.096947",
+  "dev_period_end": "2022-03-05 04:00:00",
+  "event_pool_size": 268,
+  "self_critique": "\nGEN 7 CYCLE 14 -- Phase 9 Research Space Evolution Engine, live end-to-end run.\n\nSELF-CRITIQUE, STATED BEFORE ANY EVALUATION RUNS\n--------------------------------------------------\nThis cycle exists to prove the decision layer (idea_machine/research_space/),\nnot to discover a new mechanism formula. Every real trade evaluation below\nreuses code that already exists and was already audited: gate()/stats() and\nthe SC mechanism from discovery/cycle8_intraday.py (Cycle 8), the H1-only\nwindow discipline for USDJPY (Cycle 8's own audit -- no M1 source, confirmed\nabsent), and trade_sc_and_dc from idea_machine/research_space/\nrecombination_engine.py (a new but fully real AND-combination of two already-\naudited mechanism conditions). Nothing here invents a new trading formula.\n\nThree research-mode candidates, one of each, selected by the real allocator\n(not hand-picked to look balanced):\n\n  EXPLOIT   USDJPY/USB02Y, SC_SURPRISE_CONFIRMATION, window=300m.\n            Extends Cycle 13's real finding (train t=6.456 at 240m, val n=18,\n            STILL_UNDERPOWERED) to an untested window. 300m = 5 real H1 bars\n            forward from the event -- H1Series reads real bars at that offset,\n            nothing is fabricated; USDJPY has no M1 source (Cycle 8's audit),\n            so only H1-reachable windows are used, exactly as every prior\n            USDJPY test in this project has done.\n\n  EXPLORE   USDJPY against five drivers confirmed to have real M1 data but\n            never used in ANY cycle (JP225, UK100, AU200, US2000, NATGAS).\n            Economic rationale stated per driver below -- not a blanket\n            \"risk-on\" copy-paste for all five, since they operate through\n            different channels (domestic equity/funding-currency flow for\n            JP225, global risk sentiment for UK100/AU200, US domestic-growth\n            proxy for US2000, import-cost/terms-of-trade for NATGAS, since\n            Japan is a net energy importer).\n\n  RECOMBINE GBPUSD/UK10YB, SC_AND_DC_COMBINED_CONFIRMATION. AND-combines\n            Cycle 8's SC entry/exit with its DC divergence condition as an\n            additional gate: trade the surprise-confirmed direction only when\n            FX has not yet followed the driver's own impulse move. Tagged\n            RECOMBINATION, never NEW, per governance (novelty is judged at\n            the mechanism level, not by component count).\n\nCost-aware, data-aware, holdout-blind throughout: the frozen cost model\n(discovery/cost_model.py) is read-only, the sealed-holdout guard\n(discovery/event_calendar.py's guard_path/OGD-4) is inherited unchanged, and\nGEN14 is never requested -- any DISCOVERY_SURVIVOR is frozen and reported for\nthe EXISTING GEN14 authorization process, never self-authorized here.\n",
+  "search_space_summary": {
+    "instruments": {
+      "REFUTED": 1,
+      "UNDERPOWERED": 4,
+      "KNOWN": 1,
+      "BLOCKED": 2
+    },
+    "drivers": {
+      "TESTED": 7,
+      "UNEXPLORED": 5,
+      "UNDERPOWERED": 1
+    },
+    "mechanisms": {
+      "TESTED": 4,
+      "UNEXPLORED": 1
+    },
+    "holding_periods": {
+      "TESTED": 6
+    },
+    "market_sessions": {
+      "UNEXPLORED": 4
+    },
+    "regime_dimensions": {
+      "UNEXPLORED": 2
+    },
+    "execution_models": {
+      "TESTED": 2
+    },
+    "confirmation_rules": {
+      "KNOWN": 1,
+      "TESTED": 2
+    },
+    "asset_classes": {
+      "KNOWN": 2,
+      "UNEXPLORED": 2
+    },
+    "event_types": {
+      "TESTED": 2
+    },
+    "cross_asset_relationships": {
+      "TESTED": 5
+    },
+    "behavioral_hypotheses": {
+      "TESTED": 3
+    },
+    "combinations": {
+      "TESTED": 1,
+      "UNEXPLORED": 1,
+      "UNKNOWN": 4,
+      "REFUTED": 2
+    }
+  },
+  "novelty_coverage": 0.7077,
+  "exploration_debt": {
+    "debt": 0,
+    "threshold": 3,
+    "forced_exploration": false,
+    "consecutive_exploit_only_cycles": 0,
+    "reason": "0 consecutive exploit-only cycle(s); debt 0 below threshold 3"
+  },
+  "allocation": {
+    "total_slots": 7,
+    "slots_by_mode": {
+      "EXPLOIT": 4,
+      "EXPLORE": 1,
+      "RECOMBINE": 2
+    },
+    "effective_exploration_share": 0.1429,
+    "debt_forced_increase": false,
+    "reason": "exploration floor 20% -> 1/7 EXPLORE, 4/7 EXPLOIT, 2/7 RECOMBINE"
+  },
+  "novelty_saturation": "MEDIUM",
+  "candidates_generated": 7,
+  "candidates_accepted": 3,
+  "discovery_survivors": 0,
+  "still_underpowered": 1,
+  "refuted_this_run": 2,
+  "data_blocked": 0,
+  "closure_proposals": [],
+  "hypotheses": [
+    {
+      "hyp_id": "HYP-C14-RECOMBINE-GBPUSD-UK10YB-SC_AND_D",
+      "candidate_id": "RSC-daae54e02ea7a4f3",
+      "research_mode": "RECOMBINE",
+      "mutation_operator": "MECHANISM_RECOMBINATION",
+      "mechanism": "SC_AND_DC_COMBINED_CONFIRMATION",
+      "instrument": "GBPUSD",
+      "driver": "UK10YB",
+      "window_min": 60,
+      "rationale": "test whether requiring both surprise-confirmation AND a lagging cross-asset divergence improves on either mechanism alone; AND-combines SC_SURPRISE_CONFIRMATION + DC_CROSS_ASSET_DIVERGENCE into one entry rule -- novelty is a mechanism-level question, not counted as NEW merely for having two components",
+      "train": {
+        "n": 52,
+        "mean_net": -0.00032881,
+        "t_stat": -1.336,
+        "profit_factor": 0.604,
+        "win_rate": 0.4038,
+        "gross_over_cost": 12.095
+      },
+      "validation": {
+        "n": 9,
+        "mean_net": 0.00074581,
+        "t_stat": 1.372,
+        "profit_factor": 3.088,
+        "win_rate": 0.6667,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-0.00032881 <= 0",
+      "confirmation_rate": 0.2276,
+      "final_status": "REFUTED_THIS_RUN"
+    },
+    {
+      "hyp_id": "HYP-C14-EXPLORE-USDJPY-UK100-SC_SURPR",
+      "candidate_id": "RSC-3aae1323164e99f2",
+      "research_mode": "EXPLORE",
+      "mutation_operator": "SWAP_DRIVER",
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "instrument": "USDJPY",
+      "driver": "UK100",
+      "window_min": 60,
+      "rationale": "extend SC mechanism to drivers confirmed present, never used in any cycle; UK100 confirmed to have real data, never used as a driver in any cycle",
+      "train": {
+        "n": 86,
+        "mean_net": -1.297e-05,
+        "t_stat": -0.145,
+        "profit_factor": 0.958,
+        "win_rate": 0.5,
+        "gross_over_cost": 7.037
+      },
+      "validation": {
+        "n": 10,
+        "mean_net": -1e-05,
+        "t_stat": -0.034,
+        "profit_factor": 0.968,
+        "win_rate": 0.3,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "TRAIN_NEGATIVE",
+      "verdict_reason": "train mean_net=-1.297e-05 <= 0",
+      "confirmation_rate": 0.3582,
+      "final_status": "REFUTED_THIS_RUN"
+    },
+    {
+      "hyp_id": "HYP-C14-EXPLOIT-USDJPY-USB02Y-SC_SURPR",
+      "candidate_id": "RSC-d4214a76200cf953",
+      "research_mode": "EXPLOIT",
+      "mutation_operator": "CHANGE_HOLDING_HORIZON",
+      "mechanism": "SC_SURPRISE_CONFIRMATION",
+      "instrument": "USDJPY",
+      "driver": "USB02Y",
+      "window_min": 300,
+      "rationale": "Cycle 13 found train t=6.456 at 240m for USDJPY/USB02Y SC (val n=18, STILL_UNDERPOWERED) -- deepen to an untested window before concluding; extends evidenced SC_SURPRISE_CONFIRMATION/USDJPY/USB02Y to an untested 300m window",
+      "train": {
+        "n": 57,
+        "mean_net": 0.0025723,
+        "t_stat": 4.832,
+        "profit_factor": 5.392,
+        "win_rate": 0.7368,
+        "gross_over_cost": 38.438
+      },
+      "validation": {
+        "n": 18,
+        "mean_net": -0.00015954,
+        "t_stat": -0.264,
+        "profit_factor": 0.847,
+        "win_rate": 0.6111,
+        "gross_over_cost": 0.0
+      },
+      "verdict": "VALIDATION_UNDERPOWERED",
+      "verdict_reason": "validation n=18 < 30",
+      "confirmation_rate": 0.2799,
+      "final_status": "STILL_UNDERPOWERED",
+      "opportunity_queue_entry": "OPP-000071"
+    }
+  ]
+}

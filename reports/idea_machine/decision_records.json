@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "kind": "decision_record",
+  "record_count": 7,
+  "records": [
+    {
+      "decision_id": "DEC-3df3e411f95967cd",
+      "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+      "decision": "ACCEPT",
+      "target": "RSC-d4214a76200cf953",
+      "reason": "score 36.0 ranked within the top 1 of 1 EXPLOIT candidates (CHANGE_HOLDING_HORIZON: Cycle 13 found train t=6.456 at 240m for USDJPY/USB02Y SC (val n=18, STILL_UNDERPOWERED) -- deepen to an untested window before concluding; extends evidenced SC_SURPRISE_CONFIRMATION/USDJPY/USB02Y to an untested 300m window)",
+      "evidence": [
+        "Cycle 13 found train t=6.456 at 240m for USDJPY/USB02Y SC (val n=18, STILL_UNDERPOWERED) -- deepen to an untested window before concluding; extends evidenced SC_SURPRISE_CONFIRMATION/USDJPY/USB02Y to an untested 300m window"
+      ],
+      "alternatives_considered": [],
+      "score_breakdown": {
+        "information_gain": 0.0,
+        "novelty_value": 4.0,
+        "unexplored_space_value": 0.0,
+        "evidence_gap_value": 12.0,
+        "economic_plausibility": 10.0,
+        "data_feasibility": 10.0,
+        "redundancy_penalty": -0.0,
+        "refuted_similarity_penalty": -0.0,
+        "cost_risk": -0.0,
+        "total": 36.0
+      },
+      "confidence": "HIGH",
+      "reversible": true
+    },
+    {
+      "decision_id": "DEC-4687cfd4aa0c18e0",
+      "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+      "decision": "ACCEPT",
+      "target": "RSC-3aae1323164e99f2",
+      "reason": "score 65.0 ranked within the top 1 of 5 EXPLORE candidates (SWAP_DRIVER: extend SC mechanism to drivers confirmed present, never used in any cycle; UK100 confirmed to have real data, never used as a driver in any cycle)",
+      "evidence": [
+        "extend SC mechanism to drivers confirmed present, never used in any cycle; UK100 confirmed to have real data, never used as a driver in any cycle"
+      ],
+      "alternatives_considered": [
+        "RSC-7e07f9e08b3894ae",
+        "RSC-809998bf5259b503",
+        "RSC-affa5b96594088c4",
+        "RSC-e4dc1037a7b836b9"
+      ],
+      "score_breakdown": {
+        "information_gain": 8.0,
+        "novelty_value": 15.0,
+        "unexplored_space_value": 10.0,
+        "evidence_gap_value": 12.0,
+        "economic_plausibility": 10.0,
+        "data_feasibility": 10.0,
+        "redundancy_penalty": -0.0,
+        "refuted_similarity_penalty": -0.0,
+        "cost_risk": -0.0,
+        "total": 65.0
+      },
+      "confidence": "HIGH",
+      "reversible": true
+    },
+    {
+      "decision_id": "DEC-339831db3b4aee2a",
+      "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+      "decision": "REJECT",
+      "target": "RSC-7e07f9e08b3894ae",
+      "reason": "score 65.0 ranked outside the top 1 of 5 EXPLORE candidates this cycle (allocator gave EXPLORE 1 slot(s); breakdown: {'information_gain': 8.0, 'novelty_value': 15.0, 'unexplored_space_value': 10.0, 'evidence_gap_value': 12.0, 'economic_plausibility': 10.0, 'data_feasibility': 10.0, 'redundancy_penalty': -0.0, 'refuted_similarity_penalty': -0.0, 'cost_risk': -0.0, 'total': 65.0})",
+      "evidence": [
+        "extend SC mechanism to drivers confirmed present, never used in any cycle; US2000 confirmed to have real data, never used as a driver in any cycle"
+      ],
+      "alternatives_considered": [
+        "RSC-3aae1323164e99f2",
+        "RSC-809998bf5259b503",
+        "RSC-affa5b96594088c4",
+        "RSC-e4dc1037a7b836b9"
+      ],
+      "score_breakdown": {
+        "information_gain": 8.0,
+        "novelty_value": 15.0,
+        "unexplored_space_value": 10.0,
+        "evidence_gap_value": 12.0,
+        "economic_plausibility": 10.0,
+        "data_feasibility": 10.0,
+        "redundancy_penalty": -0.0,
+        "refuted_similarity_penalty": -0.0,
+        "cost_risk": -0.0,
+        "total": 65.0
+      },
+      "confidence": "HIGH",
+      "reversible": true
+    },
+    {
+      "decision_id": "DEC-9549a0385d0cdccf",
+      "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+      "decision": "REJECT",
+      "target": "RSC-809998bf5259b503",
+      "reason": "score 65.0 ranked outside the top 1 of 5 EXPLORE candidates this cycle (allocator gave EXPLORE 1 slot(s); breakdown: {'information_gain': 8.0, 'novelty_value': 15.0, 'unexplored_space_value': 10.0, 'evidence_gap_value': 12.0, 'economic_plausibility': 10.0, 'data_feasibility': 10.0, 'redundancy_penalty': -0.0, 'refuted_similarity_penalty': -0.0, 'cost_risk': -0.0, 'total': 65.0})",
+      "evidence": [
+        "extend SC mechanism to drivers confirmed present, never used in any cycle; NATGAS confirmed to have real data, never used as a driver in any cycle"
+      ],
+      "alternatives_considered": [
+        "RSC-3aae1323164e99f2",
+        "RSC-7e07f9e08b3894ae",
+        "RSC-affa5b96594088c4",
+        "RSC-e4dc1037a7b836b9"
+      ],
+      "score_breakdown": {
+        "information_gain": 8.0,
+        "novelty_value": 15.0,
+        "unexplored_space_value": 10.0,
+        "evidence_gap_value": 12.0,
+        "economic_plausibility": 10.0,
+        "data_feasibility": 10.0,
+        "redundancy_penalty": -0.0,
+        "refuted_similarity_penalty": -0.0,
+        "cost_risk": -0.0,
+        "total": 65.0
+      },
+      "confidence": "HIGH",
+      "reversible": true
+    },
+    {
+      "decision_id": "DEC-86dc7acb9eb2c423",
+      "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+      "decision": "REJECT",
+      "target": "RSC-affa5b96594088c4",
+      "reason": "score 65.0 ranked outside the top 1 of 5 EXPLORE candidates this cycle (allocator gave EXPLORE 1 slot(s); breakdown: {'information_gain': 8.0, 'novelty_value': 15.0, 'unexplored_space_value': 10.0, 'evidence_gap_value': 12.0, 'economic_plausibility': 10.0, 'data_feasibility': 10.0, 'redundancy_penalty': -0.0, 'refuted_similarity_penalty': -0.0, 'cost_risk': -0.0, 'total': 65.0})",
+      "evidence": [
+        "extend SC mechanism to drivers confirmed present, never used in any cycle; JP225 confirmed to have real data, never used as a driver in any cycle"
+      ],
+      "alternatives_considered": [
+        "RSC-3aae1323164e99f2",
+        "RSC-7e07f9e08b3894ae",
+        "RSC-809998bf5259b503",
+        "RSC-e4dc1037a7b836b9"
+      ],
+      "score_breakdown": {
+        "information_gain": 8.0,
+        "novelty_value": 15.0,
+        "unexplored_space_value": 10.0,
+        "evidence_gap_value": 12.0,
+        "economic_plausibility": 10.0,
+        "data_feasibility": 10.0,
+        "redundancy_penalty": -0.0,
+        "refuted_similarity_penalty": -0.0,
+        "cost_risk": -0.0,
+        "total": 65.0
+      },
+      "confidence": "HIGH",
+      "reversible": true
+    },
+    {
+      "decision_id": "DEC-9ee38fd8686b01ee",
+      "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+      "decision": "REJECT",
+      "target": "RSC-e4dc1037a7b836b9",
+      "reason": "score 65.0 ranked outside the top 1 of 5 EXPLORE candidates this cycle (allocator gave EXPLORE 1 slot(s); breakdown: {'information_gain': 8.0, 'novelty_value': 15.0, 'unexplored_space_value': 10.0, 'evidence_gap_value': 12.0, 'economic_plausibility': 10.0, 'data_feasibility': 10.0, 'redundancy_penalty': -0.0, 'refuted_similarity_penalty': -0.0, 'cost_risk': -0.0, 'total': 65.0})",
+      "evidence": [
+        "extend SC mechanism to drivers confirmed present, never used in any cycle; AU200 confirmed to have real data, never used as a driver in any cycle"
+      ],
+      "alternatives_considered": [
+        "RSC-3aae1323164e99f2",
+        "RSC-7e07f9e08b3894ae",
+        "RSC-809998bf5259b503",
+        "RSC-affa5b96594088c4"
+      ],
+      "score_breakdown": {
+        "information_gain": 8.0,
+        "novelty_value": 15.0,
+        "unexplored_space_value": 10.0,
+        "evidence_gap_value": 12.0,
+        "economic_plausibility": 10.0,
+        "data_feasibility": 10.0,
+        "redundancy_penalty": -0.0,
+        "refuted_similarity_penalty": -0.0,
+        "cost_risk": -0.0,
+        "total": 65.0
+      },
+      "confidence": "HIGH",
+      "reversible": true
+    },
+    {
+      "decision_id": "DEC-061842f8a4ca0981",
+      "cycle_id": "CYCLE-14-RESEARCH-SPACE-EVOLUTION",
+      "decision": "ACCEPT",
+      "target": "RSC-daae54e02ea7a4f3",
+      "reason": "score 58.0 ranked within the top 1 of 1 RECOMBINE candidates (MECHANISM_RECOMBINATION: test whether requiring both surprise-confirmation AND a lagging cross-asset divergence improves on either mechanism alone; AND-combines SC_SURPRISE_CONFIRMATION + DC_CROSS_ASSET_DIVERGENCE into one entry rule -- novelty is a mechanism-level question, not counted as NEW merely for having two components)",
+      "evidence": [
+        "test whether requiring both surprise-confirmation AND a lagging cross-asset divergence improves on either mechanism alone; AND-combines SC_SURPRISE_CONFIRMATION + DC_CROSS_ASSET_DIVERGENCE into one entry rule -- novelty is a mechanism-level question, not counted as NEW merely for having two components"
+      ],
+      "alternatives_considered": [],
+      "score_breakdown": {
+        "information_gain": 8.0,
+        "novelty_value": 8.0,
+        "unexplored_space_value": 10.0,
+        "evidence_gap_value": 12.0,
+        "economic_plausibility": 10.0,
+        "data_feasibility": 10.0,
+        "redundancy_penalty": -0.0,
+        "refuted_similarity_penalty": -0.0,
+        "cost_risk": -0.0,
+        "total": 58.0
+      },
+      "confidence": "HIGH",
+      "reversible": true
+    }
+  ],
+  "checksum": "d33c7b7df0da31b53acd89b7ab82cb42b9d7f93abe4e8c406717d9174cd5e3fa"
+}

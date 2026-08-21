@@ -1,0 +1,81 @@
+{
+  "saved_at": "2026-08-21T08:45:14.097438",
+  "total_journeys": 3,
+  "journeys": [
+    {
+      "hypothesis_id": "HYP-C14-RECOMBINE-GBPUSD-UK10YB-SC_AND_D",
+      "source_idea_id": "RSC-daae54e02ea7a4f3",
+      "symbol": "GBPUSD",
+      "driver": "UK10YB",
+      "pre_registered_at": "2026-08-21T08:43:37.956499",
+      "gate_evaluations": [
+        {
+          "hypothesis_id": "HYP-C14-RECOMBINE-GBPUSD-UK10YB-SC_AND_D",
+          "symbol": "GBPUSD",
+          "driver": "UK10YB",
+          "gate_name": "INTERNAL_VALIDATION",
+          "train_n": 52,
+          "train_t": -1.336,
+          "val_n": 9,
+          "val_t": 1.372,
+          "verdict": "TRAIN_NEGATIVE",
+          "reason": "train mean_net=-0.00032881 <= 0",
+          "passed": false
+        }
+      ],
+      "final_status": "REJECTED",
+      "final_reason": "Failed INTERNAL_VALIDATION: train mean_net=-0.00032881 <= 0",
+      "generated_ea_product": null
+    },
+    {
+      "hypothesis_id": "HYP-C14-EXPLORE-USDJPY-UK100-SC_SURPR",
+      "source_idea_id": "RSC-3aae1323164e99f2",
+      "symbol": "USDJPY",
+      "driver": "UK100",
+      "pre_registered_at": "2026-08-21T08:44:38.842780",
+      "gate_evaluations": [
+        {
+          "hypothesis_id": "HYP-C14-EXPLORE-USDJPY-UK100-SC_SURPR",
+          "symbol": "USDJPY",
+          "driver": "UK100",
+          "gate_name": "INTERNAL_VALIDATION",
+          "train_n": 86,
+          "train_t": -0.145,
+          "val_n": 10,
+          "val_t": -0.034,
+          "verdict": "TRAIN_NEGATIVE",
+          "reason": "train mean_net=-1.297e-05 <= 0",
+          "passed": false
+        }
+      ],
+      "final_status": "REJECTED",
+      "final_reason": "Failed INTERNAL_VALIDATION: train mean_net=-1.297e-05 <= 0",
+      "generated_ea_product": null
+    },
+    {
+      "hypothesis_id": "HYP-C14-EXPLOIT-USDJPY-USB02Y-SC_SURPR",
+      "source_idea_id": "RSC-d4214a76200cf953",
+      "symbol": "USDJPY",
+      "driver": "USB02Y",
+      "pre_registered_at": "2026-08-21T08:45:07.331546",
+      "gate_evaluations": [
+        {
+          "hypothesis_id": "HYP-C14-EXPLOIT-USDJPY-USB02Y-SC_SURPR",
+          "symbol": "USDJPY",
+          "driver": "USB02Y",
+          "gate_name": "INTERNAL_VALIDATION",
+          "train_n": 57,
+          "train_t": 4.832,
+          "val_n": 18,
+          "val_t": -0.264,
+          "verdict": "VALIDATION_UNDERPOWERED",
+          "reason": "validation n=18 < 30",
+          "passed": false
+        }
+      ],
+      "final_status": "REJECTED",
+      "final_reason": "Failed INTERNAL_VALIDATION: validation n=18 < 30",
+      "generated_ea_product": null
+    }
+  ]
+}

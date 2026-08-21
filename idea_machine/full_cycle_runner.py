@@ -121,7 +121,7 @@ class EndToEndCycleRunner:
             self._stage_5_factory_evaluation()
             self._analyze_bottlenecks()
             self._make_recommendations()
-        except Exception as e:
+        except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as e:
             print(f"ERROR: {e}")
             self.metrics.bottlenecks.append(f"Exception: {e}")
         

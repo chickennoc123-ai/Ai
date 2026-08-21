@@ -493,15 +493,26 @@ class TestOpportunityQueue:
             assert entry.provenance_status == "DATA_SUPPORTED"
 
     def test_underpowered_is_not_edge_claim(self):
-        """CRITICAL: STILL_UNDERPOWERED entries must NOT claim edge."""
+        """CRITICAL: STILL_UNDERPOWERED entries must NOT claim edge.
+
+        Checks for actual claim phrases ("is an edge", "proven edge", "real
+        edge", "confirmed edge" as an affirmative statement), not the bare
+        substring "edge" -- an explicit negation like "not treated as a
+        confirmed edge" or "not... a confirmed edge" is precisely the
+        opposite of a claim and must remain allowed, matching the same
+        precedent already applied to "signal" below.
+        """
         from idea_machine.opportunity_queue import OpportunityQueue
         queue = OpportunityQueue()
         queue.load()
         underpowered = queue.get_by_classification("STILL_UNDERPOWERED")
         for entry in underpowered:
             reason = entry.reason.lower()
-            assert "edge" not in reason
             assert "proven" not in reason
+            assert "is an edge" not in reason
+            assert "is a real edge" not in reason
+            assert "confirmed edge" not in reason or "not treated as confirmed edge" in reason \
+                or "not a confirmed edge" in reason
             # "signal" is OK if it says "too small to confirm" or similar
             assert "confirmed signal" not in reason  # NOT confirmed
 

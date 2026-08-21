@@ -30,6 +30,17 @@ PERMITTED: Tuple[str, ...] = (
     "RECORD_FEEDBACK",
     "ALLOCATE_RESEARCH_BUDGET",
     "REPORT_OBSERVABILITY",
+    # Phase 9 -- Research Space Evolution Engine. Declared here, the Idea
+    # Machine's own authority module, not the Strategy Factory: these are
+    # read/propose/record actions only, none of them authorize anything the
+    # Factory itself has not already gated.
+    "MAP_SEARCH_SPACE",
+    "COMPUTE_EXPLORATION_DEBT",
+    "ALLOCATE_RESEARCH_MODE_BUDGET",
+    "SCORE_RESEARCH_VALUE",
+    "RECORD_DECISION",
+    "PROPOSE_BRANCH_CLOSURE",
+    "DESIGN_DISCRIMINATING_EXPERIMENT",
 )
 
 #: Actions that terminate the run if attempted. Each maps to *why*.

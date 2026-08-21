@@ -1,0 +1,276 @@
+{
+  "dimensions": {
+    "instruments": {
+      "REFUTED": 1,
+      "UNDERPOWERED": 4,
+      "KNOWN": 1,
+      "BLOCKED": 2
+    },
+    "drivers": {
+      "TESTED": 7,
+      "UNEXPLORED": 5,
+      "UNDERPOWERED": 1
+    },
+    "mechanisms": {
+      "TESTED": 4,
+      "UNEXPLORED": 1
+    },
+    "holding_periods": {
+      "TESTED": 6
+    },
+    "market_sessions": {
+      "UNEXPLORED": 4
+    },
+    "regime_dimensions": {
+      "UNEXPLORED": 2
+    },
+    "execution_models": {
+      "TESTED": 2
+    },
+    "confirmation_rules": {
+      "KNOWN": 1,
+      "TESTED": 2
+    },
+    "asset_classes": {
+      "KNOWN": 2,
+      "UNEXPLORED": 2
+    },
+    "event_types": {
+      "TESTED": 2
+    },
+    "cross_asset_relationships": {
+      "TESTED": 5
+    },
+    "behavioral_hypotheses": {
+      "TESTED": 3
+    },
+    "combinations": {
+      "TESTED": 1,
+      "UNEXPLORED": 1,
+      "UNKNOWN": 4,
+      "REFUTED": 2
+    }
+  },
+  "totals": {
+    "REFUTED": 3,
+    "UNDERPOWERED": 5,
+    "KNOWN": 4,
+    "BLOCKED": 2,
+    "TESTED": 32,
+    "UNEXPLORED": 15,
+    "UNKNOWN": 4
+  },
+  "novelty_coverage": 0.7077,
+  "exploration_debt": {
+    "debt": 0,
+    "threshold": 3,
+    "forced_exploration": false,
+    "consecutive_exploit_only_cycles": 0,
+    "reason": "0 consecutive exploit-only cycle(s); debt 0 below threshold 3"
+  },
+  "mode_shares": {
+    "EXPLOIT": 0.3333,
+    "EXPLORE": 0.3333,
+    "RECOMBINE": 0.3333
+  },
+  "refuted_cells": [
+    {
+      "dimension": "combinations",
+      "value": "FAMILY-C2-SURPRISE-REACTION-NFP-USD",
+      "status": "REFUTED",
+      "evidence": [
+        "research_family_registry.json status=REFUTED"
+      ]
+    },
+    {
+      "dimension": "combinations",
+      "value": "FAMILY-H1-PRICE-PATTERN",
+      "status": "REFUTED",
+      "evidence": [
+        "research_family_registry.json status=REFUTED"
+      ]
+    },
+    {
+      "dimension": "instruments",
+      "value": "EURUSD",
+      "status": "REFUTED",
+      "evidence": [
+        "frozen cost registered, real M1/H1 data present",
+        "candidate_spec_registry.json CAND-SC-EURUSD-US10Y-15M evidence_status=STILL_UNDERPOWERED",
+        "candidate_spec_registry.json CAND-SC-EURUSD-US10Y-5M evidence_status=STILL_UNDERPOWERED",
+        "CYCLE-11-IDEA-MACHINE/HYP-IM-0003 classification=REFUTED",
+        "CYCLE-11-IDEA-MACHINE/HYP-IM-0004 classification=STILL_UNDERPOWERED"
+      ]
+    }
+  ],
+  "underpowered_cells": [
+    {
+      "dimension": "drivers",
+      "value": "US10Y+SPX500",
+      "status": "UNDERPOWERED",
+      "evidence": [
+        "CYCLE-12-EA-CODE-INTEL/HYP-EACI-0001 classification=STILL_UNDERPOWERED"
+      ]
+    },
+    {
+      "dimension": "instruments",
+      "value": "GBPUSD",
+      "status": "UNDERPOWERED",
+      "evidence": [
+        "frozen cost registered, real M1/H1 data present",
+        "candidate_spec_registry.json CAND-SC-GBPUSD-US10Y-5M evidence_status=STILL_UNDERPOWERED",
+        "CYCLE-11-IDEA-MACHINE/HYP-IM-0001 classification=STILL_UNDERPOWERED"
+      ]
+    },
+    {
+      "dimension": "instruments",
+      "value": "USDCHF",
+      "status": "UNDERPOWERED",
+      "evidence": [
+        "frozen cost registered, real M1/H1 data present",
+        "candidate_spec_registry.json CAND-SC-USDCHF-SPX500-240M evidence_status=STILL_UNDERPOWERED"
+      ]
+    },
+    {
+      "dimension": "instruments",
+      "value": "USDJPY",
+      "status": "UNDERPOWERED",
+      "evidence": [
+        "frozen cost registered, real M1/H1 data present",
+        "candidate_spec_registry.json CAND-SC-USDJPY-SPX500-240M evidence_status=STILL_UNDERPOWERED",
+        "CYCLE-12-EA-CODE-INTEL/HYP-EACI-0001 classification=STILL_UNDERPOWERED"
+      ]
+    },
+    {
+      "dimension": "instruments",
+      "value": "XAUUSD",
+      "status": "UNDERPOWERED",
+      "evidence": [
+        "frozen cost registered, real M1/H1 data present",
+        "candidate_spec_registry.json CAND-SC-XAUUSD-WTICO-5M evidence_status=STILL_UNDERPOWERED"
+      ]
+    }
+  ],
+  "unexplored_cells": [
+    {
+      "dimension": "asset_classes",
+      "value": "EQUITY_INDEX",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "SPX500/NAS100 used only as drivers, never as the traded leg"
+      ]
+    },
+    {
+      "dimension": "asset_classes",
+      "value": "RATES",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "US10Y/UK10YB/DE10YB/USB02Y used only as drivers, never as the traded leg"
+      ]
+    },
+    {
+      "dimension": "combinations",
+      "value": "TWO_MECHANISM_AND",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "no cycle has combined two mechanisms into one entry rule"
+      ]
+    },
+    {
+      "dimension": "drivers",
+      "value": "AU200",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "real M1 data confirmed present, never used in any cycle"
+      ]
+    },
+    {
+      "dimension": "drivers",
+      "value": "JP225",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "real M1 data confirmed present, never used in any cycle"
+      ]
+    },
+    {
+      "dimension": "drivers",
+      "value": "NATGAS",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "real M1 data confirmed present, never used in any cycle"
+      ]
+    },
+    {
+      "dimension": "drivers",
+      "value": "UK100",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "real M1 data confirmed present, never used in any cycle"
+      ]
+    },
+    {
+      "dimension": "drivers",
+      "value": "US2000",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "real M1 data confirmed present, never used in any cycle"
+      ]
+    },
+    {
+      "dimension": "market_sessions",
+      "value": "ASIA",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "defined UTC session band, never used as an entry filter"
+      ]
+    },
+    {
+      "dimension": "market_sessions",
+      "value": "LONDON",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "defined UTC session band, never used as an entry filter"
+      ]
+    },
+    {
+      "dimension": "market_sessions",
+      "value": "LONDON_NY_OVERLAP",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "defined UTC session band, never used as an entry filter"
+      ]
+    },
+    {
+      "dimension": "market_sessions",
+      "value": "NEW_YORK",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "defined UTC session band, never used as an entry filter"
+      ]
+    },
+    {
+      "dimension": "mechanisms",
+      "value": "SC_AND_DC_COMBINED_CONFIRMATION",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "structural AND-combination of two tested mechanisms, never run"
+      ]
+    },
+    {
+      "dimension": "regime_dimensions",
+      "value": "SESSION_REGIME",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "recognised mechanism class, never used as a live filter"
+      ]
+    },
+    {
+      "dimension": "regime_dimensions",
+      "value": "VOLATILITY_REGIME",
+      "status": "UNEXPLORED",
+      "evidence": [
+        "recognised mechanism class, never used as a live filter"
+      ]
+    }
+  ]
+}

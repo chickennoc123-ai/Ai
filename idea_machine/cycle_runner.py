@@ -163,7 +163,7 @@ class IdeaMachineCycleRunner:
             # For now, report what would happen
             self._stage_report_findings()
             
-        except Exception as e:
+        except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as e:
             self.metrics.errors.append(str(e))
         
         return self.metrics
@@ -174,7 +174,7 @@ class IdeaMachineCycleRunner:
             seeded_ideas = self.machine.generate_seeded_ideas()
             self.metrics.ideas_from_seeding = len(seeded_ideas)
             self.metrics.ideas_generated = len(seeded_ideas)
-        except Exception as e:
+        except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as e:
             self.metrics.errors.append(f"Idea generation failed: {e}")
     
     def _stage_filter_by_data(self):
@@ -197,7 +197,7 @@ class IdeaMachineCycleRunner:
                     self.metrics.bottlenecks.append(
                         f"Data availability: {block_rate*100:.1f}% of ideas blocked (need exotic data)"
                     )
-        except Exception as e:
+        except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as e:
             self.metrics.errors.append(f"Data filtering failed: {e}")
     
     def _stage_rank_ideas(self):
@@ -214,7 +214,7 @@ class IdeaMachineCycleRunner:
             for i, (idea, score) in enumerate(ranked[:5]):
                 print(f"  {i+1}. {idea.idea_id}: {idea.mechanism[:60]}... (score={score:.1f})")
                 idea.status = "IN_DISCOVERY"  # Mark for next stage
-        except Exception as e:
+        except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as e:
             self.metrics.errors.append(f"Ranking failed: {e}")
     
     def _stage_convert_to_hypotheses(self):
@@ -231,7 +231,7 @@ class IdeaMachineCycleRunner:
                 json.dump([h.to_dict() for h in hypotheses], f, indent=2, default=str)
             
             print(f"\nSaved {len(hypotheses)} hypotheses to {hyp_file}")
-        except Exception as e:
+        except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as e:
             self.metrics.errors.append(f"Hypothesis conversion failed: {e}")
     
     def _stage_report_findings(self):
@@ -254,7 +254,7 @@ class IdeaMachineCycleRunner:
                 print(f"\nEstimated Factory impact:")
                 print(f"  Created {self.metrics.hypotheses_created} new hypotheses")
                 print(f"  Parameter space: {sum(self._estimate_param_combinations(self.machine.ideas))}")
-        except Exception as e:
+        except (ValueError, KeyError, TypeError, AttributeError, OSError, RuntimeError) as e:
             self.metrics.errors.append(f"Reporting failed: {e}")
     
     def _estimate_param_combinations(self, ideas: List[StrategyIdea]) -> List[int]:

@@ -40,6 +40,13 @@ from idea_machine.integration.factory_bridge import FactoryResult         # noqa
 from idea_machine.observability.dashboard import build_dashboard, render_text  # noqa: E402
 from idea_machine.pipeline import IdeaMachine                             # noqa: E402
 from idea_machine.scanner.scanner import LocalCorpusProvider              # noqa: E402
+from idea_machine.research_space.search_space import SearchSpace          # noqa: E402
+from idea_machine.research_space.exploration_debt import (                # noqa: E402
+    ExplorationDebtTracker, DEFAULT_DEBT_THRESHOLD,
+)
+from idea_machine.research_space.search_space_ledger import SearchSpaceLedger  # noqa: E402
+from idea_machine.research_space.decision_record import DecisionLedger    # noqa: E402
+from idea_machine.research_space import space_mapper, explain as explain_module  # noqa: E402
 
 
 def _load_catalog(path: Path) -> DataCatalog:
@@ -115,6 +122,36 @@ def cmd_ingest(args) -> int:
     return 0
 
 
+def cmd_space(args) -> int:
+    """Phase 9: the research-space map (spec item 25)."""
+    space = SearchSpace()
+    ledger = SearchSpaceLedger()
+    debt_tracker = ExplorationDebtTracker(DEFAULT_DEBT_THRESHOLD)
+    history = ExplorationDebtTracker.touches_from_ledger(ledger.all())
+    debt = debt_tracker.compute(history)
+
+    rows = ledger.all()
+    mode_counts: dict = {}
+    for r in rows:
+        if r.get("decision") == "ACCEPT":
+            mode_counts[r["research_mode"]] = mode_counts.get(r["research_mode"], 0) + 1
+    total_accepted = sum(mode_counts.values()) or 1
+    mode_shares = {m: round(n / total_accepted, 4) for m, n in mode_counts.items()}
+
+    space_map = space_mapper.build_space_map(space, debt=debt, mode_shares=mode_shares)
+    if args.json:
+        print(json.dumps(space_map, indent=2, default=str))
+    else:
+        print(space_mapper.render_text(space_map))
+    return 0
+
+
+def cmd_explain(args) -> int:
+    """Phase 9: explain one decision (spec item 26)."""
+    print(explain_module.render_explain(args.decision_id))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="idea_machine",
@@ -146,6 +183,14 @@ def build_parser() -> argparse.ArgumentParser:
     i = sub.add_parser("ingest", help="apply Strategy Factory verdicts")
     i.add_argument("results", help="JSON file: one FactoryResult object or a list of them")
     i.set_defaults(fn=cmd_ingest)
+
+    sp = sub.add_parser("space", help="Phase 9: research-space map")
+    sp.add_argument("--json", action="store_true", help="machine-readable output")
+    sp.set_defaults(fn=cmd_space)
+
+    ex = sub.add_parser("explain", help="Phase 9: explain one decision")
+    ex.add_argument("decision_id", help="decision id from the research_space_ledger / decision_records")
+    ex.set_defaults(fn=cmd_explain)
     return p
 
 
