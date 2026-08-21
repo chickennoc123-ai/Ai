@@ -75,7 +75,22 @@ class ResearchMemory:
         self._loaded = False
 
     def load(self):
-        """Load all three sources."""
+        """Load all three sources.
+
+        Resets in-memory state first: cycle_hypotheses is a list, so without
+        this, calling load() more than once on the same instance (e.g.
+        ProductionSupervisor.recover_state() calling AutonomousIdeaMachine.
+        load() every cycle on one persistent instance) would append a
+        second copy of every hypothesis record on top of the first each
+        time -- the same class of bug found and fixed in
+        idea_machine.opportunity_queue.OpportunityQueue.load() and
+        idea_machine.semantic_novelty.NoveltyEngine.load(). families/
+        candidates are dicts keyed by id and were never affected (repeated
+        assignment to the same key is a no-op).
+        """
+        self.families = {}
+        self.candidates = {}
+        self.cycle_hypotheses = []
         self._load_families()
         self._load_candidates()
         self._load_cycles()

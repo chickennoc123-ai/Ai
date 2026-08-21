@@ -57,7 +57,22 @@ class NoveltyEngine:
         self._loaded = False
 
     def load(self):
-        """Load read-only from the Factory's real historical records."""
+        """Load read-only from the Factory's real historical records.
+
+        Resets in-memory state first: all four collections are lists, so
+        without this, calling load() more than once on the same instance
+        (e.g. ProductionSupervisor.recover_state() calling
+        AutonomousIdeaMachine.load() every cycle on one persistent instance
+        across a run_forever() invocation) would append a second copy of
+        every family on top of the first each time -- the same class of
+        bug found and fixed in idea_machine.opportunity_queue.
+        OpportunityQueue.load() and idea_machine.research_memory.
+        ResearchMemory.load().
+        """
+        self.refuted_families = []
+        self.underpowered_families = []
+        self.tested_failed_families = []
+        self.all_families = []
         if FAMILY_REGISTRY.exists():
             data = json.loads(FAMILY_REGISTRY.read_text())
             for fam_id, fam in data.get("families", {}).items():

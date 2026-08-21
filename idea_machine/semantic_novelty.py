@@ -74,7 +74,22 @@ class SemanticNoveltyEngine:
         self._loaded = False
 
     def load(self):
-        """Load research memory and mechanism catalog."""
+        """Load research memory and mechanism catalog.
+
+        Resets in-memory state first: refuted_mechanisms/underpowered_
+        mechanisms are lists, so without this, calling load() more than
+        once on the same instance (e.g. AutonomousIdeaMachine.load(), which
+        ProductionSupervisor.recover_state() calls every cycle on one
+        persistent instance across a run_forever() invocation) would
+        append a second copy of every entry on top of the first each time
+        -- the same class of bug found and fixed in
+        idea_machine.opportunity_queue.OpportunityQueue.load().
+        research_memory is a dict keyed by family_id and was never
+        affected (repeated assignment to the same key is a no-op).
+        """
+        self.research_memory = {}
+        self.refuted_mechanisms = []
+        self.underpowered_mechanisms = []
         # Load from research_family_registry.json
         registry_path = REPO_ROOT / "reports/factory/research_family_registry.json"
         if registry_path.exists():

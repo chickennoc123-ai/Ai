@@ -76,7 +76,22 @@ class OpportunityQueue:
         self._next_id = 1
 
     def load(self):
-        """Load existing queue (immutable read)."""
+        """Load existing queue (immutable read).
+
+        Resets in-memory state before reading, so the result always reflects
+        the true on-disk content exactly once. Without this, calling load()
+        more than once on the same instance -- e.g.
+        ProductionSupervisor.recover_state() calls AutonomousIdeaMachine.
+        load() (which calls this) on every cycle, and the supervisor reuses
+        one AutonomousIdeaMachine instance across an entire run_forever()
+        invocation -- would append a second full copy of every entry
+        on top of the first, and each subsequent cycle's save() would
+        persist the compounding duplicate set, doubling the queue on every
+        cycle (found live: 85 real entries had compounded to 1360 duplicate
+        rows across repeated multi-cycle runs before this fix).
+        """
+        self.entries = []
+        self._next_id = 1
         if self.queue_file.exists():
             data = json.loads(self.queue_file.read_text())
             for entry_data in data.get("entries", []):
