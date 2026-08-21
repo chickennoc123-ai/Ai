@@ -1,0 +1,587 @@
+{
+  "cycle_id": "CYCLE-11-IDEA-MACHINE",
+  "generated_at": "2026-08-21T01:05:10.114341",
+  "dev_period": {
+    "start": "2012-11-16",
+    "end": "2020-04-29"
+  },
+  "hypotheses": [
+    {
+      "hyp_id": "HYP-IM-0001",
+      "source_idea_id": "IDEA-V2-001-MACR",
+      "idea_score": 74.0,
+      "category": "MACRO_SURPRISE",
+      "symbol": "GBPUSD",
+      "driver": "US10Y",
+      "n_events_available": 128,
+      "windows": [
+        {
+          "window_min": 5,
+          "n_trades": 68,
+          "confirmation_rate": 0.5312,
+          "train": {
+            "n": 54,
+            "mean_net": 0.00035195,
+            "t_stat": 2.436,
+            "profit_factor": 2.417,
+            "win_rate": 0.6296,
+            "gross_over_cost": 8.073
+          },
+          "validation": {
+            "n": 14,
+            "mean_net": 0.00028414,
+            "t_stat": 2.118,
+            "profit_factor": 4.406,
+            "win_rate": 0.7143,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "VALIDATION_UNDERPOWERED",
+          "reason": "val n=14 < 30"
+        },
+        {
+          "window_min": 15,
+          "n_trades": 68,
+          "confirmation_rate": 0.5312,
+          "train": {
+            "n": 54,
+            "mean_net": 0.00026003,
+            "t_stat": 1.155,
+            "profit_factor": 1.525,
+            "win_rate": 0.6111,
+            "gross_over_cost": 11.415
+          },
+          "validation": {
+            "n": 14,
+            "mean_net": 7.006e-05,
+            "t_stat": 0.201,
+            "profit_factor": 1.157,
+            "win_rate": 0.3571,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "t=1.155 < 2.0"
+        },
+        {
+          "window_min": 30,
+          "n_trades": 68,
+          "confirmation_rate": 0.5312,
+          "train": {
+            "n": 54,
+            "mean_net": 0.00017849,
+            "t_stat": 0.636,
+            "profit_factor": 1.253,
+            "win_rate": 0.5,
+            "gross_over_cost": 14.23
+          },
+          "validation": {
+            "n": 14,
+            "mean_net": 3.284e-05,
+            "t_stat": 0.107,
+            "profit_factor": 1.076,
+            "win_rate": 0.5,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "t=0.636 < 2.0"
+        },
+        {
+          "window_min": 60,
+          "n_trades": 68,
+          "confirmation_rate": 0.5312,
+          "train": {
+            "n": 54,
+            "mean_net": 0.00022062,
+            "t_stat": 0.667,
+            "profit_factor": 1.27,
+            "win_rate": 0.5185,
+            "gross_over_cost": 16.462
+          },
+          "validation": {
+            "n": 14,
+            "mean_net": -0.00023569,
+            "t_stat": -0.431,
+            "profit_factor": 0.733,
+            "win_rate": 0.3571,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "t=0.667 < 2.0"
+        },
+        {
+          "window_min": 120,
+          "n_trades": 68,
+          "confirmation_rate": 0.5312,
+          "train": {
+            "n": 54,
+            "mean_net": -9.645e-05,
+            "t_stat": -0.216,
+            "profit_factor": 0.93,
+            "win_rate": 0.5185,
+            "gross_over_cost": 23.154
+          },
+          "validation": {
+            "n": 14,
+            "mean_net": 0.00024953,
+            "t_stat": 0.345,
+            "profit_factor": 1.257,
+            "win_rate": 0.3571,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_NEGATIVE",
+          "reason": "mean_net=-0.000096 <= 0"
+        },
+        {
+          "window_min": 240,
+          "n_trades": 68,
+          "confirmation_rate": 0.5312,
+          "train": {
+            "n": 54,
+            "mean_net": -0.00019126,
+            "t_stat": -0.386,
+            "profit_factor": 0.875,
+            "win_rate": 0.5,
+            "gross_over_cost": 24.82
+          },
+          "validation": {
+            "n": 14,
+            "mean_net": 0.00043469,
+            "t_stat": 0.734,
+            "profit_factor": 1.704,
+            "win_rate": 0.5714,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_NEGATIVE",
+          "reason": "mean_net=-0.000191 <= 0"
+        }
+      ]
+    },
+    {
+      "hyp_id": "HYP-IM-0003",
+      "source_idea_id": "IDEA-V2-003-REGI",
+      "idea_score": 64.0,
+      "category": "REGIME",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 252,
+      "windows": [
+        {
+          "window_min": 1,
+          "n_trades": 202,
+          "confirmation_rate": 0.8016,
+          "train": {
+            "n": 161,
+            "mean_net": -0.0001,
+            "t_stat": -4666698134970800.0,
+            "profit_factor": 0.0,
+            "win_rate": 0.0,
+            "gross_over_cost": 2.0
+          },
+          "validation": {
+            "n": 41,
+            "mean_net": -0.0001,
+            "t_stat": -1.1666745337427026e+16,
+            "profit_factor": 0.0,
+            "win_rate": 0.0,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_NEGATIVE",
+          "reason": "mean_net=-0.000100 <= 0"
+        },
+        {
+          "window_min": 5,
+          "n_trades": 202,
+          "confirmation_rate": 0.8016,
+          "train": {
+            "n": 161,
+            "mean_net": 4.879e-05,
+            "t_stat": 0.458,
+            "profit_factor": 1.104,
+            "win_rate": 0.5217,
+            "gross_over_cost": 10.866
+          },
+          "validation": {
+            "n": 41,
+            "mean_net": -0.00010571,
+            "t_stat": -0.789,
+            "profit_factor": 0.723,
+            "win_rate": 0.3659,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "t=0.458 < 2.0"
+        },
+        {
+          "window_min": 15,
+          "n_trades": 202,
+          "confirmation_rate": 0.8016,
+          "train": {
+            "n": 161,
+            "mean_net": 4.876e-05,
+            "t_stat": 0.346,
+            "profit_factor": 1.076,
+            "win_rate": 0.5342,
+            "gross_over_cost": 14.294
+          },
+          "validation": {
+            "n": 41,
+            "mean_net": -0.0001406,
+            "t_stat": -0.905,
+            "profit_factor": 0.687,
+            "win_rate": 0.4634,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "t=0.346 < 2.0"
+        },
+        {
+          "window_min": 30,
+          "n_trades": 202,
+          "confirmation_rate": 0.8016,
+          "train": {
+            "n": 161,
+            "mean_net": 7.68e-06,
+            "t_stat": 0.045,
+            "profit_factor": 1.009,
+            "win_rate": 0.5155,
+            "gross_over_cost": 17.934
+          },
+          "validation": {
+            "n": 41,
+            "mean_net": 6.791e-05,
+            "t_stat": 0.413,
+            "profit_factor": 1.183,
+            "win_rate": 0.4634,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "t=0.045 < 2.0"
+        },
+        {
+          "window_min": 60,
+          "n_trades": 202,
+          "confirmation_rate": 0.8016,
+          "train": {
+            "n": 161,
+            "mean_net": -1.937e-05,
+            "t_stat": -0.096,
+            "profit_factor": 0.98,
+            "win_rate": 0.472,
+            "gross_over_cost": 19.953
+          },
+          "validation": {
+            "n": 41,
+            "mean_net": -5.42e-06,
+            "t_stat": -0.02,
+            "profit_factor": 0.992,
+            "win_rate": 0.5122,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_NEGATIVE",
+          "reason": "mean_net=-0.000019 <= 0"
+        }
+      ]
+    },
+    {
+      "hyp_id": "HYP-IM-0004",
+      "source_idea_id": "IDEA-V2-004-MICR",
+      "idea_score": 64.0,
+      "category": "MICROSTRUCTURE",
+      "symbol": "EURUSD",
+      "driver": null,
+      "n_events_available": 128,
+      "delays": [
+        {
+          "delay_sec": 0,
+          "windows": [
+            {
+              "window_min": 15,
+              "n_trades": 60,
+              "confirmation_rate": 0.4688,
+              "train": {
+                "n": 48,
+                "mean_net": 0.00122758,
+                "t_stat": 3.882,
+                "profit_factor": 4.885,
+                "win_rate": 0.7292,
+                "gross_over_cost": 19.596
+              },
+              "validation": {
+                "n": 12,
+                "mean_net": -0.00016654,
+                "t_stat": -0.553,
+                "profit_factor": 0.634,
+                "win_rate": 0.25,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=12 < 30"
+            },
+            {
+              "window_min": 30,
+              "n_trades": 60,
+              "confirmation_rate": 0.4688,
+              "train": {
+                "n": 48,
+                "mean_net": 0.00092406,
+                "t_stat": 2.163,
+                "profit_factor": 2.166,
+                "win_rate": 0.6875,
+                "gross_over_cost": 26.091
+              },
+              "validation": {
+                "n": 12,
+                "mean_net": 0.00037906,
+                "t_stat": 1.091,
+                "profit_factor": 2.426,
+                "win_rate": 0.5833,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=12 < 30"
+            },
+            {
+              "window_min": 60,
+              "n_trades": 60,
+              "confirmation_rate": 0.4688,
+              "train": {
+                "n": 48,
+                "mean_net": 0.00121925,
+                "t_stat": 2.451,
+                "profit_factor": 2.534,
+                "win_rate": 0.5833,
+                "gross_over_cost": 29.093
+              },
+              "validation": {
+                "n": 12,
+                "mean_net": 0.00013406,
+                "t_stat": 0.342,
+                "profit_factor": 1.262,
+                "win_rate": 0.5833,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=12 < 30"
+            },
+            {
+              "window_min": 120,
+              "n_trades": 60,
+              "confirmation_rate": 0.4688,
+              "train": {
+                "n": 48,
+                "mean_net": 0.00105151,
+                "t_stat": 1.636,
+                "profit_factor": 1.789,
+                "win_rate": 0.6042,
+                "gross_over_cost": 38.168
+              },
+              "validation": {
+                "n": 12,
+                "mean_net": 0.00076745,
+                "t_stat": 1.456,
+                "profit_factor": 2.934,
+                "win_rate": 0.75,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "TRAIN_INSIGNIFICANT",
+              "reason": "t=1.636 < 2.0"
+            }
+          ]
+        },
+        {
+          "delay_sec": 60,
+          "windows": [
+            {
+              "window_min": 15,
+              "n_trades": 74,
+              "confirmation_rate": 0.5781,
+              "train": {
+                "n": 59,
+                "mean_net": 0.00092762,
+                "t_stat": 4.237,
+                "profit_factor": 4.617,
+                "win_rate": 0.6949,
+                "gross_over_cost": 15.406
+              },
+              "validation": {
+                "n": 15,
+                "mean_net": 1.64e-06,
+                "t_stat": 0.007,
+                "profit_factor": 1.004,
+                "win_rate": 0.5333,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=15 < 30"
+            },
+            {
+              "window_min": 30,
+              "n_trades": 74,
+              "confirmation_rate": 0.5781,
+              "train": {
+                "n": 59,
+                "mean_net": 0.0006743,
+                "t_stat": 2.329,
+                "profit_factor": 2.158,
+                "win_rate": 0.661,
+                "gross_over_cost": 19.385
+              },
+              "validation": {
+                "n": 15,
+                "mean_net": 0.00016903,
+                "t_stat": 0.699,
+                "profit_factor": 1.628,
+                "win_rate": 0.5333,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=15 < 30"
+            },
+            {
+              "window_min": 60,
+              "n_trades": 74,
+              "confirmation_rate": 0.5781,
+              "train": {
+                "n": 59,
+                "mean_net": 0.00093556,
+                "t_stat": 2.687,
+                "profit_factor": 2.727,
+                "win_rate": 0.5932,
+                "gross_over_cost": 21.191
+              },
+              "validation": {
+                "n": 15,
+                "mean_net": 0.00012451,
+                "t_stat": 0.242,
+                "profit_factor": 1.166,
+                "win_rate": 0.6,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=15 < 30"
+            },
+            {
+              "window_min": 120,
+              "n_trades": 74,
+              "confirmation_rate": 0.5781,
+              "train": {
+                "n": 59,
+                "mean_net": 0.00105944,
+                "t_stat": 2.339,
+                "profit_factor": 2.173,
+                "win_rate": 0.6441,
+                "gross_over_cost": 29.658
+              },
+              "validation": {
+                "n": 15,
+                "mean_net": 0.00041088,
+                "t_stat": 0.949,
+                "profit_factor": 1.812,
+                "win_rate": 0.6667,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=15 < 30"
+            }
+          ]
+        },
+        {
+          "delay_sec": 120,
+          "windows": [
+            {
+              "window_min": 15,
+              "n_trades": 67,
+              "confirmation_rate": 0.5234,
+              "train": {
+                "n": 53,
+                "mean_net": 0.00099693,
+                "t_stat": 4.827,
+                "profit_factor": 7.282,
+                "win_rate": 0.6981,
+                "gross_over_cost": 14.144
+              },
+              "validation": {
+                "n": 14,
+                "mean_net": 0.00042614,
+                "t_stat": 2.24,
+                "profit_factor": 4.402,
+                "win_rate": 0.6429,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=14 < 30"
+            },
+            {
+              "window_min": 30,
+              "n_trades": 67,
+              "confirmation_rate": 0.5234,
+              "train": {
+                "n": 53,
+                "mean_net": 0.0007604,
+                "t_stat": 2.294,
+                "profit_factor": 2.269,
+                "win_rate": 0.717,
+                "gross_over_cost": 20.586
+              },
+              "validation": {
+                "n": 14,
+                "mean_net": 0.00041626,
+                "t_stat": 1.733,
+                "profit_factor": 3.46,
+                "win_rate": 0.7143,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=14 < 30"
+            },
+            {
+              "window_min": 60,
+              "n_trades": 67,
+              "confirmation_rate": 0.5234,
+              "train": {
+                "n": 53,
+                "mean_net": 0.00105018,
+                "t_stat": 2.945,
+                "profit_factor": 2.992,
+                "win_rate": 0.6792,
+                "gross_over_cost": 22.046
+              },
+              "validation": {
+                "n": 14,
+                "mean_net": 0.00025594,
+                "t_stat": 0.431,
+                "profit_factor": 1.312,
+                "win_rate": 0.6429,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=14 < 30"
+            },
+            {
+              "window_min": 120,
+              "n_trades": 67,
+              "confirmation_rate": 0.5234,
+              "train": {
+                "n": 53,
+                "mean_net": 0.00100945,
+                "t_stat": 2.191,
+                "profit_factor": 2.164,
+                "win_rate": 0.6415,
+                "gross_over_cost": 28.446
+              },
+              "validation": {
+                "n": 14,
+                "mean_net": 0.00051856,
+                "t_stat": 1.137,
+                "profit_factor": 2.081,
+                "win_rate": 0.6429,
+                "gross_over_cost": 0.0
+              },
+              "verdict": "VALIDATION_UNDERPOWERED",
+              "reason": "val n=14 < 30"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

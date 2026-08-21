@@ -1,0 +1,135 @@
+{
+  "generated_at": "2026-08-21T01:00:49.383077+00:00",
+  "note": "Real, tested access results for candidate EA Code Intelligence sources. Every ACCESSED entry corresponds to an actual tool call made in this session; nothing here is assumed or inferred.",
+  "summary": {
+    "total_probed": 10,
+    "accessible": 7,
+    "blocked": 3,
+    "accessible_sources": [
+      "GitHub search_repositories (MQL5)",
+      "GitHub search_repositories (Pine Script)",
+      "geraked/metatrader5 README",
+      "foeed/FvgGold-EA README",
+      "Ahmed-GoCode/Quant-Edge-Indicators README",
+      "sajidmahamud835/grid-master-pro-mt5-ea README",
+      "WebSearch (academic: cross-asset macro surprise FX)"
+    ],
+    "blocked_sources": [
+      "MQL5 CodeBase (direct)",
+      "TradingView Scripts (direct)",
+      "Macrosynergy research (direct)"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "EASRC-000001",
+      "source_type": "API_TOOL",
+      "title": "GitHub search_repositories (MQL5)",
+      "url": "tool:mcp__github__search_repositories",
+      "access_status": "TOOL_AVAILABLE",
+      "verification_status": "PROVISIONALLY_VERIFIED",
+      "content_checksum": "c31ae93f862b889cd93f4058a1d641562d3f056e8a5b46dcc908bf146212e8d6",
+      "notes": "query='mql5 expert advisor strategy language:MQL5' returned 29 total_count, top result geraked/metatrader5 (609 stars)",
+      "retrieval_timestamp": "2026-08-21T01:00:49.382961+00:00"
+    },
+    {
+      "source_id": "EASRC-000002",
+      "source_type": "API_TOOL",
+      "title": "GitHub search_repositories (Pine Script)",
+      "url": "tool:mcp__github__search_repositories",
+      "access_status": "TOOL_AVAILABLE",
+      "verification_status": "PROVISIONALLY_VERIFIED",
+      "content_checksum": "3cea3c451a5865b1893afe85ec0ad7e965a67886bb71972b8b8d741685ee4f41",
+      "notes": "query='pine script strategy trading indicator language:PineScript' returned 102 total_count, top result everget/tradingview-pinescript-indicators (879 stars)",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383002+00:00"
+    },
+    {
+      "source_id": "EASRC-000003",
+      "source_type": "OPEN_SOURCE_CODE",
+      "title": "geraked/metatrader5 README",
+      "url": "https://raw.githubusercontent.com/geraked/metatrader5/master/README.md",
+      "access_status": "ACCESSED",
+      "verification_status": "PROVISIONALLY_VERIFIED",
+      "content_checksum": "71dadab238d3037456afc95b832a6a1a519ef98aa0fc0fc0ddde93d85b54c189",
+      "notes": "Fetched live via WebFetch; content checksum recorded. Any strategy claims in the content are source claims only, not independently corroborated.",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383009+00:00"
+    },
+    {
+      "source_id": "EASRC-000004",
+      "source_type": "OPEN_SOURCE_CODE",
+      "title": "foeed/FvgGold-EA README",
+      "url": "https://raw.githubusercontent.com/foeed/FvgGold-EA/main/README.md",
+      "access_status": "ACCESSED",
+      "verification_status": "PROVISIONALLY_VERIFIED",
+      "content_checksum": "ede92f404af411543e9fbc60eb8a12262bea43dad406b44f78d792f76caac364",
+      "notes": "Fetched live via WebFetch; content checksum recorded. Any strategy claims in the content are source claims only, not independently corroborated.",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383013+00:00"
+    },
+    {
+      "source_id": "EASRC-000005",
+      "source_type": "OPEN_SOURCE_CODE",
+      "title": "Ahmed-GoCode/Quant-Edge-Indicators README",
+      "url": "https://raw.githubusercontent.com/Ahmed-GoCode/Quant-Edge-Indicators/main/README.md",
+      "access_status": "ACCESSED",
+      "verification_status": "PROVISIONALLY_VERIFIED",
+      "content_checksum": "7779d1eb2af6e07fe63e1d3b5a3fd94e15d860f27ada7fbf03df3a1c2d22ec7e",
+      "notes": "Fetched live via WebFetch; content checksum recorded. Any strategy claims in the content are source claims only, not independently corroborated.",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383017+00:00"
+    },
+    {
+      "source_id": "EASRC-000006",
+      "source_type": "OPEN_SOURCE_CODE",
+      "title": "sajidmahamud835/grid-master-pro-mt5-ea README",
+      "url": "https://raw.githubusercontent.com/sajidmahamud835/grid-master-pro-mt5-ea/main/README.md",
+      "access_status": "ACCESSED",
+      "verification_status": "PROVISIONALLY_VERIFIED",
+      "content_checksum": "0b51d487bff7e7b6f018c2a8189fc1affaa08914b16a58ecc1a7b800017db128",
+      "notes": "Fetched live via WebFetch; content checksum recorded. Any strategy claims in the content are source claims only, not independently corroborated.",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383022+00:00"
+    },
+    {
+      "source_id": "EASRC-000007",
+      "source_type": "ACADEMIC_SEARCH",
+      "title": "WebSearch (academic: cross-asset macro surprise FX)",
+      "url": "tool:WebSearch",
+      "access_status": "TOOL_AVAILABLE",
+      "verification_status": "PROVISIONALLY_VERIFIED",
+      "content_checksum": "25682b5d391be267ee21c798c1d4b05b3473f40b8f5f9b8b9a1d896c6db11a54",
+      "notes": "8 results incl. macrosynergy.com yield-curve-FX research, BIS working paper 1273, arxiv.org/pdf/2408.12863 (yield curve regime switching) -- titles/snippets only",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383026+00:00"
+    },
+    {
+      "source_id": "EASRC-000008",
+      "source_type": "OPEN_SOURCE_CODE_HOST",
+      "title": "MQL5 CodeBase (direct)",
+      "url": "https://www.mql5.com/en/code/mt5/experts",
+      "access_status": "ACCESS_FAILED",
+      "verification_status": "ACCESS_FAILED",
+      "content_checksum": null,
+      "notes": "EGRESS_BLOCKED: Access to www.mql5.com is blocked by the network egress proxy.",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383030+00:00"
+    },
+    {
+      "source_id": "EASRC-000009",
+      "source_type": "OPEN_SOURCE_CODE_HOST",
+      "title": "TradingView Scripts (direct)",
+      "url": "https://www.tradingview.com/scripts/",
+      "access_status": "ACCESS_FAILED",
+      "verification_status": "ACCESS_FAILED",
+      "content_checksum": null,
+      "notes": "EGRESS_BLOCKED: Access to www.tradingview.com is blocked by the network egress proxy.",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383034+00:00"
+    },
+    {
+      "source_id": "EASRC-000010",
+      "source_type": "ACADEMIC_PAPER",
+      "title": "Macrosynergy research (direct)",
+      "url": "https://macrosynergy.com/research/using-yield-curve-information-for-fx-trading/",
+      "access_status": "ACCESS_FAILED",
+      "verification_status": "ACCESS_FAILED",
+      "content_checksum": null,
+      "notes": "EGRESS_BLOCKED: Access to macrosynergy.com is blocked by the network egress proxy.",
+      "retrieval_timestamp": "2026-08-21T01:00:49.383037+00:00"
+    }
+  ]
+}

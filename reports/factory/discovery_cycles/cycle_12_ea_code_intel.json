@@ -1,0 +1,88 @@
+{
+  "cycle_id": "CYCLE-12-EA-CODE-INTEL",
+  "generated_at": "2026-08-21T01:09:48.243488",
+  "hypotheses": [
+    {
+      "hyp_id": "HYP-EACI-0001",
+      "source_idea_id": "EA-CODE-INTEL-MINED",
+      "category": "CROSS_ASSET_DUAL_CONFIRMATION",
+      "symbol": "USDJPY",
+      "driver": "US10Y+SPX500",
+      "n_events_available": 128,
+      "windows": [
+        {
+          "window_min": 60,
+          "n_confirmed": 41,
+          "n_events_available": 128,
+          "confirmation_rate": 0.3203,
+          "train": {
+            "n": 33,
+            "mean_net": 7.174e-05,
+            "t_stat": 0.716,
+            "profit_factor": 1.379,
+            "win_rate": 0.6364,
+            "gross_over_cost": 5.505
+          },
+          "validation": {
+            "n": 8,
+            "mean_net": 0.00021696,
+            "t_stat": 0.603,
+            "profit_factor": 1.883,
+            "win_rate": 0.625,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "train t=0.716 < 2.0"
+        },
+        {
+          "window_min": 120,
+          "n_confirmed": 41,
+          "n_events_available": 128,
+          "confirmation_rate": 0.3203,
+          "train": {
+            "n": 33,
+            "mean_net": 0.00013363,
+            "t_stat": 0.864,
+            "profit_factor": 1.499,
+            "win_rate": 0.5455,
+            "gross_over_cost": 7.691
+          },
+          "validation": {
+            "n": 8,
+            "mean_net": 0.0001412,
+            "t_stat": 0.887,
+            "profit_factor": 2.281,
+            "win_rate": 0.75,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "TRAIN_INSIGNIFICANT",
+          "reason": "train t=0.864 < 2.0"
+        },
+        {
+          "window_min": 240,
+          "n_confirmed": 41,
+          "n_events_available": 128,
+          "confirmation_rate": 0.3203,
+          "train": {
+            "n": 33,
+            "mean_net": 0.00350521,
+            "t_stat": 4.858,
+            "profit_factor": 13.011,
+            "win_rate": 0.697,
+            "gross_over_cost": 41.889
+          },
+          "validation": {
+            "n": 8,
+            "mean_net": 0.0014915,
+            "t_stat": 2.677,
+            "profit_factor": 18.413,
+            "win_rate": 0.75,
+            "gross_over_cost": 0.0
+          },
+          "verdict": "VALIDATION_UNDERPOWERED",
+          "reason": "validation n=8 < 30"
+        }
+      ]
+    }
+  ]
+}

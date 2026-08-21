@@ -1,0 +1,77 @@
+{
+  "cycles_read": [
+    "cycle_11_idea_machine.json",
+    "cycle_12_ea_code_intel.json"
+  ],
+  "hypotheses_analyzed": 4,
+  "lessons": [
+    {
+      "lesson_id": "LESSON-HYP-IM-0001-NOEDGE",
+      "source_cycle": "cycle_11_idea_machine.json",
+      "source_hypothesis": "HYP-IM-0001",
+      "finding": "5/6 windows show no train-side edge (negative or insignificant mean_net); 3 train/val sign flips",
+      "evidence": "n_events_available=128",
+      "penalty_signal": "NO_TRAIN_SIDE_EDGE",
+      "magnitude": -0.7
+    },
+    {
+      "lesson_id": "LESSON-HYP-IM-0001-DATABLOCKED",
+      "source_cycle": "cycle_11_idea_machine.json",
+      "source_hypothesis": "HYP-IM-0001",
+      "finding": "1 window(s) show train t>=1.5 but fail on validation n<30 (avg confirmation_rate=0.531 of 128 available events)",
+      "evidence": "[{\"window\": 5, \"train_t\": 2.436, \"val_n\": 14}]",
+      "penalty_signal": "DATA_EXTENSION_CANDIDATE",
+      "magnitude": 0.15
+    },
+    {
+      "lesson_id": "LESSON-HYP-IM-0003-NOEDGE",
+      "source_cycle": "cycle_11_idea_machine.json",
+      "source_hypothesis": "HYP-IM-0003",
+      "finding": "5/5 windows show no train-side edge (negative or insignificant mean_net); 2 train/val sign flips",
+      "evidence": "n_events_available=252",
+      "penalty_signal": "NO_TRAIN_SIDE_EDGE",
+      "magnitude": -0.7
+    },
+    {
+      "lesson_id": "LESSON-HYP-IM-0004-DATABLOCKED",
+      "source_cycle": "cycle_11_idea_machine.json",
+      "source_hypothesis": "HYP-IM-0004",
+      "finding": "11 window(s) show train t>=1.5 but fail on validation n<30 (avg confirmation_rate=0.528 of 128 available events) (drawn from 128 shared events across overlapping windows/delays -- correlated, not independent evidence; treat as ~1 underlying observation, not 11x)",
+      "evidence": "[{\"window\": 15, \"train_t\": 3.882, \"val_n\": 12}, {\"window\": 30, \"train_t\": 2.163, \"val_n\": 12}, {\"window\": 60, \"train_t\": 2.451, \"val_n\": 12}, {\"window\": 15, \"train_t\": 4.237, \"val_n\": 15}, {\"window\": 30, \"train_t\": 2.329, \"val_n\": 15}, {\"window\": 60, \"train_t\": 2.687, \"val_n\": 15}, {\"window\": 120, \"train_t\": 2.339, \"val_n\": 15}, {\"window\": 15, \"train_t\": 4.827, \"val_n\": 14}, {\"window\": 30, \"train_t\": 2.294, \"val_n\": 14}, {\"window\": 60, \"train_t\": 2.945, \"val_n\": 14}, {\"window\": 120, \"train_t\": 2.191, \"val_n\": 14}]",
+      "penalty_signal": "DATA_EXTENSION_CANDIDATE",
+      "magnitude": 0.15
+    },
+    {
+      "lesson_id": "LESSON-HYP-EACI-0001-NOEDGE",
+      "source_cycle": "cycle_12_ea_code_intel.json",
+      "source_hypothesis": "HYP-EACI-0001",
+      "finding": "2/3 windows show no train-side edge (negative or insignificant mean_net); 0 train/val sign flips",
+      "evidence": "n_events_available=128",
+      "penalty_signal": "NO_TRAIN_SIDE_EDGE",
+      "magnitude": -0.7
+    },
+    {
+      "lesson_id": "LESSON-HYP-EACI-0001-DATABLOCKED",
+      "source_cycle": "cycle_12_ea_code_intel.json",
+      "source_hypothesis": "HYP-EACI-0001",
+      "finding": "1 window(s) show train t>=1.5 but fail on validation n<30 (avg confirmation_rate=0.320 of 128 available events)",
+      "evidence": "[{\"window\": 240, \"train_t\": 4.858, \"val_n\": 8}]",
+      "penalty_signal": "DATA_EXTENSION_CANDIDATE",
+      "magnitude": 0.15
+    },
+    {
+      "lesson_id": "LESSON-HYP-EACI-0001-LOWCONF",
+      "source_cycle": "cycle_12_ea_code_intel.json",
+      "source_hypothesis": "HYP-EACI-0001",
+      "finding": "avg confirmation_rate=0.320 across 3 windows; 1 window(s) validation-underpowered as a direct consequence of low confirmation rate on 128 raw events",
+      "evidence": "need >=150 raw confirmed events at 80/20 split to clear val n>=30; got ~41",
+      "penalty_signal": "LOW_CONFIRMATION_RATE",
+      "magnitude": -0.35
+    }
+  ],
+  "aggregate_stats": {
+    "NO_TRAIN_SIDE_EDGE": -0.7,
+    "DATA_EXTENSION_CANDIDATE": 0.15,
+    "LOW_CONFIRMATION_RATE": -0.35
+  }
+}

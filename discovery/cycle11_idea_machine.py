@@ -34,7 +34,12 @@ def _sign(x: float) -> int:
     return 1 if x > 0 else (-1 if x < 0 else 0)
 
 SURPRISE_FX_DIR = {
-    "EURUSD": 1, "GBPUSD": 1, "XAUUSD": -1, "USDJPY": -1, "USDCHF": -1,
+    # Copied verbatim from discovery/cycle8_intraday.py's validated convention
+    # (this project's own precedent). A prior version of this dict had EURUSD,
+    # GBPUSD, USDJPY, and USDCHF all sign-flipped relative to Cycle 8 -- an
+    # implementation bug that inverted every trade direction in this module's
+    # first two runs. Fixed; see CYCLE11_FACTORY_EVALUATION_REPORT.md errata.
+    "EURUSD": -1, "GBPUSD": -1, "XAUUSD": -1, "USDJPY": +1, "USDCHF": +1,
 }
 
 DRIVER_BASE_DIR = {
@@ -168,8 +173,10 @@ def run_cycle():
             continue
         
         cut = int(len(nets) * 0.8)
-        tr_s = stats(nets[:cut], 0.0, cost)
-        va_s = stats(nets[cut:], 0.0, cost)
+        train_nets, val_nets = nets[:cut], nets[cut:]
+        gm = (sum(abs(x) for x in train_nets) / len(train_nets)) if train_nets else 0.0
+        tr_s = stats(train_nets, gm + cost, cost)
+        va_s = stats(val_nets, 0.0, cost)
         v, r = gate(tr_s, va_s)
         
         status = "✓ PASS" if v == "DISCOVERY_SURVIVOR" else "✗ FAIL"
@@ -206,8 +213,10 @@ def run_cycle():
             continue
         
         cut = int(len(nets) * 0.8)
-        tr_s = stats(nets[:cut], 0.0, cost)
-        va_s = stats(nets[cut:], 0.0, cost)
+        train_nets, val_nets = nets[:cut], nets[cut:]
+        gm = (sum(abs(x) for x in train_nets) / len(train_nets)) if train_nets else 0.0
+        tr_s = stats(train_nets, gm + cost, cost)
+        va_s = stats(val_nets, 0.0, cost)
         v, r = gate(tr_s, va_s)
         
         status = "✓ PASS" if v == "DISCOVERY_SURVIVOR" else "✗ FAIL"
@@ -249,12 +258,14 @@ def run_cycle():
                 continue
             
             cut = int(len(nets) * 0.8)
-            tr_s = stats(nets[:cut], 0.0, cost)
-            va_s = stats(nets[cut:], 0.0, cost)
+            train_nets, val_nets = nets[:cut], nets[cut:]
+            gm = (sum(abs(x) for x in train_nets) / len(train_nets)) if train_nets else 0.0
+            tr_s = stats(train_nets, gm + cost, cost)
+            va_s = stats(val_nets, 0.0, cost)
             v, r = gate(tr_s, va_s)
-            
+
             status = "✓ PASS" if v == "DISCOVERY_SURVIVOR" else "✗ FAIL"
-            print(f"    Window {w:3d}m: train n={tr_s.n:2d} t={tr_s.t_stat:5.2f}  val n={va_s.n:2d} t={va_s.t_stat:5.2f}  {status}")
+            print(f"    Window {w:3d}m: train n={tr_s.n:2d} t={tr_s.t_stat:5.2f}  val n={va_s.n:2d} t={va_s.t_stat:5.2f}  {status} ({v})")
             
             if v == "DISCOVERY_SURVIVOR":
                 delay_survivors.append({"delay": delay, "window": w, "tr": tr_s, "va": va_s})

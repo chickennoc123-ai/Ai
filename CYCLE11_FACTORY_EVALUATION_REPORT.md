@@ -1,300 +1,222 @@
-# Cycle 11 Factory Evaluation Report
+# Cycle 11 Factory Evaluation Report — TWICE CORRECTED
 
-**Date**: 2026-08-21  
-**Cycle**: GEN 7 CYCLE 11 — Idea Machine Integration  
-**Status**: COMPLETE — 3 hypotheses evaluated, 0 survivors  
+**Date**: 2026-08-21
+**Cycle**: GEN 7 CYCLE 11 — Idea Machine Integration
+**Status**: COMPLETE — 3 hypotheses evaluated, 0 survivors, 2 implementation bugs found and fixed in this session's own glue code
+
+---
+
+## Errata (read first — two separate bugs, both in this session's code, neither in the Factory)
+
+### Bug 1 (found first): `gross_over_cost` hardcoded to 0
+
+`gate()` checks `gross_over_cost = gross_mean/cost` before `mean_net`/`t_stat`. The
+first version of `discovery/cycle11_idea_machine.py` called
+`stats(train_nets, 0.0, cost)`, hardcoding `gross_mean=0.0` instead of
+computing it (`gm = mean(|net|); stats(train_nets, gm+cost, cost)`, Cycle
+8's own pattern). This made every window `COST_DOMINATED` regardless of
+actual performance. Fixed by copying Cycle 8's `gm` computation.
+
+### Bug 2 (found second, more serious): `SURPRISE_FX_DIR` sign-flipped
+
+While re-verifying the corrected numbers against this project's already-frozen
+`CAND-SC-GBPUSD-US10Y-5M` candidate (see below), the direction convention was
+cross-checked against `discovery/cycle8_intraday.py`'s own validated
+`SURPRISE_FX_DIR` dict:
+
+```
+Cycle 8 (validated):  {"EURUSD": -1, "GBPUSD": -1, "XAUUSD": -1, "USDJPY": +1, "USDCHF": +1}
+Cycle 11 (this bug):  {"EURUSD": +1, "GBPUSD": +1, "XAUUSD": -1, "USDJPY": -1, "USDCHF": -1}
+```
+
+Four of five symbols were sign-flipped. The economics of Cycle 8's
+convention are simple and checkable: EURUSD is USD-per-EUR, so a USD-bullish
+surprise (positive NFP surprise) should push EURUSD **down** (`-1`); USDJPY
+is JPY-per-USD, so the same surprise should push USDJPY **up** (`+1`).
+Cycle 11's dict had this backward for EURUSD, GBPUSD, USDJPY, and USDCHF —
+**every trade direction in the first two versions of this report was
+inverted** for HYP-IM-0001 and HYP-IM-0004 (HYP-IM-0003 was unaffected: its
+direction logic is a separate hardcoded `-sign(surprise)` expression that,
+by cross-check, already matched the correct convention). Fixed by copying
+Cycle 8's dict verbatim.
+
+**Both bugs are now fixed in `discovery/cycle11_idea_machine.py` and
+`discovery/cycle11_export_json.py`. Both scripts were re-run. This report is
+rewritten from the twice-corrected output, not patched.**
+
+---
+
+## What actually changed
+
+| Hypothesis | v1 (both bugs) | v2 (bug 1 fixed) | v3 (both bugs fixed, current) |
+|---|---|---|---|
+| HYP-IM-0001 | 6/6 COST_DOMINATED | 6/6 no train edge (TRAIN_NEGATIVE/INSIG) | 1/6 (5m) clears train t=2.44, val t=2.12, still VALIDATION_UNDERPOWERED (n=14); other 5 windows insignificant/negative |
+| HYP-IM-0003 | 5/5 COST_DOMINATED | 5/5 no train edge | **unchanged** — this hypothesis's direction logic was never affected by bug 2 |
+| HYP-IM-0004 | 12/12 COST_DOMINATED | mixed underpowered/insignificant | 12/12 windows now show train t in [1.64, 4.83] (mostly ≥2), but validation t is inconsistent: one negative (-0.55), most near 0, one at 2.24; n=12-15 throughout |
+
+**Top-line result is unchanged across all three versions: 0 survivors.**
+What changed is the diagnostic picture, materially for two of the three hypotheses.
+
+---
+
+## Reading the corrected numbers honestly (this section matters more than the tables)
+
+**HYP-IM-0004's "12/12 windows clear train significance" is weaker evidence
+than it looks.** The 12 combinations (3 delays × 4 windows) are drawn from
+the same 128 NFP events with overlapping definitions (a 30m window and a
+60m window share most of their trade set; delay=60s and delay=120s filter
+overlapping event subsets) — they are not 12 independent tests. Seeing
+correlated train t-stats cluster above 2.0 is more consistent with **one**
+underlying pattern (real or spurious) expressed 12 correlated ways than
+with 12 independent confirmations. Meanwhile validation t-stats across the
+same 12 cells range from -0.55 to +2.24 with no consistent sign or
+magnitude — which is exactly what you'd expect from small-sample noise
+(n=12-15) dominating whatever the train-side pattern is, in either
+direction (real-but-noisy or spurious-and-regressing-to-zero look similar
+at this sample size).
+
+**Correct conclusion: still genuinely ambiguous, not a hidden survivor.**
+This is not strong enough evidence to claim a real edge, and not weak
+enough to dismiss outright. It is exactly a "collect more data before
+concluding anything" case — which is precisely what `VALIDATION_UNDERPOWERED`
+already says, honestly, without embellishment.
+
+**HYP-IM-0001's signal is even weaker: 1 of 6 (uncorrelated-window) draws
+clears the bar.** With 6 window choices tested per hypothesis, seeing one
+exceed a t≈2 threshold by chance is not a low-probability event under a
+null of no effect. The 5m window's train t=2.44/val t=2.12 is *interesting*
+enough to note, not strong enough to act on.
+
+**Important cross-reference**: HYP-IM-0001 (GBPUSD, US10Y driver, 5-minute
+window, surprise-confirmation mechanism) is the same *nominal* combination
+as this project's already-frozen `CAND-SC-GBPUSD-US10Y-5M`
+(`reports/factory/candidate_spec_registry.json`), which was measured via
+the Factory's canonical `evaluate_pairing()` at **train t=+2.92 (n=149),
+val t=-0.10 (n=23)** — see `ea_products/sc_surprise_confirmation/README.md`.
+This Cycle 11 evaluation used a **different, less rigorous harness**:
+events were filtered to NFP only (the frozen candidate's evaluation used
+NFP+CPI, per `EVENT_TYPES`), and the train/validation split was computed
+by index-position on the *filtered trade list* rather than by chronological
+event timestamp (`evaluate_pairing`'s actual method). The different n (54
+train / 14 val here vs. 149/23 there) and different t-stats confirm these
+are not the same computation. **This Cycle 11 result does not replicate,
+confirm, or add evidence to the frozen candidate — it is a separate,
+methodologically weaker probe of an overlapping question, and should not
+be cited as corroboration.** The frozen candidate's own status
+(`STILL_UNDERPOWERED`) already captures everything rigorously known about
+this exact combination; nothing here changes it.
 
 ---
 
 ## Execution Summary
 
-Three top-scoring ideas from Idea Machine Cycle 2 were evaluated through the Strategy Factory discovery pipeline on real development data (2012-11-16 to 2020-04-29).
-
-| Hypothesis | Idea Score | Symbol | Mechanism | Survivors | Status |
+| Hypothesis | Idea Score | Symbol | Mechanism | Windows Tested | Survivors |
 |---|---|---|---|---|---|
-| HYP-IM-0001 | 74.0 | GBPUSD/US10Y | Macro surprise confirmation | 0/6 | REJECTED |
-| HYP-IM-0003 | 64.0 | EURUSD | Session regime bias | 0/5 | REJECTED |
-| HYP-IM-0004 | 64.0 | EURUSD | Post-event entry delay | 0/12 | REJECTED |
+| HYP-IM-0001 | 74.0 | GBPUSD/US10Y | Macro surprise confirmation | 6 | 0 |
+| HYP-IM-0003 | 64.0 | EURUSD | Session regime bias | 5 | 0 |
+| HYP-IM-0004 | 64.0 | EURUSD | Post-event entry delay | 12 | 0 |
 
-**Total Parameter Combinations Tested**: 23  
-**Survivors Advancing to GEN12**: 0  
-**Discovery Survivors**: 0  
+**Total parameter combinations tested**: 23. **Discovery survivors**: 0.
 
 ---
 
-## Hypothesis 1: GBPUSD/US10Y Macro Surprise Confirmation
+## Per-hypothesis gate tables (corrected)
 
-**HYP-IM-0001 (Idea Score: 74.0)**
+### HYP-IM-0001 — GBPUSD/US10Y
 
-### Mechanism
-Trade GBP directional surprise only when cross-asset US 10-year Treasury move confirms the same macro direction. Extension of proven SC_SURPRISE_CONFIRMATION mechanism from Cycle 8, applied to new symbol pairing.
+| Window | Train n | Train t | Val n | Val t | Verdict |
+|---|---|---|---|---|---|
+| 5m | 54 | 2.44 | 14 | 2.12 | VALIDATION_UNDERPOWERED |
+| 15m | 54 | 1.16 | 14 | 0.20 | TRAIN_INSIGNIFICANT |
+| 30m | 54 | 0.64 | 14 | 0.11 | TRAIN_INSIGNIFICANT |
+| 60m | 54 | 0.67 | 14 | -0.43 | TRAIN_INSIGNIFICANT |
+| 120m | 54 | -0.22 | 14 | 0.34 | TRAIN_NEGATIVE |
+| 240m | 54 | -0.39 | 14 | 0.73 | TRAIN_NEGATIVE |
 
-### Data Used
-- **Symbol**: GBPUSD (M1 data from FutureSharks/financial-data)
-- **Driver**: US10Y Treasury (M1 data)
-- **Events**: 128 NFP (Non-Farm Employment Change) releases in dev period
-- **Cost**: 0.000120 per round-trip (from cost_model.py)
-- **Entry Delay**: 60 seconds (frozen from Cycle 8)
-- **Impulse Window**: 5 minutes (frozen from Cycle 8)
+### HYP-IM-0003 — EURUSD session regime (unaffected by either bug)
 
-### Windows Tested
-5m, 15m, 30m, 60m, 120m, 240m exit windows
+| Window | Train n | Train t | Val n | Val t | Verdict |
+|---|---|---|---|---|---|
+| 1m | 161 | numerically unstable | 41 | numerically unstable | TRAIN_NEGATIVE |
+| 5m | 161 | 0.46 | 41 | -0.79 | TRAIN_INSIGNIFICANT |
+| 15m | 161 | 0.35 | 41 | -0.91 | TRAIN_INSIGNIFICANT |
+| 30m | 161 | 0.04 | 41 | 0.41 | TRAIN_INSIGNIFICANT |
+| 60m | 161 | -0.10 | 41 | -0.02 | TRAIN_NEGATIVE |
 
-### Gate Results
+A large, well-powered null (161 train events, t≈0 throughout). Clean
+falsification of the "US-data-day directional bias" hypothesis as specified.
 
-| Window | Train Events | Train t-stat | Val Events | Val t-stat | Verdict | Reason |
+### HYP-IM-0004 — EURUSD post-event delay
+
+| Delay | Window | Train n | Train t | Val n | Val t | Verdict |
 |---|---|---|---|---|---|---|
-| 5m | 44 | 0.75 | 11 | 0.16 | FAIL | gross/cost=1.82 < 2.0 |
-| 15m | 44 | -1.10 | 11 | 1.08 | FAIL | gross/cost=1.76 < 2.0 |
-| 30m | 44 | -1.81 | 11 | 0.22 | FAIL | gross/cost=1.63 < 2.0 |
-| 60m | 44 | -0.99 | 11 | -0.10 | FAIL | gross/cost=1.91 < 2.0 |
-| 120m | 44 | -0.35 | 11 | 2.04 | FAIL | gross/cost=1.85 < 2.0 |
-| 240m | 44 | -0.68 | 11 | 1.44 | FAIL | gross/cost=1.74 < 2.0 |
-
-### Analysis
-
-**Failure Gate**: COST_DOMINATED (all windows)
-
-Every window failed on `gross/cost < 2.0`, meaning the gross expected return from the mechanism does not exceed twice the round-trip cost. This is a structural failure, not a sample-size issue.
-
-**Root Cause**: The impulse-confirmation requirement is too restrictive. Of 128 NFP events:
-- 44 trades passed confirmation on train set (34.4% confirmation rate)
-- 11 trades passed confirmation on validation set (8.6% confirmation rate)
-
-With such low trade counts relative to total events, the cost per confirmed trade becomes prohibitive.
-
-**Conclusion**: **REJECTED** — Mechanism is not economically viable on GBPUSD/US10Y. The cross-asset confirmation requirement filters out 91% of events; those that remain don't move price enough to exceed 2x cost.
-
----
-
-## Hypothesis 2: EURUSD Session Regime
-
-**HYP-IM-0003 (Idea Score: 64.0)**
-
-### Mechanism
-EURUSD shows directional entry bias on days with scheduled US economic data (NFP, CPI) vs quiet days. Trade direction aligned with surprise direction on data days, filtered out on other days.
-
-### Data Used
-- **Symbol**: EURUSD (M1 data)
-- **Events**: 252 USD macro events (NFP + CPI y/y) in dev period
-- **Cost**: 0.000100 per round-trip
-- **Entry Delay**: 60 seconds
-- **Event Filter**: US currency impact events only
-
-### Windows Tested
-1m, 5m, 15m, 30m, 60m exit windows
-
-### Gate Results
-
-| Window | Train Events | Train t-stat | Val Events | Val t-stat | Verdict | Reason |
-|---|---|---|---|---|---|---|
-| 1m | 161 | -4.6e15 | 41 | -1.2e16 | FAIL | Numerical instability |
-| 5m | 161 | 0.46 | 41 | -0.79 | FAIL | gross/cost < 2.0 |
-| 15m | 161 | 0.35 | 41 | -0.91 | FAIL | gross/cost < 2.0 |
-| 30m | 161 | 0.04 | 41 | 0.41 | FAIL | gross/cost < 2.0 |
-| 60m | 161 | -0.10 | 41 | -0.02 | FAIL | gross/cost < 2.0 |
-
-### Analysis
-
-**Primary Failure**: COST_DOMINATED (all windows)
-
-The session regime mechanism generates many trades (161 train / 41 val) but with consistently low profitability. The t-statistics are either near zero or slightly negative, indicating mean_net barely above cost.
-
-**1m Window Issue**: Numerical instability (t-stat = -4.6e15) suggests division by near-zero variance, indicating the 1m window produces highly volatile, uninformative returns.
-
-**Why It Fails**: While the mechanism filters entry to data days (good hypothesis), the resulting trades are too small relative to cost. EURUSD's typical move on NFP is a few pips; the cost is ~1 pip for EURUSD. Profit margins are too thin.
-
-**Conclusion**: **REJECTED** — The session regime exists but is too small to trade profitably after costs. This is a "true but uneconomic" signal.
-
----
-
-## Hypothesis 3: EURUSD Post-Event Entry Delay
-
-**HYP-IM-0004 (Idea Score: 64.0)**
-
-### Mechanism
-Test whether delayed entry (0s, 60s, 120s post-event) combined with impulse confirmation reduces false-signal cost. Hypothesis: waiting longer filters out the spurious moves, leaving only genuine directional trades.
-
-### Data Used
-- **Symbol**: EURUSD (M1 data)
-- **Events**: 128 NFP releases in dev period
-- **Cost**: 0.000100 per round-trip
-- **Delays Tested**: 0s, 60s, 120s
-- **Exit Windows**: 15m, 30m, 60m, 120m
-- **Impulse Confirmation**: Required (move must be in expected direction in first 5m post-entry)
-
-### Parameter Grid (3 delays × 4 windows = 12 combinations)
-
-**Delay: 0s (no delay)**
-| Window | Train n | Train t | Val n | Val t | Verdict | Reason |
-|---|---|---|---|---|---|---|
-| 15m | 52 | 2.45 | 14 | 1.57 | FAIL | Validation underpowered (n=14<30) |
-| 30m | 52 | 1.56 | 14 | 1.00 | FAIL | Val underpowered + insig |
-| 60m | 52 | 2.36 | 14 | 0.66 | FAIL | Val underpowered + insig |
-| 120m | 52 | 1.64 | 14 | 0.90 | FAIL | Val underpowered + insig |
-
-**Delay: 60s**
-| Window | Train n | Train t | Val n | Val t | Verdict | Reason |
-|---|---|---|---|---|---|---|
-| 15m | 41 | 2.25 | 11 | 2.49 | FAIL | Validation underpowered (n=11<30) |
-| 30m | 41 | 0.87 | 11 | 0.88 | FAIL | Val underpowered + insignificant |
-| 60m | 41 | 1.75 | 11 | 1.71 | FAIL | Val underpowered + insignificant |
-| 120m | 41 | 1.66 | 11 | 1.55 | FAIL | Val underpowered + insignificant |
-
-**Delay: 120s**
-| Window | Train n | Train t | Val n | Val t | Verdict | Reason |
-|---|---|---|---|---|---|---|
-| 15m | 47 | 2.88 | 12 | 1.91 | FAIL | Validation underpowered (n=12<30) |
-| 30m | 47 | 1.75 | 12 | -0.38 | FAIL | Val negative |
-| 60m | 47 | 2.33 | 12 | 1.07 | FAIL | Val underpowered + insig |
-| 120m | 47 | 1.69 | 12 | 0.18 | FAIL | Val underpowered + insig |
-
-### Analysis
-
-**Pattern Across All Delays**: Validation sample size is too small.
-
-| Delay | Avg Train n | Avg Val n | Pass Validation Gate? |
-|---|---|---|---|
-| 0s | 52 | 14 | No (n < 30) |
-| 60s | 41 | 11 | No (n < 30) |
-| 120s | 47 | 12 | No (n < 30) |
-
-**Why Validation n is Small**: The impulse confirmation requirement is stringent. Even after waiting 60–120 seconds, only ~20–25% of NFP events produce a tradable impulse confirmation. Over the 128 events in dev period:
-- Without delay: ~52 trades pass filter
-- With 60s delay: ~41 trades pass filter (32% reduction)
-- With 120s delay: ~47 trades pass filter (smaller reduction)
-
-When the 80/20 train-val split is applied to these numbers, validation sets shrink to 11–14 trades, well below the n ≥ 30 minimum.
-
-**Best Performer (60s/120s)**: The 60s delay + 15m window combination achieved val t=2.49, which is above the 1.5 threshold—but with only n=11 trades. This is insufficient statistical power.
-
-**Conclusion**: **REJECTED** — The mechanism works statistically in-sample but requires more events for validation. This is a **BLOCKED_INSUFFICIENT_DATA** case, not a failed mechanism.
+| 0s | 15m | 48 | 3.88 | 12 | -0.55 | VALIDATION_UNDERPOWERED |
+| 0s | 30m | 48 | 2.16 | 12 | 1.09 | VALIDATION_UNDERPOWERED |
+| 0s | 60m | 48 | 2.45 | 12 | 0.34 | VALIDATION_UNDERPOWERED |
+| 0s | 120m | 48 | 1.64 | 12 | 1.46 | TRAIN_INSIGNIFICANT |
+| 60s | 15m | 59 | 4.24 | 15 | 0.01 | VALIDATION_UNDERPOWERED |
+| 60s | 30m | 59 | 2.33 | 15 | 0.70 | VALIDATION_UNDERPOWERED |
+| 60s | 60m | 59 | 2.69 | 15 | 0.24 | VALIDATION_UNDERPOWERED |
+| 60s | 120m | 59 | 2.34 | 15 | 0.95 | VALIDATION_UNDERPOWERED |
+| 120s | 15m | 53 | 4.83 | 14 | 2.24 | VALIDATION_UNDERPOWERED |
+| 120s | 30m | 53 | 2.29 | 14 | 1.73 | VALIDATION_UNDERPOWERED |
+| 120s | 60m | 53 | 2.94 | 14 | 0.43 | VALIDATION_UNDERPOWERED |
+| 120s | 120m | 53 | 2.19 | 14 | 1.14 | VALIDATION_UNDERPOWERED |
 
 ---
 
 ## Overall Findings
 
-### What Passed the Internal Validation Gate?
-None. 0 survivors from 23 parameter combinations.
-
-### Why Did All 3 Fail?
-
-1. **HYP-IM-0001**: Economically unviable (cost too high relative to mechanism's edge)
-2. **HYP-IM-0003**: Edge too small to trade after costs
-3. **HYP-IM-0004**: Insufficient validation sample size (blocked_data condition)
+| Hypothesis | Real failure mode | Actionable? |
+|---|---|---|
+| HYP-IM-0001 | 1 of 6 correlated windows clears train+val significance; not strong evidence at 6-window multiplicity; not a replication of the frozen SC candidate it nominally overlaps with | Weak — no action beyond noting the overlap with an already-known, already-frozen, already-`STILL_UNDERPOWERED` family |
+| HYP-IM-0003 | Well-powered null (t≈0, n=161) | No — clean falsification |
+| HYP-IM-0004 | Train-side pattern too consistent across 12 correlated cells to be pure noise, but validation (n=12-15, inconsistent sign) neither confirms nor refutes it | Yes, cautiously — the single most data-blocked-but-plausible lead this Idea Machine effort has produced; do not deploy on this evidence, do consider it if the NFP event pool can be extended |
 
 ### Factory Gate Sequence
 
 ```
 Stage 1: Internal Validation Gate (train + val on dev data)
-  ├─ HYP-IM-0001: COST_DOMINATED (all windows)
-  ├─ HYP-IM-0003: COST_DOMINATED (all windows)
-  └─ HYP-IM-0004: VALIDATION_UNDERPOWERED (all delays)
+  ├─ HYP-IM-0001: mostly TRAIN_INSIGNIFICANT/NEGATIVE; best window VALIDATION_UNDERPOWERED
+  ├─ HYP-IM-0003: TRAIN_NEGATIVE/TRAIN_INSIGNIFICANT (well-powered null)
+  └─ HYP-IM-0004: VALIDATION_UNDERPOWERED throughout (real-looking train pattern, unconfirmed by validation)
         └─ None advance to GEN12
-
-Stage 2: GEN12 Adversarial Gate
-  └─ (Not reached: no survivors from Stage 1)
-
-Stage 3: GEN14 Sealed Holdout Gate
-  └─ (Not reached: no GEN12 survivors)
+Stage 2: GEN12 Adversarial Gate — not reached
+Stage 3: GEN14 Sealed Holdout Gate — not reached
 ```
-
-### Data Integrity Verified
-
-✓ No holdout data accessed  
-✓ No ledger modifications  
-✓ Cost model unchanged  
-✓ All gates respected (no bypassing)  
-✓ Honest rejection logging  
 
 ---
 
 ## Lessons Learned
 
-### Idea Machine Insights
-
-1. **Idea Scoring ≠ Factory Performance**: Top-scoring ideas (74.0, 64.0) all failed Factory validation. The Idea Machine's viability scoring (which emphasizes known working patterns and strong source reliability) does not correlate with actual Factory pass rates.
-
-2. **Cost Domination is Real**: 2 of 3 ideas failed because their expected returns couldn't overcome the round-trip cost. This suggests:
-   - Pure statistical significance is not sufficient
-   - Mechanisms must generate moves 2–3x larger than cost
-   - Many "real" market patterns are too subtle to trade after costs
-
-3. **Impulse Confirmation is Restrictive**: The cross-asset confirmation requirement (HYP-IM-0001) and impulse filters (HYP-IM-0003, HYP-IM-0004) both reduce trade frequency dramatically. This is good for signal quality but bad for statistical power.
-
-4. **Data Availability Matters**: HYP-IM-0004 might have passed with more events. The blocked ideas from Cycle 2 (80% required exotic data) were not testable; these 3 were testable but underpowered.
-
-### Next Steps
-
-**Option A: Iterate on Ideas**
-- Idea Machine should weight cost-efficiency higher in scoring
-- Test longer observation windows to get more events
-- Consider mechanisms that apply to more events (less selective filtering)
-
-**Option B: Accept the Bottleneck**
-- Factory validation gate (5–10% pass rate) is working as designed
-- Keep running cycles until one passes; don't optimize away the gate
-- This is the honest path
-
-**Option C: Parallel Tracks**
-- Continue Idea Machine generation (5–10 cycles per generation sweep)
-- Also manually explore known high-potential families (continuation of SC, calendar effects)
-- Blend external ideas with internal research
+1. **A sign-convention bug can silently survive a first review because it produces plausible-looking negative results.** "No edge found" reads as a mundane, unremarkable outcome — exactly the kind of result that doesn't invite scrutiny. It took cross-referencing this session's own numbers against an unrelated already-frozen candidate (done for a different reason — checking for redundancy) to surface the inversion. **Lesson for process, not just this cycle: a negative result should be cross-checked against a known-good reference computation before being trusted, not just a positive one.**
+2. **Multiple-window/multiple-delay sweeps on overlapping event pools produce correlated, not independent, evidence.** HYP-IM-0004's "12/12 windows clear train significance" looks compelling until you account for the fact that 12 overlapping filters on 128 events are not 12 independent experiments. This is a general caution for how `idea_machine/economic_feedback.py` should weight "consistency across many parameter cells" going forward — it should not be treated as 12x the evidence of one cell.
+3. **Idea Machine viability score still did not predict which hypothesis would be most interesting.** All three scored similarly (74.0, 64.0, 64.0); the corrected result differentiates them sharply (HYP-IM-0004 > HYP-IM-0001 > HYP-IM-0003 in "worth another look" terms) for reasons the original scoring never captured (confirmation-rate stability, event-pool overlap structure).
+4. **Cross-referencing new probes against the project's own frozen candidates is a cheap, valuable sanity check** — it caught this bug, and it also prevented the report from overclaiming the GBPUSD/US10Y result as a fresh discovery when it nominally overlaps ground already covered (and already honestly labeled `STILL_UNDERPOWERED`) by Cycle 8/9.
 
 ---
 
 ## Governance Audit
 
-### Data Access
-- Dev bars: loaded from FutureSharks financial-data repo ✓
-- Events: loaded from forexfactory CSV in data/events/raw/ ✓
-- Holdout seal: never touched ✓
-
-### Ledger and Registry
-- Multiple-testing ledger: not reset ✓
-- Candidate spec registry: not modified ✓
-- Evidence vault: no new entries ✓
-
-### Cost Model
-- Round-trip costs: used as-is from discovery/cost_model.py ✓
-- No relaxation or adjustment ✓
-
-### Gates
-- Internal validation: (train t ≥ 2.0, val t ≥ 1.5, n ≥ 30, gross/cost ≥ 2.0) ✓
-- No bypassing, no parameter tuning to pass gates ✓
-
-### Transparency
-- All rejections logged with specific reasons ✓
-- No self-declared edges ✓
-- Honest reporting of "insufficient data" cases ✓
+- Dev bars/events: loaded via the same holdout-firewalled loaders used throughout this project ✓
+- Holdout: never accessed ✓
+- Multiple-testing ledger: not modified (these are diagnostic dry-runs, not registered candidates) ✓
+- Cost model: unchanged, used as-is ✓
+- Frozen candidate spec registry: not modified; HYP-IM-0001's overlap with `CAND-SC-GBPUSD-US10Y-5M` is documented as non-corroborating, not merged into or treated as new evidence for that frozen record ✓
+- Both corrections disclosed openly, with full before/after numbers, not silently amended ✓
 
 ---
 
-## Files Generated
+## Files
 
 ```
-discovery/cycle11_idea_machine.py      ← Evaluation module
-reports/factory/cycle_11_*.json        ← Metrics and results (if saved)
-CYCLE11_FACTORY_EVALUATION_REPORT.md   ← This report
+discovery/cycle11_idea_machine.py       ← evaluation module (both bugs fixed)
+discovery/cycle11_export_json.py        ← JSON export (both bugs fixed)
+reports/factory/discovery_cycles/cycle_11_idea_machine.json  ← twice-corrected results
+CYCLE11_FACTORY_EVALUATION_REPORT.md    ← this report (rewritten twice, not patched)
 ```
 
 ---
 
-## Conclusion
-
-**Three high-scoring ideas from Idea Machine integration were evaluated through Factory internal validation gates using real development data. All three were rejected at the internal validation stage:**
-
-- **HYP-IM-0001**: Economically inviable (edge too small relative to cost)
-- **HYP-IM-0003**: Statistically real but unprofitable after costs
-- **HYP-IM-0004**: Promising signal but insufficient validation data
-
-**Status**: REJECTED (no survivors)  
-**Next**: Return to Idea Machine for broader generation sweep or manual research continuation  
-**Governance**: All constraints intact, no shortcuts taken
-
----
-
-**Report Generated**: 2026-08-21  
-**Evaluation Data**: Development period 2012-11-16 to 2020-04-29  
-**Status**: Complete, honest results
-
+**Status**: REJECTED (0 survivors), twice corrected and re-verified
+**Next**: `idea_machine/economic_feedback.py` now learns from the corrected numbers — see that module's lessons for how this cycle informs future idea ranking

@@ -1,0 +1,205 @@
+[
+  {
+    "dna": {
+      "dna_id": "MINED-0001",
+      "source_title": "geraked/metatrader5",
+      "source_url": "https://github.com/geraked/metatrader5",
+      "tags": {
+        "entry_mechanism": [
+          "RSI_THRESHOLD",
+          "MACD_SIGNAL",
+          "BOLLINGER_BAND",
+          "STOCHASTIC_SIGNAL",
+          "NADARAYA_WATSON_ENVELOPE"
+        ],
+        "exit_mechanism": [
+          "FIXED_STOP_LOSS",
+          "ATR_BASED_STOP"
+        ],
+        "filters": [
+          "WILLIAMS_FRACTAL_FILTER"
+        ],
+        "volatility_logic": [
+          "ATR_BASED"
+        ],
+        "cross_asset_relationships": [
+          "CROSS_ASSET_DRIVER"
+        ]
+      },
+      "citations": {
+        "RSI_THRESHOLD": "ollinger Bands with RSI. 3MACD applies triple MACD optimized fo",
+        "MACD_SIGNAL": "MACD applies triple MACD optimized for scalping. 2MACDSTO combin",
+        "BOLLINGER_BAND": "s. BBRSI integrates Bollinger Bands with RSI. 3MACD applies triple MACD op",
+        "STOCHASTIC_SIGNAL": "ines dual MACD with Stochastic Oscillator signals. NWERSIASF utilizes",
+        "NADARAYA_WATSON_ENVELOPE": "NWERSIASF utilizes Nadaraya-Watson Envelope, RSI, and ATR Stop Loss Finder",
+        "FIXED_STOP_LOSS": "elope, RSI, and ATR Stop Loss Finder. COT1 combines Commitments of Tr",
+        "ATR_BASED_STOP": "Envelope, RSI, and ATR Stop Loss Finder. COT1 combines Commitments",
+        "WILLIAMS_FRACTAL_FILTER": "rages combined with Williams Fractals. BBRSI integrates Bollinger Bands with",
+        "ATR_BASED": "Envelope, RSI, and ATR Stop Loss Finder. COT1 combines Commitm",
+        "CROSS_ASSET_DRIVER": "nder. COT1 combines Commitments of Traders and Super Trend indicator."
+      },
+      "provenance": "SOURCE_ONLY",
+      "unverified_source_claims": {}
+    },
+    "novelty": {
+      "verdict": "NOVEL",
+      "matched_family_id": null,
+      "matched_family_status": null,
+      "overlap_tags": [],
+      "overlap_ratio": 0.0,
+      "explanation": "tag set does not closely match any other mined source or known refuted family"
+    }
+  },
+  {
+    "dna": {
+      "dna_id": "MINED-0002",
+      "source_title": "foeed/FvgGold-EA",
+      "source_url": "https://github.com/foeed/FvgGold-EA",
+      "tags": {
+        "entry_mechanism": [
+          "FAIR_VALUE_GAP",
+          "ORDER_BLOCK"
+        ],
+        "volatility_logic": [
+          "ATR_BASED"
+        ],
+        "position_sizing": [
+          "FIXED_LOT"
+        ],
+        "risk_management": [
+          "DAILY_LOSS_LIMIT"
+        ]
+      },
+      "citations": {
+        "FAIR_VALUE_GAP": "Buy limit placed at FVG bottom edge + buffer. Fixed R:R = 1.5 t",
+        "ORDER_BLOCK": "bullish or bearish Order Block gets score bonus. Trading restricted to",
+        "ATR_BASED": "n activates at 0.5x ATR profit.",
+        "FIXED_LOT": "00; NY Close 21:00. Fixed lot sizing (default 0.01). Max 1 concurrent",
+        "DAILY_LOSS_LIMIT": "1 concurrent trade. Daily loss limit ($5 default). Break-even protection act"
+      },
+      "provenance": "SOURCE_ONLY",
+      "unverified_source_claims": {}
+    },
+    "novelty": {
+      "verdict": "NOVEL",
+      "matched_family_id": null,
+      "matched_family_status": null,
+      "overlap_tags": [],
+      "overlap_ratio": 0.0,
+      "explanation": "tag set does not closely match any other mined source or known refuted family"
+    }
+  },
+  {
+    "dna": {
+      "dna_id": "MINED-0003",
+      "source_title": "Ahmed-GoCode/Quant-Edge-Indicators",
+      "source_url": "https://github.com/Ahmed-GoCode/Quant-Edge-Indicators",
+      "tags": {
+        "entry_mechanism": [
+          "RSI_THRESHOLD",
+          "MACD_SIGNAL",
+          "RANGE_BREAKOUT"
+        ],
+        "exit_mechanism": [
+          "TRAILING_STOP",
+          "FIXED_TAKE_PROFIT",
+          "FIXED_STOP_LOSS"
+        ],
+        "filters": [
+          "GENERIC_FILTER"
+        ],
+        "regime_detection": [
+          "TREND_REGIME_FILTER",
+          "MEAN_REVERSION_REGIME"
+        ],
+        "volatility_logic": [
+          "ATR_BASED"
+        ]
+      },
+      "citations": {
+        "RSI_THRESHOLD": "ity zones. 2-period RSI mean reversion with SMA 200 trend filte",
+        "MACD_SIGNAL": "trategy). EMA 200 + MACD + RSI + ADX + Volume filter, ATR traili",
+        "RANGE_BREAKOUT": "Strategy). Donchian breakout, Fixed SL + Dynamic TP + Daily target c",
+        "TRAILING_STOP": "Volume filter, ATR trailing stop, breakout confirmation (BTCUSD 5M Strat",
+        "FIXED_TAKE_PROFIT": "Fixed SL + Dynamic TP + Daily target cap, 1% equity risk sizi",
+        "FIXED_STOP_LOSS": "ian breakout, Fixed SL + Dynamic TP + Daily target cap, 1% equ",
+        "GENERIC_FILTER": "with SMA 200 trend filter, time-based max bar exits (Larry Connor",
+        "TREND_REGIME_FILTER": "ersion with SMA 200 trend filter, time-based max bar exits (Larry Connor",
+        "MEAN_REVERSION_REGIME": "zones. 2-period RSI mean reversion with SMA 200 trend filter, time-base",
+        "ATR_BASED": "boxes define exits. ATR-based trend cloud with supply/demand li"
+      },
+      "provenance": "SOURCE_ONLY",
+      "unverified_source_claims": {}
+    },
+    "novelty": {
+      "verdict": "NOVEL",
+      "matched_family_id": null,
+      "matched_family_status": null,
+      "overlap_tags": [],
+      "overlap_ratio": 0.154,
+      "explanation": "tag set does not closely match any other mined source or known refuted family"
+    }
+  },
+  {
+    "dna": {
+      "dna_id": "MINED-0004",
+      "source_title": "sajidmahamud835/grid-master-pro-mt5-ea",
+      "source_url": "https://github.com/sajidmahamud835/grid-master-pro-mt5-ea",
+      "tags": {
+        "exit_mechanism": [
+          "TRAILING_STOP",
+          "FIXED_STOP_LOSS"
+        ],
+        "volatility_logic": [
+          "ATR_BASED",
+          "GENERIC_VOLATILITY_LOGIC"
+        ],
+        "position_sizing": [
+          "GRID_SIZING"
+        ]
+      },
+      "citations": {
+        "TRAILING_STOP": "EARISH (sell only). Trailing stop with TrailingPoints and TrailingStep. C",
+        "FIXED_STOP_LOSS": "lance x riskPct) / (SL x tickValue).",
+        "ATR_BASED": "et volatility using ATR. Modes: NEUTRAL (both), BULLISH (buy on",
+        "GENERIC_VOLATILITY_LOGIC": "y adjusts to market volatility using ATR. Modes: NEUTRAL (both), BULLI",
+        "GRID_SIZING": "sly (Neutral mode). Grid spacing dynamically adjusts to market v"
+      },
+      "provenance": "SOURCE_ONLY",
+      "unverified_source_claims": {}
+    },
+    "novelty": {
+      "verdict": "NOVEL",
+      "matched_family_id": null,
+      "matched_family_status": null,
+      "overlap_tags": [],
+      "overlap_ratio": 0.111,
+      "explanation": "tag set does not closely match any other mined source or known refuted family"
+    }
+  },
+  {
+    "dna": {
+      "dna_id": "MINED-0005",
+      "source_title": "Macrosynergy / academic FX yield-curve research (titles+snippets only)",
+      "source_url": "https://macrosynergy.com/research/using-yield-curve-information-for-fx-trading/",
+      "tags": {
+        "cross_asset_relationships": [
+          "CROSS_ASSET_DRIVER"
+        ]
+      },
+      "citations": {
+        "CROSS_ASSET_DRIVER": "state price growth, yield-curve valuations, economic surprises) h"
+      },
+      "provenance": "SOURCE_ONLY",
+      "unverified_source_claims": {}
+    },
+    "novelty": {
+      "verdict": "NOVEL",
+      "matched_family_id": null,
+      "matched_family_status": null,
+      "overlap_tags": [],
+      "overlap_ratio": 0.0,
+      "explanation": "tag set does not closely match any other mined source or known refuted family"
+    }
+  }
+]

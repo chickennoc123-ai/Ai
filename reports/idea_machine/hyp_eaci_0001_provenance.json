@@ -1,0 +1,19 @@
+{
+  "entity_id": "HYP-EACI-0001",
+  "final_stage": "DATA_SUPPORTED",
+  "history": [
+    {
+      "from_stage": "SOURCE_ONLY",
+      "to_stage": "DERIVED_HYPOTHESIS",
+      "reason": "Synthesized from geraked/metatrader5 (COT1 dual-signal pattern) + academic composite-macro-factor snippet; passed novelty check (no refuted-family overlap) and data-availability check (USDJPY/US10Y/SPX500/NFP all present in project data)",
+      "timestamp": "2026-08-21T01:10:09.224910+00:00"
+    },
+    {
+      "from_stage": "DERIVED_HYPOTHESIS",
+      "to_stage": "DATA_SUPPORTED",
+      "reason": "Factory internal-validation run recorded in reports/factory/discovery_cycles/cycle_12_ea_code_intel.json: 0 survivors across 3 windows: ['TRAIN_INSIGNIFICANT', 'TRAIN_INSIGNIFICANT', 'VALIDATION_UNDERPOWERED']",
+      "timestamp": "2026-08-21T01:10:09.224964+00:00"
+    }
+  ],
+  "note": "Did not advance past DATA_SUPPORTED: 0/3 windows cleared the internal validation gate (DISCOVERY_SURVIVOR). Cannot legally advance to FACTORY_TESTED or SURVIVOR -- ProvenanceTracker.to_factory_tested() requires a passing GEN12 result, which requires a DISCOVERY_SURVIVOR first, which this hypothesis did not produce."
+}
