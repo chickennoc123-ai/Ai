@@ -165,14 +165,20 @@ class OpportunityQueue:
         }
 
 
-def populate_queue_from_cycle(cycle_json_path: Path) -> List[OpportunityQueueEntry]:
+def populate_queue_from_cycle(cycle_json_path: Path, queue_file: Path = QUEUE_FILE) -> List[OpportunityQueueEntry]:
     """
     Scan a discovery_cycles/*.json file and create queue entries for any
     hypotheses meeting the criteria for retest eligibility.
 
+    ``queue_file`` defaults to the production queue (correct for real cycle
+    integration, e.g. discovery/cycle_integration_hook.py) but MUST be
+    overridden to an isolated path by callers that are not performing a real
+    cycle run -- most importantly tests, which must never inject entries into
+    the permanent, append-only production ledger.
+
     Returns list of newly-created entries (if any).
     """
-    queue = OpportunityQueue()
+    queue = OpportunityQueue(queue_file)
     queue.load()
 
     if not cycle_json_path.exists():

@@ -443,9 +443,12 @@ class TestNoveltyFiveStatus:
 # --------------------------------------------------------------------- Phase 3: opportunity_queue
 
 class TestOpportunityQueue:
-    def test_queue_is_append_only(self):
+    def test_queue_is_append_only(self, tmp_path):
+        """Writes to an isolated queue file -- must never touch the production
+        ledger, which is permanent and append-only (a fake TEST-HYP entry
+        injected there could never be removed again)."""
         from idea_machine.opportunity_queue import OpportunityQueue, DataRequirement, RetestCondition
-        queue = OpportunityQueue()
+        queue = OpportunityQueue(tmp_path / "test_opportunity_queue.json")
         queue.load()
         initial_count = len(queue.entries)
 
@@ -520,25 +523,31 @@ class TestOpportunityQueue:
 # --------------------------------------------------------------------- Phase 3: cycle integration
 
 class TestCycleIntegration:
-    def test_populate_queue_from_cycle_11(self):
+    def test_populate_queue_from_cycle_11(self, tmp_path):
+        """Writes to an isolated queue file -- must never touch the production
+        ledger (re-running this test on every suite run would otherwise mint
+        fresh duplicate entries for the same Cycle 11 hypotheses forever)."""
         from idea_machine.opportunity_queue import populate_queue_from_cycle
         cycle_path = REPO_ROOT / "reports" / "factory" / "discovery_cycles" / "cycle_11_idea_machine.json"
         assert cycle_path.exists()
-        new_entries = populate_queue_from_cycle(cycle_path)
+        new_entries = populate_queue_from_cycle(cycle_path, queue_file=tmp_path / "q11.json")
         assert len(new_entries) >= 2  # HYP-IM-0001 and HYP-IM-0004 are underpowered
 
-    def test_populate_queue_from_cycle_12(self):
+    def test_populate_queue_from_cycle_12(self, tmp_path):
+        """Writes to an isolated queue file -- see test_populate_queue_from_cycle_11."""
         from idea_machine.opportunity_queue import populate_queue_from_cycle
         cycle_path = REPO_ROOT / "reports" / "factory" / "discovery_cycles" / "cycle_12_ea_code_intel.json"
         assert cycle_path.exists()
-        new_entries = populate_queue_from_cycle(cycle_path)
+        new_entries = populate_queue_from_cycle(cycle_path, queue_file=tmp_path / "q12.json")
         assert len(new_entries) >= 1  # HYP-EACI-0001 is underpowered
 
-    def test_cycle_integration_hook_exists(self):
-        """Verify integration hook can be called."""
+    def test_cycle_integration_hook_exists(self, tmp_path):
+        """Verify integration hook can be called. Writes to an isolated queue
+        file -- must never touch the production ledger (see
+        test_populate_queue_from_cycle_11)."""
         from discovery.cycle_integration_hook import update_research_memory_after_cycle
         cycle_path = REPO_ROOT / "reports" / "factory" / "discovery_cycles" / "cycle_11_idea_machine.json"
-        result = update_research_memory_after_cycle(cycle_path)
+        result = update_research_memory_after_cycle(cycle_path, queue_file=tmp_path / "hook_q.json")
         assert "cycle_file" in result
         assert "new_opportunities_created" in result
         assert "opportunity_ids" in result
