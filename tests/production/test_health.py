@@ -69,7 +69,8 @@ def test_case_1_switch_on_supervisor_running(tmp_path):
     switch = MasterSwitch(state_path=p["switch"], audit_path=p["audit"])
     switch.turn_on(reason="case1", source="test")
 
-    proc = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(6)", "agle.py"])
+    proc = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(6)", "agle.py"],
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL)
     try:
         time.sleep(0.3)
         _write_heartbeat(p["heartbeat"], pid=proc.pid, state="IDLE")
@@ -127,7 +128,8 @@ def test_case_3b_pid_alive_but_not_agle_never_false_positive(tmp_path):
     p = _paths(tmp_path)
     switch = MasterSwitch(state_path=p["switch"], audit_path=p["audit"])
     switch.turn_on(reason="case3b", source="test")
-    proc = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(6)"])
+    proc = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(6)"],
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL)
     try:
         time.sleep(0.3)
         _write_heartbeat(p["heartbeat"], pid=proc.pid)
@@ -292,7 +294,8 @@ def test_case_11_governance_failure_never_healthy(tmp_path):
     p = _paths(tmp_path)
     switch = MasterSwitch(state_path=p["switch"], audit_path=p["audit"])
     switch.turn_on(reason="case11", source="test")
-    proc = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(6)", "agle.py"])
+    proc = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(6)", "agle.py"],
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL)
     try:
         time.sleep(0.3)
         _write_heartbeat(p["heartbeat"], pid=proc.pid, state="IDLE")
